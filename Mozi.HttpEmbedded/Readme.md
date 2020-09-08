@@ -64,10 +64,13 @@ HttpEmbedded在Socket之上使用异步单线程模型,构建了一个HTTP服务
     //配置端口并启动服务器
     hs.SetPort(9000).Start();
     //开启认证
-    hs.UseAuth(AuthType.Basic).SetUser("admin", "admin");
-	//加载程序
-
-	//路由注入
+    hs.UseAuth(AuthorizationType.Basic).SetUser("admin", "admin");
+    //开启静态文件支持
+    hs.UseStaticFiles("");
+    //路由映射
+    Router router = Router.Default;
+    router.Map("services/{controller}/{id}");
+    Console.ReadLine();
 
 ~~~
 
