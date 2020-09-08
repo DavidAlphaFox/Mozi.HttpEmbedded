@@ -36,19 +36,19 @@ HttpEmbedded在Socket之上使用异步单线程模型,构建了一个HTTP服务
 3. Cookie管理
 	支持标准Cookie
 
-4, HTTP请求方法
+4. HTTP请求方法
 	GET POST
 
-4. 路由
+5. 路由
 	实现了URL管理,参见Router模块
 
-5. 引用与依赖关系
+6. 引用与依赖关系
 	依赖于.Net Framework
 
-6. Payload压缩
+7. Payload压缩
 	使用GZip压缩
 
-7. 字符编码
+8. 字符编码
 	字符编码部分使用UTF-8
 
 ## 功能与版本迭代
