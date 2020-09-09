@@ -68,7 +68,7 @@ namespace Mozi.HttpEmbedded.Source
         /// </summary>
         /// <param name="path"></param>
         /// <param name="ifModifiedSince"></param>
-        /// <returns></returns>
+        /// <returns><see cref="Boolean:true">Modified</see></returns>
         public bool CheckIfModified(string path, string ifModifiedSince)
         {
             DateTime dtModified=System.IO.File.GetLastWriteTime(_root + "\\" + path);
@@ -79,7 +79,7 @@ namespace Mozi.HttpEmbedded.Source
                     DateTime dtSince = DateTime.ParseExact(ifModifiedSince, "ddd, dd MMM yyyy HH:mm:ss GMT",
                                                         CultureInfo.InvariantCulture,
                                                         DateTimeStyles.AdjustToUniversal).ToLocalTime();
-                    if (dtModified <= dtSince)
+                    if ((dtModified - dtSince).TotalSeconds<1)
                     {
                         return false;
                     }

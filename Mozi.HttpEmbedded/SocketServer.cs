@@ -144,37 +144,21 @@ namespace Mozi.HttpEmbedded
         {
             StateObject so = (StateObject)iar.AsyncState;
             Socket client = so.WorkSocket;
-                if (client.Connected)
-                {
-                    int iByteRead = client.EndReceive(iar);
+            if (client.Connected)
+            {
+                int iByteRead = client.EndReceive(iar);
                    
-                    if (iByteRead >0)
+                if (iByteRead >0)
+                {
+                    //置空数据连接
+                    so.ResetBuffer(iByteRead);
+                    if (client.Available > 0)
                     {
-                        //置空数据连接
-                        so.ResetBuffer(iByteRead);
-                        if (client.Available > 0)
-                        {
-                            //Thread.Sleep(10);
-                            client.BeginReceive(so.Buffer, 0, StateObject.BufferSize, 0, CallbackReceive, so);
-                        }
-                        else
-                        {
-                            _socketDocker.Remove(client);
-                            if (AfterReceiveEnd != null)
-                            {
-                                AfterReceiveEnd(this,
-                                    new DataTransferArgs()
-                                    {
-                                        Data = so.Data.ToArray(),
-                                        IP = so.IP,
-                                        Port = so.RemotePort,
-                                        Socket = so.WorkSocket
-                                    });
-                            }
-                        }
+                        //Thread.Sleep(10);
+                        client.BeginReceive(so.Buffer, 0, StateObject.BufferSize, 0, CallbackReceive, so);
                     }
-                    else 
-                    { 
+                    else
+                    {
                         _socketDocker.Remove(client);
                         if (AfterReceiveEnd != null)
                         {
@@ -190,7 +174,7 @@ namespace Mozi.HttpEmbedded
                     }
                 }
                 else 
-                {
+                { 
                     _socketDocker.Remove(client);
                     if (AfterReceiveEnd != null)
                     {
@@ -203,8 +187,24 @@ namespace Mozi.HttpEmbedded
                                 Socket = so.WorkSocket
                             });
                     }
-                    client.Dispose();
                 }
+            }
+            else 
+            {
+                _socketDocker.Remove(client);
+                if (AfterReceiveEnd != null)
+                {
+                    AfterReceiveEnd(this,
+                        new DataTransferArgs()
+                        {
+                            Data = so.Data.ToArray(),
+                            IP = so.IP,
+                            Port = so.RemotePort,
+                            Socket = so.WorkSocket
+                        });
+                }
+                client.Dispose();
+            }
         }
     }
 }
