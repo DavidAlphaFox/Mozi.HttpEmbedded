@@ -164,7 +164,7 @@ namespace Mozi.HttpEmbedded
                     //响应静态文件
                     if (st.Exists(path, ""))
                     {
-                        DateTime dtModified = st.GetLastModified(path);
+                        DateTime dtModified = st.GetLastModified(path).ToUniversalTime();
                         string ifmodifiedsince =context.Request.Headers.GetValue(HeaderProperty.IfModifiedSince.PropertyTag);
                         if (st.CheckIfModified(path, ifmodifiedsince))
                         {
