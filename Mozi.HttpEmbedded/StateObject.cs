@@ -16,7 +16,7 @@ namespace Mozi.HttpEmbedded
         public int    RemotePort = 0;
         public static int BufferSize = 1024;
         public List<byte> Data=new List<byte>(); 
-        public byte[] Buffer = new byte[BufferSize];
+        public byte[] Buffer = new byte[BufferSize*2];
         public StringBuilder sb = new StringBuilder();
         public String IP { get; set; }
 

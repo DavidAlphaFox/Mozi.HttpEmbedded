@@ -12,7 +12,7 @@ namespace Mozi.HttpEmbedded
     {
         //private static SocketServer _mSocketServer;
         private int _iPort = 9000;
-        private List<Socket> _socketDocker;
+        private Dictionary<string,Socket> _socketDocker;
         private Socket sc;
         /// <summary>
         /// 服务器启动事件
@@ -51,7 +51,7 @@ namespace Mozi.HttpEmbedded
 
         public SocketServer() 
         {
-            _socketDocker = new List<Socket>();
+            _socketDocker = new Dictionary<string, Socket>();
         }
 
 
@@ -108,7 +108,7 @@ namespace Mozi.HttpEmbedded
         {
             Socket server = (Socket)iar.AsyncState;
             Socket client = server.EndAccept(iar);
-            _socketDocker.Add(client);
+            
             server.BeginAccept(CallbackAccept, server);
             if (OnClientConnect != null) 
             {
@@ -123,6 +123,7 @@ namespace Mozi.HttpEmbedded
                 IP = ((System.Net.IPEndPoint)client.RemoteEndPoint).Address.ToString(),
                 RemotePort = ((System.Net.IPEndPoint)client.RemoteEndPoint).Port,
             };
+            _socketDocker.Add(so.Id, client);
             try
             {
                 client.BeginReceive(so.Buffer, 0, StateObject.BufferSize, 0, CallbackReceive, so);
@@ -159,7 +160,7 @@ namespace Mozi.HttpEmbedded
                     }
                     else
                     {
-                        _socketDocker.Remove(client);
+                        _socketDocker.Remove(so.Id);
                         if (AfterReceiveEnd != null)
                         {
                             AfterReceiveEnd(this,
@@ -174,8 +175,8 @@ namespace Mozi.HttpEmbedded
                     }
                 }
                 else 
-                { 
-                    _socketDocker.Remove(client);
+                {
+                    _socketDocker.Remove(so.Id);
                     if (AfterReceiveEnd != null)
                     {
                         AfterReceiveEnd(this,
@@ -191,7 +192,7 @@ namespace Mozi.HttpEmbedded
             }
             else 
             {
-                _socketDocker.Remove(client);
+                _socketDocker.Remove(so.Id);
                 if (AfterReceiveEnd != null)
                 {
                     AfterReceiveEnd(this,

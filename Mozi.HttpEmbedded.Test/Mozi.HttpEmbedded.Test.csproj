@@ -51,639 +51,1932 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="admin\account.html">
+    <Content Include="admin\400.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\css\app.css">
+    <Content Include="admin\401.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\css\app.rtl.css">
+    <Content Include="admin\403.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\css\snackbar.css">
+    <Content Include="admin\404.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\css\snackbar.rtl.css">
+    <Content Include="admin\500.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\css\vendor-bootstrap-datatables.css">
+    <Content Include="admin\503.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\css\vendor-bootstrap-datatables.rtl.css">
+    <Content Include="admin\assets\css\dashboard.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\css\vendor-bootstrap-datepicker.css">
+    <Content Include="admin\assets\css\dashboard.rtl.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\css\vendor-bootstrap-datepicker.rtl.css">
+    <Content Include="admin\assets\fonts\feather\feather-webfont.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\css\vendor-bootstrap-switch.css">
+    <Content Include="admin\assets\images\browsers\android-browser.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\css\vendor-bootstrap-switch.rtl.css">
+    <Content Include="admin\assets\images\browsers\aol-explorer.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\css\vendor-dragula.css">
+    <Content Include="admin\assets\images\browsers\blackberry.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\css\vendor-dragula.rtl.css">
+    <Content Include="admin\assets\images\browsers\camino.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\css\vendor-fullcalendar.css">
+    <Content Include="admin\assets\images\browsers\chrome.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\css\vendor-fullcalendar.rtl.css">
+    <Content Include="admin\assets\images\browsers\chromium.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\css\vendor-morris.css">
+    <Content Include="admin\assets\images\browsers\dolphin.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\css\vendor-morris.rtl.css">
+    <Content Include="admin\assets\images\browsers\edge.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\css\vendor-summernote.css">
+    <Content Include="admin\assets\images\browsers\firefox.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\css\vendor-summernote.rtl.css">
+    <Content Include="admin\assets\images\browsers\ie.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\images\alesia-kazantceva-283291.jpg">
+    <Content Include="admin\assets\images\browsers\maxthon.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\images\alex-robert-133575.jpg">
+    <Content Include="admin\assets\images\browsers\mozilla.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\images\avatars\person-1.jpg">
+    <Content Include="admin\assets\images\browsers\netscape.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\images\avatars\person-10.jpg">
+    <Content Include="admin\assets\images\browsers\opera.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\images\avatars\person-11.jpg">
+    <Content Include="admin\assets\images\browsers\safari.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\images\avatars\person-12.jpg">
+    <Content Include="admin\assets\images\browsers\sleipnir.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\images\avatars\person-13.jpg">
+    <Content Include="admin\assets\images\browsers\uc-browser.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\images\avatars\person-14.jpg">
+    <Content Include="admin\assets\images\browsers\vivaldi.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\images\avatars\person-15.jpg">
+    <Content Include="admin\assets\images\crypto-currencies\bitcoin.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\images\avatars\person-16.jpg">
+    <Content Include="admin\assets\images\crypto-currencies\cardano.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\images\avatars\person-2.jpg">
+    <Content Include="admin\assets\images\crypto-currencies\dash.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\images\avatars\person-3.jpg">
+    <Content Include="admin\assets\images\crypto-currencies\eos.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\images\avatars\person-4.jpg">
+    <Content Include="admin\assets\images\crypto-currencies\ethereum.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\images\avatars\person-5.jpg">
+    <Content Include="admin\assets\images\crypto-currencies\litecoin.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\images\avatars\person-6.jpg">
+    <Content Include="admin\assets\images\crypto-currencies\nem.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\images\avatars\person-7.jpg">
+    <Content Include="admin\assets\images\crypto-currencies\ripple.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\images\avatars\person-8.jpg">
+    <Content Include="admin\assets\images\flags\ad.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\images\avatars\person-9.jpg">
+    <Content Include="admin\assets\images\flags\ae.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\images\calendar_screen.png">
+    <Content Include="admin\assets\images\flags\af.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\images\charts_screen.png">
+    <Content Include="admin\assets\images\flags\ag.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\images\ecommerce_screen.png">
+    <Content Include="admin\assets\images\flags\ai.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\images\evren-aydin-268458.jpg">
+    <Content Include="admin\assets\images\flags\al.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\images\fabian-irsara-92113.jpg">
+    <Content Include="admin\assets\images\flags\am.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\images\financial_screen.png">
+    <Content Include="admin\assets\images\flags\ao.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\images\fixed-banner.jpg">
+    <Content Include="admin\assets\images\flags\aq.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\images\hail.png">
+    <Content Include="admin\assets\images\flags\ar.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\images\hero_admin_preview.png">
+    <Content Include="admin\assets\images\flags\as.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\images\jason-blackeye-217162.jpg">
+    <Content Include="admin\assets\images\flags\at.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\images\jon-flobrant-4053.jpg">
+    <Content Include="admin\assets\images\flags\au.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\images\linkedin-sales-navigator-402873.jpg">
+    <Content Include="admin\assets\images\flags\aw.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\images\linkedin-sales-navigator-403828.jpg">
+    <Content Include="admin\assets\images\flags\ax.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\images\linkedin-sales-navigator-404002.jpg">
+    <Content Include="admin\assets\images\flags\az.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\images\luke-chesser-2347.jpg">
+    <Content Include="admin\assets\images\flags\ba.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\images\mia-baker-322599.jpg">
+    <Content Include="admin\assets\images\flags\bb.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\images\naomi-hebert-188183.jpg">
+    <Content Include="admin\assets\images\flags\bd.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\images\naomi-hebert-188443.jpg">
+    <Content Include="admin\assets\images\flags\be.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\images\naomi-hebert-188449.jpg">
+    <Content Include="admin\assets\images\flags\bf.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\images\notifications_screen.png">
+    <Content Include="admin\assets\images\flags\bg.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\images\preview_hero_choose.png">
+    <Content Include="admin\assets\images\flags\bh.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\images\profile_screen.jpg">
+    <Content Include="admin\assets\images\flags\bi.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\images\profile_screen.png">
+    <Content Include="admin\assets\images\flags\bj.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\images\projects_screen.png">
+    <Content Include="admin\assets\images\flags\bl.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\images\property-1.jpg">
+    <Content Include="admin\assets\images\flags\bm.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\images\property-2.jpg">
+    <Content Include="admin\assets\images\flags\bn.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\images\property-3.jpg">
+    <Content Include="admin\assets\images\flags\bo.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\images\property-4.jpg">
+    <Content Include="admin\assets\images\flags\bq.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\images\property-5.jpg">
+    <Content Include="admin\assets\images\flags\br.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\images\property-6.jpg">
+    <Content Include="admin\assets\images\flags\bs.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\images\rawpixel-com-296613.jpg">
+    <Content Include="admin\assets\images\flags\bt.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\images\real_estate_screen.jpg">
+    <Content Include="admin\assets\images\flags\bv.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\images\real_estate_screen.png">
+    <Content Include="admin\assets\images\flags\bw.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\images\scott-webb-167099.jpg">
+    <Content Include="admin\assets\images\flags\by.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\images\thought-catalog-214785.jpg">
+    <Content Include="admin\assets\images\flags\bz.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\images\ui_components_screen.png">
+    <Content Include="admin\assets\images\flags\ca.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\images\weather-icons\cloudy-day-1.svg">
+    <Content Include="admin\assets\images\flags\cc.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\images\weather-icons\cloudy-day-2.svg">
+    <Content Include="admin\assets\images\flags\cd.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\images\weather-icons\cloudy-day-3.svg">
+    <Content Include="admin\assets\images\flags\cf.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\images\weather-icons\cloudy-night-1.svg">
+    <Content Include="admin\assets\images\flags\cg.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\images\weather-icons\cloudy-night-2.svg">
+    <Content Include="admin\assets\images\flags\ch.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\images\weather-icons\cloudy-night-3.svg">
+    <Content Include="admin\assets\images\flags\ci.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\images\weather-icons\cloudy.svg">
+    <Content Include="admin\assets\images\flags\ck.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\images\weather-icons\day.svg">
+    <Content Include="admin\assets\images\flags\cl.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\images\weather-icons\night.svg">
+    <Content Include="admin\assets\images\flags\cm.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\images\weather-icons\rainy-1.svg">
+    <Content Include="admin\assets\images\flags\cn.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\images\weather-icons\rainy-2.svg">
+    <Content Include="admin\assets\images\flags\co.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\images\weather-icons\rainy-3.svg">
+    <Content Include="admin\assets\images\flags\cr.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\images\weather-icons\rainy-4.svg">
+    <Content Include="admin\assets\images\flags\cu.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\images\weather-icons\rainy-5.svg">
+    <Content Include="admin\assets\images\flags\cv.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\images\weather-icons\rainy-6.svg">
+    <Content Include="admin\assets\images\flags\cw.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\images\weather-icons\rainy-7.svg">
+    <Content Include="admin\assets\images\flags\cx.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\images\weather-icons\snowy-1.svg">
+    <Content Include="admin\assets\images\flags\cy.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\images\weather-icons\snowy-2.svg">
+    <Content Include="admin\assets\images\flags\cz.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\images\weather-icons\snowy-3.svg">
+    <Content Include="admin\assets\images\flags\de.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\images\weather-icons\snowy-4.svg">
+    <Content Include="admin\assets\images\flags\dj.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\images\weather-icons\snowy-5.svg">
+    <Content Include="admin\assets\images\flags\dk.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\images\weather-icons\snowy-6.svg">
+    <Content Include="admin\assets\images\flags\dm.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\images\weather-icons\thunder.svg">
+    <Content Include="admin\assets\images\flags\do.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\images\weather-icons\weather-sprite.svg">
+    <Content Include="admin\assets\images\flags\dz.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\images\weather-icons\weather.svg">
+    <Content Include="admin\assets\images\flags\ec.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\images\weather-icons\weather_sagittarius.svg">
+    <Content Include="admin\assets\images\flags\ee.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\images\weather-icons\weather_sunset.svg">
+    <Content Include="admin\assets\images\flags\eg.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\js\app.js">
+    <Content Include="admin\assets\images\flags\eh.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\js\calendars.js">
+    <Content Include="admin\assets\images\flags\er.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\js\charts.js">
+    <Content Include="admin\assets\images\flags\es.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\js\charts_index.js">
+    <Content Include="admin\assets\images\flags\et.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\js\charts_retail.js">
+    <Content Include="admin\assets\images\flags\eu.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\js\color_variables.js">
+    <Content Include="admin\assets\images\flags\fi.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\js\datepicker.js">
+    <Content Include="admin\assets\images\flags\fj.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\js\drag_drop_events.js">
+    <Content Include="admin\assets\images\flags\fk.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\js\snackbar.js">
+    <Content Include="admin\assets\images\flags\fm.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\vendor\bootstrap-datepicker.min.js">
+    <Content Include="admin\assets\images\flags\fo.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\vendor\bootstrap-switch.min.js">
+    <Content Include="admin\assets\images\flags\fr.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\vendor\bootstrap.min.js">
+    <Content Include="admin\assets\images\flags\ga.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\vendor\Chart.min.js">
+    <Content Include="admin\assets\images\flags\gb-eng.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\vendor\dataTables.bootstrap4.js">
+    <Content Include="admin\assets\images\flags\gb-nir.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\vendor\dateformat.js">
+    <Content Include="admin\assets\images\flags\gb-sct.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\vendor\dom-factory.js">
+    <Content Include="admin\assets\images\flags\gb-wls.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\vendor\dragula.min.js">
+    <Content Include="admin\assets\images\flags\gb.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\vendor\fullcalendar.min.js">
+    <Content Include="admin\assets\images\flags\gd.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\vendor\jquery-ui.min.js">
+    <Content Include="admin\assets\images\flags\ge.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\vendor\jquery.dataTables.js">
+    <Content Include="admin\assets\images\flags\gf.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\vendor\jquery.min.js">
+    <Content Include="admin\assets\images\flags\gg.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\vendor\material-design-kit.js">
+    <Content Include="admin\assets\images\flags\gh.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\vendor\moment.min.js">
+    <Content Include="admin\assets\images\flags\gi.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\vendor\morris.min.js">
+    <Content Include="admin\assets\images\flags\gl.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\vendor\placeholder.min.js">
+    <Content Include="admin\assets\images\flags\gm.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\vendor\popper.js">
+    <Content Include="admin\assets\images\flags\gn.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\vendor\raphael.min.js">
+    <Content Include="admin\assets\images\flags\gp.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\vendor\select2.full.min.js">
+    <Content Include="admin\assets\images\flags\gq.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\vendor\simplebar.css">
+    <Content Include="admin\assets\images\flags\gr.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\vendor\simplebar.js">
+    <Content Include="admin\assets\images\flags\gs.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\vendor\summernote-bs4.min.js">
+    <Content Include="admin\assets\images\flags\gt.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\gu.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\gw.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\gy.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\hk.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\hm.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\hn.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\hr.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\ht.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\hu.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\id.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\ie.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\il.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\im.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\in.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\io.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\iq.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\ir.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\is.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\it.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\je.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\jm.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\jo.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\jp.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\ke.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\kg.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\kh.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\ki.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\km.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\kn.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\kp.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\kr.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\kw.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\ky.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\kz.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\la.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\lb.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\lc.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\li.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\lk.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\lr.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\ls.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\lt.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\lu.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\lv.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\ly.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\ma.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\mc.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\md.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\me.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\mf.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\mg.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\mh.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\mk.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\ml.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\mm.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\mn.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\mo.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\mp.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\mq.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\mr.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\ms.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\mt.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\mu.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\mv.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\mw.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\mx.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\my.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\mz.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\na.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\nc.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\ne.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\nf.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\ng.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\ni.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\nl.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\no.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\np.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\nr.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\nu.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\nz.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\om.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\pa.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\pe.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\pf.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\pg.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\ph.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\pk.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\pl.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\pm.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\pn.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\pr.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\ps.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\pt.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\pw.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\py.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\qa.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\re.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\ro.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\rs.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\ru.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\rw.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\sa.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\sb.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\sc.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\sd.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\se.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\sg.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\sh.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\si.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\sj.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\sk.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\sl.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\sm.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\sn.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\so.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\sr.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\ss.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\st.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\sv.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\sx.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\sy.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\sz.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\tc.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\td.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\tf.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\tg.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\th.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\tj.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\tk.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\tl.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\tm.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\tn.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\to.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\tr.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\tt.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\tv.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\tw.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\tz.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\ua.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\ug.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\um.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\un.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\us.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\uy.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\uz.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\va.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\vc.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\ve.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\vg.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\vi.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\vn.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\vu.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\wf.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\ws.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\ye.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\yt.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\za.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\zm.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\flags\zw.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\2checkout-dark.svg" />
+    <Content Include="admin\assets\images\payments\2checkout.svg" />
+    <Content Include="admin\assets\images\payments\alipay-dark.svg" />
+    <Content Include="admin\assets\images\payments\alipay.svg" />
+    <Content Include="admin\assets\images\payments\amazon-dark.svg" />
+    <Content Include="admin\assets\images\payments\amazon.svg" />
+    <Content Include="admin\assets\images\payments\americanexpress-dark.svg" />
+    <Content Include="admin\assets\images\payments\americanexpress.svg" />
+    <Content Include="admin\assets\images\payments\applepay-dark.svg" />
+    <Content Include="admin\assets\images\payments\applepay.svg" />
+    <Content Include="admin\assets\images\payments\bancontact-dark.svg" />
+    <Content Include="admin\assets\images\payments\bancontact.svg" />
+    <Content Include="admin\assets\images\payments\bitcoin-dark.svg" />
+    <Content Include="admin\assets\images\payments\bitcoin.svg" />
+    <Content Include="admin\assets\images\payments\bitpay-dark.svg" />
+    <Content Include="admin\assets\images\payments\bitpay.svg" />
+    <Content Include="admin\assets\images\payments\cirrus-dark.svg" />
+    <Content Include="admin\assets\images\payments\cirrus.svg" />
+    <Content Include="admin\assets\images\payments\clickandbuy-dark.svg" />
+    <Content Include="admin\assets\images\payments\clickandbuy.svg" />
+    <Content Include="admin\assets\images\payments\coinkite-dark.svg" />
+    <Content Include="admin\assets\images\payments\coinkite.svg" />
+    <Content Include="admin\assets\images\payments\dinersclub-dark.svg" />
+    <Content Include="admin\assets\images\payments\dinersclub.svg" />
+    <Content Include="admin\assets\images\payments\directdebit-dark.svg" />
+    <Content Include="admin\assets\images\payments\directdebit.svg" />
+    <Content Include="admin\assets\images\payments\discover-dark.svg" />
+    <Content Include="admin\assets\images\payments\discover.svg" />
+    <Content Include="admin\assets\images\payments\dwolla-dark.svg" />
+    <Content Include="admin\assets\images\payments\dwolla.svg" />
+    <Content Include="admin\assets\images\payments\ebay-dark.svg" />
+    <Content Include="admin\assets\images\payments\ebay.svg" />
+    <Content Include="admin\assets\images\payments\eway-dark.svg" />
+    <Content Include="admin\assets\images\payments\eway.svg" />
+    <Content Include="admin\assets\images\payments\giropay-dark.svg" />
+    <Content Include="admin\assets\images\payments\giropay.svg" />
+    <Content Include="admin\assets\images\payments\googlewallet-dark.svg" />
+    <Content Include="admin\assets\images\payments\googlewallet.svg" />
+    <Content Include="admin\assets\images\payments\ingenico-dark.svg" />
+    <Content Include="admin\assets\images\payments\ingenico.svg" />
+    <Content Include="admin\assets\images\payments\jcb-dark.svg" />
+    <Content Include="admin\assets\images\payments\jcb.svg" />
+    <Content Include="admin\assets\images\payments\klarna-dark.svg" />
+    <Content Include="admin\assets\images\payments\klarna.svg" />
+    <Content Include="admin\assets\images\payments\laser-dark.svg" />
+    <Content Include="admin\assets\images\payments\laser.svg" />
+    <Content Include="admin\assets\images\payments\maestro-dark.svg" />
+    <Content Include="admin\assets\images\payments\maestro.svg" />
+    <Content Include="admin\assets\images\payments\mastercard-dark.svg" />
+    <Content Include="admin\assets\images\payments\mastercard.svg" />
+    <Content Include="admin\assets\images\payments\monero-dark.svg" />
+    <Content Include="admin\assets\images\payments\monero.svg" />
+    <Content Include="admin\assets\images\payments\neteller-dark.svg" />
+    <Content Include="admin\assets\images\payments\neteller.svg" />
+    <Content Include="admin\assets\images\payments\ogone-dark.svg" />
+    <Content Include="admin\assets\images\payments\ogone.svg" />
+    <Content Include="admin\assets\images\payments\okpay-dark.svg" />
+    <Content Include="admin\assets\images\payments\okpay.svg" />
+    <Content Include="admin\assets\images\payments\paybox-dark.svg" />
+    <Content Include="admin\assets\images\payments\paybox.svg" />
+    <Content Include="admin\assets\images\payments\paymill-dark.svg" />
+    <Content Include="admin\assets\images\payments\paymill.svg" />
+    <Content Include="admin\assets\images\payments\payone-dark.svg" />
+    <Content Include="admin\assets\images\payments\payone.svg" />
+    <Content Include="admin\assets\images\payments\payoneer-dark.svg" />
+    <Content Include="admin\assets\images\payments\payoneer.svg" />
+    <Content Include="admin\assets\images\payments\paypal-dark.svg" />
+    <Content Include="admin\assets\images\payments\paypal.svg" />
+    <Content Include="admin\assets\images\payments\paysafecard-dark.svg" />
+    <Content Include="admin\assets\images\payments\paysafecard.svg" />
+    <Content Include="admin\assets\images\payments\payu-dark.svg" />
+    <Content Include="admin\assets\images\payments\payu.svg" />
+    <Content Include="admin\assets\images\payments\payza-dark.svg" />
+    <Content Include="admin\assets\images\payments\payza.svg" />
+    <Content Include="admin\assets\images\payments\ripple-dark.svg" />
+    <Content Include="admin\assets\images\payments\ripple.svg" />
+    <Content Include="admin\assets\images\payments\sage-dark.svg" />
+    <Content Include="admin\assets\images\payments\sage.svg" />
+    <Content Include="admin\assets\images\payments\sepa-dark.svg" />
+    <Content Include="admin\assets\images\payments\sepa.svg" />
+    <Content Include="admin\assets\images\payments\shopify-dark.svg" />
+    <Content Include="admin\assets\images\payments\shopify.svg" />
+    <Content Include="admin\assets\images\payments\skrill-dark.svg" />
+    <Content Include="admin\assets\images\payments\skrill.svg" />
+    <Content Include="admin\assets\images\payments\solo-dark.svg" />
+    <Content Include="admin\assets\images\payments\solo.svg" />
+    <Content Include="admin\assets\images\payments\square-dark.svg" />
+    <Content Include="admin\assets\images\payments\square.svg" />
+    <Content Include="admin\assets\images\payments\stripe-dark.svg" />
+    <Content Include="admin\assets\images\payments\stripe.svg" />
+    <Content Include="admin\assets\images\payments\switch-dark.svg" />
+    <Content Include="admin\assets\images\payments\switch.svg" />
+    <Content Include="admin\assets\images\payments\ukash-dark.svg" />
+    <Content Include="admin\assets\images\payments\ukash.svg" />
+    <Content Include="admin\assets\images\payments\unionpay-dark.svg" />
+    <Content Include="admin\assets\images\payments\unionpay.svg" />
+    <Content Include="admin\assets\images\payments\verifone-dark.svg" />
+    <Content Include="admin\assets\images\payments\verifone.svg" />
+    <Content Include="admin\assets\images\payments\verisign-dark.svg" />
+    <Content Include="admin\assets\images\payments\verisign.svg" />
+    <Content Include="admin\assets\images\payments\visa-dark.svg" />
+    <Content Include="admin\assets\images\payments\visa.svg" />
+    <Content Include="admin\assets\images\payments\webmoney-dark.svg" />
+    <Content Include="admin\assets\images\payments\webmoney.svg" />
+    <Content Include="admin\assets\images\payments\westernunion-dark.svg" />
+    <Content Include="admin\assets\images\payments\westernunion.svg" />
+    <Content Include="admin\assets\images\payments\worldpay-dark.svg" />
+    <Content Include="admin\assets\images\payments\worldpay.svg" />
+    <Content Include="admin\assets\js\core.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\js\dashboard.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\js\require.min.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\js\vendors\bootstrap.bundle.min.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\js\vendors\chart.bundle.min.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\js\vendors\circle-progress.min.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\js\vendors\jquery-3.2.1.min.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\js\vendors\jquery-3.2.1.slim.min.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\js\vendors\jquery-jvectormap-2.0.3.min.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\js\vendors\jquery-jvectormap-de-merc.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\js\vendors\jquery-jvectormap-world-mill.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\js\vendors\jquery.sparkline.min.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\js\vendors\jquery.tablesorter.min.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\js\vendors\selectize.min.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\plugins\charts-c3\js\c3.min.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\plugins\charts-c3\js\d3.v3.min.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\plugins\charts-c3\plugin.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\plugins\charts-c3\plugin.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\plugins\datatables\DataTables-1.10.16\css\dataTables.bootstrap.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\plugins\datatables\DataTables-1.10.16\css\dataTables.bootstrap.min.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\plugins\datatables\DataTables-1.10.16\css\dataTables.bootstrap4.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\plugins\datatables\DataTables-1.10.16\css\dataTables.bootstrap4.min.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\plugins\datatables\DataTables-1.10.16\css\dataTables.foundation.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\plugins\datatables\DataTables-1.10.16\css\dataTables.foundation.min.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\plugins\datatables\DataTables-1.10.16\css\dataTables.jqueryui.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\plugins\datatables\DataTables-1.10.16\css\dataTables.jqueryui.min.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\plugins\datatables\DataTables-1.10.16\css\dataTables.semanticui.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\plugins\datatables\DataTables-1.10.16\css\dataTables.semanticui.min.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\plugins\datatables\DataTables-1.10.16\css\jquery.dataTables.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\plugins\datatables\DataTables-1.10.16\css\jquery.dataTables.min.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\plugins\datatables\DataTables-1.10.16\images\sort_asc.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\plugins\datatables\DataTables-1.10.16\images\sort_asc_disabled.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\plugins\datatables\DataTables-1.10.16\images\sort_both.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\plugins\datatables\DataTables-1.10.16\images\sort_desc.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\plugins\datatables\DataTables-1.10.16\images\sort_desc_disabled.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\plugins\datatables\DataTables-1.10.16\js\dataTables.bootstrap.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\plugins\datatables\DataTables-1.10.16\js\dataTables.bootstrap.min.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\plugins\datatables\DataTables-1.10.16\js\dataTables.bootstrap4.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\plugins\datatables\DataTables-1.10.16\js\dataTables.bootstrap4.min.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\plugins\datatables\DataTables-1.10.16\js\dataTables.foundation.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\plugins\datatables\DataTables-1.10.16\js\dataTables.foundation.min.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\plugins\datatables\DataTables-1.10.16\js\dataTables.jqueryui.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\plugins\datatables\DataTables-1.10.16\js\dataTables.jqueryui.min.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\plugins\datatables\DataTables-1.10.16\js\dataTables.semanticui.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\plugins\datatables\DataTables-1.10.16\js\dataTables.semanticui.min.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\plugins\datatables\DataTables-1.10.16\js\jquery.dataTables.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\plugins\datatables\DataTables-1.10.16\js\jquery.dataTables.min.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\plugins\datatables\datatables.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\plugins\datatables\datatables.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\plugins\datatables\datatables.min.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\plugins\datatables\datatables.min.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\plugins\datatables\plugin.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\plugins\fullcalendar\js\fullcalendar.min.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\plugins\fullcalendar\js\moment.min.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\plugins\fullcalendar\plugin.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\plugins\fullcalendar\plugin.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\plugins\iconfonts\fonts\materialdesignicons\materialdesignicons-webfont.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\plugins\iconfonts\fonts\simple-line-icons\Simple-Line-Icons.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\plugins\iconfonts\fonts\themify\themify.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\plugins\iconfonts\fonts\weathericons\weathericons-regular-webfont.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\plugins\iconfonts\plugin.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\plugins\input-mask\js\jquery.mask.min.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\plugins\input-mask\plugin.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\plugins\maps-google\plugin.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\plugins\maps-google\plugin.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\plugins\prismjs\js\prism.pack.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\plugins\prismjs\plugin.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\plugins\prismjs\plugin.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\blog.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\cards.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\carousel.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="admin\charts.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\checkboxes-radios.html">
+    <Content Include="admin\crypto-currencies.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\choose.html">
+    <Content Include="admin\demo\brand\tabler%401x.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\custom-forms.html">
+    <Content Include="admin\demo\brand\tabler%402x.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\datepicker.html">
+    <Content Include="admin\demo\brand\tabler.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\events-calendar.html">
+    <Content Include="admin\demo\card-demo.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\fixed-index.html">
+    <Content Include="admin\demo\faces\female\1.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\faces\female\10.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\faces\female\11.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\faces\female\12.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\faces\female\13.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\faces\female\14.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\faces\female\15.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\faces\female\16.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\faces\female\17.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\faces\female\18.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\faces\female\19.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\faces\female\2.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\faces\female\20.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\faces\female\21.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\faces\female\22.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\faces\female\23.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\faces\female\24.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\faces\female\25.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\faces\female\26.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\faces\female\27.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\faces\female\28.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\faces\female\29.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\faces\female\3.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\faces\female\30.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\faces\female\31.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\faces\female\32.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\faces\female\4.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\faces\female\5.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\faces\female\6.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\faces\female\7.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\faces\female\8.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\faces\female\9.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\faces\male\1.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\faces\male\10.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\faces\male\11.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\faces\male\12.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\faces\male\13.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\faces\male\14.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\faces\male\15.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\faces\male\16.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\faces\male\17.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\faces\male\18.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\faces\male\2.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\faces\male\20.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\faces\male\21.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\faces\male\24.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\faces\male\25.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\faces\male\26.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\faces\male\27.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\faces\male\28.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\faces\male\29.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\faces\male\3.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\faces\male\30.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\faces\male\31.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\faces\male\32.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\faces\male\33.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\faces\male\34.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\faces\male\35.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\faces\male\36.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\faces\male\37.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\faces\male\38.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\faces\male\39.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\faces\male\4.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\faces\male\40.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\faces\male\41.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\faces\male\42.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\faces\male\43.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\faces\male\5.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\faces\male\6.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\faces\male\7.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\faces\male\8.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\faces\male\9.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\logo.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\adrian-infernus-281832-1500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\adrian-infernus-281832-500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\ales-krivec-107499-1500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\ales-krivec-107499-500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\alex-bertha-316137-1500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\alex-bertha-316137-500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\anders-jilden-307322-1500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\anders-jilden-307322-500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\andrew-neel-141710-1500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\andrew-neel-141710-500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\aneta-ivanova-776-1500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\aneta-ivanova-776-500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\anthony-intraversato-257182-1500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\anthony-intraversato-257182-500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\artem-sapegin-229391-1500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\artem-sapegin-229391-500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\bobby-burch-145906-1500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\bobby-burch-145906-500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\casey-horner-339165-1500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\casey-horner-339165-500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\christian-joudrey-96208-1500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\christian-joudrey-96208-500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\christoph-bengtsson-lissalde-80291-1500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\christoph-bengtsson-lissalde-80291-500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\clarisse-meyer-122804-1500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\clarisse-meyer-122804-500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\cristina-gottardi-259243-1500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\cristina-gottardi-259243-500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\david-klaasen-54203-1500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\david-klaasen-54203-500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\david-marcu-114194-1500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\david-marcu-114194-500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\davide-cantelli-139887-1500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\davide-cantelli-139887-500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\dino-reichmuth-84359-1500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\dino-reichmuth-84359-500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\eberhard-grossgasteiger-311213-1500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\eberhard-grossgasteiger-311213-500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\geran-de-klerk-290418-1500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\geran-de-klerk-290418-500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\grant-ritchie-338179-1500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\grant-ritchie-338179-500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\ilnur-kalimullin-218996-1500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\ilnur-kalimullin-218996-500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\jakob-owens-224352-1500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\jakob-owens-224352-500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\jeremy-bishop-330225-1500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\jeremy-bishop-330225-500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\jonatan-pie-226191-1500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\jonatan-pie-226191-500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\josh-calabrese-66153-1500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\josh-calabrese-66153-500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\joshua-earle-157231-1500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\joshua-earle-157231-500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\mahkeo-222765-1500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\mahkeo-222765-500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\matt-barrett-339981-1500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\matt-barrett-339981-500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\nathan-anderson-297460-1500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\nathan-anderson-297460-500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\nathan-anderson-316188-1500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\nathan-anderson-316188-500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\nathan-dumlao-287713-1500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\nathan-dumlao-287713-500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\nicolas-picard-208276-1500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\nicolas-picard-208276-500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\oskar-vertetics-53043-1500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\oskar-vertetics-53043-500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\priscilla-du-preez-181896-1500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\priscilla-du-preez-181896-500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\ricardo-gomez-angel-262359-1500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\ricardo-gomez-angel-262359-500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\sam-ferrara-136526-1500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\sam-ferrara-136526-500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\sean-afnan-244576-1500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\sean-afnan-244576-500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\sophie-higginbottom-133982-1500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\sophie-higginbottom-133982-500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\stefan-kunze-26932-1500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\stefan-kunze-26932-500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\stefan-stefancik-105376-1500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\stefan-stefancik-105376-500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\sweet-ice-cream-photography-143023-1500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\sweet-ice-cream-photography-143023-500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\tatyana-dobreva-288463-1500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\tatyana-dobreva-288463-500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\teddy-kelley-109202-1500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\teddy-kelley-109202-500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\tim-bogdanov-97988-1500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\tim-bogdanov-97988-500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\tim-marshall-173957-1500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\tim-marshall-173957-500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\tom-barrett-318952-1500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\tom-barrett-318952-500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\vladimir-kudinov-12761-1500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\vladimir-kudinov-12761-500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\web-agency-29200-1500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\web-agency-29200-500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\wil-stewart-18242-1500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\photos\wil-stewart-18242-500.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\products\apple-iphone7-special.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\products\apple-iphone7.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\products\apple-macbook-pro.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\products\gopro-hero.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\products\huawei-mate.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\products\lenovo-tab.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\products\lg-g6.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\products\msi.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\products\samsung-galaxy.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\products\sony-kd.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\products\xiaomi-mi.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\staticmap.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\teams\fc-barcelona.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\teams\real-madrid.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\docs.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\docs\alerts.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\docs\avatars.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\docs\buttons.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\docs\cards.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\docs\charts.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\docs\colors.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\docs\form-components.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\docs\grid.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\docs\index.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\docs\tags.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\docs\typography.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\email.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\empty.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\favicon.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="admin\forgot-password.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\form-controls.html">
+    <Content Include="admin\form-elements.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\form-layout.html">
+    <Content Include="admin\gallery.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\index-second.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\index-third.html">
+    <Content Include="admin\icons.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="admin\index.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="admin\invoice.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="admin\login.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\lookup.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="admin\maps.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="admin\pagination.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\pricing-cards.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="admin\profile.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\projects.html">
+    <Content Include="admin\register.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\property.html">
+    <Content Include="admin\rtl.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\purchase-order.html">
+    <Content Include="admin\sample-cards.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\real-estate-grid.html">
+    <Content Include="admin\store.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\real-estate-list.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\retail.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\rtl-account.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\rtl-charts.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\rtl-checkboxes-radios.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\rtl-custom-forms.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\rtl-datepicker.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\rtl-events-calendar.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\rtl-fixed-index.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\rtl-forgot-password.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\rtl-form-controls.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\rtl-form-layout.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\rtl-index-second.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\rtl-index-third.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\rtl-index.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\rtl-login.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\rtl-maps.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\rtl-profile.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\rtl-projects.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\rtl-property.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\rtl-purchase-order.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\rtl-real-estate-grid.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\rtl-real-estate-list.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\rtl-retail.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\rtl-signup.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\rtl-switches-toggles.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\rtl-text-editor.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\rtl-ui-buttons.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\rtl-ui-colors.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\rtl-ui-drag-drop.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\rtl-ui-grid.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\rtl-ui-icons.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\rtl-ui-loaders.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\rtl-ui-navs.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\rtl-ui-notifications.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\rtl-ui-tables.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\rtl-ui-typography.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\rtl-validation.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\signup.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\switches-toggles.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\text-editor.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\ui-buttons.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\ui-colors.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\ui-drag-drop.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\ui-grid.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\ui-icons.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\ui-loaders.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\ui-navs.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\ui-notifications.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\ui-tables.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\ui-typography.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\validation.html">
+    <Content Include="admin\users-list.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <None Include="admin\assets\fonts\material-icons\MaterialIcons-Regular.eot">
+    <Content Include="admin\assets\fonts\feather\feather-webfont.eot">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="admin\assets\fonts\material-icons\MaterialIcons-Regular.ttf">
+    </Content>
+    <Content Include="admin\assets\fonts\feather\feather-webfont.ttf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="admin\assets\fonts\material-icons\MaterialIcons-Regular.woff">
+    </Content>
+    <Content Include="admin\assets\fonts\feather\feather-webfont.woff">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="admin\assets\fonts\material-icons\MaterialIcons-Regular.woff2">
+    </Content>
+    <Content Include="admin\assets\plugins\iconfonts\fonts\materialdesignicons\materialdesignicons-webfont.eot">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="admin\assets\fonts\summernote\summernote.eot">
+    </Content>
+    <Content Include="admin\assets\plugins\iconfonts\fonts\materialdesignicons\materialdesignicons-webfont.ttf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="admin\assets\fonts\summernote\summernote.ttf">
+    </Content>
+    <Content Include="admin\assets\plugins\iconfonts\fonts\materialdesignicons\materialdesignicons-webfont.woff">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="admin\assets\fonts\summernote\summernote.woff">
+    </Content>
+    <Content Include="admin\assets\plugins\iconfonts\fonts\materialdesignicons\materialdesignicons-webfont.woff2">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <Content Include="admin\assets\vendor\simplebar.js.map">
+    </Content>
+    <Content Include="admin\assets\plugins\iconfonts\fonts\simple-line-icons\Simple-Line-Icons.eot">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\plugins\iconfonts\fonts\simple-line-icons\Simple-Line-Icons.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\plugins\iconfonts\fonts\simple-line-icons\Simple-Line-Icons.woff">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\plugins\iconfonts\fonts\simple-line-icons\Simple-Line-Icons.woff2">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\plugins\iconfonts\fonts\themify\themify.eot">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\plugins\iconfonts\fonts\themify\themify.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\plugins\iconfonts\fonts\themify\themify.woff">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\plugins\iconfonts\fonts\weathericons\weathericons-regular-webfont.eot">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\plugins\iconfonts\fonts\weathericons\weathericons-regular-webfont.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\plugins\iconfonts\fonts\weathericons\weathericons-regular-webfont.woff">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\plugins\iconfonts\fonts\weathericons\weathericons-regular-webfont.woff2">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\CNAME">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\demo\brand\tabler.sketch">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
