@@ -1,15 +1,11 @@
-﻿using System;
-using Mozi.HttpEmbedded.Auth;
+﻿using Mozi.HttpEmbedded.Auth;
 using Mozi.HttpEmbedded.Page;
+using System;
 
-namespace Mozi.HttpEmbedded
+namespace Mozi.HttpEmbedded.Test
 {
-    static class Program
+    class Program
     {
-        /// <summary>
-        /// 入口点
-        /// </summary>
-        /// <param name="args"></param>
         static void Main(string[] args)
         {
             HttpServer hs = new HttpServer();
