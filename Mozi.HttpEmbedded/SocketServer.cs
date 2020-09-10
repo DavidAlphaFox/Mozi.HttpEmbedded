@@ -39,7 +39,7 @@ namespace Mozi.HttpEmbedded
         /// <summary>
         /// 端口
         /// </summary>
-        public int Port 
+        public int Port
         {
             get { return _iPort; }
         }
