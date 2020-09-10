@@ -78,6 +78,16 @@
     <Content Include="admin\assets\fonts\feather\feather-webfont.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="admin\assets\fonts\font-awesome\4.7.0\css\font-awesome.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\fonts\font-awesome\4.7.0\css\font-awesome.min.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\fonts\font-awesome\4.7.0\fonts\fontawesome-webfont.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\fonts\font-awesome\4.7.0\HELP-US-OUT.txt" />
     <Content Include="admin\assets\images\browsers\android-browser.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -921,114 +931,330 @@
     <Content Include="admin\assets\images\flags\zw.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\images\payments\2checkout-dark.svg" />
-    <Content Include="admin\assets\images\payments\2checkout.svg" />
-    <Content Include="admin\assets\images\payments\alipay-dark.svg" />
-    <Content Include="admin\assets\images\payments\alipay.svg" />
-    <Content Include="admin\assets\images\payments\amazon-dark.svg" />
-    <Content Include="admin\assets\images\payments\amazon.svg" />
-    <Content Include="admin\assets\images\payments\americanexpress-dark.svg" />
-    <Content Include="admin\assets\images\payments\americanexpress.svg" />
-    <Content Include="admin\assets\images\payments\applepay-dark.svg" />
-    <Content Include="admin\assets\images\payments\applepay.svg" />
-    <Content Include="admin\assets\images\payments\bancontact-dark.svg" />
-    <Content Include="admin\assets\images\payments\bancontact.svg" />
-    <Content Include="admin\assets\images\payments\bitcoin-dark.svg" />
-    <Content Include="admin\assets\images\payments\bitcoin.svg" />
-    <Content Include="admin\assets\images\payments\bitpay-dark.svg" />
-    <Content Include="admin\assets\images\payments\bitpay.svg" />
-    <Content Include="admin\assets\images\payments\cirrus-dark.svg" />
-    <Content Include="admin\assets\images\payments\cirrus.svg" />
-    <Content Include="admin\assets\images\payments\clickandbuy-dark.svg" />
-    <Content Include="admin\assets\images\payments\clickandbuy.svg" />
-    <Content Include="admin\assets\images\payments\coinkite-dark.svg" />
-    <Content Include="admin\assets\images\payments\coinkite.svg" />
-    <Content Include="admin\assets\images\payments\dinersclub-dark.svg" />
-    <Content Include="admin\assets\images\payments\dinersclub.svg" />
-    <Content Include="admin\assets\images\payments\directdebit-dark.svg" />
-    <Content Include="admin\assets\images\payments\directdebit.svg" />
-    <Content Include="admin\assets\images\payments\discover-dark.svg" />
-    <Content Include="admin\assets\images\payments\discover.svg" />
-    <Content Include="admin\assets\images\payments\dwolla-dark.svg" />
-    <Content Include="admin\assets\images\payments\dwolla.svg" />
-    <Content Include="admin\assets\images\payments\ebay-dark.svg" />
-    <Content Include="admin\assets\images\payments\ebay.svg" />
-    <Content Include="admin\assets\images\payments\eway-dark.svg" />
-    <Content Include="admin\assets\images\payments\eway.svg" />
-    <Content Include="admin\assets\images\payments\giropay-dark.svg" />
-    <Content Include="admin\assets\images\payments\giropay.svg" />
-    <Content Include="admin\assets\images\payments\googlewallet-dark.svg" />
-    <Content Include="admin\assets\images\payments\googlewallet.svg" />
-    <Content Include="admin\assets\images\payments\ingenico-dark.svg" />
-    <Content Include="admin\assets\images\payments\ingenico.svg" />
-    <Content Include="admin\assets\images\payments\jcb-dark.svg" />
-    <Content Include="admin\assets\images\payments\jcb.svg" />
-    <Content Include="admin\assets\images\payments\klarna-dark.svg" />
-    <Content Include="admin\assets\images\payments\klarna.svg" />
-    <Content Include="admin\assets\images\payments\laser-dark.svg" />
-    <Content Include="admin\assets\images\payments\laser.svg" />
-    <Content Include="admin\assets\images\payments\maestro-dark.svg" />
-    <Content Include="admin\assets\images\payments\maestro.svg" />
-    <Content Include="admin\assets\images\payments\mastercard-dark.svg" />
-    <Content Include="admin\assets\images\payments\mastercard.svg" />
-    <Content Include="admin\assets\images\payments\monero-dark.svg" />
-    <Content Include="admin\assets\images\payments\monero.svg" />
-    <Content Include="admin\assets\images\payments\neteller-dark.svg" />
-    <Content Include="admin\assets\images\payments\neteller.svg" />
-    <Content Include="admin\assets\images\payments\ogone-dark.svg" />
-    <Content Include="admin\assets\images\payments\ogone.svg" />
-    <Content Include="admin\assets\images\payments\okpay-dark.svg" />
-    <Content Include="admin\assets\images\payments\okpay.svg" />
-    <Content Include="admin\assets\images\payments\paybox-dark.svg" />
-    <Content Include="admin\assets\images\payments\paybox.svg" />
-    <Content Include="admin\assets\images\payments\paymill-dark.svg" />
-    <Content Include="admin\assets\images\payments\paymill.svg" />
-    <Content Include="admin\assets\images\payments\payone-dark.svg" />
-    <Content Include="admin\assets\images\payments\payone.svg" />
-    <Content Include="admin\assets\images\payments\payoneer-dark.svg" />
-    <Content Include="admin\assets\images\payments\payoneer.svg" />
-    <Content Include="admin\assets\images\payments\paypal-dark.svg" />
-    <Content Include="admin\assets\images\payments\paypal.svg" />
-    <Content Include="admin\assets\images\payments\paysafecard-dark.svg" />
-    <Content Include="admin\assets\images\payments\paysafecard.svg" />
-    <Content Include="admin\assets\images\payments\payu-dark.svg" />
-    <Content Include="admin\assets\images\payments\payu.svg" />
-    <Content Include="admin\assets\images\payments\payza-dark.svg" />
-    <Content Include="admin\assets\images\payments\payza.svg" />
-    <Content Include="admin\assets\images\payments\ripple-dark.svg" />
-    <Content Include="admin\assets\images\payments\ripple.svg" />
-    <Content Include="admin\assets\images\payments\sage-dark.svg" />
-    <Content Include="admin\assets\images\payments\sage.svg" />
-    <Content Include="admin\assets\images\payments\sepa-dark.svg" />
-    <Content Include="admin\assets\images\payments\sepa.svg" />
-    <Content Include="admin\assets\images\payments\shopify-dark.svg" />
-    <Content Include="admin\assets\images\payments\shopify.svg" />
-    <Content Include="admin\assets\images\payments\skrill-dark.svg" />
-    <Content Include="admin\assets\images\payments\skrill.svg" />
-    <Content Include="admin\assets\images\payments\solo-dark.svg" />
-    <Content Include="admin\assets\images\payments\solo.svg" />
-    <Content Include="admin\assets\images\payments\square-dark.svg" />
-    <Content Include="admin\assets\images\payments\square.svg" />
-    <Content Include="admin\assets\images\payments\stripe-dark.svg" />
-    <Content Include="admin\assets\images\payments\stripe.svg" />
-    <Content Include="admin\assets\images\payments\switch-dark.svg" />
-    <Content Include="admin\assets\images\payments\switch.svg" />
-    <Content Include="admin\assets\images\payments\ukash-dark.svg" />
-    <Content Include="admin\assets\images\payments\ukash.svg" />
-    <Content Include="admin\assets\images\payments\unionpay-dark.svg" />
-    <Content Include="admin\assets\images\payments\unionpay.svg" />
-    <Content Include="admin\assets\images\payments\verifone-dark.svg" />
-    <Content Include="admin\assets\images\payments\verifone.svg" />
-    <Content Include="admin\assets\images\payments\verisign-dark.svg" />
-    <Content Include="admin\assets\images\payments\verisign.svg" />
-    <Content Include="admin\assets\images\payments\visa-dark.svg" />
-    <Content Include="admin\assets\images\payments\visa.svg" />
-    <Content Include="admin\assets\images\payments\webmoney-dark.svg" />
-    <Content Include="admin\assets\images\payments\webmoney.svg" />
-    <Content Include="admin\assets\images\payments\westernunion-dark.svg" />
-    <Content Include="admin\assets\images\payments\westernunion.svg" />
-    <Content Include="admin\assets\images\payments\worldpay-dark.svg" />
-    <Content Include="admin\assets\images\payments\worldpay.svg" />
+    <Content Include="admin\assets\images\payments\2checkout-dark.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\2checkout.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\alipay-dark.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\alipay.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\amazon-dark.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\amazon.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\americanexpress-dark.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\americanexpress.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\applepay-dark.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\applepay.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\bancontact-dark.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\bancontact.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\bitcoin-dark.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\bitcoin.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\bitpay-dark.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\bitpay.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\cirrus-dark.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\cirrus.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\clickandbuy-dark.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\clickandbuy.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\coinkite-dark.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\coinkite.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\dinersclub-dark.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\dinersclub.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\directdebit-dark.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\directdebit.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\discover-dark.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\discover.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\dwolla-dark.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\dwolla.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\ebay-dark.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\ebay.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\eway-dark.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\eway.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\giropay-dark.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\giropay.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\googlewallet-dark.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\googlewallet.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\ingenico-dark.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\ingenico.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\jcb-dark.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\jcb.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\klarna-dark.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\klarna.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\laser-dark.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\laser.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\maestro-dark.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\maestro.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\mastercard-dark.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\mastercard.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\monero-dark.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\monero.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\neteller-dark.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\neteller.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\ogone-dark.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\ogone.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\okpay-dark.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\okpay.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\paybox-dark.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\paybox.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\paymill-dark.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\paymill.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\payone-dark.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\payone.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\payoneer-dark.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\payoneer.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\paypal-dark.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\paypal.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\paysafecard-dark.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\paysafecard.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\payu-dark.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\payu.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\payza-dark.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\payza.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\ripple-dark.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\ripple.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\sage-dark.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\sage.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\sepa-dark.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\sepa.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\shopify-dark.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\shopify.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\skrill-dark.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\skrill.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\solo-dark.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\solo.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\square-dark.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\square.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\stripe-dark.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\stripe.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\switch-dark.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\switch.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\ukash-dark.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\ukash.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\unionpay-dark.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\unionpay.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\verifone-dark.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\verifone.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\verisign-dark.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\verisign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\visa-dark.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\visa.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\webmoney-dark.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\webmoney.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\westernunion-dark.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\westernunion.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\worldpay-dark.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\images\payments\worldpay.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="admin\assets\js\core.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -1977,6 +2203,107 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="admin\demo\brand\tabler.sketch">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="admin\assets\fonts\font-awesome\4.7.0\fonts\fontawesome-webfont.eot">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\fonts\font-awesome\4.7.0\fonts\fontawesome-webfont.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\fonts\font-awesome\4.7.0\fonts\fontawesome-webfont.woff">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\fonts\font-awesome\4.7.0\fonts\fontawesome-webfont.woff2">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\fonts\font-awesome\4.7.0\fonts\FontAwesome.otf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\fonts\font-awesome\4.7.0\less\animated.less">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\fonts\font-awesome\4.7.0\less\bordered-pulled.less">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\fonts\font-awesome\4.7.0\less\core.less">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\fonts\font-awesome\4.7.0\less\fixed-width.less">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\fonts\font-awesome\4.7.0\less\font-awesome.less">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\fonts\font-awesome\4.7.0\less\icons.less">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\fonts\font-awesome\4.7.0\less\larger.less">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\fonts\font-awesome\4.7.0\less\list.less">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\fonts\font-awesome\4.7.0\less\mixins.less">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\fonts\font-awesome\4.7.0\less\path.less">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\fonts\font-awesome\4.7.0\less\rotated-flipped.less">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\fonts\font-awesome\4.7.0\less\screen-reader.less">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\fonts\font-awesome\4.7.0\less\stacked.less">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\fonts\font-awesome\4.7.0\less\variables.less">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\fonts\font-awesome\4.7.0\scss\font-awesome.scss">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\fonts\font-awesome\4.7.0\scss\_animated.scss">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\fonts\font-awesome\4.7.0\scss\_bordered-pulled.scss">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\fonts\font-awesome\4.7.0\scss\_core.scss">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\fonts\font-awesome\4.7.0\scss\_fixed-width.scss">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\fonts\font-awesome\4.7.0\scss\_icons.scss">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\fonts\font-awesome\4.7.0\scss\_larger.scss">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\fonts\font-awesome\4.7.0\scss\_list.scss">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\fonts\font-awesome\4.7.0\scss\_mixins.scss">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\fonts\font-awesome\4.7.0\scss\_path.scss">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\fonts\font-awesome\4.7.0\scss\_rotated-flipped.scss">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\fonts\font-awesome\4.7.0\scss\_screen-reader.scss">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\fonts\font-awesome\4.7.0\scss\_stacked.scss">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\fonts\font-awesome\4.7.0\scss\_variables.scss">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
