@@ -1,19 +1,26 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Threading;
 
 namespace Mozi.HttpEmbedded
 {
+    //TODO 加入定时器并利用POLL判断远端是否断开
+
     /// <summary>
     /// 异步单线程
     /// </summary>
     public class SocketServer
     {
         //private static SocketServer _mSocketServer;
+        
         private int _iPort = 9000;
-        private Dictionary<string,Socket> _socketDocker;
+        private int _maxListenCount = 10;
+
+        private ConcurrentDictionary<string,Socket> _socketDocker;
         private Socket _sc;
+
         /// <summary>
         /// 服务器启动事件
         /// </summary>
@@ -54,7 +61,7 @@ namespace Mozi.HttpEmbedded
 
         public SocketServer() 
         {
-            _socketDocker = new Dictionary<string, Socket>();
+            _socketDocker = new ConcurrentDictionary<string, Socket>();
         }
 
         //TODO 测试此处是否有BUG
@@ -75,7 +82,7 @@ namespace Mozi.HttpEmbedded
             }
             System.Net.IPEndPoint endpoint = new System.Net.IPEndPoint(System.Net.IPAddress.Any, _iPort);
             _sc.Bind(endpoint);
-            _sc.Listen(_iPort);            
+            _sc.Listen(_maxListenCount);            
             //回调服务器启动事件
             if (OnServerStart != null) 
             {
@@ -110,13 +117,14 @@ namespace Mozi.HttpEmbedded
         {
             Socket server = (Socket)iar.AsyncState;
             Socket client = server.EndAccept(iar);
-            
+            //接受新连接传入
             server.BeginAccept(CallbackAccept, server);
+
             if (OnClientConnect != null) 
             {
-                OnClientConnect(this, new ClientConnectArgs() { 
+                OnClientConnect.BeginInvoke(this, new ClientConnectArgs() { 
                     Client=client
-                });
+                },null,null);
             }
             StateObject so = new StateObject() 
             { 
@@ -125,13 +133,13 @@ namespace Mozi.HttpEmbedded
                 IP = ((System.Net.IPEndPoint)client.RemoteEndPoint).Address.ToString(),
                 RemotePort = ((System.Net.IPEndPoint)client.RemoteEndPoint).Port,
             };
-            _socketDocker.Add(so.Id, client);
+            _socketDocker.TryAdd(so.Id, client);
             try
             {
                 client.BeginReceive(so.Buffer, 0, StateObject.BufferSize, 0, CallbackReceive, so);
                 if (OnReceiveStart != null)
                 {
-                    OnReceiveStart(this, new DataTransferArgs());
+                    OnReceiveStart.BeginInvoke(this, new DataTransferArgs(), null, null);
                 }
             }
             catch(Exception ex)
@@ -159,52 +167,40 @@ namespace Mozi.HttpEmbedded
                         //Thread.Sleep(10);
                         client.BeginReceive(so.Buffer, 0, StateObject.BufferSize, 0, CallbackReceive, so);
                     }else{
-                        _socketDocker.Remove(so.Id);
-                        if (AfterReceiveEnd != null)
-                        {
-                            AfterReceiveEnd(this,
-                                new DataTransferArgs()
-                                {
-                                    Data = so.Data.ToArray(),
-                                    IP = so.IP,
-                                    Port = so.RemotePort,
-                                    Socket = so.WorkSocket
-                                });
-                        }
+                        InvokeAfterReceiveEnd(so, client);
                     }
                 }
-                else 
+                else
                 {
-                    _socketDocker.Remove(so.Id);
-                    if (AfterReceiveEnd != null)
-                    {
-                        AfterReceiveEnd(this,
-                            new DataTransferArgs()
-                            {
-                                Data = so.Data.ToArray(),
-                                IP = so.IP,
-                                Port = so.RemotePort,
-                                Socket = so.WorkSocket
-                            });
-                    }
+                    InvokeAfterReceiveEnd(so, client);
                 }
             }
             else 
             {
-                _socketDocker.Remove(so.Id);
-                if (AfterReceiveEnd != null)
-                {
-                    AfterReceiveEnd(this,
-                        new DataTransferArgs()
-                        {
-                            Data = so.Data.ToArray(),
-                            IP = so.IP,
-                            Port = so.RemotePort,
-                            Socket = so.WorkSocket
-                        });
-                }
-                client.Dispose();
+                InvokeAfterReceiveEnd(so, client);
             }
+        }
+        private void InvokeAfterReceiveEnd(StateObject so,Socket client)
+        { 
+            RemoveClientSocket(so);
+            if (AfterReceiveEnd != null)
+            {
+                AfterReceiveEnd(this,
+                    new DataTransferArgs()
+                    {
+                        Data = so.Data.ToArray(),
+                        IP = so.IP,
+                        Port = so.RemotePort,
+                        Socket = so.WorkSocket
+                 });
+            }
+        }
+        //TODO 此处开启Socket状态监听，对断开的链接进行关闭销毁
+        private void RemoveClientSocket(StateObject so)
+        {
+            Socket client;
+            _socketDocker.TryRemove(so.Id, out client);
+
         }
     }
 }

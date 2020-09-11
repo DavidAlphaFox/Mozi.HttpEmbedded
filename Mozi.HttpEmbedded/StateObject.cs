@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Sockets;
 using System.Text;
 
 namespace Mozi.HttpEmbedded
 {
     /// <summary>
-    /// TCP缓冲对象
+    /// 通讯缓冲对象
     /// </summary>
     class StateObject
     {
