@@ -8,7 +8,7 @@ namespace Mozi.HttpEmbedded.Generic
     /// </summary>
     public abstract class AbsClassEnum
     {
-        protected abstract String Tag { get; }
+        protected abstract string Tag { get; }
         /// <summary>
         /// 获取方法
         /// </summary>
@@ -20,7 +20,7 @@ namespace Mozi.HttpEmbedded.Generic
             FieldInfo[] pis = typeof(T).GetFields(BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Static);
             foreach (var info in pis)
             {
-                Object oc=info.GetValue(null);
+                object oc =info.GetValue(null);
                 if (oc != null)
                 {
                     if (((T)oc).Tag.Equals(name,StringComparison.OrdinalIgnoreCase))

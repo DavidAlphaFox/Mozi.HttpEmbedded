@@ -43,7 +43,7 @@ namespace Mozi.HttpEmbedded
         /// <param name="key"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public  TransformHeader Add(String key, String value)
+        public  TransformHeader Add(string key, string value)
         {
             if (HeaderData.ContainsKey(key))
             {
@@ -60,7 +60,7 @@ namespace Mozi.HttpEmbedded
         /// </summary>
         /// <param name="header"></param>
         /// <returns></returns>
-        public TransformHeader Add(HeaderProperty header,String value)
+        public TransformHeader Add(HeaderProperty header, string value)
         {
             Add(header.PropertyTag,value);
             return this;
@@ -74,7 +74,7 @@ namespace Mozi.HttpEmbedded
             List<byte> buffer=new List<byte>();
             foreach (var item in HeaderData)
             {
-                buffer.AddRange(Encoding.UTF8.GetBytes(String.Format("{0}: {1}",item.Key,item.Value)));
+                buffer.AddRange(Encoding.UTF8.GetBytes(string.Format("{0}: {1}",item.Key,item.Value)));
                 buffer.AddRange(Carriage);
             }
             return buffer.ToArray();

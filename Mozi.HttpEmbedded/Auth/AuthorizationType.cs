@@ -21,7 +21,7 @@ namespace Mozi.HttpEmbedded.Auth
 
         
 
-        public String Name
+        public string Name
         {
             get { return _name; }
             set { _name = value; }
@@ -32,7 +32,7 @@ namespace Mozi.HttpEmbedded.Auth
             get { return Name; }
         }
 
-        private AuthorizationType(String name)
+        private AuthorizationType(string name)
         {
             _name = name;
         }

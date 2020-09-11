@@ -22,32 +22,32 @@ namespace Mozi.HttpEmbedded
         /// <summary>
         /// 请求路径
         /// </summary>
-        public String Path { get; private set; }
+        public string Path { get; private set; }
         /// <summary>
         /// 查询字符串
         /// </summary>
-        public String QueryString { get; private set; }
+        public string QueryString { get; private set; }
         /// <summary>
         /// 查询 索引可忽略大小写
         /// </summary>
-        public Dictionary<String, String> Query = new Dictionary<string, string>(new StringCompareIgnoreCase());
+        public Dictionary<string, string> Query = new Dictionary<string, string>(new StringCompareIgnoreCase());
         /// <summary>
         /// POST 索引可忽略大小写
         /// </summary>
-        public Dictionary<String, String> Post = new Dictionary<string, string>(new StringCompareIgnoreCase()); 
+        public Dictionary<string, string> Post = new Dictionary<string, string>(new StringCompareIgnoreCase()); 
 
         /// <summary>
         /// 可接受压缩算法
         /// </summary>
-        public String AcceptEncoding { get; private set; }
+        public string AcceptEncoding { get; private set; }
         /// <summary>
         /// 源地址
         /// </summary>
-        public String Host { get; private set; }
+        public string Host { get; private set; }
         /// <summary>
         /// 客户端信息
         /// </summary>
-        public String UserAgent { get; private set; }
+        public string UserAgent { get; private set; }
         /// <summary>
         /// 请求方法
         /// </summary>
@@ -55,11 +55,11 @@ namespace Mozi.HttpEmbedded
         /// <summary>
         /// 内容类型
         /// </summary>
-        public String ContentType { get; private set; }        
+        public string ContentType { get; private set; }        
         /// <summary>
         /// 内容大小
         /// </summary>
-        public String ContentLength { get; private set; }
+        public string ContentLength { get; private set; }
         /// <summary>
         /// 请求头
         /// </summary>
@@ -75,7 +75,7 @@ namespace Mozi.HttpEmbedded
         /// <summary>
         /// 首行字符串
         /// </summary>
-        public String FirstLineString { get; private set; }
+        public string FirstLineString { get; private set; }
         /// <summary>
         /// 请求头数据
         /// </summary>
@@ -185,7 +185,7 @@ namespace Mozi.HttpEmbedded
         /// <param name="data"></param>
         private static void SplitPayload(ref HttpRequest req,byte[] data)
         {
-            String formType = req.Headers.GetValue(HeaderProperty.ContentType.PropertyTag);
+            string formType = req.Headers.GetValue(HeaderProperty.ContentType.PropertyTag);
             if (formType != null)
             {
                 if (formType.Contains("application/x-www-form-urlencoded"))
@@ -219,9 +219,9 @@ namespace Mozi.HttpEmbedded
         /// <param name="data"></param>
         private static void SplitPayloadFormData(ref HttpRequest req, byte[] data)
         {
-            String contentType=req.Headers.GetValue(HeaderProperty.ContentType.PropertyTag);
-            String boundary = "";
-            String[] values=contentType.Split(new[]{(char)ASCIICode.SEMICOLON}, StringSplitOptions.RemoveEmptyEntries);
+            string contentType =req.Headers.GetValue(HeaderProperty.ContentType.PropertyTag);
+            string boundary = "";
+            string[] values=contentType.Split(new[]{(char)ASCIICode.SEMICOLON}, StringSplitOptions.RemoveEmptyEntries);
 
             //取得分割符号boundary
 
@@ -279,8 +279,8 @@ namespace Mozi.HttpEmbedded
                         File file=new File();
                         bool isFile = false;
 
-                        String fieldName = String.Empty;
-                        String fileName = String.Empty;
+                        string fieldName = string.Empty;
+                        string fileName = string.Empty;
 
                         while (Array.IndexOf(fragbody, ASCIICode.CR, posCR + 1) > 0)
                         {
@@ -296,9 +296,9 @@ namespace Mozi.HttpEmbedded
                                 {
                                     //内容描述信息
                                     //Content-Disposition: form-data; name="fieldNameHere"; filename="fieldName.ext"
-                                    String disposition = StringEncoder.Decode(fragement);
-                                    
-                                    String[] headers = disposition.Split(new[] {(char) ASCIICode.SEMICOLON},StringSplitOptions.RemoveEmptyEntries);
+                                    string disposition = StringEncoder.Decode(fragement);
+
+                                    string[] headers = disposition.Split(new[] {(char) ASCIICode.SEMICOLON},StringSplitOptions.RemoveEmptyEntries);
                                     fieldName = headers[1].Trim().Replace("name=","").Trim((char)ASCIICode.QUOTE);
 
                                     if (headers.Length > 2)
@@ -399,15 +399,15 @@ namespace Mozi.HttpEmbedded
             //解析起始行
             req.FirstLineData = data;
             req.FirstLineString = Encoding.UTF8.GetString(data);
-            String[] sFirst = req.FirstLineString.Split(new[] { (char)ASCIICode.SPACE }, StringSplitOptions.None);
+            string[] sFirst = req.FirstLineString.Split(new[] { (char)ASCIICode.SPACE }, StringSplitOptions.None);
             //方法 查询 协议 
-            String sMethod = sFirst[0];
-            String sUrl = sFirst[1];
-            String sProtocol = sFirst[2];
+            string sMethod = sFirst[0];
+            string sUrl = sFirst[1];
+            string sProtocol = sFirst[2];
             RequestMethod rm = AbsClassEnum.Get<RequestMethod>(sMethod);
             req.Method = rm;
 
-            String[] urls = sUrl.Split(new[] { (char)ASCIICode.QUESTION }, StringSplitOptions.RemoveEmptyEntries);
+            string[] urls = sUrl.Split(new[] { (char)ASCIICode.QUESTION }, StringSplitOptions.RemoveEmptyEntries);
             req.Path = urls[0];
             if (urls.Length > 1)
             {
@@ -415,8 +415,8 @@ namespace Mozi.HttpEmbedded
                 req.Query = UrlEncoder.ParseQuery(urls[1]);
             }
 
-            String sProtoType = sProtocol.Substring(0, sProtocol.IndexOf((char)ASCIICode.DIVIDE));
-            String sProtoVersion = sProtocol.Substring(sProtocol.IndexOf((char)ASCIICode.DIVIDE) + 1);
+            string sProtoType = sProtocol.Substring(0, sProtocol.IndexOf((char)ASCIICode.DIVIDE));
+            string sProtoVersion = sProtocol.Substring(sProtocol.IndexOf((char)ASCIICode.DIVIDE) + 1);
             req.Protocol = AbsClassEnum.Get<ProtocolType>(sProtoType);
             req.ProtocolVersion = AbsClassEnum.Get<HttpVersion>(sProtoVersion);
         }

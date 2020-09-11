@@ -22,7 +22,7 @@ namespace Mozi.HttpEmbedded
 
         public int ContengLength = 0;
 
-        public String Server = "";
+        public string Server = "";
 
         /// <summary>
         /// 请求头
@@ -31,7 +31,7 @@ namespace Mozi.HttpEmbedded
         /// <summary>
         /// 压缩类型
         /// </summary>
-        public String ContentEncoding { get; set; }
+        public string ContentEncoding { get; set; }
         /// <summary>
         /// 请求数据体
         /// </summary>
@@ -68,7 +68,7 @@ namespace Mozi.HttpEmbedded
         /// </summary>
         /// <param name="head"></param>
         /// <returns></returns>
-        public HttpResponse AddHeader(HeaderProperty head,String value)
+        public HttpResponse AddHeader(HeaderProperty head, string value)
         {
             Headers.Add(head,value);
             return this;
@@ -79,7 +79,7 @@ namespace Mozi.HttpEmbedded
         /// <param name="item"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public HttpResponse AddHeader(String item,String value)
+        public HttpResponse AddHeader(string item, string value)
         {
             Headers.Add(item,value);
             return this;
@@ -106,7 +106,7 @@ namespace Mozi.HttpEmbedded
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        public HttpResponse Write(String data)
+        public HttpResponse Write(string data)
         {
             Write(StringEncoder.Encode(data));
             return this;
@@ -144,7 +144,7 @@ namespace Mozi.HttpEmbedded
         /// <returns></returns>
         public byte[] GetStatusLine()
         {
-            return StringEncoder.Encode(String.Format("HTTP/{0} {1} {2}", ProxyVersion.Version, Status.Code, Status.Text));
+            return StringEncoder.Encode(string.Format("HTTP/{0} {1} {2}", ProxyVersion.Version, Status.Code, Status.Text));
         }
         /// <summary>
         /// 重定向302

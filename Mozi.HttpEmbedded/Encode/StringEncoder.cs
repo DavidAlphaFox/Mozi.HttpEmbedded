@@ -7,7 +7,7 @@ namespace Mozi.HttpEmbedded.Encode
     /// </summary>
     public static class StringEncoder
     {
-        public static byte[] Encode(String data)
+        public static byte[] Encode(string data)
         {
             return System.Text.Encoding.UTF8.GetBytes(data);
         }

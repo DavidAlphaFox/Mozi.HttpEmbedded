@@ -49,24 +49,19 @@ namespace Mozi.HttpEmbedded
         /// <summary>
         /// 时区
         /// </summary>
-        public String Timezone { get; set; }
+        public string Timezone { get; set; }
         /// <summary>
         /// 编码格式
         /// </summary>
-        public String Encoding { get; set; }
+        public string Encoding { get; set; }
         /// <summary>
         /// 服务器名称
         /// </summary>
-        public String ServerName
+        public string ServerName
         {
             get { return _serverName; }
             private set { _serverName = value; }
         }
-        /// <summary>
-        /// 服务器用户
-        /// </summary>
-        private List<User> _users=new List<User>(); 
-
         public HttpServer()
         {
             Auth=new Authenticator();
@@ -131,13 +126,13 @@ namespace Mozi.HttpEmbedded
         private StatusCode HandleAuth(ref HttpContext context)
         {
             var authorization = context.Request.Headers.GetValue(HeaderProperty.Authorization.PropertyTag);
-            if (!String.IsNullOrEmpty(authorization) && Auth.Check(authorization))
+            if (!string.IsNullOrEmpty(authorization) && Auth.Check(authorization))
             {
                 return HandleRequest(ref context);
             }
             else
             {
-                context.Response.AddHeader(HeaderProperty.WWWAuthenticate, String.Format("{0} realm=\"{1}\"", Auth.AuthType.Name,AuthorizationType.REALM));
+                context.Response.AddHeader(HeaderProperty.WWWAuthenticate, string.Format("{0} realm=\"{1}\"", Auth.AuthType.Name,AuthorizationType.REALM));
                 return StatusCode.Unauthorized;
             }
         }
@@ -264,12 +259,12 @@ namespace Mozi.HttpEmbedded
         }
         /// <summary>
         /// 设置服务器认证用户
-        /// <para>如果<see cref="F:EnableAuth"/>=<see cref="Boolean.False"/>,此设置就没有意义</para>
+        /// <para>如果<see cref="F:EnableAuth"/>=<see cref="bool.False"/>,此设置就没有意义</para>
         /// </summary>
         /// <param name="userName"></param>
         /// <param name="userPassword"></param>
         /// <returns></returns>
-        public HttpServer SetUser(String userName, String userPassword)
+        public HttpServer SetUser(string userName, string userPassword)
         {
             Auth.SetUser(userName, userName);
             return this;
@@ -300,7 +295,7 @@ namespace Mozi.HttpEmbedded
         /// </summary>
         /// <param name="page"></param>
         /// <returns></returns>
-        public HttpServer UseErrorPage(String page)
+        public HttpServer UseErrorPage(string page)
         {
             throw new NotImplementedException();
         }

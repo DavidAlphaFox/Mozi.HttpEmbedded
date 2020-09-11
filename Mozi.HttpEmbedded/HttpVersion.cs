@@ -14,9 +14,9 @@ namespace Mozi.HttpEmbedded
         public static readonly HttpVersion Version12 = new HttpVersion("1.2");
         public static readonly HttpVersion Version20 = new HttpVersion("2.0");
 
-        public String Version { get { return _vervalue; } }
+        public string Version { get { return _vervalue; } }
 
-        protected override String Tag { get { return Version; } }
+        protected override string Tag { get { return Version; } }
 
         private string _vervalue = "";
 
@@ -28,9 +28,9 @@ namespace Mozi.HttpEmbedded
         /// 重写ToString方法
         /// </summary>
         /// <returns></returns>
-        public override String ToString()
+        public override string ToString()
         {
-            return String.Format("HTTP/{0}", _vervalue);
+            return string.Format("HTTP/{0}", _vervalue);
         }
     }
 }

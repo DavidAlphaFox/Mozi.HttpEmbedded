@@ -5,7 +5,7 @@ namespace Mozi.HttpEmbedded
 {
     public class File
     {
-        public String FileName  { get; set; }
+        public string FileName  { get; set; }
         public int FileIndex    { get; set; }
         public byte[] FileData  { get; set; }
     }

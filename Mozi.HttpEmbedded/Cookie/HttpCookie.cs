@@ -124,7 +124,7 @@ namespace Mozi.HttpEmbedded.Cookie
         public static RequestCookie Parse(string data)
         {
             RequestCookie hc = new RequestCookie();
-            String[] kps = data.Split(new string[] {"; "}, StringSplitOptions.RemoveEmptyEntries);
+            string[] kps = data.Split(new string[] {"; "}, StringSplitOptions.RemoveEmptyEntries);
             foreach (var kp in kps)
             {
                 var startIndex = kp.IndexOf((char)ASCIICode.EQUAL);

@@ -25,26 +25,37 @@ namespace Mozi.HttpEmbedded.Page
  
         private Router()
         {
-            
+            LoadInternalApi();
         }
-
         /// <summary>
-        /// 调起
+        /// 从程序集载入接口
         /// </summary>
-        /// <param name="ctx"></param>
-        internal object Invoke(HttpContext ctx)
+        /// <param name="ass"></param>
+        private void LoadApiFromAssembly(Assembly ass)
         {
-            Assembly ass = Assembly.GetExecutingAssembly();
             Type[] types = ass.GetExportedTypes();
             foreach (var type in types)
             {
                 if (type.IsSubclassOf(typeof(BaseApi)))
                 {
-                   apis.Add(type); 
+                    apis.Add(type);
                 }
             }
-            
-            ass.GetModules();
+        }
+        /// <summary>
+        /// 载入内部接口
+        /// </summary>
+        private void LoadInternalApi()
+        {
+            Assembly ass = Assembly.GetExecutingAssembly();
+            LoadApiFromAssembly(ass);
+        }
+        /// <summary>
+        /// 调起
+        /// </summary>
+        /// <param name="ctx"></param>
+        internal object Invoke(HttpContext ctx)
+        {           
             string path = ctx.Request.Path;
             //确定路径映射关系
             AccessPoint ap=Match(path);
@@ -73,14 +84,15 @@ namespace Mozi.HttpEmbedded.Page
             return method.Invoke(instance, BindingFlags.IgnoreCase, null, args, CultureInfo.CurrentCulture);
             //调起相关方法 
         }
-
         /// <summary>
         /// 载入模块
         /// </summary>
         /// <returns></returns>
         public Router Register(string filePath)
         {
-            throw new NotImplementedException();
+            Assembly ass = Assembly.LoadFrom(filePath);
+            LoadApiFromAssembly(ass);
+            return this;
         }
         /// <summary>
         /// 路由注入
@@ -112,7 +124,6 @@ namespace Mozi.HttpEmbedded.Page
             _mappers.Add(new RouteMapper(){Pattern = pattern});
             return this;
         }
-
         public AccessPoint Match(string path)
         {
             foreach (var mapper in _mappers)
@@ -148,7 +159,7 @@ namespace Mozi.HttpEmbedded.Page
 
             private string Prefix { get; set; }
             private string Suffix { get; set; }
-            private String Link   { get; set; }
+            private string Link   { get; set; }
             private string IdName { get; set; }
             private Regex Matcher { get; set; }
 
@@ -171,7 +182,7 @@ namespace Mozi.HttpEmbedded.Page
                 Prefix = pattern.Substring(0, indCrl);
                 Link = pattern.Substring(indCrl + 12, indID - indCrl - 12);
                 Suffix = "";
-                Matcher = new Regex(String.Format("{0}[a-zA-Z]\\w+{1}[a-zA-Z]\\w+{2}", Regex.Escape(Prefix), Regex.Escape(Link), Regex.Escape(Suffix)), RegexOptions.IgnoreCase);
+                Matcher = new Regex(string.Format("{0}[a-zA-Z]\\w+{1}[a-zA-Z]\\w+{2}", Regex.Escape(Prefix), Regex.Escape(Link), Regex.Escape(Suffix)), RegexOptions.IgnoreCase);
             }
             /// <summary>
             /// 判断是否匹配路由
@@ -210,8 +221,8 @@ namespace Mozi.HttpEmbedded.Page
 
         public class AccessPoint
         {
-             public String Domain { get; set; }
-             public String Method { get; set; }
+             public string Domain { get; set; }
+             public string Method { get; set; }
         }
     }
 }

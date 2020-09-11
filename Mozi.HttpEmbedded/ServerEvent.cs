@@ -36,7 +36,7 @@ namespace Mozi.HttpEmbedded
      public class DataTransferArgs:EventArgs 
      {
          public byte[] Data { get; set; }
-         public String IP { get; set; }
+         public string IP { get; set; }
          public int Port { get; set; }
          public Socket Socket { get; set; }
 

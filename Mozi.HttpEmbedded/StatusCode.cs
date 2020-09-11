@@ -282,9 +282,9 @@ namespace Mozi.HttpEmbedded
         /// </summary>
         public int Code{get { return _code; }}
 
-        public String Text{get { return _text; }}
+        public string Text {get { return _text; }}
 
-        private StatusCode(int code, String desc)
+        private StatusCode(int code, string desc)
         {
             _code = code;
             _text = desc;

@@ -15,15 +15,13 @@ namespace Mozi.HttpEmbedded.Page
         {
             return "Welcome to Mozi.HttpEnbedded";
         }
+        /// <summary>
+        /// 取时间
+        /// </summary>
+        /// <returns></returns>
+        public string GetTime()
+        {
 
-        //public string Hello(string greet)
-        //{
-        //    return String.Format("you say {0}", greet);
-        //}
-    }
-
-    public class Test2 : Test
-    {
-        
+        }
     }
 }

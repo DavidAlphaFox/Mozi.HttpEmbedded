@@ -451,7 +451,7 @@ namespace Mozi.HttpEmbedded.Source
         /// <returns></returns>
         public static string GetContentType(string ext)
         {
-            if (String.IsNullOrEmpty(ext)||!Types.ContainsKey(ext))
+            if (string.IsNullOrEmpty(ext)||!Types.ContainsKey(ext))
             {
                 return "text/html";
             }

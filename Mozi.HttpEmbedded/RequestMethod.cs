@@ -83,17 +83,17 @@ namespace Mozi.HttpEmbedded
         /// <summary>
         /// 方法名
         /// </summary>
-        public String Name
+        public string Name
         {
             get { return _name; }
             set { _name = value; }
         }
 
-        protected override String Tag { get { return Name; } }
+        protected override string Tag { get { return Name; } }
 
         private string _name;
 
-        private RequestMethod(String name)
+        private RequestMethod(string name)
         {
             _name = name;
         }

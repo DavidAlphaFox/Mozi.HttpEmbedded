@@ -13,15 +13,15 @@ namespace Mozi.HttpEmbedded
 
         private string _proxy;
 
-        public String Proxy
+        public string Proxy
         {
             get { return _proxy; }
             set { _proxy = value; }
         }
 
-        protected override String Tag { get { return Proxy; } }
+        protected override string Tag { get { return Proxy; } }
 
-        private ProtocolType(String typeName)
+        private ProtocolType(string typeName)
         {
             _proxy = typeName;
         }

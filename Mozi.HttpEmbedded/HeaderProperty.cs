@@ -112,17 +112,17 @@ namespace Mozi.HttpEmbedded
         //通常在值为“XMLHttpRequest”时使用
         //        Not standard
 
-        public String PropertyTag { get; set; }
-        public String PropertyValue { get; set; }
+        public string PropertyTag { get; set; }
+        public string PropertyValue { get; set; }
 
-        protected override String Tag { get { return PropertyTag; } }
+        protected override string Tag { get { return PropertyTag; } }
 
         private HeaderProperty()
         {
             
         }
 
-        private HeaderProperty(String tag)
+        private HeaderProperty(string tag)
         {
             PropertyTag = tag;
         }
@@ -132,14 +132,14 @@ namespace Mozi.HttpEmbedded
         /// <returns></returns>
         public override string ToString()
         {
-            return String.Format("{0} {1}", PropertyTag, PropertyValue);
+            return string.Format("{0} {1}", PropertyTag, PropertyValue);
         }
         /// <summary>
         /// 解析
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        public static HeaderProperty Parse(String data)
+        public static HeaderProperty Parse(string data)
         {
             var tag = data.Substring(0, data.IndexOf((char)ASCIICode.COLON));
             var value = data.Substring(data.IndexOf((char) ASCIICode.SPACE) + 1);

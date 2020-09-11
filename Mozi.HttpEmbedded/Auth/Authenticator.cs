@@ -25,10 +25,10 @@ namespace Mozi.HttpEmbedded.Auth
             {
                 if (authType.Equals(AuthorizationType.Basic))
                 {
-                    String userinfo = Base64.From(authBody);
+                    string userinfo = Base64.From(authBody);
                     var indBnd = userinfo.IndexOf((char) ASCIICode.COLON);
-                    String username = userinfo.Substring(0, indBnd);
-                    String password = userinfo.Substring(indBnd + 1);
+                    string username = userinfo.Substring(0, indBnd);
+                    string password = userinfo.Substring(indBnd + 1);
                     return IsValidUser(username, password);
                 }
                 else
@@ -46,7 +46,7 @@ namespace Mozi.HttpEmbedded.Auth
         /// <returns></returns>
         private bool IsValidUser(string userName, string userPassword)
         {
-            return _users.Any(x => x.UserName.Equals(userName) && x.Password.Equals(userPassword));
+            return _users.Any(x =>x.UserGroup==UserGroup.Admin&& x.UserName.Equals(userName) && x.Password.Equals(userPassword));
         }
         /// <summary>
         /// 设置认证类型
@@ -69,7 +69,7 @@ namespace Mozi.HttpEmbedded.Auth
             var user = _users.Find(x => x.UserName.Equals(userName));
             if (user == null)
             {
-                _users.Add(new User() {UserName = userName, Password = userPassword});
+                _users.Add(new User() {UserName = userName, Password = userPassword,UserGroup=UserGroup.Admin});
             }
             else
             {
@@ -117,12 +117,12 @@ namespace Mozi.HttpEmbedded.Auth
 
         public string GetChallenge()
         {
-            List<String> clgs=new List<string>();
+            List<string> clgs=new List<string>();
             foreach (var o in Challenge)
             {
-                clgs.Add(String.Format("{0}=\"{1}\"",o.Key,o.Value));
+                clgs.Add(string.Format("{0}=\"{1}\"",o.Key,o.Value));
             }
-            var clg = String.Format("{0} {1}", this.GetType().Name, String.Join(",", clgs));
+            var clg = string.Format("{0} {1}", this.GetType().Name, string.Join(",", clgs));
             return clg;
         }
 

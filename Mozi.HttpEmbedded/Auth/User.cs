@@ -1,11 +1,20 @@
 ﻿namespace Mozi.HttpEmbedded.Auth
 {
     /// <summary>
-    /// 服务器认证用户
+    /// 服务器用户
     /// </summary>
-    class User
+    public class User
     {
         public string UserName { get; set; }
         public string Password { get; set; }
+        public UserGroup UserGroup { get; set; }
     }
+    /// <summary>
+    /// 用户组
+    /// </summary>
+    public enum UserGroup
+    {
+        User=0,
+        Admin=1 //管理组
+    } 
 }

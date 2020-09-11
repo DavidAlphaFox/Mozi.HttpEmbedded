@@ -13,7 +13,7 @@ namespace Mozi.HttpEmbedded
         //private static SocketServer _mSocketServer;
         private int _iPort = 9000;
         private Dictionary<string,Socket> _socketDocker;
-        private Socket sc;
+        private Socket _sc;
         /// <summary>
         /// 服务器启动事件
         /// </summary>
@@ -22,6 +22,9 @@ namespace Mozi.HttpEmbedded
         /// 客户端连接事件
         /// </summary>
         public event ClientConnect OnClientConnect;
+        /// <summary>
+        /// 客户端断开连接时间
+        /// </summary>
         public event ClientDisConnect AfterClientDisConnect;
         /// <summary>
         /// 数据接收开始事件
@@ -46,14 +49,13 @@ namespace Mozi.HttpEmbedded
 
         public Socket SocketMain
         {
-            get { return sc; }
+            get { return _sc; }
         }
 
         public SocketServer() 
         {
             _socketDocker = new Dictionary<string, Socket>();
         }
-
 
         //TODO 测试此处是否有BUG
         /// <summary>
@@ -63,23 +65,23 @@ namespace Mozi.HttpEmbedded
         public void StartServer(int port)
         {
             _iPort = port;
-            if (sc == null)
+            if (_sc == null)
             {
-                sc = new Socket(AddressFamily.InterNetwork, SocketType.Stream, System.Net.Sockets.ProtocolType.Tcp);
+                _sc = new Socket(AddressFamily.InterNetwork, SocketType.Stream, System.Net.Sockets.ProtocolType.Tcp);
             }
             else
             {
-                sc.Close();
+                _sc.Close();
             }
             System.Net.IPEndPoint endpoint = new System.Net.IPEndPoint(System.Net.IPAddress.Any, _iPort);
-            sc.Bind(endpoint);
-            sc.Listen(_iPort);            
+            _sc.Bind(endpoint);
+            _sc.Listen(_iPort);            
             //回调服务器启动事件
             if (OnServerStart != null) 
             {
                 OnServerStart(this, new ServerArgs() { StartTime=DateTime.Now,StopTime=DateTime.MinValue });
             }
-            sc.BeginAccept(new AsyncCallback(CallbackAccept), sc);
+            _sc.BeginAccept(new AsyncCallback(CallbackAccept), _sc);
         }
         /// <summary>
         /// 关闭服务器
@@ -89,10 +91,10 @@ namespace Mozi.HttpEmbedded
             _socketDocker.Clear();
             try
             {
-                sc.Shutdown(SocketShutdown.Both);
+                _sc.Shutdown(SocketShutdown.Both);
                 if (AfterServerStop != null) 
                 {
-                    AfterServerStop(sc, null);
+                    AfterServerStop(_sc, null);
                 }
             }
             catch 
@@ -153,13 +155,10 @@ namespace Mozi.HttpEmbedded
                 {
                     //置空数据连接
                     so.ResetBuffer(iByteRead);
-                    if (client.Available > 0)
-                    {
+                    if (client.Available > 0){
                         //Thread.Sleep(10);
                         client.BeginReceive(so.Buffer, 0, StateObject.BufferSize, 0, CallbackReceive, so);
-                    }
-                    else
-                    {
+                    }else{
                         _socketDocker.Remove(so.Id);
                         if (AfterReceiveEnd != null)
                         {
