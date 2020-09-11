@@ -102,6 +102,18 @@ namespace Mozi.HttpEmbedded
         }
         /// <summary>
         /// 解析请求
+        /// <code>
+        ///                     
+        ///  GET / HTTP/1.1\r\nHost: 127.0.0.1:9000\r\n
+        ///  User-Agent: Mozilla/5.0 (Windows NT 5.2; rv:22.0) Gecko/20100101 Firefox/22.0\r\n
+        ///  Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\r\n
+        ///  Accept-Language: zh-cn,zh;q=0.8,en-us;q=0.5,en;q=0.3\r\n
+        ///  Accept-Encoding: gzip, deflate\r\n
+        ///  Authorization: Basic c2Rmc2RmOnNmc2Rm\r\n
+        ///  Connection: keep-alive\r\n
+        ///  Cache-Control: max-age=0
+        ///  
+        /// </code>
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
@@ -117,25 +129,8 @@ namespace Mozi.HttpEmbedded
             while (Array.IndexOf(data,ASCIICode.CR,posCR+1)>0)
             {
                 posCR = Array.IndexOf(data, ASCIICode.CR, posCR + 1);
-                //GET / HTTP/1.1\r\nHost: 127.0.0.1:9000\r\n
-                //User-Agent: Mozilla/5.0 (Windows NT 5.2; rv:22.0) Gecko/20100101 Firefox/22.0\r\n
-                //Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\r\n
-                //Accept-Language: zh-cn,zh;q=0.8,en-us;q=0.5,en;q=0.3\r\n
-                //Accept-Encoding: gzip, deflate\r\n
-                //Authorization: Basic c2Rmc2RmOnNmc2Rm\r\n
-                //Connection: keep-alive\r\n
-                //Cache-Control: max-age=0
 
-                //GET /amazeui/login.html HTTP/1.1\r\n
-                //Host: 100.100.0.105:9000\r\n
-                //User-Agent: Mozilla/5.0 (Windows NT 6.3; Win64; x64; rv:79.0) Gecko/20100101 Firefox/79.0\r\n
-                //Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8\r\n
-                //Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2\r\n
-                //Accept-Encoding: gzip, deflate\r\nConnection: keep-alive\r\n
-                //Upgrade-Insecure-Requests: 1\r\n
-                //Authorization: Basic YWRtaW46YWRtaW4=\r\n\r\n
                 //连续两个CR
-
                 byte[] fragement=new byte[posCR-posCaret];
                 Array.Copy(data,posCaret,fragement,0,posCR-posCaret);
                 if (index == 0)
@@ -167,15 +162,6 @@ namespace Mozi.HttpEmbedded
             return req;
         }
 
-        ~HttpRequest()
-        {
-            PackedData = null;
-            FirstLineData = null;
-            Body = null;
-            Headers = null;
-            HeaderData = null;
-            Files = null;
-        }
         /// <summary>
         /// 解析请求体
         /// 区分Content-Type
@@ -267,7 +253,6 @@ namespace Mozi.HttpEmbedded
                     if (isFragStart && indFragNext > 0)
                     {
                         //Console.WriteLine("发现片段{0}-{1},长度{2}Byte", indFragFirst, indFragNext, indFragNext - indFragFirst);
-                        
                         int posCR = 0;
                         int posCaret = 0;
                         int index = 0;
@@ -284,7 +269,6 @@ namespace Mozi.HttpEmbedded
 
                         while (Array.IndexOf(fragbody, ASCIICode.CR, posCR + 1) > 0)
                         {
-
                             posCR = Array.IndexOf(fragbody, ASCIICode.CR, posCR + 1);
                             //连续两个CR
                             if (posCR > 0 && Array.IndexOf(fragbody, ASCIICode.CR, posCR + 1) != posCR + 2)
@@ -353,9 +337,9 @@ namespace Mozi.HttpEmbedded
         //TODO 后续扩展支撑，暂时不实现
         /// <summary>
         /// 分析请求体 文本类型
-        /// application/json
-        /// text/plain
-        /// text/xml
+        ///     application/json
+        ///     text/plain
+        ///     text/xml
         /// </summary>
         /// <param name="req"></param>
         /// <param name="data"></param>
@@ -419,6 +403,15 @@ namespace Mozi.HttpEmbedded
             string sProtoVersion = sProtocol.Substring(sProtocol.IndexOf((char)ASCIICode.DIVIDE) + 1);
             req.Protocol = AbsClassEnum.Get<ProtocolType>(sProtoType);
             req.ProtocolVersion = AbsClassEnum.Get<HttpVersion>(sProtoVersion);
+        }
+        ~HttpRequest()
+        {
+            PackedData = null;
+            FirstLineData = null;
+            Body = null;
+            Headers = null;
+            HeaderData = null;
+            Files = null;
         }
     }
 }

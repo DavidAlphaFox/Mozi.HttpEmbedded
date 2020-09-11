@@ -18,7 +18,7 @@ namespace Mozi.HttpEmbedded
         /// <summary>
         /// ×´Ì¬Âë
         /// </summary>
-        public StatusCode Status { get; set; }
+        public StatusCode Status { get; private set; }
 
         public int ContengLength = 0;
 

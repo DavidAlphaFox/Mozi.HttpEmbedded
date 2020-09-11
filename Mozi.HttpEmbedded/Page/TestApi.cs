@@ -16,12 +16,12 @@ namespace Mozi.HttpEmbedded.Page
             return "Welcome to Mozi.HttpEnbedded";
         }
         /// <summary>
-        /// 取时间
+        /// 取服务器当前时间
         /// </summary>
         /// <returns></returns>
-        public string GetTime()
+        public DateTime GetTime()
         {
-
+            return DateTime.Now;
         }
     }
 }

@@ -300,6 +300,15 @@ namespace Mozi.HttpEmbedded
             throw new NotImplementedException();
         }
         /// <summary>
+        /// 设置临时文件目录
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public HttpServer UseTempPath(string path)
+        {
+            throw new NotImplementedException();
+        }
+        /// <summary>
         /// 设置服务器名称
         /// </summary>
         /// <param name="serverName"></param>
