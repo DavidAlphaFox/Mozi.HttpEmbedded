@@ -36,7 +36,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -84,6 +84,7 @@
     <Compile Include="Log\Log.cs" />
     <Compile Include="Page\BaseApi.cs" />
     <Compile Include="Page\AbsPage.cs" />
+    <Compile Include="Page\DataSerializeType.cs" />
     <Compile Include="Page\Global.cs" />
     <Compile Include="Page\PageCreator.cs" />
     <Compile Include="Page\Router.cs" />

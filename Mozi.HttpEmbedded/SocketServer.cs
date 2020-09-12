@@ -81,6 +81,8 @@ namespace Mozi.HttpEmbedded
                 _sc.Close();
             }
             System.Net.IPEndPoint endpoint = new System.Net.IPEndPoint(System.Net.IPAddress.Any, _iPort);
+            //允许端口复用
+            _sc.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
             _sc.Bind(endpoint);
             _sc.Listen(_maxListenCount);            
             //回调服务器启动事件
@@ -136,7 +138,7 @@ namespace Mozi.HttpEmbedded
             _socketDocker.TryAdd(so.Id, client);
             try
             {
-                client.BeginReceive(so.Buffer, 0, StateObject.BufferSize, 0, CallbackReceive, so);
+                client.BeginReceive(so.Buffer, 0, StateObject.BufferSize, SocketFlags.None, CallbackReceive, so);
                 if (OnReceiveStart != null)
                 {
                     OnReceiveStart.BeginInvoke(this, new DataTransferArgs(), null, null);
@@ -165,7 +167,7 @@ namespace Mozi.HttpEmbedded
                     so.ResetBuffer(iByteRead);
                     if (client.Available > 0){
                         //Thread.Sleep(10);
-                        client.BeginReceive(so.Buffer, 0, StateObject.BufferSize, 0, CallbackReceive, so);
+                        client.BeginReceive(so.Buffer, 0, StateObject.BufferSize, SocketFlags.None, CallbackReceive, so);
                     }else{
                         InvokeAfterReceiveEnd(so, client);
                     }
@@ -185,14 +187,14 @@ namespace Mozi.HttpEmbedded
             RemoveClientSocket(so);
             if (AfterReceiveEnd != null)
             {
-                AfterReceiveEnd(this,
+                AfterReceiveEnd.BeginInvoke(this,
                     new DataTransferArgs()
                     {
                         Data = so.Data.ToArray(),
                         IP = so.IP,
                         Port = so.RemotePort,
                         Socket = so.WorkSocket
-                 });
+                 },null,null);
             }
         }
         //TODO 此处开启Socket状态监听，对断开的链接进行关闭销毁
