@@ -185,9 +185,17 @@ namespace Mozi.HttpEmbedded
             //WEBDAV部分
             else
             {
-                
+                return HandleRequestWebDAV(ref context);
             }
             return StatusCode.Success;
+        }
+        /// <summary>
+        /// 处理WebDAV请求
+        /// </summary>
+        private StatusCode HandleRequestWebDAV(ref HttpContext context)
+        {
+            //RequestMethod.PROPFIND,RequestMethod.PROPPATCH RequestMethod.MKCOL RequestMethod.COPY RequestMethod.MOVE RequestMethod.LOCK RequestMethod.UNLOCK
+            return StatusCode.MultiStatus;
         }
         /// <summary>
         /// 取URL资源扩展名
@@ -215,12 +223,13 @@ namespace Mozi.HttpEmbedded
             if (router.Match(context.Request.Path) != null)
             {
                 router.Invoke(context);
-                context.Response.Write("<html>"
-                                       + "<head></head>"
-                                       + "<body>"
-                                       + "  <strong>Welcome to a Web Server Developed base on c#!</strong>"
-                                       + "</body>"
-                                       + "</html>");
+                //context.Response.Write("<html>"
+                //                       + "<head></head>"
+                //                       + "<body>"
+                //                       + "  <strong>Welcome to a Web Server Developed base on c#!</strong>"
+                //                       + "</body>"
+                //                       + "</html>");
+                context.Response.Write(router.Invoke(context).ToString());
                 return StatusCode.Success;
             }
             return StatusCode.NotFound; 
