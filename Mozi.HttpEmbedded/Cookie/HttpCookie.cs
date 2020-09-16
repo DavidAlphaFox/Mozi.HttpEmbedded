@@ -157,7 +157,7 @@ namespace Mozi.HttpEmbedded.Cookie
         /// <returns></returns>
         public HttpCookie Set(string key, string value)
         {
-            HttpCookie cookie = new HttpCookie() { Name = key, Value = UrlEncoder.EncodeUrl(value) };
+            HttpCookie cookie = new HttpCookie() { Name = key, Value = UrlEncoder.Encode(value) };
             if (_cookies.Exists(x => x.Equals(cookie)))
             {
                 cookie = _cookies.Find(x => x.Equals(cookie));

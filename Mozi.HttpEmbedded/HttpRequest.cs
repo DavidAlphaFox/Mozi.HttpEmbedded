@@ -99,6 +99,7 @@ namespace Mozi.HttpEmbedded
             Headers=new TransformHeader();
             Files=new FileCollection();
             Cookies = new RequestCookie();
+            Body = new byte[] { };
         }
         /// <summary>
         /// Ω‚Œˆ«Î«Û

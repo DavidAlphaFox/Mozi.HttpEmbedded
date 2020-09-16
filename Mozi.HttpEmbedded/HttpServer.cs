@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Mozi.HttpEmbedded.Auth;
 using Mozi.HttpEmbedded.Compress;
 using Mozi.HttpEmbedded.Page;
@@ -14,10 +13,14 @@ namespace Mozi.HttpEmbedded
     {
         
         private readonly SocketServer _sc=new SocketServer();
-        
+        private WebDav.DavServer _davserver;
         private int _port=80;
 
         private string _serverName = "HttpEmbedded";
+
+        //允许和公开的方法
+        private RequestMethod[] MethodAllow = new RequestMethod[] { RequestMethod.OPTIONS, RequestMethod.TRACE, RequestMethod.GET, RequestMethod.HEAD, RequestMethod.POST, RequestMethod.COPY, RequestMethod.PROPFIND, RequestMethod.LOCK, RequestMethod.UNLOCK };
+        private RequestMethod[] MethodPublic = new RequestMethod[] { RequestMethod.OPTIONS, RequestMethod.GET, RequestMethod.HEAD, RequestMethod.PROPFIND, RequestMethod.PROPPATCH, RequestMethod.MKCOL, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.COPY, RequestMethod.MOVE, RequestMethod.LOCK, RequestMethod.UNLOCK };
 
         /// <summary>
         /// 支持的HTTP服务协议版本
@@ -27,9 +30,10 @@ namespace Mozi.HttpEmbedded
         /// 是否使用基本认证
         /// </summary>
         public bool EnableAuth { get; private set; }
-
+        /// <summary>
+        /// 认证器
+        /// </summary>
         private Authenticator Auth { get;  set; }
-
         /// <summary>
         /// 是否开启压缩
         /// </summary>
@@ -54,6 +58,10 @@ namespace Mozi.HttpEmbedded
         /// 编码格式
         /// </summary>
         public string Encoding { get; set; }
+        /// <summary>
+        /// 是否启用WebDav
+        /// </summary>
+        public bool EnableWebDav { get; private set; }
         /// <summary>
         /// 服务器名称
         /// </summary>
@@ -143,8 +151,11 @@ namespace Mozi.HttpEmbedded
         private StatusCode HandleRequest(ref HttpContext context)
         {
             RequestMethod method = context.Request.Method;
-           
-            if (method == RequestMethod.GET || method == RequestMethod.POST || method == RequestMethod.HEAD||method==RequestMethod.PUT ||method==RequestMethod.OPTIONS||method == RequestMethod.DELETE||method==RequestMethod.TRACE||method==RequestMethod.CONNECT)
+            if (method == RequestMethod.OPTIONS)
+            {
+                return HandleRequestOptions(ref context);
+            }
+            if (method == RequestMethod.GET || method == RequestMethod.POST || method == RequestMethod.HEAD||method==RequestMethod.PUT ||method == RequestMethod.DELETE||method==RequestMethod.TRACE||method==RequestMethod.CONNECT)
             {
                 StaticFiles st = StaticFiles.Default;
                 var path = context.Request.Path;
@@ -189,13 +200,29 @@ namespace Mozi.HttpEmbedded
             }
             return StatusCode.Success;
         }
+        private StatusCode HandleRequestOptions(ref HttpContext context)
+        {
+            foreach (RequestMethod verb in MethodAllow)
+                context.Response.AddHeader("Allow", verb.Name);
+
+            foreach (RequestMethod verb in MethodPublic)
+                context.Response.AddHeader("Public", verb.Name);
+
+            // Sends 200 OK
+            return StatusCode.Success;
+        }
         /// <summary>
         /// 处理WebDAV请求
         /// </summary>
         private StatusCode HandleRequestWebDAV(ref HttpContext context)
         {
+            RequestMethod method = context.Request.Method;
+            if (EnableWebDav)
+            {
+               return _davserver.ProcessRequest(ref context);
+            }
+            return StatusCode.Forbidden;
             //RequestMethod.PROPFIND,RequestMethod.PROPPATCH RequestMethod.MKCOL RequestMethod.COPY RequestMethod.MOVE RequestMethod.LOCK RequestMethod.UNLOCK
-            return StatusCode.MultiStatus;
         }
         /// <summary>
         /// 取URL资源扩展名
@@ -292,11 +319,28 @@ namespace Mozi.HttpEmbedded
         /// <summary>
         /// 允许静态文件访问
         /// </summary>
-        /// <param name="root">静态文件目录</param>
+        /// <param name="root">静态文件根目录</param>
         /// <returns></returns>
         public HttpServer UseStaticFiles(string root)
         {
             StaticFiles.Default.Enabled = true;
+            StaticFiles.Default.SetRoot(root);
+            return this;
+        }
+        /// <summary>
+        /// 启用WebDav
+        /// </summary>
+        /// <param name="root"></param>
+        /// <returns></returns>
+        public HttpServer UseWebDav(string root)
+        {
+            EnableWebDav = true;
+            //DONE WEBDAV服务初始化
+            if (_davserver == null)
+            {
+                _davserver = new WebDav.DavServer();
+                _davserver.SetStore(root);
+             }
             return this;
         }
         /// <summary>

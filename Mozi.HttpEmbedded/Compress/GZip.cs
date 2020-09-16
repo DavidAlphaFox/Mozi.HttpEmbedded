@@ -26,10 +26,7 @@ namespace Mozi.HttpEmbedded.Compress
 
         public static byte[] UnZip(byte[] value)
         {
-            //Transform string into byte[]  
             byte[] byteArray;
-
-            //Prepare for decompress  
             MemoryStream ms = new MemoryStream(value);
             MemoryStream msOut=new MemoryStream();
             GZipStream sr = new GZipStream(ms,

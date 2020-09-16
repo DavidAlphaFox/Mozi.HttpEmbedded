@@ -22,13 +22,29 @@ namespace Mozi.HttpEmbedded.Source
 
         private StaticFiles()
         {
-            _root = AppDomain.CurrentDomain.BaseDirectory+"/";
+            _root = AppDomain.CurrentDomain.BaseDirectory;
             init();    
         }
-
+        /// <summary>
+        /// 设置静态文件根目录
+        /// </summary>
+        /// <param name="root"></param>
+        /// <returns></returns>
         public StaticFiles SetRoot(string root)
         {
-            _root = root;
+            if (!String.IsNullOrEmpty(root))
+            {
+                
+                //TODO 区分相对路径和绝对路径
+                if (Path.IsPathRooted(root))
+                {
+                    _root = root;
+                }
+                else
+                {
+                    _root = AppDomain.CurrentDomain.BaseDirectory + "/";
+                }
+            }
             return this;
         }
 

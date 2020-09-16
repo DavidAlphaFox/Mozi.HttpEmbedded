@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Mozi.HttpEmbedded.Generic;
 
 namespace Mozi.HttpEmbedded.Source
@@ -453,12 +452,14 @@ namespace Mozi.HttpEmbedded.Source
         {
             if (string.IsNullOrEmpty(ext)||!Types.ContainsKey(ext))
             {
-                return "text/html";
+                return Default;
             }
             else
             {
                 return Types[ext];
             }
         }
+
+        public const string Default = "text/html";
     }
 }

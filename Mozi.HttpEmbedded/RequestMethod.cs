@@ -1,5 +1,4 @@
-﻿using System;
-using Mozi.HttpEmbedded.Generic;
+﻿using Mozi.HttpEmbedded.Generic;
 
 namespace Mozi.HttpEmbedded
 {

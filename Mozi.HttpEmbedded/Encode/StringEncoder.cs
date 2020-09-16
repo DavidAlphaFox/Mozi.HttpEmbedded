@@ -1,5 +1,3 @@
-using System;
-
 namespace Mozi.HttpEmbedded.Encode
 {
     /// <summary>

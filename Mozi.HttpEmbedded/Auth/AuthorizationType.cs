@@ -1,4 +1,3 @@
-using System;
 using Mozi.HttpEmbedded.Generic;
 
 namespace Mozi.HttpEmbedded.Auth

@@ -20,7 +20,7 @@ namespace Mozi.HttpEmbedded.Encode
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        public static string DecodeUrl(string data)
+        public static string Decode(string data)
         {
             for (int i = 0; i < To.Length; i++)
             {
@@ -37,7 +37,7 @@ namespace Mozi.HttpEmbedded.Encode
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        public static string EncodeUrl(string data)
+        public static string Encode(string data)
         {
             for (int i = 0; i < From.Length; i++)
             {
@@ -56,7 +56,7 @@ namespace Mozi.HttpEmbedded.Encode
         /// <returns></returns>
         public static Dictionary<string, string> ParseQuery(string data)
         {
-            data = DecodeUrl(data);
+            data = Decode(data);
             Dictionary<string, string> res=new Dictionary<string, string>();
             string[] querys = data.Split(new[] { (char)ASCIICode.AND }, StringSplitOptions.RemoveEmptyEntries);
             foreach (var item in querys)

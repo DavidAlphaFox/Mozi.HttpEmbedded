@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Mozi.HttpEmbedded
+﻿namespace Mozi.HttpEmbedded
 {
     /// <summary>
     /// 响应状态码

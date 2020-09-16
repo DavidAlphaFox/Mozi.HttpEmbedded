@@ -64,6 +64,7 @@
   <ItemGroup>
     <Compile Include="ASCIICode.cs" />
     <Compile Include="Auth\User.cs" />
+    <Compile Include="Common\UrlTree.cs" />
     <Compile Include="Encode\UrlEncoder.cs" />
     <Compile Include="Generic\AbsClassEnum.cs" />
     <Compile Include="Auth\AuthorizationType.cs" />
@@ -81,7 +82,7 @@
     <Compile Include="HttpContext.cs" />
     <Compile Include="HttpServer.cs" />
     <Compile Include="HttpVersion.cs" />
-    <Compile Include="Log\Log.cs" />
+    <Compile Include="Common\Log.cs" />
     <Compile Include="Page\BaseApi.cs" />
     <Compile Include="Page\AbsPage.cs" />
     <Compile Include="Page\DataSerializeType.cs" />
@@ -102,20 +103,57 @@
     <Compile Include="StatusCode.cs" />
     <Compile Include="Encode\StringEncoder.cs" />
     <Compile Include="TransformHeader.cs" />
+    <Compile Include="WebDav\Exceptions\ConflictException.cs" />
+    <Compile Include="WebDav\Exceptions\WebDavException.cs" />
+    <Compile Include="WebDav\Exceptions\ForbiddenException.cs" />
+    <Compile Include="WebDav\Exceptions\NotFoundException.cs" />
+    <Compile Include="WebDav\Exceptions\UnauthorizedException.cs" />
+    <Compile Include="WebDav\LockProperty.cs" />
+    <Compile Include="WebDav\Method\Copy.cs" />
+    <Compile Include="WebDav\Method\Delete.cs" />
+    <Compile Include="WebDav\Method\Head.cs" />
+    <Compile Include="WebDav\Method\IMethodHandler.cs" />
+    <Compile Include="WebDav\Method\Lock.cs" />
+    <Compile Include="WebDav\Method\MkCol.cs" />
+    <Compile Include="WebDav\Method\Move.cs" />
+    <Compile Include="WebDav\Method\Propfind.cs" />
+    <Compile Include="WebDav\Method\Proppatch.cs" />
+    <Compile Include="WebDav\Method\Put.cs" />
+    <Compile Include="WebDav\Method\Unlock.cs" />
+    <Compile Include="WebDav\Method\WebDAVMethodHandlerBase.cs" />
+    <Compile Include="WebDav\Storage\BaseClasses\WebDAVStoreBase.cs" />
+    <Compile Include="WebDav\Storage\BaseClasses\WebDAVStoreDocumentBase.cs" />
+    <Compile Include="WebDav\Storage\BaseClasses\WebDAVStoreItemBase.cs" />
+    <Compile Include="WebDav\Storage\DiskStore\WebDAVDiskStore.cs" />
+    <Compile Include="WebDav\Storage\DiskStore\WebDAVDiskStoreCollection.cs" />
+    <Compile Include="WebDav\Storage\DiskStore\WebDAVDiskStoreDocument.cs" />
+    <Compile Include="WebDav\Storage\DiskStore\WebDAVDiskStoreItem.cs" />
+    <Compile Include="WebDav\Storage\IWebDAVStore.cs" />
+    <Compile Include="WebDav\Storage\IWebDAVStoreCollection.cs" />
+    <Compile Include="WebDav\Storage\IWebDAVStoreDocument.cs" />
+    <Compile Include="WebDav\Storage\IWebDAVStoreItem.cs" />
+    <Compile Include="WebDav\Utilities\Md5Util.cs" />
+    <Compile Include="WebDav\DAVExtensions.cs" />
+    <Compile Include="WebDav\DAVProperty.cs" />
+    <Compile Include="WebDav\DAVServer.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Docment\Error.html" />
     <Content Include="Source\mime.data" />
+    <Content Include="WebDav\Icon.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="Changes.md" />
     <None Include="License.md" />
     <None Include="Readme.md" />
+    <None Include="WebDav\ClassDiagram.cd" />
+    <None Include="WebDav\LICENSE" />
+    <None Include="WebDav\packages.config" />
+    <None Include="WebDav\README.md" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="JSON\" />
-    <Folder Include="WebDav\" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0">
