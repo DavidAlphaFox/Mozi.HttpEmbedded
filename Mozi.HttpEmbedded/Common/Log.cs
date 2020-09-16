@@ -10,6 +10,7 @@ namespace Mozi.HttpEmbedded.Common
     public static class Log
     {
         private static readonly string LogDir = AppDomain.CurrentDomain.BaseDirectory + @"Log\";
+        
         /// <summary>
         /// 追加式写入日志
         /// </summary>
