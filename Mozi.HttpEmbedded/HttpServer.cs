@@ -1,5 +1,6 @@
 ﻿using System;
 using Mozi.HttpEmbedded.Auth;
+using Mozi.HttpEmbedded.Common;
 using Mozi.HttpEmbedded.Compress;
 using Mozi.HttpEmbedded.Page;
 using Mozi.HttpEmbedded.Source;
@@ -115,6 +116,7 @@ namespace Mozi.HttpEmbedded
             catch (Exception ex)
             {
                 sc = StatusCode.InternalServerError;
+                Log.Save(ex.Message+":"+ex.StackTrace??"");
             }
             finally
             {                

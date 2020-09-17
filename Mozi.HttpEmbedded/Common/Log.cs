@@ -24,7 +24,9 @@ namespace Mozi.HttpEmbedded.Common
                 dir.Create();
             }
             StreamWriter sw = new StreamWriter(LogDir + name + "_" + DateTime.Now.ToString("yyyyMMdd") + ".log", true);
-            sw.WriteLine(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + " "+Enum.GetName(typeof(LogLevel),level)+" | " + info);
+            string loginfo = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + " "+Enum.GetName(typeof(LogLevel),level)+" | " + info;
+            sw.WriteLine(loginfo);
+            Console.WriteLine(loginfo);
             sw.Flush();
             sw.Close();
         }
