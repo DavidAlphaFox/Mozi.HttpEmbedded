@@ -345,6 +345,15 @@ namespace Mozi.HttpEmbedded
              }
             return this;
         }
+        //TODO 实现一个反向代理服务
+        /// <summary>
+        /// 实现代理
+        /// </summary>
+        /// <returns></returns>
+        public HttpServer UserProxy()
+        {
+            throw new NotImplementedException();
+        }
         /// <summary>
         /// 
         /// </summary>
