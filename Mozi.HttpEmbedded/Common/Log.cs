@@ -1,5 +1,7 @@
 ﻿using System;
 using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Mozi.HttpEmbedded.Common
 {
@@ -10,7 +12,9 @@ namespace Mozi.HttpEmbedded.Common
     public static class Log
     {
         private static readonly string LogDir = AppDomain.CurrentDomain.BaseDirectory + @"Log\";
-        
+
+        private static ReaderWriterLockSlim writeLock = new ReaderWriterLockSlim();
+
         /// <summary>
         /// 追加式写入日志
         /// </summary>
@@ -23,12 +27,22 @@ namespace Mozi.HttpEmbedded.Common
             {
                 dir.Create();
             }
-            StreamWriter sw = new StreamWriter(LogDir + name + "_" + DateTime.Now.ToString("yyyyMMdd") + ".log", true);
-            string loginfo = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + " "+Enum.GetName(typeof(LogLevel),level)+" | " + info;
-            sw.WriteLine(loginfo);
-            Console.WriteLine(loginfo);
-            sw.Flush();
-            sw.Close();
+            Parallel.For(0, 100, x => {
+                try
+                {
+                    writeLock.EnterWriteLock();
+                    StreamWriter sw = new StreamWriter(LogDir + name + "_" + DateTime.Now.ToString("yyyyMMdd") + ".log", true);
+                    string loginfo = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + " " + Enum.GetName(typeof(LogLevel), level) + " | " + info;
+                    sw.WriteLine(loginfo);
+                    Console.WriteLine(loginfo);
+                    sw.Flush();
+                    sw.Close();
+                }
+                finally
+                {
+                    writeLock.ExitWriteLock();
+                }
+            });
         }
         public static void Save(string info)
         {

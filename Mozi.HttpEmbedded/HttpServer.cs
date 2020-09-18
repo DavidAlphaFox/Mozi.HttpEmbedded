@@ -73,7 +73,9 @@ namespace Mozi.HttpEmbedded
         }
         public HttpServer()
         {
-            Auth=new Authenticator();
+            //配置默认服务器名
+            _serverName = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name+ "/" + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            Auth =new Authenticator();
             _sc.OnServerStart += _sc_OnServerStart;
             _sc.OnClientConnect += _sc_OnClientConnect;
             _sc.OnReceiveStart += _sc_OnReceiveStart;
