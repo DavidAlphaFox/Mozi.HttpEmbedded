@@ -1,6 +1,6 @@
 ﻿using Mozi.HttpEmbedded.WebDav.Storage;
 
-namespace Mozi.HttpEmbedded.WebDav.MethodHandlers
+namespace Mozi.HttpEmbedded.WebDav.Method
 {
     /// <summary>
     /// </summary>

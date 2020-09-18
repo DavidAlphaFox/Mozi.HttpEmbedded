@@ -2,9 +2,9 @@
 using Mozi.HttpEmbedded.Encode;
 using Mozi.HttpEmbedded.Common;
 using Mozi.HttpEmbedded.WebDav.Storage;
-using Mozi.HttpEmbedded.WebDav.Exception;
+using Mozi.HttpEmbedded.WebDav.Exceptions;
 
-namespace Mozi.HttpEmbedded.WebDav.MethodHandlers
+namespace Mozi.HttpEmbedded.WebDav.Method
 {
     /// <summary>
     /// </summary>
@@ -21,9 +21,9 @@ namespace Mozi.HttpEmbedded.WebDav.MethodHandlers
             }
             catch (UnauthorizedAccessException)
             {
-                throw  new WebDavUnauthorizedException();
+                throw new WebDavUnauthorizedException();
             }
-            catch(WebDavNotFoundException)
+            catch (WebDavNotFoundException)
             {
                 throw new WebDavConflictException();
             }
@@ -51,32 +51,30 @@ namespace Mozi.HttpEmbedded.WebDav.MethodHandlers
             {
                 throw new WebDavNotFoundException();
             }
-            if (item == null)
-                throw new WebDavNotFoundException();
-
-            return item;
+            if (item != null)
+            {
+                return item;
+            }
+            throw new WebDavNotFoundException();
         }
 
         public static int GetDepthHeader(HttpRequest request)
         {
             string depth = request.Headers["Depth"];
 
-            if (string.IsNullOrEmpty(depth) || depth.Equals("infinity"))
+            if (!string.IsNullOrEmpty(depth) && !depth.Equals("infinity"))
             {
+                int value;
+                if (int.TryParse(depth, out value))
+                {
+                    if (value == 0 || value == 1)
+                    {
+                        return value;
+                    }
+                    return DepthInfinity;
+                }
                 return DepthInfinity;
             }
-
-            int value;
-            if (!int.TryParse(depth, out value))
-            {
-                return DepthInfinity;
-            }
-
-            if (value == 0 || value == 1)
-            {
-                return value;
-            }
-
             return DepthInfinity;
         }
 
@@ -98,15 +96,14 @@ namespace Mozi.HttpEmbedded.WebDav.MethodHandlers
             }
             return timeout;
         }
-        public static Uri GetDestinationHeader(HttpRequest request)
+        public static Uri GetdestItemHeader(HttpRequest request)
         {
-            string destinationUri = request.Headers["Destination"];
+            string destPath = request.Headers["destItem"];
 
-           
-            if (!string.IsNullOrEmpty(destinationUri))
-                return new Uri(destinationUri);
-            
-            throw new WebDavConflictException();
+
+            if (string.IsNullOrEmpty(destPath))
+                throw new WebDavConflictException();
+            return new Uri(destPath);
         }
     }
 }

@@ -1,6 +1,6 @@
 using System;
 
-namespace Mozi.HttpEmbedded.WebDav.Exception
+namespace Mozi.HttpEmbedded.WebDav.Exceptions
 {
     /// <summary>
     /// 

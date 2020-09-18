@@ -58,18 +58,18 @@ namespace Mozi.HttpEmbedded.WebDav.Storage
         /// Copies an existing store item into this collection, overwriting any existing items.
         /// </summary>
         /// <param name="source">The store item to copy from.</param>
-        /// <param name="destinationName">The name of the copy to create of <paramref name="source" />.</param>
+        /// <param name="destName">The name of the copy to create of <paramref name="source" />.</param>
         /// <param name="includeContent">The boolean for copying the containing files/folders or not.</param>
         /// <returns>
         /// The created <see cref="IWebDavStoreItem" /> instance.
         /// </returns>
-        IWebDavStoreItem CopyItemHere(IWebDavStoreItem source, string destinationName, bool includeContent);
+        IWebDavStoreItem CopyItemHere(IWebDavStoreItem source, string destName, bool includeContent);
 
         /// <summary>
         /// Moves an existing store item into this collection, overwriting any existing items.
         /// </summary>
         /// <param name="source">The store item to move.</param>
-        /// <param name="destinationName">The 
+        /// <param name="destName">The 
         /// <see cref="IWebDavStoreItem" /> that refers to the item that was moved,
         /// in its new location.</param>
         /// <returns>
@@ -79,6 +79,6 @@ namespace Mozi.HttpEmbedded.WebDav.Storage
         /// Note that the method should fail without creating or overwriting content in the
         /// target collection if the move cannot go through.
         /// </remarks>
-        IWebDavStoreItem MoveItemHere(IWebDavStoreItem source, string destinationName);
+        IWebDavStoreItem MoveItemHere(IWebDavStoreItem source, string destName);
     }
 }

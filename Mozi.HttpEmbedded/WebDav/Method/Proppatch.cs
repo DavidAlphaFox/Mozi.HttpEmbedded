@@ -1,13 +1,12 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Xml;
 using Mozi.HttpEmbedded.Common;
 using Mozi.HttpEmbedded.Encode;
 using Mozi.HttpEmbedded.WebDav.Storage;
 
-namespace Mozi.HttpEmbedded.WebDav.MethodHandlers
+namespace Mozi.HttpEmbedded.WebDav.Method
 {
     /// <summary>
     ///  <c>PROPPATCH</c> WebDAV扩展方法
@@ -25,7 +24,7 @@ namespace Mozi.HttpEmbedded.WebDav.MethodHandlers
         /// <param name="store"><see cref="IWebDavStore" /><see cref="DavServer" /></param>
         public StatusCode ProcessRequest(DavServer server, HttpContext context, IWebDavStore store)
         {
-           
+
             string requestUri = context.Request.Path;
 
             XmlNamespaceManager manager = null;
@@ -62,10 +61,6 @@ namespace Mozi.HttpEmbedded.WebDav.MethodHandlers
             {
                 Log.Warn(ex.Message);
             }
-
-            /***************************************************************************************************
-             * Take action
-             ***************************************************************************************************/
 
             //父目录资源清单
             IWebDavStoreCollection collection = GetParentCollection(store, context.Request.Path);
@@ -115,20 +110,20 @@ namespace Mozi.HttpEmbedded.WebDav.MethodHandlers
             WebDavProperty propstatProperty = new WebDavProperty("propstat", "");
             XmlElement propstatElement = propstatProperty.ToXmlElement(responseDoc);
 
-            WebDavProperty statusProperty = new WebDavProperty("status", "HTTP/1.1 " + context.Response.Status.Code + " " +context.Response.Status.Text);
+            WebDavProperty statusProperty = new WebDavProperty("status", "HTTP/1.1 " + context.Response.Status.Code + " " + context.Response.Status.Text);
             propstatElement.AppendChild(statusProperty.ToXmlElement(responseDoc));
 
-           
+
             foreach (WebDavProperty property in from XmlNode child in propNode.ChildNodes
-                where child.Name.ToLower()
-                    .Contains("creationtime") || child.Name.ToLower()
-                        .Contains("fileattributes") || child.Name.ToLower()
-                            .Contains("lastaccesstime") || child.Name.ToLower()
-                                .Contains("lastmodifiedtime")
-                let node = propNode.SelectSingleNode(child.Name, manager)
-                select node != null
-                    ? new WebDavProperty(child.LocalName, "", node.NamespaceURI)
-                    : new WebDavProperty(child.LocalName, "", ""))
+                                                where child.Name.ToLower()
+                                                    .Contains("creationtime") || child.Name.ToLower()
+                                                        .Contains("fileattributes") || child.Name.ToLower()
+                                                            .Contains("lastaccesstime") || child.Name.ToLower()
+                                                                .Contains("lastmodifiedtime")
+                                                let node = propNode.SelectSingleNode(child.Name, manager)
+                                                select node != null
+                                                    ? new WebDavProperty(child.LocalName, "", node.NamespaceURI)
+                                                    : new WebDavProperty(child.LocalName, "", ""))
                 propstatElement.AppendChild(property.ToXmlElement(responseDoc));
 
             responseNode.AppendChild(propstatElement);
@@ -137,7 +132,7 @@ namespace Mozi.HttpEmbedded.WebDav.MethodHandlers
             byte[] responseBytes = StringEncoder.Encode(resp);
 
             context.Response.Headers.Add(HeaderProperty.ContentType.PropertyTag, "text/xml");
-            
+
             context.Response.Write(responseBytes);
 
             return StatusCode.MultiStatus;

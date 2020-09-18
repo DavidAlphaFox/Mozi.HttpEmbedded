@@ -2,7 +2,7 @@ using Mozi.HttpEmbedded.Common;
 using Mozi.HttpEmbedded.Encode;
 using Mozi.HttpEmbedded.WebDav.Storage;
 
-namespace Mozi.HttpEmbedded.WebDav.MethodHandlers
+namespace Mozi.HttpEmbedded.WebDav.Method
 {
     /// <summary>
     ///  <c>MOVE</c> WebDAVÀ©Õ¹·½·¨
@@ -21,24 +21,30 @@ namespace Mozi.HttpEmbedded.WebDav.MethodHandlers
         {
             var source = WebDavExtensions.GetStoreItem(context.Request.Path, store);
 
-            string destinationUri = context.Request.Headers["Destination"];
-            IWebDavStoreCollection destinationParentCollection = GetParentCollection(store, destinationUri);
+            string destPath = context.Request.Headers["destItem"];
+            IWebDavStoreCollection destParentCollection = GetParentCollection(store, destPath);
 
             bool isNew = true;
-            UrlTree ut = new UrlTree(destinationUri);
-            string destinationName = UrlEncoder.Decode(ut.Last().TrimEnd('/', '\\'));
-            IWebDavStoreItem destination = destinationParentCollection.GetItemByName(destinationName);
-            if (destination != null)
+            UrlTree ut = new UrlTree(destPath);
+            string destName = UrlEncoder.Decode(ut.Last().TrimEnd('/', '\\'));
+            IWebDavStoreItem destItem = destParentCollection.GetItemByName(destName);
+            if (destItem != null)
             {
-                if (source.ItemPath == destination.ItemPath)
+                if (source.ItemPath == destItem.ItemPath)
+                {
                     return StatusCode.Forbidden;
+                }
+
                 if (!GetOverwriteHeader(context.Request))
+                {
                     return StatusCode.PreconditionFailed;
-                destinationParentCollection.Delete(destination);
+                }
+
+                destParentCollection.Delete(destItem);
                 isNew = false;
             }
 
-            destinationParentCollection.MoveItemHere(source, destinationName);
+            destParentCollection.MoveItemHere(source, destName);
 
             return StatusCode.Success;
         }

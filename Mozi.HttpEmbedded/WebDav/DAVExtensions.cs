@@ -1,6 +1,6 @@
 using System;
 using Mozi.HttpEmbedded.WebDav.Storage;
-using Mozi.HttpEmbedded.WebDav.Exception;
+using Mozi.HttpEmbedded.WebDav.Exceptions;
 
 namespace Mozi.HttpEmbedded.WebDav
 {

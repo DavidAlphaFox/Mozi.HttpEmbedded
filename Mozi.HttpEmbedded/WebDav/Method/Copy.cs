@@ -1,6 +1,5 @@
 using Mozi.HttpEmbedded.Common;
 using Mozi.HttpEmbedded.Encode;
-using Mozi.HttpEmbedded.WebDav.MethodHandlers;
 using Mozi.HttpEmbedded.WebDav.Storage;
 
 namespace Mozi.HttpEmbedded.WebDav.Method
@@ -23,27 +22,27 @@ namespace Mozi.HttpEmbedded.WebDav.Method
             IWebDavStoreItem source = WebDavExtensions.GetStoreItem(context.Request.Path, store);
             if (source is IWebDavStoreDocument || source is IWebDavStoreCollection)
             {
-                string destinationUri = context.Request.Headers["Destination"];
-                IWebDavStoreCollection destinationParentCollection = GetParentCollection(store, destinationUri);
+                string destPath = context.Request.Headers["destItem"];
+                IWebDavStoreCollection destParentCollection = GetParentCollection(store, destPath);
 
                 bool copyContent = GetDepthHeader(context.Request) != 0;
                 bool isNew = true;
-                UrlTree ut = new UrlTree(destinationUri);
-                string destinationName = UrlEncoder.Decode(ut.Last().TrimEnd('/', '\\'));
-                IWebDavStoreItem destination = destinationParentCollection.GetItemByName(destinationName);
+                UrlTree ut = new UrlTree(destPath);
+                string destName = UrlEncoder.Decode(ut.Last().TrimEnd('/', '\\'));
+                IWebDavStoreItem destItem = destParentCollection.GetItemByName(destName);
 
-                if (destination != null)
+                if (destItem != null)
                 {
-                    if (source.ItemPath == destination.ItemPath)
+                    if (source.ItemPath == destItem.ItemPath)
                         return StatusCode.Forbidden;
                     if (!GetOverwriteHeader(context.Request))
                         return StatusCode.PreconditionFailed;
-                    if (destination is IWebDavStoreCollection)
-                        destinationParentCollection.Delete(destination);
+                    if (destItem is IWebDavStoreCollection)
+                        destParentCollection.Delete(destItem);
                     isNew = false;
                 }
 
-                destinationParentCollection.CopyItemHere(source, destinationName, copyContent);
+                destParentCollection.CopyItemHere(source, destName, copyContent);
                 return isNew ? StatusCode.Created : StatusCode.NoContent;
             }
             else

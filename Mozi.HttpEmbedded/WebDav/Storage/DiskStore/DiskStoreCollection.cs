@@ -1,4 +1,4 @@
-using Mozi.HttpEmbedded.WebDav.Exception;
+using Mozi.HttpEmbedded.WebDav.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -325,22 +325,22 @@ namespace Mozi.HttpEmbedded.WebDav.Storage.DiskStore
         /// Copies an existing store item into this collection, overwriting any existing items.
         /// </summary>
         /// <param name="source">The store item to copy from.</param>
-        /// <param name="destinationName">The name of the copy to create of <paramref name="source" />.</param>
+        /// <param name="destName">The name of the copy to create of <paramref name="source" />.</param>
         /// <param name="includeContent">The boolean for copying the containing files/folders or not.</param>
         /// <returns>
         /// The created <see cref="IWebDavStoreItem" /> instance.
         /// </returns>
         /// <exception cref="WebDavUnauthorizedException">If the user is unauthorized or has no access</exception>
-        public IWebDavStoreItem CopyItemHere(IWebDavStoreItem source, string destinationName, bool includeContent)
+        public IWebDavStoreItem CopyItemHere(IWebDavStoreItem source, string destName, bool includeContent)
         {
-            string destinationItemPath = Path.Combine(ItemPath, destinationName);
+            string destItemItemPath = Path.Combine(ItemPath, destName);
 
             if (source.IsCollection)
             {
                 try
                 {
                     WindowsImpersonationContext wic = Identity.Impersonate();
-                    DirectoryCopy(source.ItemPath, destinationItemPath, true);
+                    DirectoryCopy(source.ItemPath, destItemItemPath, true);
                     wic.Undo();
                 }
                 catch
@@ -348,8 +348,8 @@ namespace Mozi.HttpEmbedded.WebDav.Storage.DiskStore
                     throw new WebDavUnauthorizedException();
                 }
 
-                DiskStoreCollection collection = new DiskStoreCollection(this, destinationItemPath);
-                _items.Add(destinationName, new WeakReference(collection));
+                DiskStoreCollection collection = new DiskStoreCollection(this, destItemItemPath);
+                _items.Add(destName, new WeakReference(collection));
                 return collection;
             }
 
@@ -357,7 +357,7 @@ namespace Mozi.HttpEmbedded.WebDav.Storage.DiskStore
             try
             {
                 WindowsImpersonationContext wic = Identity.Impersonate();
-                System.IO.File.Copy(source.ItemPath, destinationItemPath, true);
+                System.IO.File.Copy(source.ItemPath, destItemItemPath, true);
                 wic.Undo();
             }
             catch
@@ -365,8 +365,8 @@ namespace Mozi.HttpEmbedded.WebDav.Storage.DiskStore
                 throw new WebDavUnauthorizedException();
             }
 
-            DiskStoreDocument document = new DiskStoreDocument(this, destinationItemPath);
-            _items.Add(destinationName, new WeakReference(document));
+            DiskStoreDocument document = new DiskStoreDocument(this, destItemItemPath);
+            _items.Add(destName, new WeakReference(document));
             return document;
 
         }
@@ -392,7 +392,7 @@ namespace Mozi.HttpEmbedded.WebDav.Storage.DiskStore
                     + sourceDirName);
             }
 
-            // If the destination directory doesn't exist, create it. 
+            // If the destItem directory doesn't exist, create it. 
             if (!Directory.Exists(destDirName))
             {
                 Directory.CreateDirectory(destDirName);
@@ -413,7 +413,7 @@ namespace Mozi.HttpEmbedded.WebDav.Storage.DiskStore
         /// Moves an existing store item into this collection, overwriting any existing items.
         /// </summary>
         /// <param name="source">The store item to move.</param>
-        /// <param name="destinationName">The
+        /// <param name="destName">The
         /// <see cref="IWebDavStoreItem" /> that refers to the item that was moved,
         /// in its new location.</param>
         /// <returns>
@@ -425,7 +425,7 @@ namespace Mozi.HttpEmbedded.WebDav.Storage.DiskStore
         /// Note that the method should fail without creating or overwriting content in the
         /// target collection if the move cannot go through.
         /// </remarks>
-        public IWebDavStoreItem MoveItemHere(IWebDavStoreItem source, string destinationName)
+        public IWebDavStoreItem MoveItemHere(IWebDavStoreItem source, string destName)
         {
 
             string sourceItemPath = "";
@@ -438,7 +438,7 @@ namespace Mozi.HttpEmbedded.WebDav.Storage.DiskStore
             }
 
 
-            string destinationItemPath = Path.Combine(ItemPath, destinationName);
+            string destItemItemPath = Path.Combine(ItemPath, destName);
 
 
             if (source.IsCollection)
@@ -447,7 +447,7 @@ namespace Mozi.HttpEmbedded.WebDav.Storage.DiskStore
                 {
 
                     WindowsImpersonationContext wic = Identity.Impersonate();
-                    Directory.Move(sourceItemPath, destinationItemPath);
+                    Directory.Move(sourceItemPath, destItemItemPath);
                     wic.Undo();
                 }
                 catch
@@ -456,8 +456,8 @@ namespace Mozi.HttpEmbedded.WebDav.Storage.DiskStore
                 }
 
 
-                var collection = new DiskStoreCollection(this, destinationItemPath);
-                _items.Add(destinationName, new WeakReference(collection));
+                var collection = new DiskStoreCollection(this, destItemItemPath);
+                _items.Add(destName, new WeakReference(collection));
                 return collection;
             }
 
@@ -465,7 +465,7 @@ namespace Mozi.HttpEmbedded.WebDav.Storage.DiskStore
             {
 
                 WindowsImpersonationContext wic = Identity.Impersonate();
-                System.IO.File.Move(sourceItemPath, destinationItemPath);
+                System.IO.File.Move(sourceItemPath, destItemItemPath);
                 wic.Undo();
             }
             catch
@@ -474,8 +474,8 @@ namespace Mozi.HttpEmbedded.WebDav.Storage.DiskStore
             }
 
 
-            DiskStoreDocument document = new DiskStoreDocument(this, destinationItemPath);
-            _items.Add(destinationName, new WeakReference(document));
+            DiskStoreDocument document = new DiskStoreDocument(this, destItemItemPath);
+            _items.Add(destName, new WeakReference(document));
             return document;
 
         }

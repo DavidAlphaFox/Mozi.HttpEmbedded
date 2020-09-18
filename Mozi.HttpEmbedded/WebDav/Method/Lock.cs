@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Text;
 using System.Xml;
 using Mozi.HttpEmbedded.Common;
 using Mozi.HttpEmbedded.Encode;
 using Mozi.HttpEmbedded.WebDav.Storage;
 
-namespace Mozi.HttpEmbedded.WebDav.MethodHandlers
+namespace Mozi.HttpEmbedded.WebDav.Method
 {
     /// <summary>
     ///  <c>LOCK</c> WebDAV扩展方法
@@ -88,8 +87,8 @@ namespace Mozi.HttpEmbedded.WebDav.MethodHandlers
                 collection.CreateDocument(ut.Last().TrimEnd('/', '\\'));
                 isNew = true;
             }
-           
-            
+
+
 
             /***************************************************************************************************
              * Create the body for the response
@@ -97,7 +96,7 @@ namespace Mozi.HttpEmbedded.WebDav.MethodHandlers
 
             //实例化XML文档
             XmlDocument responseDoc = new XmlDocument();
-            string responseXml = "<?xml version=\"1.0\" encoding=\"utf-8\" ?><D:prop " +"xmlns:D=\"DAV:\"><D:lockdiscovery><D:activelock/></D:lockdiscovery></D:prop>";
+            string responseXml = "<?xml version=\"1.0\" encoding=\"utf-8\" ?><D:prop " + "xmlns:D=\"DAV:\"><D:lockdiscovery><D:activelock/></D:lockdiscovery></D:prop>";
             responseDoc.LoadXml(responseXml);
 
             //锁定节点
@@ -113,9 +112,9 @@ namespace Mozi.HttpEmbedded.WebDav.MethodHandlers
             activelock.AppendChild(timeoutProperty.ToXmlElement(responseDoc));
 
             // depth头属性
-            WebDavProperty depthProperty = new WebDavProperty("depth", (depth == 0 ? "0" : "Infinity"));
+            WebDavProperty depthProperty = new WebDavProperty("depth", depth == 0 ? "0" : "Infinity");
             activelock.AppendChild(depthProperty.ToXmlElement(responseDoc));
-            
+
             // locktoken头属性
             WebDavProperty locktokenProperty = new WebDavProperty("locktoken", "");
             XmlElement locktokenElement = locktokenProperty.ToXmlElement(responseDoc);

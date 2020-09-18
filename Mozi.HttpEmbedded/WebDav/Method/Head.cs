@@ -1,8 +1,8 @@
 using Mozi.HttpEmbedded.Source;
-using Mozi.HttpEmbedded.WebDav.Exception;
+using Mozi.HttpEmbedded.WebDav.Exceptions;
 using Mozi.HttpEmbedded.WebDav.Storage;
 
-namespace Mozi.HttpEmbedded.WebDav.MethodHandlers
+namespace Mozi.HttpEmbedded.WebDav.Method
 {
     /// <summary>
     ///  <c>PROPFIND</c> WebDAVÀ©Õ¹·½·¨

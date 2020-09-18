@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using System.Security.Principal;
 using System.Threading;
-using Mozi.HttpEmbedded.WebDav.Storage.BaseClasses;
+using Mozi.HttpEmbedded.WebDav.Storage.Base;
 
 namespace Mozi.HttpEmbedded.WebDav.Storage.DiskStore
 {

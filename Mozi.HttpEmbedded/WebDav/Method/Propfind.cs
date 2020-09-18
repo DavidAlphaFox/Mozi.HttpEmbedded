@@ -1,11 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Xml;
-using Mozi.HttpEmbedded.WebDav.MethodHandlers;
 using Mozi.HttpEmbedded.Common;
 using Mozi.HttpEmbedded.Encode;
 using Mozi.HttpEmbedded.WebDav.Storage;
-using Mozi.HttpEmbedded.WebDav.Exception;
+using Mozi.HttpEmbedded.WebDav.Exceptions;
 
 namespace Mozi.HttpEmbedded.WebDav.Method
 {
@@ -15,7 +14,7 @@ namespace Mozi.HttpEmbedded.WebDav.Method
     internal class Propfind : MethodHandlerBase, IMethodHandler
     {
         private string _requestUri;
-        private List<WebDavProperty> _requestedProperties;
+        private List<WebDavProperty> _reqProps;
         private List<IWebDavStoreItem> _webDavStoreItems;
 
         /// <summary>
@@ -46,7 +45,7 @@ namespace Mozi.HttpEmbedded.WebDav.Method
             XmlDocument requestDoc = GetXmlDocument(context.Request);
 
             //提取请求信息
-            _requestedProperties = new List<WebDavProperty>();
+            _reqProps = new List<WebDavProperty>();
             if (requestDoc.DocumentElement != null)
             {
                 if (requestDoc.DocumentElement.LocalName != "propfind")
@@ -61,25 +60,25 @@ namespace Mozi.HttpEmbedded.WebDav.Method
                         switch (n.LocalName)
                         {
                             case "allprop":
-                                _requestedProperties = GetAllProperties();
+                                _reqProps = GetAllProperties();
                                 break;
                             case "propname":
                                 isPropname = true;
-                                _requestedProperties = GetAllProperties();
+                                _reqProps = GetAllProperties();
                                 break;
                             case "prop":
                                 foreach (XmlNode child in n.ChildNodes)
-                                    _requestedProperties.Add(new WebDavProperty(child.LocalName, "", child.NamespaceURI));
+                                    _reqProps.Add(new WebDavProperty(child.LocalName, "", child.NamespaceURI));
                                 break;
                             default:
-                                _requestedProperties.Add(new WebDavProperty(n.LocalName, "", n.NamespaceURI));
+                                _reqProps.Add(new WebDavProperty(n.LocalName, "", n.NamespaceURI));
                                 break;
                         }
                     }
                 }
             }
             else
-                _requestedProperties = GetAllProperties();
+                _reqProps = GetAllProperties();
             XmlDocument responseDoc = ResponseDocument(context, isPropname, StatusCode.Success);
 
 
@@ -242,7 +241,7 @@ namespace Mozi.HttpEmbedded.WebDav.Method
                 WebDavProperty propProperty = new WebDavProperty("prop", "");
                 XmlElement propElement = propProperty.ToXmlElement(responseDoc);
 
-                foreach (WebDavProperty davProperty in _requestedProperties)
+                foreach (WebDavProperty davProperty in _reqProps)
                 {
                     propElement.AppendChild(PropChildElement(davProperty, responseDoc, webDavStoreItem, propname));
                 }

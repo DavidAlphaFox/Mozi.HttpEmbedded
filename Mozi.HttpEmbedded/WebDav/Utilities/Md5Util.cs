@@ -5,15 +5,9 @@ using Mozi.HttpEmbedded.Encode;
 
 namespace Mozi.HttpEmbedded.WebDav.Utilities
 {
-    /// <summary>
-    /// For generating an MD5 hash
-    /// </summary>
-    /// <remarks>
-    /// Source: <see href="https://gist.github.com/kristopherjohnson/3021045" />
-    /// </remarks>
     internal static class Md5Util
     {
-        public static string Md5HashStringForUtf8String(string s)
+        public static string Md5Hash4Utf8String(string s)
         {
             byte[] bytes =StringEncoder.Encode(s);
 
@@ -22,14 +16,6 @@ namespace Mozi.HttpEmbedded.WebDav.Utilities
  
             return HexStringFromBytes(hashBytes);
         }
-
-        /// <summary>
-        /// Convert an array of bytes to a string of hex digits
-        /// </summary>
-        /// <param name="bytes">Array of bytes</param>
-        /// <returns>
-        /// String of hex digits
-        /// </returns>
         public static string HexStringFromBytes(byte[] bytes)
         {
             StringBuilder sb = new StringBuilder();

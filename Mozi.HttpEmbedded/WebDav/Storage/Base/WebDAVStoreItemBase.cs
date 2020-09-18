@@ -1,7 +1,7 @@
-using Mozi.HttpEmbedded.WebDav.Exception;
+using Mozi.HttpEmbedded.WebDav.Exceptions;
 using System;
 
-namespace Mozi.HttpEmbedded.WebDav.Storage.BaseClasses
+namespace Mozi.HttpEmbedded.WebDav.Storage.Base
 {
     /// <summary>
     /// This is the base class for <see cref="IWebDavStoreItem" /> implementations.

@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Security.Principal;
 using Mozi.HttpEmbedded.Source;
-using Mozi.HttpEmbedded.WebDav.Exception;
+using Mozi.HttpEmbedded.WebDav.Exceptions;
 using Mozi.HttpEmbedded.WebDav.Utilities;
 
 namespace Mozi.HttpEmbedded.WebDav.Storage.DiskStore
@@ -59,7 +59,7 @@ namespace Mozi.HttpEmbedded.WebDav.Storage.DiskStore
         {
             get
             {
-                return Md5Util.Md5HashStringForUtf8String(ItemPath + ModificationDate + Hidden + Size);
+                return Md5Util.Md5Hash4Utf8String(ItemPath + ModificationDate + Hidden + Size);
             }
         }
 
