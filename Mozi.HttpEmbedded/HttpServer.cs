@@ -171,6 +171,7 @@ namespace Mozi.HttpEmbedded
                 //静态文件处理
                 if (st.Enabled && isStatic)
                 {
+                    //TODO 考虑增加断点续传的功能
                     //响应静态文件
                     if (st.Exists(path, ""))
                     {               
