@@ -52,7 +52,6 @@ namespace Mozi.HttpEmbedded.Common
         {
             Save("error", info, LogLevel.Debug);
         }
-
         public static void Warn(string info)
         {
             Save("error", info, LogLevel.Warn);

@@ -131,5 +131,39 @@ namespace Mozi.HttpEmbedded.Source
                 return data;
             }
         }
+        /// <summary>
+        /// 分段读取文件 
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="ext"></param>
+        /// <param name="offset"></param>
+        /// <param name="end"></param>
+        /// <returns></returns>
+        public byte[] Load(string path,string ext,int offset,int end)
+        {
+            if (end > offset&&offset>=0)
+            {
+                using (FileStream fs = new FileStream(_root + "\\" + path, FileMode.Open))
+                {
+                    byte[] data = new byte[fs.Length];
+                    fs.Read(data, offset, end - offset + 1);
+                    return data;
+                }
+            }
+            else
+            {
+                return new byte[] { };
+            }
+        }
+        /// <summary>
+        /// 取文件大小
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public long GetFileSize(string path)
+        {
+            FileInfo fi = new FileInfo(path);
+            return fi.Length;
+        }
     }
 }
