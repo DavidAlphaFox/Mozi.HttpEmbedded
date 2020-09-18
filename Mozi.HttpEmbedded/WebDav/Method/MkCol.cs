@@ -1,13 +1,13 @@
 using Mozi.HttpEmbedded.Common;
 using Mozi.HttpEmbedded.Encode;
-using Mozi.HttpEmbedded.WebDav.Stores;
+using Mozi.HttpEmbedded.WebDav.Storage;
 
 namespace Mozi.HttpEmbedded.WebDav.MethodHandlers
 {
     /// <summary>
     ///  <c>MKCOL</c> WebDAV扩展方法
     /// </summary>
-    internal class MkCol : WebDavMethodHandlerBase, IMethodHandler
+    internal class MkCol : MethodHandlerBase, IMethodHandler
     {
         /// <summary>
         /// 响应请求

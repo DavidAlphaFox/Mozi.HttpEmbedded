@@ -1,13 +1,13 @@
 using Mozi.HttpEmbedded.Source;
-using Mozi.HttpEmbedded.WebDav.Exceptions;
-using Mozi.HttpEmbedded.WebDav.Stores;
+using Mozi.HttpEmbedded.WebDav.Exception;
+using Mozi.HttpEmbedded.WebDav.Storage;
 
 namespace Mozi.HttpEmbedded.WebDav.MethodHandlers
 {
     /// <summary>
     ///  <c>PROPFIND</c> WebDAV扩展方法
     /// </summary>
-    internal class WebDavHeadMethodHandler : WebDavMethodHandlerBase, IMethodHandler
+    internal class WebDavHeadMethodHandler : MethodHandlerBase, IMethodHandler
     {
         /// <summary>
         /// 响应请求

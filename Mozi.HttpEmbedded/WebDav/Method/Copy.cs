@@ -1,14 +1,14 @@
 using Mozi.HttpEmbedded.Common;
 using Mozi.HttpEmbedded.Encode;
 using Mozi.HttpEmbedded.WebDav.MethodHandlers;
-using Mozi.HttpEmbedded.WebDav.Stores;
+using Mozi.HttpEmbedded.WebDav.Storage;
 
 namespace Mozi.HttpEmbedded.WebDav.Method
 {
     /// <summary>
     ///  <c>COPY</c> WebDAV扩展方法
     /// </summary>
-    internal class Copy : WebDavMethodHandlerBase, IMethodHandler
+    internal class Copy : MethodHandlerBase, IMethodHandler
     {
         /// <summary>
         /// 响应请求

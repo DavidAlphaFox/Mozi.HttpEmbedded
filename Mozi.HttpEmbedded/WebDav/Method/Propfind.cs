@@ -1,18 +1,18 @@
 using System;
 using System.Collections.Generic;
 using System.Xml;
-using Mozi.HttpEmbedded.WebDav.Exceptions;
 using Mozi.HttpEmbedded.WebDav.MethodHandlers;
-using Mozi.HttpEmbedded.WebDav.Stores;
 using Mozi.HttpEmbedded.Common;
 using Mozi.HttpEmbedded.Encode;
+using Mozi.HttpEmbedded.WebDav.Storage;
+using Mozi.HttpEmbedded.WebDav.Exception;
 
 namespace Mozi.HttpEmbedded.WebDav.Method
 {
     /// <summary>
     ///  <c>PROPFIND</c> WebDAVÀ©Õ¹·½·¨
     /// </summary>
-    internal class Propfind : WebDavMethodHandlerBase, IMethodHandler
+    internal class Propfind : MethodHandlerBase, IMethodHandler
     {
         private string _requestUri;
         private List<WebDavProperty> _requestedProperties;

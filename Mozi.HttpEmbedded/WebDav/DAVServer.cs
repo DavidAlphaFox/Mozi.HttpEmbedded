@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using Mozi.HttpEmbedded.WebDav.Exceptions;
+using Mozi.HttpEmbedded.WebDav.Exception;
 using Mozi.HttpEmbedded.WebDav.Method;
 using Mozi.HttpEmbedded.WebDav.MethodHandlers;
-using Mozi.HttpEmbedded.WebDav.Stores;
-using Mozi.HttpEmbedded.WebDav.Stores.DiskStore;
+using Mozi.HttpEmbedded.WebDav.Storage;
+using Mozi.HttpEmbedded.WebDav.Storage.DiskStore;
 
 namespace Mozi.HttpEmbedded.WebDav
 {

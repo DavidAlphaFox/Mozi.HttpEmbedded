@@ -1,4 +1,4 @@
-using Mozi.HttpEmbedded.WebDav.Exceptions;
+using Mozi.HttpEmbedded.WebDav.Exception;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -7,22 +7,22 @@ using System.Linq;
 using System.Security.AccessControl;
 using System.Security.Principal;
 
-namespace Mozi.HttpEmbedded.WebDav.Stores.DiskStore
+namespace Mozi.HttpEmbedded.WebDav.Storage.DiskStore
 {
     /// <summary>
     /// This class implements a disk-based <see cref="IWebDavStore" /> that maps to a folder on disk.
     /// </summary>
     [DebuggerDisplay("Directory ({Name})")]
-    public sealed class WebDavDiskStoreCollection : WebDavDiskStoreItem, IWebDavStoreCollection
+    public sealed class DiskStoreCollection : DiskStoreItem, IWebDavStoreCollection
     {
         private readonly Dictionary<string, WeakReference> _items = new Dictionary<string, WeakReference>();
 
         /// <summary>
-        /// Initializes a new instance of <see cref="WebDavDiskStoreCollection" /> class.
+        /// Initializes a new instance of <see cref="DiskStoreCollection" /> class.
         /// </summary>
-        /// <param name="parentCollection">The parent <see cref="WebDavDiskStoreCollection" /> that contains this <see cref="WebDavDiskStoreCollection" />.</param>
-        /// <param name="path">The path to the folder on this that this <see cref="WebDavDiskStoreCollection" /> maps to.</param>
-        public WebDavDiskStoreCollection(WebDavDiskStoreCollection parentCollection, string path): base(parentCollection, path)
+        /// <param name="parentCollection">The parent <see cref="DiskStoreCollection" /> that contains this <see cref="DiskStoreCollection" />.</param>
+        /// <param name="path">The path to the folder on this that this <see cref="DiskStoreCollection" /> maps to.</param>
+        public DiskStoreCollection(DiskStoreCollection parentCollection, string path) : base(parentCollection, path)
         {
 
         }
@@ -57,9 +57,9 @@ namespace Mozi.HttpEmbedded.WebDav.Stores.DiskStore
                         }
                         catch
                         {
-                           
+
                         }
-                     }
+                    }
                 }
                 catch
                 {
@@ -69,19 +69,19 @@ namespace Mozi.HttpEmbedded.WebDav.Stores.DiskStore
                 foreach (string subDirectoryPath in directories)
                 {
                     string name = Path.GetFileName(subDirectoryPath);
-                    WebDavDiskStoreCollection collection = null;
+                    DiskStoreCollection collection = null;
 
                     WeakReference wr;
                     if (_items.TryGetValue(name, out wr))
                     {
-                        collection = wr.Target as WebDavDiskStoreCollection;
+                        collection = wr.Target as DiskStoreCollection;
                         if (collection == null)
                             toDelete.Remove(wr);
                     }
 
                     if (collection == null)
                     {
-                        collection = new WebDavDiskStoreCollection(this, subDirectoryPath);
+                        collection = new DiskStoreCollection(this, subDirectoryPath);
                         _items[name] = new WeakReference(collection);
                     }
 
@@ -100,19 +100,19 @@ namespace Mozi.HttpEmbedded.WebDav.Stores.DiskStore
                 foreach (string filePath in files)
                 {
                     string name = Path.GetFileName(filePath);
-                    WebDavDiskStoreDocument document = null;
+                    DiskStoreDocument document = null;
 
                     WeakReference wr;
                     if (_items.TryGetValue(name, out wr))
                     {
-                        document = wr.Target as WebDavDiskStoreDocument;
+                        document = wr.Target as DiskStoreDocument;
                         if (document == null)
                             toDelete.Remove(wr);
                     }
 
                     if (document == null)
                     {
-                        document = new WebDavDiskStoreDocument(this, filePath);
+                        document = new DiskStoreDocument(this, filePath);
                         _items[name] = new WeakReference(document);
                     }
                     items.Add(document);
@@ -210,9 +210,9 @@ namespace Mozi.HttpEmbedded.WebDav.Stores.DiskStore
             //using (Identity.Impersonate())
             {
                 if (System.IO.File.Exists(path) && CanReadFile(path))
-                    return new WebDavDiskStoreDocument(this, path);
+                    return new DiskStoreDocument(this, path);
                 if (Directory.Exists(path) && CanReadDirectory(path))
-                    return new WebDavDiskStoreCollection(this, path);
+                    return new DiskStoreCollection(this, path);
             }
 
             return null;
@@ -252,9 +252,9 @@ namespace Mozi.HttpEmbedded.WebDav.Stores.DiskStore
         /// <exception cref="WebDavUnauthorizedException">If the user is unauthorized or has no access.</exception>
         public void Delete(IWebDavStoreItem item)
         {
-            WebDavDiskStoreItem diskItem = (WebDavDiskStoreItem)item;
+            DiskStoreItem diskItem = (DiskStoreItem)item;
             string itemPath = diskItem.ItemPath;
-            if (item is WebDavDiskStoreDocument)
+            if (item is DiskStoreDocument)
             {
                 if (!System.IO.File.Exists(itemPath))
                     throw new WebDavNotFoundException();
@@ -276,7 +276,7 @@ namespace Mozi.HttpEmbedded.WebDav.Stores.DiskStore
                     throw new WebDavNotFoundException();
                 try
                 {
-                    
+
                     WindowsImpersonationContext wic = Identity.Impersonate();
                     Directory.Delete(diskItem.ItemPath);
                     wic.Undo();
@@ -305,7 +305,7 @@ namespace Mozi.HttpEmbedded.WebDav.Stores.DiskStore
 
             try
             {
-                
+
                 WindowsImpersonationContext wic = Identity.Impersonate();
                 System.IO.File.Create(itemPath).Dispose();
                 wic.Undo();
@@ -315,7 +315,7 @@ namespace Mozi.HttpEmbedded.WebDav.Stores.DiskStore
                 throw new WebDavUnauthorizedException();
             }
 
-            WebDavDiskStoreDocument document = new WebDavDiskStoreDocument(this, itemPath);
+            DiskStoreDocument document = new DiskStoreDocument(this, itemPath);
             _items.Add(name, new WeakReference(document));
             return document;
 
@@ -348,26 +348,26 @@ namespace Mozi.HttpEmbedded.WebDav.Stores.DiskStore
                     throw new WebDavUnauthorizedException();
                 }
 
-                WebDavDiskStoreCollection collection = new WebDavDiskStoreCollection(this, destinationItemPath);
+                DiskStoreCollection collection = new DiskStoreCollection(this, destinationItemPath);
                 _items.Add(destinationName, new WeakReference(collection));
                 return collection;
             }
 
 
-                try
-                {
-                    WindowsImpersonationContext wic = Identity.Impersonate();
+            try
+            {
+                WindowsImpersonationContext wic = Identity.Impersonate();
                 System.IO.File.Copy(source.ItemPath, destinationItemPath, true);
-                    wic.Undo();
-                }
-                catch
-                {
-                    throw new WebDavUnauthorizedException();
-                }
+                wic.Undo();
+            }
+            catch
+            {
+                throw new WebDavUnauthorizedException();
+            }
 
-                WebDavDiskStoreDocument document = new WebDavDiskStoreDocument(this, destinationItemPath);
-                _items.Add(destinationName, new WeakReference(document));
-                return document;
+            DiskStoreDocument document = new DiskStoreDocument(this, destinationItemPath);
+            _items.Add(destinationName, new WeakReference(document));
+            return document;
 
         }
 
@@ -381,7 +381,7 @@ namespace Mozi.HttpEmbedded.WebDav.Stores.DiskStore
         ///                     + sourceDirName</exception>
         private static void DirectoryCopy(string sourceDirName, string destDirName, bool copySubDirs)
         {
-           
+
             DirectoryInfo dir = new DirectoryInfo(sourceDirName);
             DirectoryInfo[] dirs = dir.GetDirectories();
 
@@ -400,7 +400,7 @@ namespace Mozi.HttpEmbedded.WebDav.Stores.DiskStore
 
             // If copying subdirectories, copy them and their contents to new location. 
             if (!copySubDirs) return;
-           
+
             FileInfo[] files = dir.GetFiles();
             foreach (FileInfo file in files)
                 file.CopyTo(Path.Combine(destDirName, file.Name), false);
@@ -427,9 +427,9 @@ namespace Mozi.HttpEmbedded.WebDav.Stores.DiskStore
         /// </remarks>
         public IWebDavStoreItem MoveItemHere(IWebDavStoreItem source, string destinationName)
         {
-           
+
             string sourceItemPath = "";
-            WebDavDiskStoreItem sourceItem = (WebDavDiskStoreItem)source;
+            DiskStoreItem sourceItem = (DiskStoreItem)source;
             sourceItemPath = sourceItem.ItemPath;
 
             if (sourceItemPath.Equals(""))
@@ -437,15 +437,15 @@ namespace Mozi.HttpEmbedded.WebDav.Stores.DiskStore
                 throw new Exception("Path to the source item not defined.");
             }
 
-           
+
             string destinationItemPath = Path.Combine(ItemPath, destinationName);
 
-           
+
             if (source.IsCollection)
             {
                 try
                 {
-                   
+
                     WindowsImpersonationContext wic = Identity.Impersonate();
                     Directory.Move(sourceItemPath, destinationItemPath);
                     wic.Undo();
@@ -455,29 +455,29 @@ namespace Mozi.HttpEmbedded.WebDav.Stores.DiskStore
                     throw new WebDavUnauthorizedException();
                 }
 
-               
-                var collection = new WebDavDiskStoreCollection(this, destinationItemPath);
+
+                var collection = new DiskStoreCollection(this, destinationItemPath);
                 _items.Add(destinationName, new WeakReference(collection));
                 return collection;
             }
-            
-                try
-                {            
-                   
-                    WindowsImpersonationContext wic = Identity.Impersonate();
-                    System.IO.File.Move(sourceItemPath, destinationItemPath);
-                    wic.Undo();
-                }
-                catch
-                    {
-                    throw new WebDavUnauthorizedException();
-                    }
 
-           
-            WebDavDiskStoreDocument document = new WebDavDiskStoreDocument(this, destinationItemPath);
+            try
+            {
+
+                WindowsImpersonationContext wic = Identity.Impersonate();
+                System.IO.File.Move(sourceItemPath, destinationItemPath);
+                wic.Undo();
+            }
+            catch
+            {
+                throw new WebDavUnauthorizedException();
+            }
+
+
+            DiskStoreDocument document = new DiskStoreDocument(this, destinationItemPath);
             _items.Add(destinationName, new WeakReference(document));
             return document;
-            
+
         }
 
         #endregion

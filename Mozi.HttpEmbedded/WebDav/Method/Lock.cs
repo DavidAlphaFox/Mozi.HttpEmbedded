@@ -3,14 +3,14 @@ using System.Text;
 using System.Xml;
 using Mozi.HttpEmbedded.Common;
 using Mozi.HttpEmbedded.Encode;
-using Mozi.HttpEmbedded.WebDav.Stores;
+using Mozi.HttpEmbedded.WebDav.Storage;
 
 namespace Mozi.HttpEmbedded.WebDav.MethodHandlers
 {
     /// <summary>
     ///  <c>LOCK</c> WebDAV扩展方法
     /// </summary>
-    internal class Lock : WebDavMethodHandlerBase, IMethodHandler
+    internal class Lock : MethodHandlerBase, IMethodHandler
     {
         /// <summary>
         /// 响应请求

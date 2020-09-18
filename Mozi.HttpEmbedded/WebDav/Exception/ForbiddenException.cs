@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Mozi.HttpEmbedded.WebDav.Exceptions
+namespace Mozi.HttpEmbedded.WebDav.Exception
 {
     /// <summary>
     /// 403
@@ -13,10 +13,9 @@ namespace Mozi.HttpEmbedded.WebDav.Exceptions
         /// <param name="message"></param>
         /// <param name="innerException">
         /// </param>
-        public WebDavForbiddenException(string message = null, Exception innerException = null)
-            : base(StatusCode.Forbidden, message, innerException)
+        public WebDavForbiddenException(string message = null, Exception innerException = null) : base(StatusCode.Forbidden, message, innerException)
         {
-            
+
         }
     }
 }

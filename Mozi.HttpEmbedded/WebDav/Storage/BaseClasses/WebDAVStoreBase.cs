@@ -1,6 +1,6 @@
 using System;
 
-namespace Mozi.HttpEmbedded.WebDav.Stores.BaseClasses
+namespace Mozi.HttpEmbedded.WebDav.Storage.BaseClasses
 {
     /// <summary>
     /// This class is a base class for <see cref="IWebDavStore" /> implementations.

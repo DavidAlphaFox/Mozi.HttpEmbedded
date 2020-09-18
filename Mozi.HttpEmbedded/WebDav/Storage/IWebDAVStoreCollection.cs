@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Mozi.HttpEmbedded.WebDav.Stores
+namespace Mozi.HttpEmbedded.WebDav.Storage
 {
     /// <summary>
     /// This interface must be implemented by classes that operate as document collections in a store.

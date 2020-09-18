@@ -1,6 +1,6 @@
 using System;
 
-namespace Mozi.HttpEmbedded.WebDav.Stores
+namespace Mozi.HttpEmbedded.WebDav.Storage
 {
     /// <summary>
     /// This interface must be implemented by classes that will function as a store item,

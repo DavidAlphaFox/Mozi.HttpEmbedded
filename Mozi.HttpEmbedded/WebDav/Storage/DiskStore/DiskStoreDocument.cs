@@ -3,32 +3,32 @@ using System.Diagnostics;
 using System.IO;
 using System.Security.Principal;
 using Mozi.HttpEmbedded.Source;
-using Mozi.HttpEmbedded.WebDav.Exceptions;
+using Mozi.HttpEmbedded.WebDav.Exception;
 using Mozi.HttpEmbedded.WebDav.Utilities;
 
-namespace Mozi.HttpEmbedded.WebDav.Stores.DiskStore
+namespace Mozi.HttpEmbedded.WebDav.Storage.DiskStore
 {
     /// <summary>
-    /// This class implements a disk-based <see cref="WebDavDiskStoreDocument" /> mapped to a file.
+    /// This class implements a disk-based <see cref="DiskStoreDocument" /> mapped to a file.
     /// </summary>
     [DebuggerDisplay("File ({Name})")]
-    public sealed class WebDavDiskStoreDocument : WebDavDiskStoreItem, IWebDavStoreDocument
+    public sealed class DiskStoreDocument : DiskStoreItem, IWebDavStoreDocument
     {
         /// <summary>
-        /// Initializes a new instance of <see cref="WebDavDiskStoreDocument" /> class.
+        /// Initializes a new instance of <see cref="DiskStoreDocument" /> class.
         /// </summary>
         /// <param name="parentCollection">The parent 
-        /// <see cref="WebDavDiskStoreCollection" /> that contains this 
-        /// <see cref="WebDavDiskStoreItem" />;
+        /// <see cref="DiskStoreCollection" /> that contains this 
+        /// <see cref="DiskStoreItem" />;
         /// or 
         /// if this is the root 
-        /// <see cref="WebDavDiskStoreCollection" />.</param>
-        /// <param name="path">The path that this <see cref="WebDavDiskStoreItem" /> maps to.</param>
+        /// <see cref="DiskStoreCollection" />.</param>
+        /// <param name="path">The path that this <see cref="DiskStoreItem" /> maps to.</param>
         /// <exception cref="ArgumentNullException"><paramref name="path" /> is or empty.</exception>
-        public WebDavDiskStoreDocument(WebDavDiskStoreCollection parentCollection, string path)
+        public DiskStoreDocument(DiskStoreCollection parentCollection, string path)
             : base(parentCollection, path)
         {
-            
+
         }
 
         #region IWebDAVStoreDocument Members
@@ -113,7 +113,7 @@ namespace Mozi.HttpEmbedded.WebDav.Stores.DiskStore
             Stream stream = null;
             try
             {
-               
+
                 WindowsImpersonationContext wic = Identity.Impersonate();
                 stream = new FileStream(ItemPath, FileMode.Create, FileAccess.ReadWrite, FileShare.None);
                 wic.Undo();

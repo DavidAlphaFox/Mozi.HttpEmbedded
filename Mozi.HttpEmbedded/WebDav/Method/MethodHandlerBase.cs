@@ -1,14 +1,14 @@
-﻿using Mozi.HttpEmbedded.WebDav.Exceptions;
-using System;
-using Mozi.HttpEmbedded.WebDav.Stores;
+﻿using System;
 using Mozi.HttpEmbedded.Encode;
 using Mozi.HttpEmbedded.Common;
+using Mozi.HttpEmbedded.WebDav.Storage;
+using Mozi.HttpEmbedded.WebDav.Exception;
 
 namespace Mozi.HttpEmbedded.WebDav.MethodHandlers
 {
     /// <summary>
     /// </summary>
-    internal abstract class WebDavMethodHandlerBase
+    internal abstract class MethodHandlerBase
     {
         private const int DepthInfinity = -1;
 

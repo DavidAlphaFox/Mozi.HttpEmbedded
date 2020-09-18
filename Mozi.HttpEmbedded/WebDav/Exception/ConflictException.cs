@@ -1,6 +1,6 @@
 using System;
 
-namespace Mozi.HttpEmbedded.WebDav.Exceptions
+namespace Mozi.HttpEmbedded.WebDav.Exception
 {
     /// <summary>
     /// 409
@@ -17,7 +17,7 @@ namespace Mozi.HttpEmbedded.WebDav.Exceptions
         /// </param>
         public WebDavConflictException(string message = null, Exception innerException = null) : base(StatusCode.Conflict, message, innerException)
         {
-            
+
         }
     }
 }

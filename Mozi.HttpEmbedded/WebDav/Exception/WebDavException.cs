@@ -1,6 +1,6 @@
 using System;
 
-namespace Mozi.HttpEmbedded.WebDav.Exceptions
+namespace Mozi.HttpEmbedded.WebDav.Exception
 {
     /// <summary>
     /// </summary>
@@ -12,7 +12,7 @@ namespace Mozi.HttpEmbedded.WebDav.Exceptions
 
         public override string Message { get; }
 
-        public WebDavException(StatusCode status,string message,Exception innerException) 
+        public WebDavException(StatusCode status, string message, Exception innerException)
         {
             _status = status;
             Message = message;

@@ -1,11 +1,11 @@
-﻿using Mozi.HttpEmbedded.WebDav.Stores;
+﻿using Mozi.HttpEmbedded.WebDav.Storage;
 
 namespace Mozi.HttpEmbedded.WebDav.MethodHandlers
 {
     /// <summary>
     ///  <c>PUT</c> WebDAV扩展方法
     /// </summary>
-    internal class Unlock : WebDavMethodHandlerBase, IMethodHandler
+    internal class Unlock : MethodHandlerBase, IMethodHandler
     {
         /// <summary>
         /// 响应请求

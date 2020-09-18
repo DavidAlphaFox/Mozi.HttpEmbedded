@@ -2,7 +2,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 
-namespace Mozi.HttpEmbedded.WebDav.Stores.DiskStore
+namespace Mozi.HttpEmbedded.WebDav.Storage.DiskStore
 {
     /// <summary>
     /// This class implements a disk-based <see cref="IWebDavStore" />.
@@ -30,10 +30,10 @@ namespace Mozi.HttpEmbedded.WebDav.Stores.DiskStore
             {
                 if (!Path.IsPathRooted(rootPath))
                 {
-                    rootPath = AppDomain.CurrentDomain.BaseDirectory  + rootPath+"\\";
+                    rootPath = AppDomain.CurrentDomain.BaseDirectory + rootPath + "\\";
                 }
-                if (!Directory.Exists(rootPath)) 
-                { 
+                if (!Directory.Exists(rootPath))
+                {
                     throw new DirectoryNotFoundException(rootPath);
                 }
             }
@@ -63,7 +63,7 @@ namespace Mozi.HttpEmbedded.WebDav.Stores.DiskStore
         {
             get
             {
-                return new WebDavDiskStoreCollection(null, _rootPath);
+                return new DiskStoreCollection(null, _rootPath);
             }
         }
 

@@ -1,6 +1,6 @@
 using System;
 
-namespace Mozi.HttpEmbedded.WebDav.Exceptions
+namespace Mozi.HttpEmbedded.WebDav.Exception
 {
     /// <summary>
     /// 
@@ -16,7 +16,7 @@ namespace Mozi.HttpEmbedded.WebDav.Exceptions
         public WebDavUnauthorizedException(string message = null, Exception innerException = null)
             : base(StatusCode.Unauthorized, message, innerException)
         {
-            
+
         }
     }
 }

@@ -5,14 +5,14 @@ using System.Text;
 using System.Xml;
 using Mozi.HttpEmbedded.Common;
 using Mozi.HttpEmbedded.Encode;
-using Mozi.HttpEmbedded.WebDav.Stores;
+using Mozi.HttpEmbedded.WebDav.Storage;
 
 namespace Mozi.HttpEmbedded.WebDav.MethodHandlers
 {
     /// <summary>
     ///  <c>PROPPATCH</c> WebDAV扩展方法
     /// </summary>
-    internal class Proppatch : WebDavMethodHandlerBase, IMethodHandler
+    internal class Proppatch : MethodHandlerBase, IMethodHandler
     {
 
         /// <summary>

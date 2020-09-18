@@ -2,40 +2,40 @@ using System;
 using System.IO;
 using System.Security.Principal;
 using System.Threading;
-using Mozi.HttpEmbedded.WebDav.Stores.BaseClasses;
+using Mozi.HttpEmbedded.WebDav.Storage.BaseClasses;
 
-namespace Mozi.HttpEmbedded.WebDav.Stores.DiskStore
+namespace Mozi.HttpEmbedded.WebDav.Storage.DiskStore
 {
     /// <summary>
     /// This class implements a disk-based 
     /// <see cref="IWebDavStoreItem" /> which can be either
     /// a folder on disk (
-    /// <see cref="WebDavDiskStoreCollection" />) or a file on disk
+    /// <see cref="DiskStoreCollection" />) or a file on disk
     /// (
-    /// <see cref="WebDavDiskStoreDocument" />).
+    /// <see cref="DiskStoreDocument" />).
     /// </summary>
-    public class WebDavDiskStoreItem : WebDavStoreItemBase
+    public class DiskStoreItem : WebDavStoreItemBase
     {
         /// <summary>
         /// Gets the Identity of the person logged on via HTTP Request.
         /// </summary>
         protected readonly WindowsIdentity Identity;
-        private readonly WebDavDiskStoreCollection _parentCollection;
+        private readonly DiskStoreCollection _parentCollection;
         private readonly string _path;
 
         /// <summary>
-        /// Initializes a new instance of <see cref="WebDavDiskStoreItem" /> class.
+        /// Initializes a new instance of <see cref="DiskStoreItem" /> class.
         /// </summary>
         /// <param name="parentCollection">The parent 
-        /// <see cref="WebDavDiskStoreCollection" /> that contains this 
-        /// <see cref="WebDavDiskStoreItem" />;
+        /// <see cref="DiskStoreCollection" /> that contains this 
+        /// <see cref="DiskStoreItem" />;
         /// or 
         /// if this is the root 
-        /// <see cref="WebDavDiskStoreCollection" />.</param>
-        /// <param name="path">The path that this <see cref="WebDavDiskStoreItem" /> maps to.</param>
+        /// <see cref="DiskStoreCollection" />.</param>
+        /// <param name="path">The path that this <see cref="DiskStoreItem" /> maps to.</param>
         /// <exception cref="ArgumentNullException">path</exception>
         /// <exception cref="ArgumentNullException"><paramref name="path" /> is or empty.</exception>
-        protected WebDavDiskStoreItem(WebDavDiskStoreCollection parentCollection, string path) : base(parentCollection, path)
+        protected DiskStoreItem(DiskStoreCollection parentCollection, string path) : base(parentCollection, path)
         {
             if (string.IsNullOrWhiteSpace(path))
                 throw new ArgumentNullException("path");
@@ -46,7 +46,7 @@ namespace Mozi.HttpEmbedded.WebDav.Stores.DiskStore
         }
 
         /// <summary>
-        /// Gets the path to this <see cref="WebDavDiskStoreItem" />.
+        /// Gets the path to this <see cref="DiskStoreItem" />.
         /// </summary>
         public override string ItemPath
         {
@@ -74,7 +74,7 @@ namespace Mozi.HttpEmbedded.WebDav.Stores.DiskStore
                 throw new InvalidOperationException("Unable to rename item");
             }
         }
-        public  string Ext
+        public string Ext
         {
             get
             {
@@ -103,7 +103,7 @@ namespace Mozi.HttpEmbedded.WebDav.Stores.DiskStore
         {
             get
             {
-                
+
                 return System.IO.File.GetCreationTime(_path);
             }
         }
@@ -115,7 +115,7 @@ namespace Mozi.HttpEmbedded.WebDav.Stores.DiskStore
         {
             get
             {
-                
+
                 return System.IO.File.GetLastWriteTime(_path);
             }
         }

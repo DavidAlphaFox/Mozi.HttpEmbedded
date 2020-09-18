@@ -1,4 +1,4 @@
-﻿using Mozi.HttpEmbedded.WebDav.Stores;
+﻿using Mozi.HttpEmbedded.WebDav.Storage;
 
 namespace Mozi.HttpEmbedded.WebDav.MethodHandlers
 {

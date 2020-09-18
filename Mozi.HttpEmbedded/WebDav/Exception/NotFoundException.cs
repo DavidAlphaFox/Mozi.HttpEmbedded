@@ -1,6 +1,6 @@
 using System;
 
-namespace Mozi.HttpEmbedded.WebDav.Exceptions
+namespace Mozi.HttpEmbedded.WebDav.Exception
 {
     /// <summary>
     /// 404
@@ -16,7 +16,7 @@ namespace Mozi.HttpEmbedded.WebDav.Exceptions
         public WebDavNotFoundException(string message = null, Exception innerException = null)
             : base(StatusCode.NotFound, message, innerException)
         {
-            
+
         }
     }
 }
