@@ -3,7 +3,7 @@
     /// <summary>
     /// 响应状态码
     /// </summary>
-    public class StatusCode
+    public struct StatusCode
     {
         /// <summary>
         /// 这个临时响应表明，迄今为止的所有内容都是可行的，客户端应该继续请求，如果已经完成，则忽略它。
@@ -272,13 +272,13 @@
         /// </summary>
         public static StatusCode AuthenticationRequired = new StatusCode(511, "Network Authentication Required");
 
-        private int _code = 0;
-        private string _text = "";
+        private int _code;
+        private string _text;
 
         /// <summary>
         /// 状态码值
         /// </summary>
-        public int Code{get { return _code; }}
+        public int Code {get { return _code; } }
 
         public string Text {get { return _text; }}
 

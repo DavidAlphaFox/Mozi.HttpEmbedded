@@ -5,7 +5,6 @@ using System.Net.Sockets;
 namespace Mozi.HttpEmbedded
 {
     //TODO 加入定时器并利用POLL判断远端是否断开
-
     /// <summary>
     /// 异步单线程
     /// </summary>

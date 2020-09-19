@@ -127,7 +127,8 @@ namespace Mozi.HttpEmbedded
             int count = 0;
 
             int index=0;
-            while (Array.IndexOf(data,ASCIICode.CR,posCR+1)>0)
+            int dataLength = data.Length;
+            while ((posCR< dataLength) &&Array.IndexOf(data,ASCIICode.CR,posCR+1)>0)
             {
                 posCR = Array.IndexOf(data, ASCIICode.CR, posCR + 1);
 
@@ -143,7 +144,7 @@ namespace Mozi.HttpEmbedded
                     SplitHeaders(ref req, fragement);
                 }
 
-                if (Array.IndexOf(data, ASCIICode.CR, posCR + 1) == posCR + 2)
+                if ((Array.IndexOf(data, ASCIICode.CR, posCR + 1) == posCR + 2))
                 {
                     break;
                 }

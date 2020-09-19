@@ -28,7 +28,7 @@ namespace Mozi.HttpEmbedded
         /// <summary>
         /// 支持的HTTP服务协议版本
         /// </summary>
-        public HttpVersion  ProxyVersion { get; set; }
+        public HttpVersion  ProtocolVersion { get; set; }
         /// <summary>
         /// 是否使用基本认证
         /// </summary>
