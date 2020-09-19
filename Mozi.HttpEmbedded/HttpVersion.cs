@@ -13,6 +13,7 @@ namespace Mozi.HttpEmbedded
         public static readonly HttpVersion Version11 = new HttpVersion("1.1");
         public static readonly HttpVersion Version12 = new HttpVersion("1.2");
         public static readonly HttpVersion Version20 = new HttpVersion("2.0");
+        public static readonly HttpVersion Version30 = new HttpVersion("3.0");
 
         public string Version { get { return _vervalue; } }
 

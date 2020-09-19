@@ -5,7 +5,7 @@
     /// </summary>
     public enum DataSerializeType
     {
-        Xml=0,
+        XML=0,
         JSON=1
     }
 }

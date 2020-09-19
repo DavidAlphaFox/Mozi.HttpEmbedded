@@ -7,6 +7,7 @@ using Mozi.HttpEmbedded.Source;
 
 namespace Mozi.HttpEmbedded
 {
+    //TODO 2020/09/19 增加WebService功能
     /// <summary>
     /// Http服务器
     /// </summary>
@@ -15,6 +16,7 @@ namespace Mozi.HttpEmbedded
         
         private readonly SocketServer _sc=new SocketServer();
         private WebDav.DavServer _davserver;
+
         private int _port=80;
 
         private string _serverName = "HttpEmbedded";
@@ -148,6 +150,9 @@ namespace Mozi.HttpEmbedded
                 return StatusCode.Unauthorized;
             }
         }
+        //TODO 2020/09/18 考虑增加断点续传的功能
+        //TODO 2020/09/18 增加缓存功能
+        //TODO 2020/09/19 增加默认页面功能
         /// <summary>
         /// 处理响应
         /// </summary>
@@ -171,7 +176,6 @@ namespace Mozi.HttpEmbedded
                 //静态文件处理
                 if (st.Enabled && isStatic)
                 {
-                    //TODO 考虑增加断点续传的功能
                     //响应静态文件
                     if (st.Exists(path, ""))
                     {               
@@ -384,6 +388,23 @@ namespace Mozi.HttpEmbedded
         {
             _serverName = serverName;
             return this;
+        }        
+        //TODO HTTPS
+        public HttpServer UseHttps()
+        {
+            throw new NotImplementedException();
+        }
+        /// <summary>
+        /// 配置安全证书
+        /// <para>
+        ///     证书类型为x509
+        /// </para>
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public HttpServer SetCertificate(string path)
+        {
+            throw new NotImplementedException();
         }
         /// <summary>
         /// 启动服务器
@@ -406,5 +427,7 @@ namespace Mozi.HttpEmbedded
         {
             _sc.StopServer();
         }
+
+
     }
 }

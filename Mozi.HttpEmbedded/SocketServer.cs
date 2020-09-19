@@ -13,9 +13,8 @@ namespace Mozi.HttpEmbedded
     {
         //private static SocketServer _mSocketServer;
         
-        private int _iPort = 9000;
+        private int _iport = 80;
         private int _maxListenCount = 10;
-
         private ConcurrentDictionary<string,Socket> _socketDocker;
         private Socket _sc;
 
@@ -49,7 +48,7 @@ namespace Mozi.HttpEmbedded
         /// </summary>
         public int Port
         {
-            get { return _iPort; }
+            get { return _iport; }
         }
 
         public Socket SocketMain
@@ -69,7 +68,7 @@ namespace Mozi.HttpEmbedded
         /// <param name="port"></param>
         public void StartServer(int port)
         {
-            _iPort = port;
+            _iport = port;
             if (_sc == null)
             {
                 _sc = new Socket(AddressFamily.InterNetwork, SocketType.Stream, System.Net.Sockets.ProtocolType.Tcp);
@@ -78,7 +77,7 @@ namespace Mozi.HttpEmbedded
             {
                 _sc.Close();
             }
-            System.Net.IPEndPoint endpoint = new System.Net.IPEndPoint(System.Net.IPAddress.Any, _iPort);
+            System.Net.IPEndPoint endpoint = new System.Net.IPEndPoint(System.Net.IPAddress.Any, _iport);
             //允许端口复用
             _sc.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
             _sc.Bind(endpoint);
