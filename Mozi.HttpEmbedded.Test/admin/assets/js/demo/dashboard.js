@@ -32,7 +32,7 @@ $(function(){
     };
 
     this.makeGauge('#d1-c1', 42, '#1abc9c');
-    this.makeGauge('#d1-c2', 22, '#3498db');
+    this.makeGauge('#d1-c2', 22, '#3C8DBC');
     this.makeGauge('#d1-c3', 72, '#f39c12');
 
     this.makeChart = function(selector, type, colors, legend)
@@ -80,9 +80,9 @@ $(function(){
 	});
     }  
 
-    //this.makeChart('#d1-c4', 'area-spline', ['#3498db', '#f39c12'], true);
-    this.makeChart('#d1-c4', 'spline', ['#1abc9c', '#3498db'], true);
+    //this.makeChart('#d1-c4', 'area-spline', ['#3C8DBC', '#f39c12'], true);
+    this.makeChart('#d1-c4', 'spline', ['#1abc9c', '#3C8DBC'], true);
     //this.makeChart('#d1-c5', 'bar', ['#1abc9c', '#16a085', '#f39c12'], false);
-    this.makeChart('#d1-c5', 'bar', ['#3498db', '#2980b9'], false);
+    this.makeChart('#d1-c5', 'bar', ['#3C8DBC', '#2980b9'], false);
 
 });
