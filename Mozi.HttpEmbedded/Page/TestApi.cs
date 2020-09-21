@@ -13,7 +13,7 @@ namespace Mozi.HttpEmbedded.Page
         /// <returns></returns>
         public string Hello()
         {
-            return "Welcome to Mozi.HttpEnbedded";
+            return "Welcome to Mozi.HttpEmbedded";
         }
         /// <summary>
         /// 取服务器当前时间
@@ -40,7 +40,23 @@ namespace Mozi.HttpEmbedded.Page
         public ResponseMessage UploadFile()
         {
             throw new NotImplementedException();
-        } 
+        }
+        /// <summary>
+        /// GET
+        /// </summary>
+        /// <returns></returns>
+        public ResponseMessage Get()
+        {
+            throw new NotImplementedException();
+        }
+        /// <summary>
+        /// POST
+        /// </summary>
+        /// <returns></returns>
+        public ResponseMessage Post()
+        {
+            throw new NotImplementedException();
+        }
     }
     /// <summary>
     /// 标准消息封装

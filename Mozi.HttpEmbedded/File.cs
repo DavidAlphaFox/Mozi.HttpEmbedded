@@ -2,13 +2,18 @@ using System.Collections.Generic;
 
 namespace Mozi.HttpEmbedded
 {
+    /// <summary>
+    /// 上传的文件
+    /// </summary>
     public class File
     {
         public string FileName  { get; set; }
         public int FileIndex    { get; set; }
         public byte[] FileData  { get; set; }
     }
-
+    /// <summary>
+    /// 文件集合
+    /// </summary>
     public class FileCollection
     {
         private List<File> _files=new List<File>();

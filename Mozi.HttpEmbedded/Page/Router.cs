@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using Mozi.HttpEmbedded.DataSerialize;
 
 namespace Mozi.HttpEmbedded.Page
 {
@@ -13,18 +14,23 @@ namespace Mozi.HttpEmbedded.Page
     {
         private static Router _r;
 
+        private List<Assembly> _assemblies=new List<Assembly>();
+
+        private List<Type> apis = new List<Type>();
+        //数据序列化对象
+        private ISerializer _dataserializer;
+
+        private readonly List<RouteMapper> _mappers = new List<RouteMapper>() { new RouteMapper() { Pattern = "/{controller}/{id}" }, new RouteMapper() { Pattern = "/{controller}.{id}" } };
+
         public static Router Default
         {
             get { return _r ?? (_r = new Router()); }
         }
-        private List<Assembly> _assemblies=new List<Assembly>();
 
-        private List<Type> apis = new List<Type>();
-
-        private readonly List<RouteMapper> _mappers = new List<RouteMapper>() { new RouteMapper() { Pattern = "/{controller}/{id}" }, new RouteMapper() { Pattern = "/{controller}.{id}" } };
- 
         private Router()
         {
+            //提供一个默认数据序列化接口
+            //载入内部接口API
             LoadInternalApi();
         }
         /// <summary>
@@ -134,6 +140,11 @@ namespace Mozi.HttpEmbedded.Page
                 }
             }
             return null;
+        }
+
+        public void SetDataSerializer(ISerializer ser)
+        {
+            this._dataserializer = ser;
         }
         /// <summary>
         /// 路由映射

@@ -6,6 +6,7 @@ using Mozi.HttpEmbedded.Generic;
 
 namespace Mozi.HttpEmbedded.Auth
 {
+    //TODO 认证应区分目录
     /// <summary>
     /// 认证器
     /// </summary>

@@ -65,6 +65,7 @@
     <Compile Include="ASCIICode.cs" />
     <Compile Include="Auth\User.cs" />
     <Compile Include="Common\UrlTree.cs" />
+    <Compile Include="Serialize\ISerializer.cs" />
     <Compile Include="Encode\UrlEncoder.cs" />
     <Compile Include="Generic\AbsClassEnum.cs" />
     <Compile Include="Auth\AuthorizationType.cs" />
@@ -152,9 +153,7 @@
     <None Include="WebDav\packages.config" />
     <None Include="WebDav\README.md" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="JSON\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0">
       <Visible>False</Visible>
