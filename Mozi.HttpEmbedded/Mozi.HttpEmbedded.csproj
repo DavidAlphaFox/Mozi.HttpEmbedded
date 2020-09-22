@@ -96,6 +96,7 @@
     <Compile Include="HttpRequest.cs" />
     <Compile Include="RequestMethod.cs" />
     <Compile Include="HttpResponse.cs" />
+    <Compile Include="Serialize\XMLSerializer.cs" />
     <Compile Include="SocketServer.cs" />
     <Compile Include="ServerEvent.cs" />
     <Compile Include="Source\Mime.cs" />

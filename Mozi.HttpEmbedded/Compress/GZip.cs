@@ -8,7 +8,12 @@ namespace Mozi.HttpEmbedded.Compress
     /// </summary>
     public static class GZip
     {
-        public static byte[] Zip(byte[] value)
+        /// <summary>
+        /// 压缩
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static byte[] Compress(byte[] value)
         {
             //Transform string into byte[]    
             byte[] byteArray;
@@ -23,8 +28,12 @@ namespace Mozi.HttpEmbedded.Compress
             return byteArray;
 
         }
-
-        public static byte[] UnZip(byte[] value)
+        /// <summary>
+        /// 解压缩
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static byte[] Decompress(byte[] value)
         {
             byte[] byteArray;
             MemoryStream ms = new MemoryStream(value);

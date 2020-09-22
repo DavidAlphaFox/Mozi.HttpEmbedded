@@ -7,10 +7,25 @@ namespace Mozi.HttpEmbedded.DataSerialize
     /// </summary>
     public interface ISerializer
     {
+        /// <summary>
+        /// 序列化
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
         string Encode(object data);
-
+        /// <summary>
+        /// 反序列化
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="data"></param>
+        /// <returns></returns>
         T Decode<T>(string data);
-
+        /// <summary>
+        /// 集合反序列化
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="data"></param>
+        /// <returns></returns>
         IEnumerable<T> DecodeList<T>(string data);
     }
 }
