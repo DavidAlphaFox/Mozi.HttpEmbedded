@@ -5,8 +5,11 @@
 Mozi.HttpEmbedded是一个基于.Net构建的嵌入式Web服务器，为.Net App提供web服务功能。
 
 > 嵌入式的目标不是单片机，而是.Net应用程序。
+
 > 此项目并不会实现非常丰富的大型Web服务器功能
+
 > 项目基于.Net Framework 4.0开发,也可转换为.Net Core/.Net Standard项目
+
 
 ## 特点
 
@@ -33,6 +36,7 @@ Mozi.HttpEmbedded在Socket之上使用异步单线程模型,构建了一个HTTP�
 	仅用很少的系统资源即可快速搭建WEB服务器
 
 > 在经典的Asp.Net开发中，Web服务的部署高度依赖于IIS,.Net Core项目则可基于Kestrel/IIS部署。
+
 > 基于KESTREL或IIS部署的WEB项目，都基于Asp.Net体系。
 
 ## 原理及功能
