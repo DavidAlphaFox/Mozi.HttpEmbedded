@@ -7,6 +7,7 @@ using Mozi.HttpEmbedded.DataSerialize;
 
 namespace Mozi.HttpEmbedded.Page
 {
+    //TODO 增加API下载的功能，允许客户端提取所有API，同时加入鉴权机制
     /// <summary>
     /// 全局路由
     /// </summary>

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using Mozi.HttpEmbedded.Cookie;
 using Mozi.HttpEmbedded.Encode;
 
@@ -8,7 +9,7 @@ namespace Mozi.HttpEmbedded
     /// <summary>
     /// HTTP响应
     /// </summary>
-    public class HttpResponse
+    public sealed class HttpResponse
     {
         private byte[] _body=new byte[0];
         /// <summary>
@@ -109,6 +110,33 @@ namespace Mozi.HttpEmbedded
         public HttpResponse Write(string data)
         {
             Write(StringEncoder.Encode(data));
+            return this;
+        }
+        //TODO 此处需要调试
+        /// <summary>
+        /// 发送文件
+        /// </summary>
+        /// <param name="filepath"></param>
+        /// <returns></returns>
+        public HttpResponse SendFile(string filepath)
+        {
+            FileStream fs = new FileStream(filepath, FileMode.Open, FileAccess.Read);
+            MemoryStream ms = new MemoryStream();
+            try
+            {
+                byte[] buffer = new byte[1024];
+                int readCount = 0;
+                while ((readCount = fs.Read(buffer, 0, buffer.Length)) > 0)
+                {
+                    ms.Write(buffer, 0, readCount);
+                }
+                Write(ms.GetBuffer());
+            }
+            finally
+            {
+                ms.Close();
+                fs.Close();
+            }
             return this;
         }
         /// <summary>
