@@ -20,11 +20,10 @@ namespace Mozi.HttpEmbedded
         /// 状态码
         /// </summary>
         public StatusCode Status { get; private set; }
-
-        public int ContengLength = 0;
-
-        public string Server = "";
-
+        /// <summary>
+        /// 内容长度
+        /// </summary>
+        public int ContengLength {  get  { return _body.Length; } }
         /// <summary>
         /// 请求头
         /// </summary>
@@ -150,10 +149,7 @@ namespace Mozi.HttpEmbedded
             data.AddRange(GetStatusLine()); 
             data.AddRange(TransformHeader.Carriage);
             //注入包体大小 字节长度
-            if (_body != null)
-            {
-                AddHeader(HeaderProperty.ContentLength, _body.Length.ToString());
-            }
+            AddHeader(HeaderProperty.ContentLength, _body.Length.ToString());
             //注入响应时间
             AddHeader(HeaderProperty.Date, DateTime.Now.ToUniversalTime().ToString("r"));
             //注入默认头部
