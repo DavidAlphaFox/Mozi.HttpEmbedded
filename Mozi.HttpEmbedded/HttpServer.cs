@@ -8,6 +8,8 @@ using Mozi.HttpEmbedded.Source;
 namespace Mozi.HttpEmbedded
 {
     //TODO 2020/09/19 增加WebService功能
+    //TODO 2020/09/28 增加信号量机制
+
     /// <summary>
     /// Http服务器
     /// </summary>

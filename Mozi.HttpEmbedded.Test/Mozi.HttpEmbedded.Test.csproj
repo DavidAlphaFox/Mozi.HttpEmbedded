@@ -5094,6 +5094,494 @@
     <Content Include="admin\assets\js\clearmin.min.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="admin\assets\js\codemirror\addon\runmode\codemirror-standalone.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\js\codemirror\addon\runmode\codemirror.node.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\js\codemirror\addon\runmode\runmode-standalone.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\js\codemirror\addon\runmode\runmode.node.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\js\codemirror\codemirror.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\js\codemirror\display\Display.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\js\codemirror\display\focus.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\js\codemirror\display\gutters.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\js\codemirror\display\highlight_worker.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\js\codemirror\display\line_numbers.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\js\codemirror\display\mode_state.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\js\codemirror\display\operations.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\js\codemirror\display\scrollbars.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\js\codemirror\display\scrolling.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\js\codemirror\display\scroll_events.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\js\codemirror\display\selection.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\js\codemirror\display\update_display.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\js\codemirror\display\update_line.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\js\codemirror\display\update_lines.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\js\codemirror\display\view_tracking.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\js\codemirror\edit\CodeMirror.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\js\codemirror\edit\commands.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\js\codemirror\edit\deleteNearSelection.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\js\codemirror\edit\drop_events.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\js\codemirror\edit\fromTextArea.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\js\codemirror\edit\global_events.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\js\codemirror\edit\key_events.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\js\codemirror\edit\legacy.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\js\codemirror\edit\main.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\js\codemirror\edit\methods.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\js\codemirror\edit\mouse_events.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\js\codemirror\edit\options.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\js\codemirror\edit\utils.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\js\codemirror\input\ContentEditableInput.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\js\codemirror\input\indent.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\js\codemirror\input\input.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\js\codemirror\input\keymap.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\js\codemirror\input\keynames.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\js\codemirror\input\movement.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\js\codemirror\input\TextareaInput.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\js\codemirror\line\highlight.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\js\codemirror\line\line_data.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\js\codemirror\line\pos.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\js\codemirror\line\saw_special_spans.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\js\codemirror\line\spans.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\js\codemirror\line\utils_line.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\js\codemirror\measurement\position_measurement.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\js\codemirror\measurement\widgets.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\js\codemirror\model\changes.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\js\codemirror\model\change_measurement.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\js\codemirror\model\chunk.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\js\codemirror\model\Doc.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\js\codemirror\model\document_data.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\js\codemirror\model\history.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\js\codemirror\model\line_widget.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\js\codemirror\model\mark_text.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\js\codemirror\model\selection.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\js\codemirror\model\selection_updates.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\js\codemirror\modes.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\js\codemirror\mode\apl\apl.js" />
+    <Content Include="admin\assets\js\codemirror\mode\apl\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\asciiarmor\asciiarmor.js" />
+    <Content Include="admin\assets\js\codemirror\mode\asciiarmor\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\asn.1\asn.1.js" />
+    <Content Include="admin\assets\js\codemirror\mode\asn.1\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\asterisk\asterisk.js" />
+    <Content Include="admin\assets\js\codemirror\mode\asterisk\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\brainfuck\brainfuck.js" />
+    <Content Include="admin\assets\js\codemirror\mode\brainfuck\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\clike\clike.js" />
+    <Content Include="admin\assets\js\codemirror\mode\clike\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\clike\scala.html" />
+    <Content Include="admin\assets\js\codemirror\mode\clike\test.js" />
+    <Content Include="admin\assets\js\codemirror\mode\clojure\clojure.js" />
+    <Content Include="admin\assets\js\codemirror\mode\clojure\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\clojure\test.js" />
+    <Content Include="admin\assets\js\codemirror\mode\cmake\cmake.js" />
+    <Content Include="admin\assets\js\codemirror\mode\cmake\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\cobol\cobol.js" />
+    <Content Include="admin\assets\js\codemirror\mode\cobol\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\coffeescript\coffeescript.js" />
+    <Content Include="admin\assets\js\codemirror\mode\coffeescript\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\commonlisp\commonlisp.js" />
+    <Content Include="admin\assets\js\codemirror\mode\commonlisp\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\crystal\crystal.js" />
+    <Content Include="admin\assets\js\codemirror\mode\crystal\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\css\css.js" />
+    <Content Include="admin\assets\js\codemirror\mode\css\gss.html" />
+    <Content Include="admin\assets\js\codemirror\mode\css\gss_test.js" />
+    <Content Include="admin\assets\js\codemirror\mode\css\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\css\less.html" />
+    <Content Include="admin\assets\js\codemirror\mode\css\less_test.js" />
+    <Content Include="admin\assets\js\codemirror\mode\css\scss.html" />
+    <Content Include="admin\assets\js\codemirror\mode\css\scss_test.js" />
+    <Content Include="admin\assets\js\codemirror\mode\css\test.js" />
+    <Content Include="admin\assets\js\codemirror\mode\cypher\cypher.js" />
+    <Content Include="admin\assets\js\codemirror\mode\cypher\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\cypher\test.js" />
+    <Content Include="admin\assets\js\codemirror\mode\dart\dart.js" />
+    <Content Include="admin\assets\js\codemirror\mode\dart\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\diff\diff.js" />
+    <Content Include="admin\assets\js\codemirror\mode\diff\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\django\django.js" />
+    <Content Include="admin\assets\js\codemirror\mode\django\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\dockerfile\dockerfile.js" />
+    <Content Include="admin\assets\js\codemirror\mode\dockerfile\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\dockerfile\test.js" />
+    <Content Include="admin\assets\js\codemirror\mode\dtd\dtd.js" />
+    <Content Include="admin\assets\js\codemirror\mode\dtd\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\dylan\dylan.js" />
+    <Content Include="admin\assets\js\codemirror\mode\dylan\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\dylan\test.js" />
+    <Content Include="admin\assets\js\codemirror\mode\d\d.js" />
+    <Content Include="admin\assets\js\codemirror\mode\d\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\d\test.js" />
+    <Content Include="admin\assets\js\codemirror\mode\ebnf\ebnf.js" />
+    <Content Include="admin\assets\js\codemirror\mode\ebnf\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\ecl\ecl.js" />
+    <Content Include="admin\assets\js\codemirror\mode\ecl\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\eiffel\eiffel.js" />
+    <Content Include="admin\assets\js\codemirror\mode\eiffel\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\elm\elm.js" />
+    <Content Include="admin\assets\js\codemirror\mode\elm\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\erlang\erlang.js" />
+    <Content Include="admin\assets\js\codemirror\mode\erlang\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\factor\factor.js" />
+    <Content Include="admin\assets\js\codemirror\mode\factor\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\fcl\fcl.js" />
+    <Content Include="admin\assets\js\codemirror\mode\fcl\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\forth\forth.js" />
+    <Content Include="admin\assets\js\codemirror\mode\forth\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\fortran\fortran.js" />
+    <Content Include="admin\assets\js\codemirror\mode\fortran\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\gas\gas.js" />
+    <Content Include="admin\assets\js\codemirror\mode\gas\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\gfm\gfm.js" />
+    <Content Include="admin\assets\js\codemirror\mode\gfm\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\gfm\test.js" />
+    <Content Include="admin\assets\js\codemirror\mode\gherkin\gherkin.js" />
+    <Content Include="admin\assets\js\codemirror\mode\gherkin\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\go\go.js" />
+    <Content Include="admin\assets\js\codemirror\mode\go\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\groovy\groovy.js" />
+    <Content Include="admin\assets\js\codemirror\mode\groovy\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\haml\haml.js" />
+    <Content Include="admin\assets\js\codemirror\mode\haml\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\haml\test.js" />
+    <Content Include="admin\assets\js\codemirror\mode\handlebars\handlebars.js" />
+    <Content Include="admin\assets\js\codemirror\mode\handlebars\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\haskell-literate\haskell-literate.js" />
+    <Content Include="admin\assets\js\codemirror\mode\haskell-literate\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\haskell\haskell.js" />
+    <Content Include="admin\assets\js\codemirror\mode\haskell\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\haxe\haxe.js" />
+    <Content Include="admin\assets\js\codemirror\mode\haxe\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\htmlembedded\htmlembedded.js" />
+    <Content Include="admin\assets\js\codemirror\mode\htmlembedded\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\htmlmixed\htmlmixed.js" />
+    <Content Include="admin\assets\js\codemirror\mode\htmlmixed\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\http\http.js" />
+    <Content Include="admin\assets\js\codemirror\mode\http\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\idl\idl.js" />
+    <Content Include="admin\assets\js\codemirror\mode\idl\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\javascript\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\javascript\javascript.js" />
+    <Content Include="admin\assets\js\codemirror\mode\javascript\json-ld.html" />
+    <Content Include="admin\assets\js\codemirror\mode\javascript\test.js" />
+    <Content Include="admin\assets\js\codemirror\mode\javascript\typescript.html" />
+    <Content Include="admin\assets\js\codemirror\mode\jinja2\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\jinja2\jinja2.js" />
+    <Content Include="admin\assets\js\codemirror\mode\jsx\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\jsx\jsx.js" />
+    <Content Include="admin\assets\js\codemirror\mode\jsx\test.js" />
+    <Content Include="admin\assets\js\codemirror\mode\julia\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\julia\julia.js" />
+    <Content Include="admin\assets\js\codemirror\mode\livescript\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\livescript\livescript.js" />
+    <Content Include="admin\assets\js\codemirror\mode\lua\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\lua\lua.js" />
+    <Content Include="admin\assets\js\codemirror\mode\markdown\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\markdown\markdown.js" />
+    <Content Include="admin\assets\js\codemirror\mode\markdown\test.js" />
+    <Content Include="admin\assets\js\codemirror\mode\mathematica\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\mathematica\mathematica.js" />
+    <Content Include="admin\assets\js\codemirror\mode\mbox\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\mbox\mbox.js" />
+    <Content Include="admin\assets\js\codemirror\mode\meta.js" />
+    <Content Include="admin\assets\js\codemirror\mode\mirc\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\mirc\mirc.js" />
+    <Content Include="admin\assets\js\codemirror\mode\mllike\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\mllike\mllike.js" />
+    <Content Include="admin\assets\js\codemirror\mode\modelica\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\modelica\modelica.js" />
+    <Content Include="admin\assets\js\codemirror\mode\mscgen\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\mscgen\mscgen.js" />
+    <Content Include="admin\assets\js\codemirror\mode\mscgen\mscgen_test.js" />
+    <Content Include="admin\assets\js\codemirror\mode\mscgen\msgenny_test.js" />
+    <Content Include="admin\assets\js\codemirror\mode\mscgen\xu_test.js" />
+    <Content Include="admin\assets\js\codemirror\mode\mumps\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\mumps\mumps.js" />
+    <Content Include="admin\assets\js\codemirror\mode\nginx\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\nginx\nginx.js" />
+    <Content Include="admin\assets\js\codemirror\mode\nsis\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\nsis\nsis.js" />
+    <Content Include="admin\assets\js\codemirror\mode\ntriples\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\ntriples\ntriples.js" />
+    <Content Include="admin\assets\js\codemirror\mode\octave\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\octave\octave.js" />
+    <Content Include="admin\assets\js\codemirror\mode\oz\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\oz\oz.js" />
+    <Content Include="admin\assets\js\codemirror\mode\pascal\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\pascal\pascal.js" />
+    <Content Include="admin\assets\js\codemirror\mode\pegjs\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\pegjs\pegjs.js" />
+    <Content Include="admin\assets\js\codemirror\mode\perl\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\perl\perl.js" />
+    <Content Include="admin\assets\js\codemirror\mode\php\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\php\php.js" />
+    <Content Include="admin\assets\js\codemirror\mode\php\test.js" />
+    <Content Include="admin\assets\js\codemirror\mode\pig\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\pig\pig.js" />
+    <Content Include="admin\assets\js\codemirror\mode\powershell\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\powershell\powershell.js" />
+    <Content Include="admin\assets\js\codemirror\mode\powershell\test.js" />
+    <Content Include="admin\assets\js\codemirror\mode\properties\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\properties\properties.js" />
+    <Content Include="admin\assets\js\codemirror\mode\protobuf\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\protobuf\protobuf.js" />
+    <Content Include="admin\assets\js\codemirror\mode\pug\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\pug\pug.js" />
+    <Content Include="admin\assets\js\codemirror\mode\puppet\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\puppet\puppet.js" />
+    <Content Include="admin\assets\js\codemirror\mode\python\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\python\python.js" />
+    <Content Include="admin\assets\js\codemirror\mode\python\test.js" />
+    <Content Include="admin\assets\js\codemirror\mode\q\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\q\q.js" />
+    <Content Include="admin\assets\js\codemirror\mode\rpm\changes\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\rpm\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\rpm\rpm.js" />
+    <Content Include="admin\assets\js\codemirror\mode\rst\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\rst\rst.js" />
+    <Content Include="admin\assets\js\codemirror\mode\ruby\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\ruby\ruby.js" />
+    <Content Include="admin\assets\js\codemirror\mode\ruby\test.js" />
+    <Content Include="admin\assets\js\codemirror\mode\rust\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\rust\rust.js" />
+    <Content Include="admin\assets\js\codemirror\mode\rust\test.js" />
+    <Content Include="admin\assets\js\codemirror\mode\r\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\r\r.js" />
+    <Content Include="admin\assets\js\codemirror\mode\sass\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\sass\sass.js" />
+    <Content Include="admin\assets\js\codemirror\mode\sass\test.js" />
+    <Content Include="admin\assets\js\codemirror\mode\sas\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\sas\sas.js" />
+    <Content Include="admin\assets\js\codemirror\mode\scheme\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\scheme\scheme.js" />
+    <Content Include="admin\assets\js\codemirror\mode\shell\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\shell\shell.js" />
+    <Content Include="admin\assets\js\codemirror\mode\shell\test.js" />
+    <Content Include="admin\assets\js\codemirror\mode\sieve\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\sieve\sieve.js" />
+    <Content Include="admin\assets\js\codemirror\mode\slim\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\slim\slim.js" />
+    <Content Include="admin\assets\js\codemirror\mode\slim\test.js" />
+    <Content Include="admin\assets\js\codemirror\mode\smalltalk\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\smalltalk\smalltalk.js" />
+    <Content Include="admin\assets\js\codemirror\mode\smarty\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\smarty\smarty.js" />
+    <Content Include="admin\assets\js\codemirror\mode\solr\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\solr\solr.js" />
+    <Content Include="admin\assets\js\codemirror\mode\soy\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\soy\soy.js" />
+    <Content Include="admin\assets\js\codemirror\mode\soy\test.js" />
+    <Content Include="admin\assets\js\codemirror\mode\sparql\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\sparql\sparql.js" />
+    <Content Include="admin\assets\js\codemirror\mode\spreadsheet\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\spreadsheet\spreadsheet.js" />
+    <Content Include="admin\assets\js\codemirror\mode\sql\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\sql\sql.js" />
+    <Content Include="admin\assets\js\codemirror\mode\stex\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\stex\stex.js" />
+    <Content Include="admin\assets\js\codemirror\mode\stex\test.js" />
+    <Content Include="admin\assets\js\codemirror\mode\stylus\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\stylus\stylus.js" />
+    <Content Include="admin\assets\js\codemirror\mode\swift\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\swift\swift.js" />
+    <Content Include="admin\assets\js\codemirror\mode\swift\test.js" />
+    <Content Include="admin\assets\js\codemirror\mode\tcl\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\tcl\tcl.js" />
+    <Content Include="admin\assets\js\codemirror\mode\textile\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\textile\test.js" />
+    <Content Include="admin\assets\js\codemirror\mode\textile\textile.js" />
+    <Content Include="admin\assets\js\codemirror\mode\tiddlywiki\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\tiddlywiki\tiddlywiki.css" />
+    <Content Include="admin\assets\js\codemirror\mode\tiddlywiki\tiddlywiki.js" />
+    <Content Include="admin\assets\js\codemirror\mode\tiki\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\tiki\tiki.css" />
+    <Content Include="admin\assets\js\codemirror\mode\tiki\tiki.js" />
+    <Content Include="admin\assets\js\codemirror\mode\toml\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\toml\toml.js" />
+    <Content Include="admin\assets\js\codemirror\mode\tornado\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\tornado\tornado.js" />
+    <Content Include="admin\assets\js\codemirror\mode\troff\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\troff\troff.js" />
+    <Content Include="admin\assets\js\codemirror\mode\ttcn-cfg\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\ttcn-cfg\ttcn-cfg.js" />
+    <Content Include="admin\assets\js\codemirror\mode\ttcn\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\ttcn\ttcn.js" />
+    <Content Include="admin\assets\js\codemirror\mode\turtle\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\turtle\turtle.js" />
+    <Content Include="admin\assets\js\codemirror\mode\twig\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\twig\twig.js" />
+    <Content Include="admin\assets\js\codemirror\mode\vbscript\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\vbscript\vbscript.js" />
+    <Content Include="admin\assets\js\codemirror\mode\vb\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\vb\vb.js" />
+    <Content Include="admin\assets\js\codemirror\mode\velocity\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\velocity\velocity.js" />
+    <Content Include="admin\assets\js\codemirror\mode\verilog\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\verilog\test.js" />
+    <Content Include="admin\assets\js\codemirror\mode\verilog\verilog.js" />
+    <Content Include="admin\assets\js\codemirror\mode\vhdl\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\vhdl\vhdl.js" />
+    <Content Include="admin\assets\js\codemirror\mode\vue\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\vue\vue.js" />
+    <Content Include="admin\assets\js\codemirror\mode\wast\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\wast\test.js" />
+    <Content Include="admin\assets\js\codemirror\mode\wast\wast.js" />
+    <Content Include="admin\assets\js\codemirror\mode\webidl\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\webidl\webidl.js" />
+    <Content Include="admin\assets\js\codemirror\mode\xml\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\xml\test.js" />
+    <Content Include="admin\assets\js\codemirror\mode\xml\xml.js" />
+    <Content Include="admin\assets\js\codemirror\mode\xquery\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\xquery\test.js" />
+    <Content Include="admin\assets\js\codemirror\mode\xquery\xquery.js" />
+    <Content Include="admin\assets\js\codemirror\mode\yacas\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\yacas\yacas.js" />
+    <Content Include="admin\assets\js\codemirror\mode\yaml-frontmatter\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\yaml-frontmatter\yaml-frontmatter.js" />
+    <Content Include="admin\assets\js\codemirror\mode\yaml\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\yaml\yaml.js" />
+    <Content Include="admin\assets\js\codemirror\mode\z80\index.html" />
+    <Content Include="admin\assets\js\codemirror\mode\z80\z80.js" />
+    <Content Include="admin\assets\js\codemirror\util\bidi.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\js\codemirror\util\browser.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\js\codemirror\util\dom.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\js\codemirror\util\event.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\js\codemirror\util\feature_detection.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\js\codemirror\util\misc.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\js\codemirror\util\operation_group.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="admin\assets\js\codemirror\util\StringStream.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="admin\assets\js\demo\dashboard.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
