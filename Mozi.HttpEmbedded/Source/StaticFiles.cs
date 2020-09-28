@@ -19,6 +19,10 @@ namespace Mozi.HttpEmbedded.Source
         {
             get { return _staticfiles ?? (_staticfiles = new StaticFiles()); }
         }
+        /// <summary>
+        /// 静态文件根路径 本地磁盘路径
+        /// </summary>
+        public string RootDirectory { get { return _root; } }
 
         private StaticFiles()
         {
@@ -32,7 +36,7 @@ namespace Mozi.HttpEmbedded.Source
         /// <returns></returns>
         public StaticFiles SetRoot(string root)
         {
-            if (!String.IsNullOrEmpty(root))
+            if (!string.IsNullOrEmpty(root))
             {
                 
                 //TODO 区分相对路径和绝对路径
