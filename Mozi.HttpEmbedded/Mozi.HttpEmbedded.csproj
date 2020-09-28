@@ -65,6 +65,7 @@
     <Compile Include="ASCIICode.cs" />
     <Compile Include="Auth\User.cs" />
     <Compile Include="Common\UrlTree.cs" />
+    <Compile Include="Page\SystemApi.cs" />
     <Compile Include="Serialize\ISerializer.cs" />
     <Compile Include="Encode\UrlEncoder.cs" />
     <Compile Include="Generic\AbsClassEnum.cs" />
@@ -138,6 +139,7 @@
     <Compile Include="WebDav\DAVExtensions.cs" />
     <Compile Include="WebDav\DAVProperty.cs" />
     <Compile Include="WebDav\DAVServer.cs" />
+    <Compile Include="WebService\Publisher.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Docment\Error.html" />

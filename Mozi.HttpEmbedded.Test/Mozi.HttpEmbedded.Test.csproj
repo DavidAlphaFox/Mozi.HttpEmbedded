@@ -5736,6 +5736,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <None Include="admin\assets\js\codemirror\Readme.md" />
     <None Include="Readme.md" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
