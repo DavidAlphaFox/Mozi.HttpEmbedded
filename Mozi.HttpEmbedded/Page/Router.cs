@@ -15,7 +15,7 @@ namespace Mozi.HttpEmbedded.Page
     {
         private static Router _r;
 
-        private List<Assembly> _assemblies=new List<Assembly>();
+        private List<Assembly> _assemblies = new List<Assembly>();
 
         private List<Type> apis = new List<Type>();
         //数据序列化对象
@@ -62,43 +62,68 @@ namespace Mozi.HttpEmbedded.Page
         /// </summary>
         /// <param name="ctx"></param>
         internal object Invoke(HttpContext ctx)
-        {           
+        {
             string path = ctx.Request.Path;
             //确定路径映射关系
-            AccessPoint ap=Match(path);
+            AccessPoint ap = Match(path);
             Type cls = apis.Find(x => x.Name.Equals(ap.Domain, StringComparison.OrdinalIgnoreCase));
 
-            MethodInfo method = cls.GetMethod(ap.Method,BindingFlags.Instance | BindingFlags.IgnoreCase | BindingFlags.Public);
+            MethodInfo method = cls.GetMethod(ap.Method, BindingFlags.Instance | BindingFlags.IgnoreCase | BindingFlags.Public);
             ParameterInfo[] pms = method.GetParameters();
             object[] args = new object[pms.Length];
 
             for (int i = 0; i < pms.Length; i++)
             {
-               var argname = pms[i].Name;
-               if (ctx.Request.Query.ContainsKey(argname))
-               {
-                  args[i] = ctx.Request.Query[argname];
-               }
-               if (ctx.Request.Post.ContainsKey(argname))
-               {
-                   args[i] = ctx.Request.Post[argname];
-               }
+                var argname = pms[i].Name;
+                if (ctx.Request.Query.ContainsKey(argname))
+                {
+                    args[i] = ctx.Request.Query[argname];
+                }
+                if (ctx.Request.Post.ContainsKey(argname))
+                {
+                    args[i] = ctx.Request.Post[argname];
+                }
             }
             object instance = Activator.CreateInstance(cls);
             //注入变量
-            ((BaseApi) instance).Context = ctx;
+            ((BaseApi)instance).Context = ctx;
             //调用方法
             return method.Invoke(instance, BindingFlags.IgnoreCase, null, args, CultureInfo.CurrentCulture);
             //调起相关方法 
         }
         /// <summary>
         /// 载入模块
+        /// <para>自动扫描程序集中的接口模块</para>
         /// </summary>
         /// <returns></returns>
         public Router Register(string filePath)
         {
             Assembly ass = Assembly.LoadFrom(filePath);
             LoadApiFromAssembly(ass);
+            return this;
+        }
+        /// <summary>
+        /// 载入模块
+        /// <para>自动扫描程序集中的接口模块</para>
+        /// </summary>
+        /// <param name="ass"></param>
+        /// <returns></returns>
+        public Router Register(Assembly ass)
+        {
+            LoadApiFromAssembly(ass);
+            return this;
+        }
+        /// <summary>
+        /// 单独注册某个接口模块
+        /// </summary>
+        /// <param name="type">参数需继承自<see cref="T:BaseApi"/>，其他类型无法注册</param>
+        /// <returns></returns>
+        public Router Register(Type type)
+        {
+            if(type.IsSubclassOf(typeof(BaseApi)))
+            {
+                apis.Add(type);
+            }
             return this;
         }
         /// <summary>
