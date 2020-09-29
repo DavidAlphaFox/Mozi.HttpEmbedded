@@ -38,7 +38,10 @@ namespace Mozi.HttpEmbedded.Source
         {
             if (!string.IsNullOrEmpty(root))
             {
-                
+                if (!root.EndsWith("/"))
+                {
+                    root = root + "/";
+                }
                 //TODO 区分相对路径和绝对路径
                 if (Path.IsPathRooted(root))
                 {
@@ -46,7 +49,7 @@ namespace Mozi.HttpEmbedded.Source
                 }
                 else
                 {
-                    _root = AppDomain.CurrentDomain.BaseDirectory + "/";
+                    _root = AppDomain.CurrentDomain.BaseDirectory +root;
                 }
             }
             return this;
@@ -81,7 +84,7 @@ namespace Mozi.HttpEmbedded.Source
         /// <returns></returns>
         public bool Exists(string path, string ext)
         {
-            return System.IO.File.Exists(_root + "\\" + path);
+            return System.IO.File.Exists(_root + path);
         }
         /// <summary>
         /// 检查最后修改日期
@@ -91,7 +94,7 @@ namespace Mozi.HttpEmbedded.Source
         /// <returns><see cref="bool:true">Modified</see></returns>
         public bool CheckIfModified(string path, string ifModifiedSince)
         {
-            DateTime dtModified=System.IO.File.GetLastWriteTime(_root + "\\" + path);
+            DateTime dtModified=System.IO.File.GetLastWriteTime(_root + path);
             try
             {
                 if (!string.IsNullOrEmpty(ifModifiedSince))
@@ -118,7 +121,7 @@ namespace Mozi.HttpEmbedded.Source
         /// <returns></returns>
         public DateTime GetLastModified(string path)
         {
-            return System.IO.File.GetLastWriteTime(_root + "\\" + path);
+            return System.IO.File.GetLastWriteTime(_root + path);
         }
         /// <summary>
         /// 提取文件流
@@ -128,7 +131,7 @@ namespace Mozi.HttpEmbedded.Source
         /// <returns></returns>
         public byte[] Load(string path,string ext)
         {
-            using (FileStream fs = new FileStream(_root + "\\" + path, FileMode.Open))
+            using (FileStream fs = new FileStream(_root + path, FileMode.Open))
             {
                 byte[] data = new byte[fs.Length];
                 fs.Read(data, 0, data.Length);
@@ -147,7 +150,7 @@ namespace Mozi.HttpEmbedded.Source
         {
             if (end > offset&&offset>=0)
             {
-                using (FileStream fs = new FileStream(_root + "\\" + path, FileMode.Open))
+                using (FileStream fs = new FileStream(_root+ path, FileMode.Open))
                 {
                     byte[] data = new byte[fs.Length];
                     fs.Read(data, offset, end - offset + 1);
