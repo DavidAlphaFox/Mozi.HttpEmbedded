@@ -38,9 +38,9 @@ namespace Mozi.HttpEmbedded.Source
         {
             if (!string.IsNullOrEmpty(root))
             {
-                if (!root.EndsWith("/"))
+                if (!root.EndsWith("\\"))
                 {
-                    root = root + "/";
+                    root = root + "\\";
                 }
                 //TODO 区分相对路径和绝对路径
                 if (Path.IsPathRooted(root))
