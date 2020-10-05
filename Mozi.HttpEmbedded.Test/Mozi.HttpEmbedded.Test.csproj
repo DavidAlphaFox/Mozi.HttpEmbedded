@@ -5094,183 +5094,95 @@
     <Content Include="admin\assets\js\clearmin.min.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\js\codemirror\addon\runmode\codemirror-standalone.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\assets\js\codemirror\addon\runmode\codemirror.node.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\assets\js\codemirror\addon\runmode\runmode-standalone.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\assets\js\codemirror\addon\runmode\runmode.node.js">
+    <Content Include="admin\assets\js\codemirror\addon\comment\comment.js" />
+    <Content Include="admin\assets\js\codemirror\addon\comment\continuecomment.js" />
+    <Content Include="admin\assets\js\codemirror\addon\dialog\dialog.css" />
+    <Content Include="admin\assets\js\codemirror\addon\dialog\dialog.js" />
+    <Content Include="admin\assets\js\codemirror\addon\display\autorefresh.js" />
+    <Content Include="admin\assets\js\codemirror\addon\display\fullscreen.css" />
+    <Content Include="admin\assets\js\codemirror\addon\display\fullscreen.js" />
+    <Content Include="admin\assets\js\codemirror\addon\display\panel.js" />
+    <Content Include="admin\assets\js\codemirror\addon\display\placeholder.js" />
+    <Content Include="admin\assets\js\codemirror\addon\display\rulers.js" />
+    <Content Include="admin\assets\js\codemirror\addon\edit\closebrackets.js" />
+    <Content Include="admin\assets\js\codemirror\addon\edit\closetag.js" />
+    <Content Include="admin\assets\js\codemirror\addon\edit\continuelist.js" />
+    <Content Include="admin\assets\js\codemirror\addon\edit\matchbrackets.js" />
+    <Content Include="admin\assets\js\codemirror\addon\edit\matchtags.js" />
+    <Content Include="admin\assets\js\codemirror\addon\edit\trailingspace.js" />
+    <Content Include="admin\assets\js\codemirror\addon\fold\brace-fold.js" />
+    <Content Include="admin\assets\js\codemirror\addon\fold\comment-fold.js" />
+    <Content Include="admin\assets\js\codemirror\addon\fold\foldcode.js" />
+    <Content Include="admin\assets\js\codemirror\addon\fold\foldgutter.css" />
+    <Content Include="admin\assets\js\codemirror\addon\fold\foldgutter.js" />
+    <Content Include="admin\assets\js\codemirror\addon\fold\indent-fold.js" />
+    <Content Include="admin\assets\js\codemirror\addon\fold\markdown-fold.js" />
+    <Content Include="admin\assets\js\codemirror\addon\fold\xml-fold.js" />
+    <Content Include="admin\assets\js\codemirror\addon\hint\anyword-hint.js" />
+    <Content Include="admin\assets\js\codemirror\addon\hint\css-hint.js" />
+    <Content Include="admin\assets\js\codemirror\addon\hint\html-hint.js" />
+    <Content Include="admin\assets\js\codemirror\addon\hint\javascript-hint.js" />
+    <Content Include="admin\assets\js\codemirror\addon\hint\show-hint.css" />
+    <Content Include="admin\assets\js\codemirror\addon\hint\show-hint.js" />
+    <Content Include="admin\assets\js\codemirror\addon\hint\sql-hint.js" />
+    <Content Include="admin\assets\js\codemirror\addon\hint\xml-hint.js" />
+    <Content Include="admin\assets\js\codemirror\addon\lint\coffeescript-lint.js" />
+    <Content Include="admin\assets\js\codemirror\addon\lint\css-lint.js" />
+    <Content Include="admin\assets\js\codemirror\addon\lint\html-lint.js" />
+    <Content Include="admin\assets\js\codemirror\addon\lint\javascript-lint.js" />
+    <Content Include="admin\assets\js\codemirror\addon\lint\json-lint.js" />
+    <Content Include="admin\assets\js\codemirror\addon\lint\lint.css" />
+    <Content Include="admin\assets\js\codemirror\addon\lint\lint.js" />
+    <Content Include="admin\assets\js\codemirror\addon\lint\yaml-lint.js" />
+    <Content Include="admin\assets\js\codemirror\addon\merge\merge.css" />
+    <Content Include="admin\assets\js\codemirror\addon\merge\merge.js" />
+    <Content Include="admin\assets\js\codemirror\addon\mode\loadmode.js" />
+    <Content Include="admin\assets\js\codemirror\addon\mode\multiplex.js" />
+    <Content Include="admin\assets\js\codemirror\addon\mode\multiplex_test.js" />
+    <Content Include="admin\assets\js\codemirror\addon\mode\overlay.js" />
+    <Content Include="admin\assets\js\codemirror\addon\mode\simple.js" />
+    <Content Include="admin\assets\js\codemirror\addon\runmode\colorize.js" />
+    <Content Include="admin\assets\js\codemirror\addon\runmode\runmode-standalone.js" />
+    <Content Include="admin\assets\js\codemirror\addon\runmode\runmode.js" />
+    <Content Include="admin\assets\js\codemirror\addon\runmode\runmode.node.js" />
+    <Content Include="admin\assets\js\codemirror\addon\scroll\annotatescrollbar.js" />
+    <Content Include="admin\assets\js\codemirror\addon\scroll\scrollpastend.js" />
+    <Content Include="admin\assets\js\codemirror\addon\scroll\simplescrollbars.css" />
+    <Content Include="admin\assets\js\codemirror\addon\scroll\simplescrollbars.js" />
+    <Content Include="admin\assets\js\codemirror\addon\search\jump-to-line.js" />
+    <Content Include="admin\assets\js\codemirror\addon\search\match-highlighter.js" />
+    <Content Include="admin\assets\js\codemirror\addon\search\matchesonscrollbar.css" />
+    <Content Include="admin\assets\js\codemirror\addon\search\matchesonscrollbar.js" />
+    <Content Include="admin\assets\js\codemirror\addon\search\search.js" />
+    <Content Include="admin\assets\js\codemirror\addon\search\searchcursor.js" />
+    <Content Include="admin\assets\js\codemirror\addon\selection\active-line.js" />
+    <Content Include="admin\assets\js\codemirror\addon\selection\mark-selection.js" />
+    <Content Include="admin\assets\js\codemirror\addon\selection\selection-pointer.js" />
+    <Content Include="admin\assets\js\codemirror\addon\tern\tern.css" />
+    <Content Include="admin\assets\js\codemirror\addon\tern\tern.js" />
+    <Content Include="admin\assets\js\codemirror\addon\tern\worker.js" />
+    <Content Include="admin\assets\js\codemirror\addon\wrap\hardwrap.js" />
+    <Content Include="admin\assets\js\codemirror\codemirror.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="admin\assets\js\codemirror\codemirror.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\js\codemirror\display\Display.js">
+    <Content Include="admin\assets\js\codemirror\doc\activebookmark.js" />
+    <Content Include="admin\assets\js\codemirror\doc\docs.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="admin\assets\js\codemirror\display\focus.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\assets\js\codemirror\display\gutters.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\assets\js\codemirror\display\highlight_worker.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\assets\js\codemirror\display\line_numbers.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\assets\js\codemirror\display\mode_state.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\assets\js\codemirror\display\operations.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\assets\js\codemirror\display\scrollbars.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\assets\js\codemirror\display\scrolling.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\assets\js\codemirror\display\scroll_events.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\assets\js\codemirror\display\selection.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\assets\js\codemirror\display\update_display.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\assets\js\codemirror\display\update_line.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\assets\js\codemirror\display\update_lines.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\assets\js\codemirror\display\view_tracking.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\assets\js\codemirror\edit\CodeMirror.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\assets\js\codemirror\edit\commands.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\assets\js\codemirror\edit\deleteNearSelection.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\assets\js\codemirror\edit\drop_events.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\assets\js\codemirror\edit\fromTextArea.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\assets\js\codemirror\edit\global_events.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\assets\js\codemirror\edit\key_events.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\assets\js\codemirror\edit\legacy.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\assets\js\codemirror\edit\main.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\assets\js\codemirror\edit\methods.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\assets\js\codemirror\edit\mouse_events.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\assets\js\codemirror\edit\options.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\assets\js\codemirror\edit\utils.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\assets\js\codemirror\input\ContentEditableInput.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\assets\js\codemirror\input\indent.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\assets\js\codemirror\input\input.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\assets\js\codemirror\input\keymap.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\assets\js\codemirror\input\keynames.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\assets\js\codemirror\input\movement.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\assets\js\codemirror\input\TextareaInput.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\assets\js\codemirror\line\highlight.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\assets\js\codemirror\line\line_data.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\assets\js\codemirror\line\pos.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\assets\js\codemirror\line\saw_special_spans.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\assets\js\codemirror\line\spans.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\assets\js\codemirror\line\utils_line.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\assets\js\codemirror\measurement\position_measurement.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\assets\js\codemirror\measurement\widgets.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\assets\js\codemirror\model\changes.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\assets\js\codemirror\model\change_measurement.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\assets\js\codemirror\model\chunk.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\assets\js\codemirror\model\Doc.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\assets\js\codemirror\model\document_data.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\assets\js\codemirror\model\history.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\assets\js\codemirror\model\line_widget.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\assets\js\codemirror\model\mark_text.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\assets\js\codemirror\model\selection.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\assets\js\codemirror\model\selection_updates.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\assets\js\codemirror\modes.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <Content Include="admin\assets\js\codemirror\doc\internals.html" />
+    <Content Include="admin\assets\js\codemirror\doc\logo.png" />
+    <Content Include="admin\assets\js\codemirror\doc\logo.svg" />
+    <Content Include="admin\assets\js\codemirror\doc\manual.html" />
+    <Content Include="admin\assets\js\codemirror\doc\realworld.html" />
+    <Content Include="admin\assets\js\codemirror\doc\releases.html" />
+    <Content Include="admin\assets\js\codemirror\doc\reporting.html" />
+    <Content Include="admin\assets\js\codemirror\doc\upgrade_v2.2.html" />
+    <Content Include="admin\assets\js\codemirror\doc\upgrade_v3.html" />
+    <Content Include="admin\assets\js\codemirror\doc\upgrade_v4.html" />
+    <Content Include="admin\assets\js\codemirror\doc\yinyang.png" />
     <Content Include="admin\assets\js\codemirror\mode\apl\apl.js" />
     <Content Include="admin\assets\js\codemirror\mode\apl\index.html" />
     <Content Include="admin\assets\js\codemirror\mode\asciiarmor\asciiarmor.js" />
@@ -5558,30 +5470,6 @@
     <Content Include="admin\assets\js\codemirror\mode\yaml\yaml.js" />
     <Content Include="admin\assets\js\codemirror\mode\z80\index.html" />
     <Content Include="admin\assets\js\codemirror\mode\z80\z80.js" />
-    <Content Include="admin\assets\js\codemirror\util\bidi.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\assets\js\codemirror\util\browser.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\assets\js\codemirror\util\dom.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\assets\js\codemirror\util\event.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\assets\js\codemirror\util\feature_detection.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\assets\js\codemirror\util\misc.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\assets\js\codemirror\util\operation_group.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="admin\assets\js\codemirror\util\StringStream.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="admin\assets\js\demo\dashboard.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
