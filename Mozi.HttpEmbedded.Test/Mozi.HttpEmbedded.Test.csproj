@@ -5518,6 +5518,9 @@
     <Content Include="admin\assets\js\summernote.min.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="admin\codeedit.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="admin\components-buttons.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -5624,7 +5627,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <None Include="admin\assets\js\codemirror\Readme.md" />
+    <None Include="admin\Readme.md" />
     <None Include="Readme.md" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

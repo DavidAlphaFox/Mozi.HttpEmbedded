@@ -4,6 +4,8 @@ using System.IO;
 
 namespace Mozi.HttpEmbedded.Source
 {
+    //TODO 加入扩展名黑名单
+    //TODO 加入虚拟目录
     /// <summary>
     /// 静态资源管理
     /// </summary>
@@ -54,7 +56,15 @@ namespace Mozi.HttpEmbedded.Source
             }
             return this;
         }
-
+        /// <summary>
+        /// 设置虚拟目录
+        /// </summary>
+        /// <param name="vroot"></param>
+        /// <returns></returns>
+        public StaticFiles SetVirtualRoot(string vroot)
+        {
+            throw new NotImplementedException();
+        }
         /// <summary>
         /// 初始化
         /// </summary>
