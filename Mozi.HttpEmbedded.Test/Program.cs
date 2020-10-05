@@ -17,7 +17,6 @@ namespace Mozi.HttpEmbedded.Test
 
             //开启静态文件支持
             hs.UseStaticFiles("");
-
             //路由映射
             Router router = Router.Default;
             router.Map("services/{controller}/{id}");

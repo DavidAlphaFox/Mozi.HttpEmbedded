@@ -339,6 +339,20 @@ namespace Mozi.HttpEmbedded
             return this;
         }
         /// <summary>
+        /// 配置虚拟目录
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public HttpServer SetVirtualDirectory(string name,string path)
+        {
+            if (StaticFiles.Default.Enabled)
+            {
+                StaticFiles.Default.SetVirtualDirectory(name, path);
+            }
+            return this;
+        }
+        /// <summary>
         /// 启用WebDav
         /// </summary>
         /// <param name="root"></param>

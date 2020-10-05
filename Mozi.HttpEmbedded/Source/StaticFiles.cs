@@ -1,11 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 
 namespace Mozi.HttpEmbedded.Source
 {
     //TODO 加入扩展名黑名单
-    //TODO 加入虚拟目录
+    //DONE 加入虚拟目录
     /// <summary>
     /// 静态资源管理
     /// </summary>
@@ -14,7 +16,6 @@ namespace Mozi.HttpEmbedded.Source
         public bool Enabled { get; set; }
 
         private string _root;
-
         private static StaticFiles _staticfiles;
 
         public static StaticFiles Default
@@ -25,9 +26,14 @@ namespace Mozi.HttpEmbedded.Source
         /// 静态文件根路径 本地磁盘路径
         /// </summary>
         public string RootDirectory { get { return _root; } }
+        /// <summary>
+        /// 虚拟路径
+        /// </summary>
+        public List<DirPublished> VirtualDirs = new List<DirPublished>();
 
         private StaticFiles()
         {
+            //初始化根路径为AppDomain基目录
             _root = AppDomain.CurrentDomain.BaseDirectory;
             init();    
         }
@@ -59,11 +65,35 @@ namespace Mozi.HttpEmbedded.Source
         /// <summary>
         /// 设置虚拟目录
         /// </summary>
-        /// <param name="vroot"></param>
+        /// <param name="name">虚拟路径名</param>
+        /// <param name="realpath">磁盘路径</param>
         /// <returns></returns>
-        public StaticFiles SetVirtualRoot(string vroot)
+        /// <remarks>虚拟路径名不能与ROOT路径的子路径名重复，否则设置会被忽略</remarks>
+        public StaticFiles SetVirtualDirectory(string name, string realpath)
         {
-            throw new NotImplementedException();
+            if (!realpath.EndsWith("\\"))
+            {
+                realpath = realpath + "\\";
+            }
+
+            var dir = VirtualDirs.Find(x => x.Name.Equals(name));
+            if (dir != null)
+            {
+                dir.Path = realpath;
+            }
+            else
+            {
+                if (!string.IsNullOrEmpty(name))
+                {
+                    DirectoryInfo rootdir = new DirectoryInfo(_root);
+                    var dirs = rootdir.GetDirectories();
+                    if (!dirs.Any(a => a.Name.Equals(name)))
+                    {
+                        VirtualDirs.Add(new DirPublished() { Name = name, Path = realpath });
+                    }
+                }
+            }
+            return this;
         }
         /// <summary>
         /// 初始化
@@ -72,7 +102,6 @@ namespace Mozi.HttpEmbedded.Source
         {
            //载入MIME类型
         }
-
         /// <summary>
         /// 判断是否静态文件
         /// </summary>
@@ -94,7 +123,52 @@ namespace Mozi.HttpEmbedded.Source
         /// <returns></returns>
         public bool Exists(string path, string ext)
         {
-            return System.IO.File.Exists(_root + path);
+            var filepath = _root + path;
+            if (IsVirtualFile(path))
+            {
+                filepath = GetVirtualFilePhysicalDirectory(path);
+            }
+            return System.IO.File.Exists(filepath);
+        }
+
+        private bool IsVirtualFile(string path)
+        {
+            foreach (var d in VirtualDirs)
+            {
+                var prefix = "/" + d.Name + "/";
+                //Config/files1.xml;
+                if (path.StartsWith(prefix))
+                {
+                    return true;
+                }
+                else
+                {
+                    continue;
+                }
+            }
+            return false;
+        }
+        /// <summary>
+        /// 取虚拟目录中的文件物理路径
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        private string GetVirtualFilePhysicalDirectory(string path)
+        {
+            foreach (var d in VirtualDirs)
+            {
+                var prefix = "/" + d.Name + "/";
+                //Config/files1.xml;
+                if (path.StartsWith(prefix) && System.IO.File.Exists(d.Path + path.Substring(prefix.Length)))
+                {
+                    return d.Path + path.Substring(prefix.Length);
+                }
+                else
+                {
+                    continue;
+                }
+            }
+            return null;
         }
         /// <summary>
         /// 检查最后修改日期
@@ -104,7 +178,12 @@ namespace Mozi.HttpEmbedded.Source
         /// <returns><see cref="bool:true">Modified</see></returns>
         public bool CheckIfModified(string path, string ifModifiedSince)
         {
-            DateTime dtModified=System.IO.File.GetLastWriteTime(_root + path);
+            var filepath = _root + path;
+            if (IsVirtualFile(path))
+            {
+                filepath = GetVirtualFilePhysicalDirectory(path);
+            }
+            DateTime dtModified=System.IO.File.GetLastWriteTime(filepath);
             try
             {
                 if (!string.IsNullOrEmpty(ifModifiedSince))
@@ -131,7 +210,12 @@ namespace Mozi.HttpEmbedded.Source
         /// <returns></returns>
         public DateTime GetLastModified(string path)
         {
-            return System.IO.File.GetLastWriteTime(_root + path);
+            var filepath = _root + path;
+            if (IsVirtualFile(path))
+            {
+                filepath = GetVirtualFilePhysicalDirectory(path);
+            }
+            return System.IO.File.GetLastWriteTime(filepath);
         }
         /// <summary>
         /// 提取文件流
@@ -141,7 +225,12 @@ namespace Mozi.HttpEmbedded.Source
         /// <returns></returns>
         public byte[] Load(string path,string ext)
         {
-            using (FileStream fs = new FileStream(_root + path, FileMode.Open))
+            var filepath = _root + path;
+            if (IsVirtualFile(path))
+            {
+                filepath = GetVirtualFilePhysicalDirectory(path);
+            }
+            using (FileStream fs = new FileStream(filepath, FileMode.Open))
             {
                 byte[] data = new byte[fs.Length];
                 fs.Read(data, 0, data.Length);
@@ -160,7 +249,12 @@ namespace Mozi.HttpEmbedded.Source
         {
             if (end > offset&&offset>=0)
             {
-                using (FileStream fs = new FileStream(_root+ path, FileMode.Open))
+                var filepath = _root + path;
+                if (IsVirtualFile(path))
+                {
+                    filepath = GetVirtualFilePhysicalDirectory(path);
+                }
+                using (FileStream fs = new FileStream(filepath, FileMode.Open))
                 {
                     byte[] data = new byte[fs.Length];
                     fs.Read(data, offset, end - offset + 1);
@@ -172,15 +266,23 @@ namespace Mozi.HttpEmbedded.Source
                 return new byte[] { };
             }
         }
-        /// <summary>
-        /// 取文件大小
-        /// </summary>
-        /// <param name="path"></param>
-        /// <returns></returns>
-        public long GetFileSize(string path)
-        {
-            FileInfo fi = new FileInfo(path);
-            return fi.Length;
-        }
+        ///// <summary>
+        ///// 取文件大小
+        ///// </summary>
+        ///// <param name="path"></param>
+        ///// <returns></returns>
+        //public long GetFileSize(string path)
+        //{
+        //    FileInfo fi = new FileInfo(path);
+        //    return fi.Length;
+        //}
+    }
+    /// <summary>
+    /// 发布的目录
+    /// </summary>
+    internal sealed class DirPublished
+    {
+        public string Name { get; set; }
+        public string Path { get; set; }
     }
 }
