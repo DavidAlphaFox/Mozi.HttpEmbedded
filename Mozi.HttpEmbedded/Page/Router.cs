@@ -164,6 +164,11 @@ namespace Mozi.HttpEmbedded.Page
             _mappers.Add(new RouteMapper(){Pattern = pattern});
             return this;
         }
+        /// <summary>
+        /// 匹配路由
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
         public AccessPoint Match(string path)
         {
             foreach (var mapper in _mappers)
@@ -175,7 +180,10 @@ namespace Mozi.HttpEmbedded.Page
             }
             return null;
         }
-
+        /// <summary>
+        /// 配置数据序列化组件
+        /// </summary>
+        /// <param name="ser"></param>
         public void SetDataSerializer(ISerializer ser)
         {
             this._dataserializer = ser;

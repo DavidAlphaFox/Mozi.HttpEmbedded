@@ -459,7 +459,9 @@ namespace Mozi.HttpEmbedded.Source
                 return Types[ext];
             }
         }
-
+        /// <summary>
+        /// 默认为HTML
+        /// </summary>
         public const string Default = "text/html";
     }
 }

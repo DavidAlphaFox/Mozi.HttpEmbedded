@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Mozi.HttpEmbedded.Page;
 
 namespace Mozi.HttpEmbedded.Serialize
 {
@@ -7,6 +8,7 @@ namespace Mozi.HttpEmbedded.Serialize
     /// </summary>
     public interface ISerializer
     {
+        DataSerializeType SerialzeType { get; }
         /// <summary>
         /// 序列化
         /// </summary>

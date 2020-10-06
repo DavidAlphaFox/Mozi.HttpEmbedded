@@ -10,7 +10,7 @@ namespace Mozi.HttpEmbedded
     public class TransformHeader
     {
 
-        public static byte[] Carriage = { (byte)ASCIICode.CR, (byte)ASCIICode.LF };
+        public static byte[] Carriage = { ASCIICode.CR, ASCIICode.LF };
 
         /// <summary>
         /// 通讯头集合

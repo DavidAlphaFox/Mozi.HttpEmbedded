@@ -87,7 +87,7 @@
     <Compile Include="Common\Log.cs" />
     <Compile Include="Page\BaseApi.cs" />
     <Compile Include="Page\AbsPage.cs" />
-    <Compile Include="Page\DataSerializeType.cs" />
+    <Compile Include="Serialize\DataSerializeType.cs" />
     <Compile Include="Page\Global.cs" />
     <Compile Include="Page\PageCreator.cs" />
     <Compile Include="Page\Router.cs" />

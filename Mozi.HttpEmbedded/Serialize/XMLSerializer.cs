@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
+using Mozi.HttpEmbedded.Page;
 
 namespace Mozi.HttpEmbedded.Serialize
 {
@@ -11,6 +12,8 @@ namespace Mozi.HttpEmbedded.Serialize
     /// </summary>
     public class XMLSerializer : ISerializer
     {
+        public DataSerializeType SerialzeType => DataSerializeType.XML;
+
         /// <summary>
         /// 反序列化
         /// </summary>
@@ -62,6 +65,8 @@ namespace Mozi.HttpEmbedded.Serialize
     /// </summary>
     public class JSONSerializer: ISerializer
     {
+        public DataSerializeType SerialzeType => throw new NotImplementedException();
+
         public T Decode<T>(string data)
         {
             throw new NotImplementedException();
