@@ -88,7 +88,15 @@ namespace Mozi.HttpEmbedded.Page
             //注入变量
             ((BaseApi)instance).Context = ctx;
             //调用方法
-            return method.Invoke(instance, BindingFlags.IgnoreCase, null, args, CultureInfo.CurrentCulture);
+            object result=method.Invoke(instance, BindingFlags.IgnoreCase, null, args, CultureInfo.CurrentCulture);
+            if (_dataserializer != null)
+            {
+                return _dataserializer.Encode(result);
+            }
+            else
+            {
+                return result;
+            }
             //调起相关方法 
         }
         /// <summary>
