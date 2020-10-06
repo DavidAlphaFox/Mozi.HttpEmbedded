@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Mozi.HttpEmbedded.DataSerialize
+namespace Mozi.HttpEmbedded.Serialize
 {
     /// <summary>
     /// 数据序列化接口

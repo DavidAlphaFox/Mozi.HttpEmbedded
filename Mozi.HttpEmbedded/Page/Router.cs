@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Reflection;
 using System.Text.RegularExpressions;
-using Mozi.HttpEmbedded.DataSerialize;
+using Mozi.HttpEmbedded.Serialize;
 
 namespace Mozi.HttpEmbedded.Page
 {
