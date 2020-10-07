@@ -63,6 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ASCIICode.cs" />
+    <Compile Include="Attributes\BasicApiAttribute.cs" />
     <Compile Include="Auth\User.cs" />
     <Compile Include="Common\UrlTree.cs" />
     <Compile Include="Page\SystemApi.cs" />

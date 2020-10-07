@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using Mozi.HttpEmbedded.Attributes;
 using Mozi.HttpEmbedded.Serialize;
 
 namespace Mozi.HttpEmbedded.Page
@@ -43,10 +44,7 @@ namespace Mozi.HttpEmbedded.Page
             Type[] types = ass.GetExportedTypes();
             foreach (var type in types)
             {
-                if (type.IsSubclassOf(typeof(BaseApi)))
-                {
-                    apis.Add(type);
-                }
+                Register(type);
             }
         }
         /// <summary>
@@ -124,11 +122,12 @@ namespace Mozi.HttpEmbedded.Page
         /// <summary>
         /// 单独注册某个接口模块
         /// </summary>
-        /// <param name="type">参数需继承自<see cref="T:BaseApi"/>，其他类型无法注册</param>
+        /// <param name="type">参数需继承自<see cref="T:BaseApi"/>，或者标记为<see cref="T:BasicApiAttribute"/>,其他类型无法注册</param>
         /// <returns></returns>
         public Router Register(Type type)
         {
-            if(type.IsSubclassOf(typeof(BaseApi)))
+            var attribute = type.GetCustomAttributes(typeof(BasicApiAttribute), false);
+            if(type.IsSubclassOf(typeof(BaseApi))|| attribute.Length>0)
             {
                 apis.Add(type);
             }
