@@ -19,7 +19,9 @@ namespace Mozi.HttpEmbedded
         
         private readonly SocketServer _sc=new SocketServer();
         private WebDav.DavServer _davserver;
-
+        /// <summary>
+        /// 
+        /// </summary>
         private int _port=80;
         private int _iporthttps = 443;
 
@@ -65,7 +67,7 @@ namespace Mozi.HttpEmbedded
         /// </summary>
         internal int PortHTTPS
         {
-            get { return _iporthttps; }
+            get { return _iporthttps; } private set { _iporthttps = value; }
         }
         /// <summary>
         /// 时区
