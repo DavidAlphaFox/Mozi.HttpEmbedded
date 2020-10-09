@@ -61,7 +61,7 @@ namespace Mozi.HttpEmbedded.Serialize
     /// <summary>
     /// JSON序列化
     /// </summary>
-    public class JSONSerializer: ISerializer
+    internal class JSONSerializer: ISerializer
     {
         public DataSerializeType SerialzeType => throw new NotImplementedException();
 
