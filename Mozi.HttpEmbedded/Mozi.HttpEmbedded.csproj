@@ -65,6 +65,7 @@
     <Compile Include="ASCIICode.cs" />
     <Compile Include="Attributes\BasicApiAttribute.cs" />
     <Compile Include="Auth\User.cs" />
+    <Compile Include="Cert\CertManager.cs" />
     <Compile Include="Common\UrlTree.cs" />
     <Compile Include="Page\SystemApi.cs" />
     <Compile Include="Serialize\ISerializer.cs" />

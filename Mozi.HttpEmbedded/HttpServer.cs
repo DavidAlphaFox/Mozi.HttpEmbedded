@@ -1,5 +1,6 @@
 ﻿using System;
 using Mozi.HttpEmbedded.Auth;
+using Mozi.HttpEmbedded.Cert;
 using Mozi.HttpEmbedded.Common;
 using Mozi.HttpEmbedded.Compress;
 using Mozi.HttpEmbedded.Page;
@@ -20,13 +21,17 @@ namespace Mozi.HttpEmbedded
         private WebDav.DavServer _davserver;
 
         private int _port=80;
+        private int _iporthttps = 443;
 
         private string _serverName = "HttpEmbedded";
 
         //允许和公开的方法
         private RequestMethod[] MethodAllow = new RequestMethod[] { RequestMethod.OPTIONS, RequestMethod.TRACE, RequestMethod.GET, RequestMethod.HEAD, RequestMethod.POST, RequestMethod.COPY, RequestMethod.PROPFIND, RequestMethod.LOCK, RequestMethod.UNLOCK };
         private RequestMethod[] MethodPublic = new RequestMethod[] { RequestMethod.OPTIONS, RequestMethod.GET, RequestMethod.HEAD, RequestMethod.PROPFIND, RequestMethod.PROPPATCH, RequestMethod.MKCOL, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.COPY, RequestMethod.MOVE, RequestMethod.LOCK, RequestMethod.UNLOCK };
-
+        //证书管理器
+        private CertManager _certMg;
+        //HTTPS开启标识
+        private bool _httpsEnabled = false;
         /// <summary>
         /// 支持的HTTP服务协议版本
         /// </summary>
@@ -54,6 +59,13 @@ namespace Mozi.HttpEmbedded
         {
             get { return _port; }
             private set { _port = value; }
+        }
+        /// <summary>
+        /// HTTPS服务端口
+        /// </summary>
+        internal int PortHTTPS
+        {
+            get { return _iporthttps; }
         }
         /// <summary>
         /// 时区
@@ -406,7 +418,15 @@ namespace Mozi.HttpEmbedded
             return this;
         }        
         //TODO HTTPS
-        public HttpServer UseHttps()
+        internal HttpServer UseHttps()
+        {
+            throw new NotImplementedException();
+        }
+        /// <summary>
+        /// 载入证书
+        /// </summary>
+        /// <returns></returns>
+        private HttpServer LoadCertification()
         {
             throw new NotImplementedException();
         }
@@ -418,7 +438,7 @@ namespace Mozi.HttpEmbedded
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
-        public HttpServer SetCertificate(string path)
+        public HttpServer SetCertification(string path)
         {
             throw new NotImplementedException();
         }
@@ -443,7 +463,5 @@ namespace Mozi.HttpEmbedded
         {
             _sc.StopServer();
         }
-
-
     }
 }

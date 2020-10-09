@@ -13,6 +13,7 @@ namespace Mozi.HttpEmbedded
         //private static SocketServer _mSocketServer;
         
         private int _iport = 80;
+
         private int _maxListenCount = 100;
         private ConcurrentDictionary<string,Socket> _socketDocker;
         private Socket _sc;
@@ -49,7 +50,6 @@ namespace Mozi.HttpEmbedded
         {
             get { return _iport; }
         }
-
         public Socket SocketMain
         {
             get { return _sc; }
