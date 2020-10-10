@@ -107,6 +107,7 @@
     <Compile Include="StateObject.cs" />
     <Compile Include="StatusCode.cs" />
     <Compile Include="Encode\StringEncoder.cs" />
+    <Compile Include="Template\AbsTemplate.cs" />
     <Compile Include="TransformHeader.cs" />
     <Compile Include="WebDav\Exceptions\ConflictException.cs" />
     <Compile Include="WebDav\Exceptions\WebDavException.cs" />
