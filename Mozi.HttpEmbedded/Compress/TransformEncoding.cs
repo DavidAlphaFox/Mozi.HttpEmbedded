@@ -1,4 +1,4 @@
-﻿namespace Mozi.HttpEmbedded.Encode
+﻿namespace Mozi.HttpEmbedded.Compress
 {
     /// <summary>
     /// 传输压缩类型

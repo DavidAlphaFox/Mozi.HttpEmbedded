@@ -1,6 +1,4 @@
-﻿using Mozi.HttpEmbedded.Encode;
-
-namespace Mozi.HttpEmbedded.Compress
+﻿namespace Mozi.HttpEmbedded.Compress
 {
     /// <summary>
     /// 压缩选项

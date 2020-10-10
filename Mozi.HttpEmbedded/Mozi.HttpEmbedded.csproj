@@ -77,7 +77,7 @@
     <Compile Include="Encode\Base64.cs" />
     <Compile Include="Compress\CompressOption.cs" />
     <Compile Include="Compress\GZip.cs" />
-    <Compile Include="Encode\TransformEncoding.cs" />
+    <Compile Include="Compress\TransformEncoding.cs" />
     <Compile Include="Cookie\HttpCookie.cs" />
     <Compile Include="File.cs" />
     <Compile Include="Generic\StringCompareIgnoreCase.cs" />
