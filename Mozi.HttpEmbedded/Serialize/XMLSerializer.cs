@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;
 
@@ -56,28 +55,6 @@ namespace Mozi.HttpEmbedded.Serialize
                 content = writer.ToString();
             };
             return content;
-        }
-    }
-    /// <summary>
-    /// JSON序列化
-    /// </summary>
-    internal class JSONSerializer: ISerializer
-    {
-        public DataSerializeType SerialzeType => throw new NotImplementedException();
-
-        public T Decode<T>(string data)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<T> DecodeList<T>(string data)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string Encode(object data)
-        {
-            throw new NotImplementedException();
         }
     }
 }
