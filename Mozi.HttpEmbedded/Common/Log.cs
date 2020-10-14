@@ -14,13 +14,20 @@ namespace Mozi.HttpEmbedded.Common
         private static readonly string LogDir = AppDomain.CurrentDomain.BaseDirectory + @"Log\";
 
         private static ReaderWriterLockSlim writeLock = new ReaderWriterLockSlim();
-
+        /// <summary>
+        /// 默认日志文件扩展名
+        /// </summary>
+        private const string LogFileExt = ".log";
+        /// <summary>
+        /// 默认记录器名
+        /// </summary>
+        private static string DefaultLoggerName = "error";
         /// <summary>
         /// 追加式写入日志
         /// </summary>
         /// <param name="name"></param>
         /// <param name="info"></param>
-        public static void Save(string name, string info,LogLevel level)
+        public static void Save(string name, string info, LogLevel level)
         {
             DirectoryInfo dir = new DirectoryInfo(LogDir);
             if (!dir.Exists)
@@ -31,7 +38,7 @@ namespace Mozi.HttpEmbedded.Common
                 try
                 {
                     writeLock.EnterWriteLock();
-                    StreamWriter sw = new StreamWriter(LogDir + name + "_" + DateTime.Now.ToString("yyyyMMdd") + ".log", true);
+                    StreamWriter sw = new StreamWriter(LogDir + name + "_" + DateTime.Now.ToString("yyyyMMdd") + LogFileExt, true);
                     string loginfo = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + " " + Enum.GetName(typeof(LogLevel), level) + " | " + info;
                     sw.WriteLine(loginfo);
                     Console.WriteLine(loginfo);
@@ -44,17 +51,23 @@ namespace Mozi.HttpEmbedded.Common
                 }
             });
         }
+
+        public static void Save(string name, string info)
+        {
+            Save(name, info, LogLevel.Info);
+        }
+
         public static void Save(string info)
         {
-            Save("error", info,LogLevel.Error);
+            Save(DefaultLoggerName, info, LogLevel.Error);
         }
         public static void Debug(string info)
         {
-            Save("error", info, LogLevel.Debug);
+            Save(DefaultLoggerName, info, LogLevel.Debug);
         }
         public static void Warn(string info)
         {
-            Save("error", info, LogLevel.Warn);
+            Save(DefaultLoggerName, info, LogLevel.Warn);
         }
         /// <summary>
         /// 日志级别
@@ -64,7 +77,7 @@ namespace Mozi.HttpEmbedded.Common
             Error = 1,
             Debug = 2,
             Info = 3,
-            Warn=4
+            Warn = 4
         }
     }
 }
