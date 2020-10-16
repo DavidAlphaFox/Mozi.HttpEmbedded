@@ -136,7 +136,7 @@ namespace Mozi.HttpEmbedded
             catch (Exception ex)
             {
                 sc = StatusCode.InternalServerError;
-                Log.Save(ex.Message+":"+ex.StackTrace??"");
+                Log.Error(ex.Message+":"+ex.StackTrace??"");
             }
             finally
             {                

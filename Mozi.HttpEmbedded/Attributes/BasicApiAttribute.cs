@@ -1,5 +1,8 @@
 ﻿using System;
 
+/// <summary>
+/// 属性标记还需要统筹设计
+/// </summary>
 namespace Mozi.HttpEmbedded.Attributes
 {
     /// <summary>
@@ -7,6 +10,14 @@ namespace Mozi.HttpEmbedded.Attributes
     /// </summary>
     [AttributeUsage(AttributeTargets.Class)]
     public class BasicApiAttribute:Attribute
+    {
+
+    }
+    /// <summary>
+    /// 禁止访问的方法
+    /// </summary>
+    [AttributeUsage(AttributeTargets.Method)]
+    public class ForbiddenMethodAttribute : Attribute
     {
 
     }

@@ -13,7 +13,7 @@ namespace Mozi.HttpEmbedded.Common
     {
         private static readonly string LogDir = AppDomain.CurrentDomain.BaseDirectory + @"Log\";
 
-        private static ReaderWriterLockSlim writeLock = new ReaderWriterLockSlim();
+        private static ReaderWriterLockSlim _writeLock = new ReaderWriterLockSlim();
         /// <summary>
         /// 默认日志文件扩展名
         /// </summary>
@@ -37,7 +37,7 @@ namespace Mozi.HttpEmbedded.Common
             Parallel.Invoke(() => {
                 try
                 {
-                    writeLock.EnterWriteLock();
+                    _writeLock.EnterWriteLock();
                     StreamWriter sw = new StreamWriter(LogDir + name + "_" + DateTime.Now.ToString("yyyyMMdd") + LogFileExt, true);
                     string loginfo = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + " " + Enum.GetName(typeof(LogLevel), level) + " | " + info;
                     sw.WriteLine(loginfo);
@@ -47,17 +47,32 @@ namespace Mozi.HttpEmbedded.Common
                 }
                 finally
                 {
-                    writeLock.ExitWriteLock();
+                    _writeLock.ExitWriteLock();
                 }
             });
         }
-
+        /// <summary>
+        /// 自定义提示
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="info"></param>
         public static void Save(string name, string info)
         {
             Save(name, info, LogLevel.Info);
         }
-
-        public static void Save(string info)
+        /// <summary>
+        /// 提示
+        /// </summary>
+        /// <param name="info"></param>
+        public static void Info(string info)
+        {
+            Save(DefaultLoggerName, info, LogLevel.Info);
+        }
+        /// <summary>
+        /// 错误
+        /// </summary>
+        /// <param name="info"></param>
+        public static void Error(string info)
         {
             Save(DefaultLoggerName, info, LogLevel.Error);
         }

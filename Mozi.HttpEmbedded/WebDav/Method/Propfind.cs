@@ -49,12 +49,12 @@ namespace Mozi.HttpEmbedded.WebDav.Method
             if (requestDoc.DocumentElement != null)
             {
                 if (requestDoc.DocumentElement.LocalName != "propfind")
-                    Log.Save("PROPFIND method without propfind in xml document");
+                    Log.Error("PROPFIND method without propfind in xml document");
                 else
                 {
                     XmlNode n = requestDoc.DocumentElement.FirstChild;
                     if (n == null)
-                        Log.Save("propfind element without children");
+                        Log.Error("propfind element without children");
                     else
                     {
                         switch (n.LocalName)

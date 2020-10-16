@@ -65,7 +65,6 @@ namespace Mozi.HttpEmbedded.Page
             //确定路径映射关系
             AccessPoint ap = Match(path);
             Type cls = apis.Find(x => x.Name.Equals(ap.Domain, StringComparison.OrdinalIgnoreCase));
-
             MethodInfo method = cls.GetMethod(ap.Method, BindingFlags.Instance | BindingFlags.IgnoreCase | BindingFlags.Public);
             ParameterInfo[] pms = method.GetParameters();
             object[] args = new object[pms.Length];
