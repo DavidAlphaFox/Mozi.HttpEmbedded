@@ -405,6 +405,34 @@ namespace Mozi.HttpEmbedded
             req.Protocol = AbsClassEnum.Get<ProtocolType>(sProtoType);
             req.ProtocolVersion = AbsClassEnum.Get<HttpVersion>(sProtoVersion);
         }
+        /// <summary>
+        /// 将数据重播
+        /// </summary>
+        /// <returns></returns>
+        public byte[] GetBuffer()
+        {
+            List<byte> data = new List<byte>();
+            //注入状态信息
+            data.AddRange(GetStatusLine());
+            data.AddRange(TransformHeader.Carriage);
+            //注入默认头部
+            data.AddRange(Headers.GetBuffer());
+            //注入Cookie
+            data.AddRange(Cookies.GetBuffer());
+            //注入分割符
+            data.AddRange(TransformHeader.Carriage);
+            //注入响应包体
+            data.AddRange(Body);
+            return data.ToArray();
+        }
+        /// <summary>
+        /// 响应状态
+        /// </summary>
+        /// <returns></returns>
+        public byte[] GetStatusLine()
+        {
+            return StringEncoder.Encode(string.Format("{0} {1},HTTP/{2}", Method.Name,Path, ProtocolVersion.Version));
+        }
         ~HttpRequest()
         {
             PackedData = null;

@@ -132,7 +132,20 @@ namespace Mozi.HttpEmbedded.Cookie
             }
             return hc;
         }
-
+        /// <summary>
+        /// 取出缓冲区数据
+        /// </summary>
+        /// <returns></returns>
+        public List<byte> GetBuffer()
+        {
+            List<byte> data = new List<byte>();
+            foreach (var cookie in _data)
+            {
+                data.AddRange(StringEncoder.Encode(string.Format("{0}: {1}={2}", HeaderProperty.Cookie.PropertyTag, cookie.Key,cookie.Value)));
+                data.AddRange(TransformHeader.Carriage);
+            }
+            return data;
+        }
         public string Get(string name)
         {
             return _data[name];
