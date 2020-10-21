@@ -91,8 +91,7 @@ namespace Mozi.HttpEmbedded
         protected override string Tag { get { return Name; } }
 
         private string _name;
-
-        private RequestMethod(string name)
+        public RequestMethod(string name)
         {
             _name = name;
         }

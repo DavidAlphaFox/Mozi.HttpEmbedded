@@ -9,7 +9,7 @@ namespace Mozi.HttpEmbedded
     /// <summary>
     /// HTTPœÏ”¶
     /// </summary>
-    public sealed class HttpResponse
+    public class HttpResponse
     {
         private byte[] _body=new byte[0];
         /// <summary>

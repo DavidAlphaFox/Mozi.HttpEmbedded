@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mozi.HttpEmbedded", "Mozi.H
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mozi.HttpEmbedded.Test", "Mozi.HttpEmbedded.Test\Mozi.HttpEmbedded.Test.csproj", "{3B2BFA0E-804F-4CB5-B77C-4F1856E6D223}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mozi.SSDP", "Mozi.SSDP\Mozi.SSDP.csproj", "{9A64BE58-2308-4F54-8BDE-7FE7154B0058}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,18 @@ Global
 		{3B2BFA0E-804F-4CB5-B77C-4F1856E6D223}.ReleaseBinaries|Any CPU.Build.0 = Release|Any CPU
 		{3B2BFA0E-804F-4CB5-B77C-4F1856E6D223}.ReleaseBinaries|x86.ActiveCfg = Release|Any CPU
 		{3B2BFA0E-804F-4CB5-B77C-4F1856E6D223}.ReleaseBinaries|x86.Build.0 = Release|Any CPU
+		{9A64BE58-2308-4F54-8BDE-7FE7154B0058}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A64BE58-2308-4F54-8BDE-7FE7154B0058}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A64BE58-2308-4F54-8BDE-7FE7154B0058}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9A64BE58-2308-4F54-8BDE-7FE7154B0058}.Debug|x86.Build.0 = Debug|Any CPU
+		{9A64BE58-2308-4F54-8BDE-7FE7154B0058}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A64BE58-2308-4F54-8BDE-7FE7154B0058}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A64BE58-2308-4F54-8BDE-7FE7154B0058}.Release|x86.ActiveCfg = Release|Any CPU
+		{9A64BE58-2308-4F54-8BDE-7FE7154B0058}.Release|x86.Build.0 = Release|Any CPU
+		{9A64BE58-2308-4F54-8BDE-7FE7154B0058}.ReleaseBinaries|Any CPU.ActiveCfg = Release|Any CPU
+		{9A64BE58-2308-4F54-8BDE-7FE7154B0058}.ReleaseBinaries|Any CPU.Build.0 = Release|Any CPU
+		{9A64BE58-2308-4F54-8BDE-7FE7154B0058}.ReleaseBinaries|x86.ActiveCfg = Release|Any CPU
+		{9A64BE58-2308-4F54-8BDE-7FE7154B0058}.ReleaseBinaries|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
