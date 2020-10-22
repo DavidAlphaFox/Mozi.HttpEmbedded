@@ -95,6 +95,7 @@ namespace Mozi.HttpEmbedded
 
         public HttpRequest()
         {
+            ProtocolVersion = HttpVersion.Version11;
             Headers=new TransformHeader();
             Files=new FileCollection();
             Cookies = new RequestCookie();
