@@ -198,7 +198,6 @@ namespace Mozi.HttpEmbedded
         {
             Socket client;
             _socketDocker.TryRemove(so.Id, out client);
-
         }
     }
 }

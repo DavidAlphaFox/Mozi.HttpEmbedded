@@ -1,17 +1,14 @@
-﻿using System.Collections.Generic;
-using System.Net;
+﻿using System.Net;
 using System.Net.Sockets;
 using Mozi.HttpEmbedded;
-using Mozi.HttpEmbedded.Generic;
 
 namespace Mozi.SSDP
 {
     /// <summary>
-    /// SOCKET
+    /// SSDP协议实现
     /// </summary>
     public class Service
     {
-
         private string BroadcastAddress = "239.255.255.250";
         private int ProtocolPort = 1900;
         private RequestMethod MSEARCH = new RequestMethod("M-SEARCH");
@@ -24,7 +21,6 @@ namespace Mozi.SSDP
         {
             _socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, System.Net.Sockets.ProtocolType.Udp);
             _socket.Bind(new IPEndPoint(IPAddress.Any, ProtocolPort));
-
         }
         /// <summary>
         /// 激活
@@ -78,7 +74,7 @@ namespace Mozi.SSDP
             headers.Add("ST", "mozi-embedded:simplehost");
             headers.Add("MX", "3");
             request.SetHeaders(headers);
-
+            _socket.Send(request.GetBuffer());
         }
 
         //NOTIFY* HTTP/1.1
@@ -105,7 +101,6 @@ namespace Mozi.SSDP
             headers.Add(HeaderProperty.CacheControl, "max-age= 3600");
             request.SetHeaders(headers);
             _socket.Send(request.GetBuffer());
-
         }
 
         //NOTIFY* HTTP/1.1
@@ -150,88 +145,6 @@ namespace Mozi.SSDP
             resp.AddHeader("USN", "mozi-embedded:simplehost");
             resp.SetStatus(StatusCode.Success);
             _socket.Send(resp.GetBuffer());
-        }
-    }
-
-    public class SSDPType : AbsClassEnum
-    {
-
-        public static SSDPType Discover = new SSDPType("discover");
-        public static SSDPType All = new SSDPType("all");
-        public static SSDPType Alive = new SSDPType("alive");
-        public static SSDPType Byebye = new SSDPType("byebye");
-
-        private string _name;
-
-        //discover all alive byebye
-        public SSDPType(string name)
-        {
-            _name = name;
-        }
-        public override string ToString()
-        {
-            return $"ssdp:{_name}";
-        }
-        protected override string Tag => _name;
-    }
-    /// <summary>
-    /// 缓存
-    /// </summary>
-    public class SSDPCache
-    {
-        public string USN { get; set; }
-        public string ServiceType { get; set; }
-        public int Expiration { get; set; }
-        public string Location { get; set; }
-    }
-    /// <summary>
-    /// 缓存管理器
-    /// </summary>
-    public class SSDPCacheManager
-    {
-        public static SSDPCacheManager _cm;
-        /// <summary>
-        /// 单实例
-        /// </summary>
-        public static SSDPCacheManager Instance
-        {
-            get { return _cm ?? (_cm = new SSDPCacheManager()); }
-        }
-
-        private List<SSDPCache> _caches = new List<SSDPCache>();
-
-        private SSDPCacheManager()
-        {
-
-        }
-    }
-    /// <summary>
-    /// 请求包
-    /// </summary>
-    public class HttpRequestU:HttpRequest
-    {
-        public HttpRequestU SetPath(string path)
-        {
-            Path = path;
-            return this;
-        }
-
-        public HttpRequestU SetMethod(RequestMethod method)
-        {
-            Method = method;
-            return this;
-        }
-
-        public HttpRequestU SetProtocol(HttpEmbedded.HttpVersion version)
-        {
-            ProtocolVersion = version;
-            return this;
-        }
-
-        public HttpRequestU SetHeaders(TransformHeader headers)
-        {
-            Headers = headers;
-            return this;
         }
     }
 }

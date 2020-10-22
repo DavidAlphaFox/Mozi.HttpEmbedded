@@ -32,7 +32,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="HttpRequestU.cs" />
     <Compile Include="Service.cs" />
+    <Compile Include="SSDPCache.cs" />
+    <Compile Include="SSDPCacheManager.cs" />
+    <Compile Include="SSDPType.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Mozi.HttpEmbedded\Mozi.HttpEmbedded.csproj">
