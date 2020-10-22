@@ -13,19 +13,19 @@ namespace Mozi.HttpEmbedded
     /// </summary>
     public class HttpRequest
     {
-        public ProtocolType Protocol { get; private set; }
+        public ProtocolType Protocol { get; protected set; }
         /// <summary>
         /// 协议版本
         /// </summary>
-        public HttpVersion ProtocolVersion { get; private set; }
+        public HttpVersion ProtocolVersion { get; protected set; }
         /// <summary>
         /// 请求路径
         /// </summary>
-        public string Path { get; private set; }
+        public string Path { get; protected set; }
         /// <summary>
         /// 查询字符串
         /// </summary>
-        public string QueryString { get; private set; }
+        public string QueryString { get; protected set; }
         /// <summary>
         /// 查询 索引可忽略大小写
         /// </summary>
@@ -38,60 +38,60 @@ namespace Mozi.HttpEmbedded
         /// <summary>
         /// 可接受压缩算法
         /// </summary>
-        public string AcceptEncoding { get; private set; }
+        public string AcceptEncoding { get; protected set; }
         /// <summary>
         /// 源地址
         /// </summary>
-        public string Host { get; private set; }
+        public string Host { get; protected set; }
         /// <summary>
         /// 客户端信息
         /// </summary>
-        public string UserAgent { get; private set; }
+        public string UserAgent { get; protected set; }
         /// <summary>
         /// 请求方法
         /// </summary>
-        public RequestMethod Method { get;  private set; }
+        public RequestMethod Method { get; protected set; }
         /// <summary>
         /// 内容类型
         /// </summary>
-        public string ContentType { get; private set; }        
+        public string ContentType { get; protected set; }        
         /// <summary>
         /// 内容大小
         /// </summary>
-        public string ContentLength { get; private set; }
+        public string ContentLength { get; protected set; }
         /// <summary>
         /// 请求头
         /// </summary>
-        public TransformHeader Headers { get; private set; }
+        public TransformHeader Headers { get; protected set; }
         /// <summary>
         /// 通讯数据
         /// </summary>
-        public byte[] PackedData { get; private set; }
+        public byte[] PackedData { get; protected set; }
         /// <summary>
         /// 首行数据
         /// </summary>
-        public byte[] FirstLineData { get; private set; }
+        public byte[] FirstLineData { get; protected set; }
         /// <summary>
         /// 首行字符串
         /// </summary>
-        public string FirstLineString { get; private set; }
+        public string FirstLineString { get; protected set; }
         /// <summary>
         /// 请求头数据
         /// </summary>
-        public byte[] HeaderData { get; private set; }
+        public byte[] HeaderData { get; protected set; }
         /// <summary>
         /// 请求数据体
         /// </summary>
-        public byte[] Body { get; private set; }
+        public byte[] Body { get; protected set; }
         /// <summary>
         /// 文件
         /// </summary>
-        public FileCollection Files { get; private set; }
+        public FileCollection Files { get; protected set; }
 
         /// <summary>
         /// Cookie
         /// </summary>
-        public RequestCookie Cookies { get; private set; }
+        public RequestCookie Cookies { get; protected set; }
 
         public HttpRequest()
         {
@@ -405,6 +405,7 @@ namespace Mozi.HttpEmbedded
             req.Protocol = AbsClassEnum.Get<ProtocolType>(sProtoType);
             req.ProtocolVersion = AbsClassEnum.Get<HttpVersion>(sProtoVersion);
         }
+        //TODO 此功能需要重试
         /// <summary>
         /// 将数据重播
         /// </summary>
