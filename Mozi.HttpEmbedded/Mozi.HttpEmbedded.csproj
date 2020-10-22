@@ -67,6 +67,7 @@
     <Compile Include="Auth\User.cs" />
     <Compile Include="Cert\CertManager.cs" />
     <Compile Include="Common\UrlTree.cs" />
+    <Compile Include="Cookie\CookieManager.cs" />
     <Compile Include="Page\SystemApi.cs" />
     <Compile Include="Serialize\ISerializer.cs" />
     <Compile Include="Encode\UrlEncoder.cs" />

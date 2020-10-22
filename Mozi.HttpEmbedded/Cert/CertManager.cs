@@ -20,5 +20,13 @@ namespace Mozi.HttpEmbedded.Cert
         {
             throw new NotImplementedException();
         }
+        /// <summary>
+        /// 验证
+        /// </summary>
+        /// <returns></returns>
+        public bool Valid()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
