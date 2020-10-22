@@ -144,6 +144,7 @@
     <Compile Include="WebDav\DAVProperty.cs" />
     <Compile Include="WebDav\DAVServer.cs" />
     <Compile Include="WebService\Publisher.cs" />
+    <Compile Include="WebService\SOAP.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Docment\Error.html" />

@@ -48,8 +48,8 @@ namespace Mozi.SSDP
         /// </summary>
         public void Discover()
         {
-            HttpRequest request = new HttpRequest();
-            request.Path = "*";
+            HttpRequestU request = new HttpRequestU();
+            request.SetPath("*").SetMethod(MSEARCH);
         }
         /// <summary>
         /// 发送存在通知
@@ -90,11 +90,31 @@ namespace Mozi.SSDP
 
         protected override string Tag => _name;
     }
-
-    public static class HttpServerExtensions{
-        public static HttpRequest SetPath(this HttpRequest server,string path)
+    /// <summary>
+    /// 缓存
+    /// </summary>
+    public class SSDPCache
+    {
+        public string USN { get; set; }
+        public string ServiceType { get; set; }
+        public int Expiration { get; set; }
+        public string Location { get; set; }
+    }
+    /// <summary>
+    /// 请求包
+    /// </summary>
+    public class HttpRequestU:HttpRequest
+    {
+        public HttpRequestU SetPath(string path)
         {
-            server.Path = path;
+            Path = path;
+            return this;
+        }
+
+        public HttpRequestU SetMethod(RequestMethod method)
+        {
+            Method = method;
+            return this;
         }
     }
 }
