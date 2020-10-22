@@ -110,6 +110,7 @@
     <Compile Include="Encode\StringEncoder.cs" />
     <Compile Include="Template\AbsTemplate.cs" />
     <Compile Include="TransformHeader.cs" />
+    <Compile Include="UDPSocket.cs" />
     <Compile Include="WebDav\Exceptions\ConflictException.cs" />
     <Compile Include="WebDav\Exceptions\WebDavException.cs" />
     <Compile Include="WebDav\Exceptions\ForbiddenException.cs" />

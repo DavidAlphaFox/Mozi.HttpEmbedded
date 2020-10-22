@@ -11,12 +11,12 @@ namespace Mozi.HttpEmbedded
     public class SocketServer
     {
         //private static SocketServer _mSocketServer;
-        
-        private int _iport = 80;
 
-        private int _maxListenCount = 100;
-        private ConcurrentDictionary<string,Socket> _socketDocker;
-        private Socket _sc;
+        protected int _iport = 80;
+
+        protected int _maxListenCount = 100;
+        protected ConcurrentDictionary<string,Socket> _socketDocker;
+        protected Socket _sc;
 
         /// <summary>
         /// 服务器启动事件
@@ -111,7 +111,7 @@ namespace Mozi.HttpEmbedded
         /// 开始连接回调
         /// </summary>
         /// <param name="iar"></param>
-        private void CallbackAccept(IAsyncResult iar)
+        protected void CallbackAccept(IAsyncResult iar)
         {
             Socket server = (Socket)iar.AsyncState;
             Socket client = server.EndAccept(iar);

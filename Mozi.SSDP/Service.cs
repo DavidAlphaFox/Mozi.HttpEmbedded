@@ -1,6 +1,4 @@
-﻿using System.Net;
-using System.Net.Sockets;
-using Mozi.HttpEmbedded;
+﻿using Mozi.HttpEmbedded;
 
 namespace Mozi.SSDP
 {
@@ -15,12 +13,11 @@ namespace Mozi.SSDP
         private RequestMethod NOTIFY = new RequestMethod("NOTIFY");
         private const string QueryPath = "*";
 
-        private Socket _socket;
+        private UDPSocket _socket;
 
         public Service()
         {
-            _socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, System.Net.Sockets.ProtocolType.Udp);
-            _socket.Bind(new IPEndPoint(IPAddress.Any, ProtocolPort));
+            _socket = new UDPSocket();
         }
         /// <summary>
         /// 激活
@@ -28,7 +25,7 @@ namespace Mozi.SSDP
         /// <returns></returns>
         public Service Active()
         {
-            _socket.Listen(10);
+            _socket.StartServer(ProtocolPort);
             return this;
         }
         /// <summary>
@@ -37,7 +34,7 @@ namespace Mozi.SSDP
         /// <returns></returns>
         public Service Showdown()
         {
-            _socket.Shutdown(SocketShutdown.Both);
+            _socket.StopServer();
             return this;
         }
         //M-SEARCH* HTTP/1.1
@@ -74,7 +71,7 @@ namespace Mozi.SSDP
             headers.Add("ST", "mozi-embedded:simplehost");
             headers.Add("MX", "3");
             request.SetHeaders(headers);
-            _socket.Send(request.GetBuffer());
+            _socket.SocketMain.Send(request.GetBuffer());
         }
 
         //NOTIFY* HTTP/1.1
@@ -100,7 +97,7 @@ namespace Mozi.SSDP
             headers.Add("AL", "");
             headers.Add(HeaderProperty.CacheControl, "max-age= 3600");
             request.SetHeaders(headers);
-            _socket.Send(request.GetBuffer());
+            _socket.SocketMain.Send(request.GetBuffer());
         }
 
         //NOTIFY* HTTP/1.1
@@ -122,7 +119,7 @@ namespace Mozi.SSDP
             headers.Add("NTS", SSDPType.Byebye.ToString());
             headers.Add("USN", "mozi-embedded:simplehost");
             request.SetHeaders(headers);
-            _socket.Send(request.GetBuffer());
+            _socket.SocketMain.Send(request.GetBuffer());
         }
 
         //CACHE-CONTROL: max-age = seconds until advertisement expires
@@ -144,7 +141,7 @@ namespace Mozi.SSDP
             resp.AddHeader("ST", "mozi-embedded:simplehost");
             resp.AddHeader("USN", "mozi-embedded:simplehost");
             resp.SetStatus(StatusCode.Success);
-            _socket.Send(resp.GetBuffer());
+            _socket.SocketMain.Send(resp.GetBuffer());
         }
     }
 }
