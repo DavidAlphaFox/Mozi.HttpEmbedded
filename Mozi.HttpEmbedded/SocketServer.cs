@@ -134,7 +134,7 @@ namespace Mozi.HttpEmbedded
             _socketDocker.TryAdd(so.Id, client);
             try
             {
-                client.BeginReceive(so.Buffer, 0, StateObject.BufferSize, SocketFlags.None, CallbackReceive, so);
+                client.BeginReceive(so.Buffer, 0, so.Buffer.Length, SocketFlags.None, CallbackReceive, so);
                 if (OnReceiveStart != null)
                 {
                     OnReceiveStart.BeginInvoke(this, new DataTransferArgs(), null, null);
@@ -163,7 +163,7 @@ namespace Mozi.HttpEmbedded
                     so.ResetBuffer(iByteRead);
                     if (client.Available > 0){
                         //Thread.Sleep(10);
-                        client.BeginReceive(so.Buffer, 0, StateObject.BufferSize, SocketFlags.None, CallbackReceive, so);
+                        client.BeginReceive(so.Buffer, 0, so.Buffer.Length, SocketFlags.None, CallbackReceive, so);
                     }else{
                         InvokeAfterReceiveEnd(so, client);
                     }

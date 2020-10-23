@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using System.Threading;
 using Mozi.HttpEmbedded;
 
@@ -9,9 +10,11 @@ namespace Mozi.SSDP
     /// </summary>
     public class Service
     {
-        //固定参数
-        private string BroadcastAddress = "239.255.255.250";
-        private int ProtocolPort = 1900;
+        //组播地址
+        public const string BroadcastAddress = "239.255.255.250";
+        //组播端口
+        public const int ProtocolPort = 1900;
+
         private RequestMethod MSEARCH = new RequestMethod("M-SEARCH");
         private RequestMethod NOTIFY = new RequestMethod("NOTIFY");
         private const string QueryPath = "*";
@@ -32,13 +35,42 @@ namespace Mozi.SSDP
         /// 缓存时间
         /// </summary>
         public int CacheTimeout = 3600;
+        /// <summary>
+        /// 默认包
+        /// </summary>
+        public DiscoverPackage PackDefaultDiscover = new DiscoverPackage() 
+        {
+            MX=3,
+            ST= "upnp:rootdevice"
+        };
+
+        public NotificationPackage PackDefaultAlive = new NotificationPackage()
+        {
+            CacheTimeout = 3600,
+            Location = "",
+            Server = "",
+            NT="upnp:rootdevice",
+            USN=""
+        };
+        public ByebyePackage PackDefaultByebye = new ByebyePackage() 
+        { 
+        
+        };
 
         public Service()
         {
             _socket = new UDPSocket();
+            _socket.AfterReceiveEnd += _socket_AfterReceiveEnd;
             _remoteEP = new IPEndPoint(IPAddress.Parse(BroadcastAddress), ProtocolPort);
             _timer = new Timer(TimeoutCallback, null, Timeout.Infinite, Timeout.Infinite);
         }
+
+        private void _socket_AfterReceiveEnd(object sender, DataTransferArgs args)
+        {
+            Console.WriteLine("收到数据,{0}",args.IP);
+            Console.WriteLine(System.Text.Encoding.Default.GetString(args.Data));
+        }
+
         /// <summary>
         /// 激活
         /// </summary>
@@ -81,18 +113,11 @@ namespace Mozi.SSDP
         /// <summary>
         /// 发送查询消息
         /// </summary>
-        public void Discover()
+        public void Discover(DiscoverPackage dp)
         {
             HttpRequestU request = new HttpRequestU();
             request.SetPath("*").SetMethod(MSEARCH);
-            TransformHeader headers = new TransformHeader();
-
-            headers.Add(HeaderProperty.Host, $"{BroadcastAddress}:{ProtocolPort}");
-            headers.Add("S", "uuid:ijklmnop-7dec-11d0-a765-00a0c91e6bf6");
-            headers.Add("MAN", "\"ssdp:discover\"");
-            headers.Add("ST", "mozi-embedded:simplehost");
-            headers.Add("MX", "3");
-            request.SetHeaders(headers);
+            request.SetHeaders(dp.GetHeaders());
 
             byte[] data = request.GetBuffer();
             
@@ -111,19 +136,11 @@ namespace Mozi.SSDP
         /// <summary>
         /// 发送存在通知
         /// </summary>
-        public void Notification()
+        public void Notification(NotificationPackage np)
         {
             HttpRequestU request = new HttpRequestU();
             request.SetPath("*").SetMethod(NOTIFY);
-            TransformHeader headers = new TransformHeader();
-            headers.Add(HeaderProperty.Host, $"{BroadcastAddress}:{ProtocolPort}");
-            headers.Add("SERVER", "mozi/embedded/simplehost");
-            headers.Add("NT","mozi-embedded:simplehost");
-            headers.Add("NTS", SSDPType.Alive.ToString());
-            headers.Add("USN", "mozi-embedded:simplehost");
-            headers.Add("LOCATION", "");
-            headers.Add(HeaderProperty.CacheControl, $"max-age= {CacheTimeout}");
-            request.SetHeaders(headers);
+            request.SetHeaders(np.GetHeaders());
             byte[] data = request.GetBuffer();
             _socket.SocketMain.SendTo(data, _remoteEP);
         }
@@ -137,16 +154,11 @@ namespace Mozi.SSDP
         /// <summary>
         /// 离线通知
         /// </summary>
-        public void Leave()
+        public void Leave(ByebyePackage bp)
         {
             HttpRequestU request = new HttpRequestU();
             request.SetPath("*").SetMethod(NOTIFY);
-            TransformHeader headers = new TransformHeader();
-            headers.Add(HeaderProperty.Host, $"{BroadcastAddress}:{ProtocolPort}");
-            headers.Add("NT", "mozi-embedded:simplehost");
-            headers.Add("NTS", SSDPType.Byebye.ToString());
-            headers.Add("USN", "mozi-embedded:simplehost");
-            request.SetHeaders(headers);
+            request.SetHeaders(bp.GetHeaders());
             byte[] data = request.GetBuffer();
             _socket.SocketMain.SendTo(data, _remoteEP);
         }
@@ -176,7 +188,8 @@ namespace Mozi.SSDP
 
         public void TimeoutCallback(object state)
         {
-            Notification();
+            Discover(PackDefaultDiscover);
+            Notification(PackDefaultAlive);
         }
     }
 
@@ -232,7 +245,7 @@ namespace Mozi.SSDP
     public class ByebyePackage:AdvertisePackage
     {
         public string NT { get; set; }
-        public string NTS { get; set; }
+        //public string NTS { get; set; }
         public string USN { get; set; }
 
         public TransformHeader GetHeaders()
@@ -258,5 +271,11 @@ namespace Mozi.SSDP
         //USN: advertisement UUI
         public string BroadcastAddress { get; set; }
         public int ProtocolPort { get; set; }
+
+        public AdvertisePackage()
+        {
+            BroadcastAddress = Service.BroadcastAddress;
+            ProtocolPort = Service.ProtocolPort;
+        }
     }
 }
