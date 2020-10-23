@@ -64,6 +64,10 @@
       <Project>{051c3f42-0a53-4a78-a961-28ffa8c17b46}</Project>
       <Name>Mozi.HttpEmbedded</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Mozi.SSDP\Mozi.SSDP.csproj">
+      <Project>{9a64be58-2308-4f54-8bde-7fe7154b0058}</Project>
+      <Name>Mozi.SSDP</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="admin\assets\css\bootstrap-clearmin.min.css">

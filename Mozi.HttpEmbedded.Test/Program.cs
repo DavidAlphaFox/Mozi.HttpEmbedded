@@ -1,5 +1,6 @@
 ﻿using Mozi.HttpEmbedded.Auth;
 using Mozi.HttpEmbedded.Page;
+using Mozi.SSDP;
 using System;
 
 namespace Mozi.HttpEmbedded.Test
@@ -23,6 +24,8 @@ namespace Mozi.HttpEmbedded.Test
 
             //开启WebDAV
             hs.UseWebDav("dav");
+            Service ser = new Service();
+            ser.Active();
             Console.ReadLine();
         }
     }

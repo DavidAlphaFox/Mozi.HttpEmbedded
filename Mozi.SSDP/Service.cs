@@ -1,4 +1,6 @@
-﻿using Mozi.HttpEmbedded;
+﻿using System.Net;
+using System.Threading;
+using Mozi.HttpEmbedded;
 
 namespace Mozi.SSDP
 {
@@ -7,6 +9,7 @@ namespace Mozi.SSDP
     /// </summary>
     public class Service
     {
+        //固定参数
         private string BroadcastAddress = "239.255.255.250";
         private int ProtocolPort = 1900;
         private RequestMethod MSEARCH = new RequestMethod("M-SEARCH");
@@ -14,10 +17,27 @@ namespace Mozi.SSDP
         private const string QueryPath = "*";
 
         private UDPSocket _socket;
+        private Timer _timer;
+        private IPEndPoint _remoteEP;
+
+        /// <summary>
+        /// 广播消息周期
+        /// </summary>
+        public int NotificationPeriod = 30 * 1000;
+        /// <summary>
+        /// 查询周期
+        /// </summary>
+        public int DiscoverPeriod = 30 * 1000;
+        /// <summary>
+        /// 缓存时间
+        /// </summary>
+        public int CacheTimeout = 3600;
 
         public Service()
         {
             _socket = new UDPSocket();
+            _remoteEP = new IPEndPoint(IPAddress.Parse(BroadcastAddress), ProtocolPort);
+            _timer = new Timer(TimeoutCallback, null, Timeout.Infinite, Timeout.Infinite);
         }
         /// <summary>
         /// 激活
@@ -26,6 +46,7 @@ namespace Mozi.SSDP
         public Service Active()
         {
             _socket.StartServer(ProtocolPort);
+            _timer.Change(0, NotificationPeriod);
             return this;
         }
         /// <summary>
@@ -35,6 +56,7 @@ namespace Mozi.SSDP
         public Service Showdown()
         {
             _socket.StopServer();
+            _timer.Change(Timeout.Infinite, Timeout.Infinite);
             return this;
         }
         //M-SEARCH* HTTP/1.1
@@ -71,17 +93,21 @@ namespace Mozi.SSDP
             headers.Add("ST", "mozi-embedded:simplehost");
             headers.Add("MX", "3");
             request.SetHeaders(headers);
-            _socket.SocketMain.Send(request.GetBuffer());
+
+            byte[] data = request.GetBuffer();
+            
+            _socket.SocketMain.SendTo(data, _remoteEP);
         }
 
-        //NOTIFY* HTTP/1.1
-        //Host: 239.255.255.250:reservedSSDPport
-        //NT: blenderassociation:blender
-        //NTS: ssdp:alive
-        //USN: someunique:idscheme3
-        //AL: <blender:ixl><http://foo/bar>
-        //Cache-Control: max-age = 7393
-        
+        //NOTIFY* HTTP/1.1     
+        //HOST: 239.255.255.250:1900    
+        //CACHE-CONTROL: max-age = seconds until advertisement expires    
+        //LOCATION: URL for UPnP description for root device
+        //NT: search target
+        //NTS: ssdp:alive 
+        //SERVER: OS/versionUPnP/1.0product/version 
+        //USN: advertisement UUI
+
         /// <summary>
         /// 发送存在通知
         /// </summary>
@@ -91,20 +117,22 @@ namespace Mozi.SSDP
             request.SetPath("*").SetMethod(NOTIFY);
             TransformHeader headers = new TransformHeader();
             headers.Add(HeaderProperty.Host, $"{BroadcastAddress}:{ProtocolPort}");
+            headers.Add("SERVER", "mozi/embedded/simplehost");
             headers.Add("NT","mozi-embedded:simplehost");
             headers.Add("NTS", SSDPType.Alive.ToString());
             headers.Add("USN", "mozi-embedded:simplehost");
-            headers.Add("AL", "");
-            headers.Add(HeaderProperty.CacheControl, "max-age= 3600");
+            headers.Add("LOCATION", "");
+            headers.Add(HeaderProperty.CacheControl, $"max-age= {CacheTimeout}");
             request.SetHeaders(headers);
-            _socket.SocketMain.Send(request.GetBuffer());
+            byte[] data = request.GetBuffer();
+            _socket.SocketMain.SendTo(data, _remoteEP);
         }
 
-        //NOTIFY* HTTP/1.1
-        //Host: 239.255.255.250:reservedSSDPport
-        //NT: someunique:idscheme3
+        //NOTIFY* HTTP/1.1     
+        //HOST:    239.255.255.250:1900
+        //NT: search target
         //NTS: ssdp:byebye
-        //USN: someunique:idscheme3
+        //USN: uuid:advertisement UUID
 
         /// <summary>
         /// 离线通知
@@ -119,7 +147,8 @@ namespace Mozi.SSDP
             headers.Add("NTS", SSDPType.Byebye.ToString());
             headers.Add("USN", "mozi-embedded:simplehost");
             request.SetHeaders(headers);
-            _socket.SocketMain.Send(request.GetBuffer());
+            byte[] data = request.GetBuffer();
+            _socket.SocketMain.SendTo(data, _remoteEP);
         }
 
         //CACHE-CONTROL: max-age = seconds until advertisement expires
@@ -134,14 +163,100 @@ namespace Mozi.SSDP
         {
             HttpResponse resp = new HttpResponse();
             resp.AddHeader(HeaderProperty.Host, $"{BroadcastAddress}:{ProtocolPort}");
-            resp.AddHeader(HeaderProperty.CacheControl, "max-age=3600");
+            resp.AddHeader(HeaderProperty.CacheControl, $"max-age={CacheTimeout}");
             resp.AddHeader("EXT", "");
             resp.AddHeader(HeaderProperty.Location, "http://127.0.0.1/desc.xml");
             resp.AddHeader("Server", "");
             resp.AddHeader("ST", "mozi-embedded:simplehost");
             resp.AddHeader("USN", "mozi-embedded:simplehost");
             resp.SetStatus(StatusCode.Success);
-            _socket.SocketMain.Send(resp.GetBuffer());
+            byte[] data = resp.GetBuffer();
+            _socket.SocketMain.SendTo(data, _remoteEP);
         }
+
+        public void TimeoutCallback(object state)
+        {
+            Notification();
+        }
+    }
+
+    public class NotificationPackage:ByebyePackage
+    {
+        public int CacheTimeout { get; set; }
+        public string Location { get; set; }
+        public string Server { get; set; }
+
+        public new TransformHeader GetHeaders()
+        {
+            TransformHeader headers = new TransformHeader();
+            headers.Add(HeaderProperty.Host, $"{BroadcastAddress}:{ProtocolPort}");
+            headers.Add("SERVER", $"{Server}");
+            headers.Add("NT", $"{NT}");
+            headers.Add("NTS", SSDPType.Alive.ToString());
+            headers.Add("USN", $"{USN}");
+            headers.Add("LOCATION", $"{Location}");
+            headers.Add(HeaderProperty.CacheControl, $"max-age= {CacheTimeout}");
+            return headers;
+        }
+    }
+    /// <summary>
+    /// 查询头信息
+    /// </summary>
+    public class DiscoverPackage:AdvertisePackage
+    {
+        public string S { get; set; }
+        //-ssdp:all 搜索所有设备和服务
+        //-upnp:rootdevice 仅搜索网络中的根设备
+        //-uuid:device-UUID 查询UUID标识的设备
+        //-urn:schemas-upnp-org:device:device-Type:version 查询device-Type字段指定的设备类型，设备类型和版本由UPNP组织定义。
+        //-urn:schemas-upnp-org:service:service-Type:version 查询service-Type字段指定的服务类型，服务类型和版本由UPNP组织定义。
+        public string ST { get; set; }
+        /// <summary>
+        /// 查询等待时间
+        /// </summary>
+        public int MX { get; set; }
+        public  TransformHeader GetHeaders()
+        {
+            TransformHeader headers = new TransformHeader();
+            headers.Add(HeaderProperty.Host, $"{BroadcastAddress}:{ProtocolPort}");
+            headers.Add("S", $"{S}");
+            headers.Add("MAN", SSDPType.Discover.ToString());
+            headers.Add("ST", $"{ST}");
+            headers.Add("MX", $"{MX}");
+            return headers;
+        }
+    }
+    /// <summary>
+    /// 离线头信息
+    /// </summary>
+    public class ByebyePackage:AdvertisePackage
+    {
+        public string NT { get; set; }
+        public string NTS { get; set; }
+        public string USN { get; set; }
+
+        public TransformHeader GetHeaders()
+        {
+            TransformHeader headers = new TransformHeader();
+            headers.Add(HeaderProperty.Host, $"{BroadcastAddress}:{ProtocolPort}");
+            headers.Add("NT", $"{NT}");
+            headers.Add("NTS", SSDPType.Byebye.ToString());
+            headers.Add("USN", $"{USN}");
+            return headers;
+        }
+    }
+
+    public class AdvertisePackage
+    {
+        //NOTIFY* HTTP/1.1     
+        //HOST: 239.255.255.250:1900    
+        //CACHE-CONTROL: max-age = seconds until advertisement expires    
+        //LOCATION: URL for UPnP description for root device
+        //NT: search target
+        //NTS: ssdp:alive 
+        //SERVER: OS/versionUPnP/1.0product/version 
+        //USN: advertisement UUI
+        public string BroadcastAddress { get; set; }
+        public int ProtocolPort { get; set; }
     }
 }

@@ -149,7 +149,7 @@ namespace Mozi.HttpEmbedded
         /// 接收数据回调
         /// </summary>
         /// <param name="iar"></param>
-        private void CallbackReceive(IAsyncResult iar)
+        protected void CallbackReceive(IAsyncResult iar)
         {
             StateObject so = (StateObject)iar.AsyncState;
             Socket client = so.WorkSocket;
