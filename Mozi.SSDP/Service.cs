@@ -10,11 +10,6 @@ namespace Mozi.SSDP
     /// </summary>
     public class Service
     {
-        //组播地址
-        public const string BroadcastAddress = "239.255.255.250";
-        //组播端口
-        public const int ProtocolPort = 1900;
-
         private RequestMethod MSEARCH = new RequestMethod("M-SEARCH");
         private RequestMethod NOTIFY = new RequestMethod("NOTIFY");
         private const string QueryPath = "*";
@@ -36,14 +31,16 @@ namespace Mozi.SSDP
         /// </summary>
         public int CacheTimeout = 3600;
         /// <summary>
-        /// 默认包
+        /// 默认查询包
         /// </summary>
         public DiscoverPackage PackDefaultDiscover = new DiscoverPackage() 
         {
             MX=3,
             ST= "upnp:rootdevice"
         };
-
+        /// <summary>
+        /// 默认在线消息包
+        /// </summary>
         public NotificationPackage PackDefaultAlive = new NotificationPackage()
         {
             CacheTimeout = 3600,
@@ -52,6 +49,9 @@ namespace Mozi.SSDP
             NT="upnp:rootdevice",
             USN=""
         };
+        /// <summary>
+        /// 默认离线消息包
+        /// </summary>
         public ByebyePackage PackDefaultByebye = new ByebyePackage() 
         { 
         
@@ -61,13 +61,13 @@ namespace Mozi.SSDP
         {
             _socket = new UDPSocket();
             _socket.AfterReceiveEnd += _socket_AfterReceiveEnd;
-            _remoteEP = new IPEndPoint(IPAddress.Parse(BroadcastAddress), ProtocolPort);
+            _remoteEP = new IPEndPoint(IPAddress.Parse(SSDPProtocol.MulticastAddress), SSDPProtocol.ProtocolPort);
             _timer = new Timer(TimeoutCallback, null, Timeout.Infinite, Timeout.Infinite);
         }
 
         private void _socket_AfterReceiveEnd(object sender, DataTransferArgs args)
         {
-            Console.WriteLine("收到数据,{0}\n{1}\n***************",args.IP,System.Text.Encoding.Default.GetString(args.Data));
+            Console.WriteLine("*********收到数据*********,{0}\n{1}\n*******END********", args.IP,System.Text.Encoding.UTF8.GetString(args.Data));
         }
 
         /// <summary>
@@ -76,7 +76,7 @@ namespace Mozi.SSDP
         /// <returns></returns>
         public Service Active()
         {
-            _socket.StartServer(ProtocolPort);
+            _socket.StartServer(SSDPProtocol.ProtocolPort);
             _timer.Change(0, NotificationPeriod);
             return this;
         }
@@ -173,7 +173,7 @@ namespace Mozi.SSDP
         public void EchoDiscover()
         {
             HttpResponse resp = new HttpResponse();
-            resp.AddHeader(HeaderProperty.Host, $"{BroadcastAddress}:{ProtocolPort}");
+            resp.AddHeader(HeaderProperty.Host, $"{SSDPProtocol.MulticastAddress}:{SSDPProtocol.ProtocolPort}");
             resp.AddHeader(HeaderProperty.CacheControl, $"max-age={CacheTimeout}");
             resp.AddHeader("EXT", "");
             resp.AddHeader(HeaderProperty.Location, "http://127.0.0.1/desc.xml");
@@ -201,7 +201,7 @@ namespace Mozi.SSDP
         public new TransformHeader GetHeaders()
         {
             TransformHeader headers = new TransformHeader();
-            headers.Add(HeaderProperty.Host, $"{BroadcastAddress}:{ProtocolPort}");
+            headers.Add(HeaderProperty.Host, $"{MulticastAddress}:{ProtocolPort}");
             headers.Add("SERVER", $"{Server}");
             headers.Add("NT", $"{NT}");
             headers.Add("NTS", SSDPType.Alive.ToString());
@@ -230,7 +230,7 @@ namespace Mozi.SSDP
         public  TransformHeader GetHeaders()
         {
             TransformHeader headers = new TransformHeader();
-            headers.Add(HeaderProperty.Host, $"{BroadcastAddress}:{ProtocolPort}");
+            headers.Add(HeaderProperty.Host, $"{MulticastAddress}:{ProtocolPort}");
             headers.Add("S", $"{S}");
             headers.Add("MAN", SSDPType.Discover.ToString());
             headers.Add("ST", $"{ST}");
@@ -250,7 +250,7 @@ namespace Mozi.SSDP
         public TransformHeader GetHeaders()
         {
             TransformHeader headers = new TransformHeader();
-            headers.Add(HeaderProperty.Host, $"{BroadcastAddress}:{ProtocolPort}");
+            headers.Add(HeaderProperty.Host, $"{MulticastAddress}:{ProtocolPort}");
             headers.Add("NT", $"{NT}");
             headers.Add("NTS", SSDPType.Byebye.ToString());
             headers.Add("USN", $"{USN}");
@@ -268,13 +268,23 @@ namespace Mozi.SSDP
         //NTS: ssdp:alive 
         //SERVER: OS/versionUPnP/1.0product/version 
         //USN: advertisement UUI
-        public string BroadcastAddress { get; set; }
+        public string MulticastAddress { get; set; }
         public int ProtocolPort { get; set; }
 
         public AdvertisePackage()
         {
-            BroadcastAddress = Service.BroadcastAddress;
-            ProtocolPort = Service.ProtocolPort;
+            MulticastAddress = SSDPProtocol.MulticastAddress;
+            ProtocolPort = SSDPProtocol.ProtocolPort;
         }
+    }
+
+    public class SSDPProtocol
+    {
+        //组播地址
+        public const string MulticastAddress = "239.255.255.250";
+        //组播地址IPv6
+        public const string MulticastAddressIPv6 = "FF0x::C";
+        //组播端口
+        public const int ProtocolPort = 1900;
     }
 }

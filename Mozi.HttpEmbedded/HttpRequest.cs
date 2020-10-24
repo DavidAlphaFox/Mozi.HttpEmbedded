@@ -433,7 +433,7 @@ namespace Mozi.HttpEmbedded
         /// <returns></returns>
         public byte[] GetStatusLine()
         {
-            return StringEncoder.Encode(string.Format("{0} {1},HTTP/{2}", Method.Name,Path, ProtocolVersion.Version));
+            return StringEncoder.Encode(string.Format("{0} {1} HTTP/{2}", Method.Name,Path, ProtocolVersion.Version));
         }
         ~HttpRequest()
         {

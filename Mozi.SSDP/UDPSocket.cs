@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Net;
 using System.Net.Sockets;
+using Mozi.HttpEmbedded;
 
-namespace Mozi.HttpEmbedded
+namespace Mozi.SSDP
 {
     /// <summary>
     /// UDP套接字
@@ -14,10 +15,14 @@ namespace Mozi.HttpEmbedded
         protected Socket _sc;
 
         //private EndPoint _remoteEndPoint=new IPEndPoint(IPAddress.Any, 0);
+        /// <summary>
+        /// 组播地址
+        /// </summary>
+        public string MulticastGroupAddress = SSDPProtocol.MulticastAddress;
 
         public UDPSocket()
         {
-          
+
         }
         /// <summary>
         /// 服务器启动事件
@@ -65,6 +70,32 @@ namespace Mozi.HttpEmbedded
 
             }
         }
+        /// <summary>
+        /// 加入组播
+        /// </summary>
+        /// <param name="multicastGroupAddress"></param>
+        public void JoinMulticastGroup(string multicastGroupAddress)
+        {
+            MulticastGroupAddress = multicastGroupAddress;
+            MulticastOption mcastOpt = new MulticastOption(IPAddress.Parse(multicastGroupAddress), IPAddress.Any);
+            // Add membership to the group.
+            _sc.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.AddMembership, mcastOpt);
+
+        }
+        /// <summary>
+        /// 离开组播
+        /// </summary>
+        /// <param name="multicastGroupAddress"></param>
+        public void LeaveMulticastGroup(string multicastGroupAddress)
+        {
+            MulticastGroupAddress = multicastGroupAddress;
+            MulticastOption mcastOpt = new MulticastOption(IPAddress.Parse(multicastGroupAddress), IPAddress.Any);
+            _sc.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.DropMembership, mcastOpt);
+        }
+        /// <summary>
+        /// 启动服务器
+        /// </summary>
+        /// <param name="port"></param>
         public void StartServer(int port)
         {
             _iport = port;
@@ -79,14 +110,12 @@ namespace Mozi.HttpEmbedded
             IPEndPoint endpoint = new IPEndPoint(IPAddress.Any, _iport);
             //允许端口复用
             _sc.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
-            MulticastOption mcastOpt = new MulticastOption(IPAddress.Parse("239.255.255.250"), IPAddress.Any);
-            // Add membership to the group.
-            _sc.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.AddMembership, mcastOpt);
-
+            _sc.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.MulticastTimeToLive, 1);
             _sc.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.MulticastInterface, 0);
+            JoinMulticastGroup(MulticastGroupAddress);
             _sc.Bind(endpoint);
 
-            EndPoint _remoteEndPoint = new IPEndPoint(IPAddress.Any, 0);
+            //EndPoint _remoteEndPoint = new IPEndPoint(IPAddress.Any, 0);
             //回调服务器启动事件
             UDPStateObject so = new UDPStateObject()
             {
@@ -94,16 +123,16 @@ namespace Mozi.HttpEmbedded
                 Id = Guid.NewGuid().ToString(),
                 //IP = ((System.Net.IPEndPoint)client.RemoteEndPoint).Address.ToString(),
                 //RemotePort = ((System.Net.IPEndPoint)client.RemoteEndPoint).Port,
-                RemoteEndPoint= _remoteEndPoint
+                RemoteEndPoint = new IPEndPoint(IPAddress.Any, 0)
             };
+
             if (OnServerStart != null)
             {
                 OnServerStart(this, new ServerArgs() { StartTime = DateTime.Now, StopTime = DateTime.MinValue });
             }
             try
             {
-
-                _sc.BeginReceiveFrom(so.Buffer, 0, StateObject.BufferSize, SocketFlags.None, ref _remoteEndPoint, CallbackReceive, so);
+                _sc.BeginReceiveFrom(so.Buffer, 0, StateObject.BufferSize, SocketFlags.None, ref so.RemoteEndPoint, CallbackReceive, so);
                 if (OnReceiveStart != null)
                 {
                     OnReceiveStart.BeginInvoke(this, new DataTransferArgs(), null, null);
@@ -125,8 +154,8 @@ namespace Mozi.HttpEmbedded
 
             EndPoint remote = (IPEndPoint)so.RemoteEndPoint;
 
-            int iByteRead = client.EndReceiveFrom(iar,ref remote);
-            
+            int iByteRead = client.EndReceiveFrom(iar, ref remote);
+
             //EndPoint remoteEndPoint = remote;
 
             if (iByteRead > 0)
@@ -135,9 +164,8 @@ namespace Mozi.HttpEmbedded
                 so.ResetBuffer(iByteRead);
                 if (client.Available > 0)
                 {
-                    //Thread.Sleep(10);
-                    so.RemoteEndPoint = remote;
-                    _sc.BeginReceiveFrom(so.Buffer, 0, so.Buffer.Length, SocketFlags.None, ref remote, CallbackReceive, so);
+                    //so.RemoteEndPoint = remote;
+                    client.BeginReceiveFrom(so.Buffer, 0, so.Buffer.Length, SocketFlags.None, ref so.RemoteEndPoint, CallbackReceive, so);
                 }
                 else
                 {
@@ -149,7 +177,7 @@ namespace Mozi.HttpEmbedded
                 InvokeAfterReceiveEnd(so, client, (IPEndPoint)remote);
             }
         }
-        private void InvokeAfterReceiveEnd(UDPStateObject so, Socket client,EndPoint remote)
+        private void InvokeAfterReceiveEnd(UDPStateObject so, Socket client, EndPoint remote)
         {
             if (AfterReceiveEnd != null)
             {
