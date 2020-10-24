@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net;
 using System.Net.Sockets;
 
 namespace Mozi.HttpEmbedded
@@ -8,14 +7,14 @@ namespace Mozi.HttpEmbedded
     /// <summary>
     /// 通讯缓冲对象
     /// </summary>
-    class StateObject
+    public class StateObject
     {
         public string Id         { get; set; }   //连接标识符
         public Socket WorkSocket = null;
         public int    RemotePort = 0;
         public const int BufferSize = 1024;
         public List<byte> Data=new List<byte>(); 
-        public byte[] Buffer = new byte[BufferSize*2];
+        public byte[] Buffer = new byte[BufferSize*4];
         public string IP { get; set; }
 
         //TODO 此处没有完整处理包体，会有多读取的冗余数据
@@ -31,12 +30,5 @@ namespace Mozi.HttpEmbedded
         {
             Buffer = null;
         }
-    }
-    /// <summary>
-    /// UDP通讯缓冲对象
-    /// </summary>
-    class UDPStateObject : StateObject
-    {
-        public EndPoint RemoteEndPoint { get; set; }
     }
 }

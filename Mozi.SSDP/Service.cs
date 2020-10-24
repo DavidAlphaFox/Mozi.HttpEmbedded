@@ -67,8 +67,7 @@ namespace Mozi.SSDP
 
         private void _socket_AfterReceiveEnd(object sender, DataTransferArgs args)
         {
-            Console.WriteLine("收到数据,{0}",args.IP);
-            Console.WriteLine(System.Text.Encoding.Default.GetString(args.Data));
+            Console.WriteLine("收到数据,{0}\n{1}\n***************",args.IP,System.Text.Encoding.Default.GetString(args.Data));
         }
 
         /// <summary>

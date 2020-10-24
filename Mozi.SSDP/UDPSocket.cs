@@ -13,7 +13,7 @@ namespace Mozi.HttpEmbedded
 
         protected Socket _sc;
 
-        private EndPoint _remoteEndPoint=new IPEndPoint(IPAddress.Any, 0);
+        //private EndPoint _remoteEndPoint=new IPEndPoint(IPAddress.Any, 0);
 
         public UDPSocket()
         {
@@ -79,6 +79,11 @@ namespace Mozi.HttpEmbedded
             IPEndPoint endpoint = new IPEndPoint(IPAddress.Any, _iport);
             //允许端口复用
             _sc.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
+            MulticastOption mcastOpt = new MulticastOption(IPAddress.Parse("239.255.255.250"), IPAddress.Any);
+            // Add membership to the group.
+            _sc.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.AddMembership, mcastOpt);
+
+            _sc.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.MulticastInterface, 0);
             _sc.Bind(endpoint);
 
             EndPoint _remoteEndPoint = new IPEndPoint(IPAddress.Any, 0);
@@ -131,6 +136,7 @@ namespace Mozi.HttpEmbedded
                 if (client.Available > 0)
                 {
                     //Thread.Sleep(10);
+                    so.RemoteEndPoint = remote;
                     _sc.BeginReceiveFrom(so.Buffer, 0, so.Buffer.Length, SocketFlags.None, ref remote, CallbackReceive, so);
                 }
                 else
@@ -156,6 +162,7 @@ namespace Mozi.HttpEmbedded
                         Socket = so.WorkSocket
                     }, null, null);
             }
+            EndPoint _remoteEndPoint = new IPEndPoint(IPAddress.Any, 0);
             UDPStateObject stateobject = new UDPStateObject()
             {
                 WorkSocket = _sc,

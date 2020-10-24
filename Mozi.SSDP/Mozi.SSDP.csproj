@@ -40,6 +40,8 @@
     <Compile Include="SSDPCache.cs" />
     <Compile Include="SSDPCacheManager.cs" />
     <Compile Include="SSDPType.cs" />
+    <Compile Include="UDPSocket.cs" />
+    <Compile Include="UDPStateObject.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Mozi.HttpEmbedded\Mozi.HttpEmbedded.csproj">
