@@ -110,7 +110,7 @@ namespace Mozi.SSDP
             IPEndPoint endpoint = new IPEndPoint(IPAddress.Any, _iport);
             //允许端口复用
             _sc.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
-            _sc.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.MulticastTimeToLive, 1);
+            _sc.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.MulticastTimeToLive, 32);
             _sc.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.MulticastInterface, 0);
             JoinMulticastGroup(MulticastGroupAddress);
             _sc.Bind(endpoint);
@@ -156,16 +156,14 @@ namespace Mozi.SSDP
 
             int iByteRead = client.EndReceiveFrom(iar, ref remote);
 
-            //EndPoint remoteEndPoint = remote;
-
             if (iByteRead > 0)
             {
                 //置空数据连接
                 so.ResetBuffer(iByteRead);
                 if (client.Available > 0)
                 {
-                    //so.RemoteEndPoint = remote;
-                    client.BeginReceiveFrom(so.Buffer, 0, so.Buffer.Length, SocketFlags.None, ref so.RemoteEndPoint, CallbackReceive, so);
+                    so.RemoteEndPoint = remote;
+                    client.BeginReceiveFrom(so.Buffer, 0, so.Buffer.Length, SocketFlags.None, ref so.RemoteEndPoint,new AsyncCallback(CallbackReceive), so);
                 }
                 else
                 {
@@ -190,16 +188,15 @@ namespace Mozi.SSDP
                         Socket = so.WorkSocket
                     }, null, null);
             }
-            EndPoint _remoteEndPoint = new IPEndPoint(IPAddress.Any, 0);
             UDPStateObject stateobject = new UDPStateObject()
             {
                 WorkSocket = _sc,
                 Id = Guid.NewGuid().ToString(),
                 //IP = ((System.Net.IPEndPoint)client.RemoteEndPoint).Address.ToString(),
                 //RemotePort = ((System.Net.IPEndPoint)client.RemoteEndPoint).Port,
-                RemoteEndPoint = _remoteEndPoint
+                RemoteEndPoint = new IPEndPoint(IPAddress.Any, 0)
             };
-            _sc.BeginReceiveFrom(so.Buffer, 0, so.Buffer.Length, SocketFlags.None, ref _remoteEndPoint, CallbackReceive, so);
+            _sc.BeginReceiveFrom(so.Buffer, 0, so.Buffer.Length, SocketFlags.None, ref so.RemoteEndPoint, new AsyncCallback(CallbackReceive), so);
         }
     }
 }

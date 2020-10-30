@@ -34,6 +34,7 @@ Mozi.HttpEmbedded在Socket之上使用异步单线程模型,构建了一个HTTP�
 	通过HTTP方式对应用终端数据或文件，进行主动推送、下载
 2. 简易WEB服务器  
 	仅用很少的系统资源即可快速搭建WEB服务器
+3. 程序运行时数据透视
 
 > 在经典的Asp.Net开发中，Web服务的部署高度依赖于IIS,.Net Core项目则可基于Kestrel/IIS部署。
 
@@ -69,7 +70,7 @@ Mozi.HttpEmbedded在Socket之上使用异步单线程模型,构建了一个HTTP�
    不定期对Mozi.HttpEmbedded的功能进行完善,解决各种BUG。HTTP标准功能繁多，需要一步步实现。
 
 ## 版权说明
-本项目采用MIT开源协议,欢迎复制，引用和修改
+本项目采用MIT开源协议,欢迎复制，引用和修改。欢迎对功能提供建议。
 
 ## 使用说明
 
