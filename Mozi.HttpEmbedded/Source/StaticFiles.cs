@@ -76,7 +76,7 @@ namespace Mozi.HttpEmbedded.Source
                 realpath = realpath + "\\";
             }
 
-            var dir = VirtualDirs.Find(x => x.Name.Equals(name));
+            var dir = VirtualDirs.Find(x => x.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
             if (dir != null)
             {
                 dir.Path = realpath;
@@ -87,7 +87,7 @@ namespace Mozi.HttpEmbedded.Source
                 {
                     DirectoryInfo rootdir = new DirectoryInfo(_root);
                     var dirs = rootdir.GetDirectories();
-                    if (!dirs.Any(a => a.Name.Equals(name)))
+                    if (!dirs.Any(a => a.Name.Equals(name, StringComparison.OrdinalIgnoreCase)))
                     {
                         VirtualDirs.Add(new DirPublished() { Name = name, Path = realpath });
                     }
@@ -137,7 +137,7 @@ namespace Mozi.HttpEmbedded.Source
             {
                 var prefix = "/" + d.Name + "/";
                 //Config/files1.xml;
-                if (path.StartsWith(prefix))
+                if (path.StartsWith(prefix,StringComparison.OrdinalIgnoreCase))
                 {
                     return true;
                 }
@@ -159,7 +159,7 @@ namespace Mozi.HttpEmbedded.Source
             {
                 var prefix = "/" + d.Name + "/";
                 //Config/files1.xml;
-                if (path.StartsWith(prefix) && System.IO.File.Exists(d.Path + path.Substring(prefix.Length)))
+                if (path.StartsWith(prefix,StringComparison.OrdinalIgnoreCase) && System.IO.File.Exists(d.Path + path.Substring(prefix.Length)))
                 {
                     return d.Path + path.Substring(prefix.Length);
                 }
