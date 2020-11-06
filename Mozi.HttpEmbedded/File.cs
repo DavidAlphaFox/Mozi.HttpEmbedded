@@ -18,12 +18,13 @@ namespace Mozi.HttpEmbedded
     {
         private List<File> _files=new List<File>();
 
-        public File this[string name] { get { return GetFile(name); } }
+        public File this[string name] { get { return GetFile(name); } }        
+        public File this[int ind]{  get { return _files[0]; }}
 
-        public File this[int ind]
-        {
-            get { return _files[0]; }
-        }
+        /// <summary>
+        /// 文件集合
+        /// </summary>
+        public List<File> Files { get { return _files; } }
 
         public int Length { get { return _files.Count; }}
 
@@ -37,5 +38,4 @@ namespace Mozi.HttpEmbedded
             _files.Add(f);
         }
     }
-
 }

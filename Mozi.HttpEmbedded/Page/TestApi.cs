@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 
 namespace Mozi.HttpEmbedded.Page
 {
@@ -34,13 +35,30 @@ namespace Mozi.HttpEmbedded.Page
         {
             throw new NotImplementedException();
         }
+        //TODO 此处重传同名文件有问题
         /// <summary>
         /// 上传文件
         /// </summary>
         /// <returns></returns>
         public ResponseMessage UploadFile()
         {
-            throw new NotImplementedException();
+            if (Context.Request.Files.Length > 0)
+            {
+                for(int i = 0; i < Context.Request.Files.Length; i++)
+                {
+                    File f = Context.Request.Files[i];
+                    FileInfo fi = new FileInfo(AppDomain.CurrentDomain.BaseDirectory + f.FileName);
+
+                    using (FileStream fs = new FileStream(AppDomain.CurrentDomain.BaseDirectory + f.FileName, FileMode.OpenOrCreate,FileAccess.ReadWrite))
+                    {
+                        fs.Write(f.FileData, 0, f.FileData.Length);
+                        fs.Flush();
+                        fs.Close();
+                    }
+                }
+            }
+            ResponseMessage rm = new ResponseMessage() { success = true };
+            return rm;
         }
         /// <summary>
         /// GET
