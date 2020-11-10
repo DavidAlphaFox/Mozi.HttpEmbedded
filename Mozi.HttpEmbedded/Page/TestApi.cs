@@ -42,22 +42,30 @@ namespace Mozi.HttpEmbedded.Page
         /// <returns></returns>
         public ResponseMessage UploadFile()
         {
+            bool success = false;
             if (Context.Request.Files.Length > 0)
             {
-                for(int i = 0; i < Context.Request.Files.Length; i++)
+                try
                 {
-                    File f = Context.Request.Files[i];
-                    FileInfo fi = new FileInfo(AppDomain.CurrentDomain.BaseDirectory + f.FileName);
-
-                    using (FileStream fs = new FileStream(AppDomain.CurrentDomain.BaseDirectory + f.FileName, FileMode.OpenOrCreate,FileAccess.ReadWrite))
+                    for(int i = 0; i < Context.Request.Files.Length; i++)
                     {
-                        fs.Write(f.FileData, 0, f.FileData.Length);
-                        fs.Flush();
-                        fs.Close();
+                        File f = Context.Request.Files[i];
+                        //FileInfo fi = new FileInfo(AppDomain.CurrentDomain.BaseDirectory + f.FileName);
+
+                        using (FileStream fs = new FileStream(AppDomain.CurrentDomain.BaseDirectory + f.FileName, FileMode.OpenOrCreate,FileAccess.ReadWrite))
+                        {
+                            fs.Write(f.FileData, 0, f.FileData.Length);
+                            fs.Flush();
+                            fs.Close();
+                        }
                     }
+                    success = true;
+
+                }catch(Exception ex){
+                    
                 }
             }
-            ResponseMessage rm = new ResponseMessage() { success = true };
+            ResponseMessage rm = new ResponseMessage() { success = success };
             return rm;
         }
         /// <summary>

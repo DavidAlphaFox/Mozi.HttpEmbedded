@@ -2,6 +2,7 @@
 
 namespace Mozi.HttpEmbedded.Page
 {
+    //TODO 需要实现一个模板引擎或考虑通过Razor引擎提高通用性
     /// <summary>
     /// 页面生成器
     /// </summary>

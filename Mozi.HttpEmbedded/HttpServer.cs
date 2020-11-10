@@ -143,7 +143,7 @@ namespace Mozi.HttpEmbedded
                 context.Response.AddHeader(HeaderProperty.Server, ServerName);
                 context.Response.SetStatus(sc);
                 args.Socket.Send(context.Response.GetBuffer());
-                //TODO HTTP/1.1 通过Coonection控制连接 服务器同时对连接进行监测 保证服务器效率
+                //TODO HTTP/1.1 通过Connection控制连接 服务器同时对连接进行监测 保证服务器效率
                 args.Socket.Close(100);
             }
             GC.Collect();
@@ -170,7 +170,7 @@ namespace Mozi.HttpEmbedded
         //TODO 2020/09/18 增加缓存功能
         //TODO 2020/09/19 增加默认页面功能
         /// <summary>
-        /// 处理响应
+        /// 处理请求
         /// </summary>
         /// <param name="context"></param>
         private StatusCode HandleRequest(ref HttpContext context)
@@ -225,6 +225,11 @@ namespace Mozi.HttpEmbedded
             }
             return StatusCode.Success;
         }
+        /// <summary>
+        /// 处理METHOD-OPTIONS请求
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
         private StatusCode HandleRequestOptions(ref HttpContext context)
         {
             foreach (RequestMethod verb in MethodAllow)
@@ -310,7 +315,7 @@ namespace Mozi.HttpEmbedded
         /// 启用认证
         /// <para>此方法可连续配置用户</para>
         /// </summary>
-        /// <param name="at"><see cref="E:Auth.AuthType"/></param>
+        /// <param name="at">访问认证类型<see cref="E:Auth.AuthType"/></param>
         /// <returns></returns>
         public HttpServer UseAuth(AuthorizationType at)
         {
@@ -451,6 +456,7 @@ namespace Mozi.HttpEmbedded
         {
             _sc.StartServer(_port);
         }
+        //TODO 实现访问黑名单 基于IP控制策略
         /// <summary>
         /// 检查访问黑名单
         /// </summary>

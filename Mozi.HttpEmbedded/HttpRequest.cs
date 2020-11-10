@@ -332,7 +332,7 @@ namespace Mozi.HttpEmbedded
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("{0}",indBoundary);
+                    Console.WriteLine("Exception parse form-data:{0}",ex.Message);
                 }
             }
         }
