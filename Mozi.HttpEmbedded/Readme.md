@@ -22,7 +22,7 @@ Mozi.HttpEmbedded在Socket之上使用异步单线程模型,构建了一个HTTP�
 3. 可用性  
 	开箱即用，配置少，可控性高。同时遵从.Net平台Web项目开发的典型规范。
 4. 低耦合  
-	不改变现有业务逻辑，无需对现有代码进行改造，即可实现现有功能面向HTTP提供服务器。
+	不改变现有业务逻辑，无需对现有代码进行改造，即可实现现有功能面向HTTP提供服务。
 5. 可控性  
 	宿主程序对Web服务高度可控
 
@@ -76,6 +76,7 @@ Mozi.HttpEmbedded在Socket之上使用异步单线程模型,构建了一个HTTP�
 ## 使用说明
 
 ~~~csharp
+
     HttpServer hs = new HttpServer();
     //配置端口并启动服务器
     hs.SetPort(9000).Start();
