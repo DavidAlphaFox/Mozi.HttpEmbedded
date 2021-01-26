@@ -25,7 +25,7 @@ Mozi.HttpEmbedded在Socket之上使用异步单线程模型,构建了一个HTTP�
 
 ## 典型应用场景
 
-业务体系或功能已开发完成，期望在项目中加入一个Web服务器功能，同时不能对现有代码进行大规模改动。
+业务体系或功能已开发完成，期望在项目中加入一个Web服务器功能，同时不对现有代码进行大规模改动。
 
 1. APP内嵌WEB服务  
 	通过HTTP方式对应用终端数据或文件，进行主动推送、下载
@@ -70,6 +70,7 @@ Mozi.HttpEmbedded在Socket之上使用异步单线程模型,构建了一个HTTP�
 ## 使用说明
 
 ~~~csharp
+
     HttpServer hs = new HttpServer();
     //配置端口并启动服务器
     hs.SetPort(9000).Start();
