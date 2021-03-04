@@ -37,7 +37,7 @@ namespace Mozi.HttpEmbedded.Page
         }
         //TODO 此处重传同名文件有问题
         /// <summary>
-        /// 上传文件
+        /// 上传文件 支持多文件上传
         /// </summary>
         /// <returns></returns>
         public ResponseMessage UploadFile()
@@ -50,8 +50,6 @@ namespace Mozi.HttpEmbedded.Page
                     for(int i = 0; i < Context.Request.Files.Length; i++)
                     {
                         File f = Context.Request.Files[i];
-                        //FileInfo fi = new FileInfo(AppDomain.CurrentDomain.BaseDirectory + f.FileName);
-
                         using (FileStream fs = new FileStream(AppDomain.CurrentDomain.BaseDirectory + f.FileName, FileMode.OpenOrCreate,FileAccess.ReadWrite))
                         {
                             fs.Write(f.FileData, 0, f.FileData.Length);

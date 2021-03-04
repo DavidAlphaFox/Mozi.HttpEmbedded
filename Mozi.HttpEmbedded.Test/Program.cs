@@ -22,7 +22,7 @@ namespace Mozi.HttpEmbedded.Test
             //程序集注入
             //1,此方法会扫描程序集内继承自BaseApi或属性标记为[BasicApi]的类
             //2,Http通讯数据标准默认为xml,使用Router.Default.SetDataSerializer(ISerializer ser)更改序列化类型
-            Router.Default.Register("./test.dll");
+            //Router.Default.Register("./test.dll");
 
             //路由映射
             Router router = Router.Default;

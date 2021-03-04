@@ -9,38 +9,38 @@ namespace Mozi.HttpEmbedded
     /// </summary>
     public class HeaderProperty : AbsClassEnum
     {
-        public static HeaderProperty Accept         = new HeaderProperty("Accept");// 	用户代理期望的MIME 类型列表 	HTTP Content Negotiation 	HTTP/1.1
-        public static HeaderProperty AcceptCH       = new HeaderProperty("Accept-CH");// 
+        public static HeaderProperty Accept         = new HeaderProperty("Accept");             // 	用户代理期望的MIME 类型列表 	HTTP Content Negotiation 	HTTP/1.1
+        public static HeaderProperty AcceptCH       = new HeaderProperty("Accept-CH");          // 
 
         //    列出配置数据，服务器可据此来选择适当的响应。 	HTTP Client Hints 	
-        public static HeaderProperty AcceptCharset  = new HeaderProperty("Accept-Charset");// 	列出用户代理支持的字符集。 	HTTP Content Negotiation 	HTTP/1.1
-        public static HeaderProperty AcceptFeatures = new HeaderProperty("Accept-Features");// 		HTTP Content Negotiation 	RFC 2295, §8.2
-        public static HeaderProperty AcceptEncoding = new HeaderProperty("Accept-Encoding");// 	列出用户代理支持的压缩方法。 	HTTP Content Negotiation 	HTTP/1.1
-        public static HeaderProperty AcceptLanguage = new HeaderProperty("Accept-Language");// 	列出用户代理期望的页面语言。 	HTTP Content Negotiation 	HTTP/1.1
+        public static HeaderProperty AcceptCharset  = new HeaderProperty("Accept-Charset");     // 	列出用户代理支持的字符集。 	HTTP Content Negotiation 	HTTP/1.1
+        public static HeaderProperty AcceptFeatures = new HeaderProperty("Accept-Features");    // 	HTTP Content Negotiation 	RFC 2295, §8.2
+        public static HeaderProperty AcceptEncoding = new HeaderProperty("Accept-Encoding");    // 	列出用户代理支持的压缩方法。 	HTTP Content Negotiation 	HTTP/1.1
+        public static HeaderProperty AcceptLanguage = new HeaderProperty("Accept-Language");    // 	列出用户代理期望的页面语言。 	HTTP Content Negotiation 	HTTP/1.1
         //Accept-Ranges 			
-        public static HeaderProperty AccessControlAllowCredentials=new HeaderProperty("Access-Control-Allow-Credentials");// 		HTTP Access Control and Server Side Access Control 	W3C Cross-Origin Resource Sharing
-        public static HeaderProperty AccessControlAllowOrigin=new HeaderProperty("Access-Control-Allow-Origin");// 		HTTP Access Control and Server Side Access Control 	W3C Cross-Origin Resource Sharing
-        public static HeaderProperty AccessControlAllowMethods=new HeaderProperty("Access-Control-Allow-Methods");// 		HTTP Access Control and Server Side Access Control 	W3C Cross-Origin Resource Sharing
-        public static HeaderProperty AccessControlAllowHeaders=new HeaderProperty("Access-Control-Allow-Headers");// 		HTTP Access Control and Server Side Access Control 	W3C Cross-Origin Resource Sharing
-        public static HeaderProperty AccessControlMaxAge=new HeaderProperty("Access-Control-Max-Age");// 		HTTP Access Control and Server Side Access Control 	W3C Cross-Origin Resource Sharing
-        public static HeaderProperty AccessControlExposeHeaders=new HeaderProperty("Access-Control-Expose-Headers");// 		HTTP Access Control and Server Side Access Control 	W3C Cross-Origin Resource Sharing
-        public static HeaderProperty AccessControlRequestMethod=new HeaderProperty("Access-Control-Request-Method");// 		HTTP Access Control and Server Side Access Control 	W3C Cross-Origin Resource Sharing
-        public static HeaderProperty AccessControlRequestHeaders=new HeaderProperty("Access-Control-Request-Headers");// 		HTTP Access Control and Server Side Access Control 	W3C Cross-Origin Resource Sharing
-        public static HeaderProperty Age=new HeaderProperty("Age");// 			
-        public static HeaderProperty Allow=new HeaderProperty("Allow");// 			
-        public static HeaderProperty Alternates=new HeaderProperty("Alternates");// 		HTTP Content Negotiation 	RFC 2295, §8.3
-        public static HeaderProperty Authorization=new HeaderProperty("Authorization");// 	包含用服务器验证用户代理的凭证 		
-        public static HeaderProperty CacheControl=new HeaderProperty("Cache-Control");// 		HTTP Caching FAQ 	
-        public static HeaderProperty Connection=new HeaderProperty("Connection");// 			
-        public static HeaderProperty ContentEncoding=new HeaderProperty("Content-Encoding");// 			
-        public static HeaderProperty ContentLanguage=new HeaderProperty("Content-Language");// 			
+        public static HeaderProperty AccessControlAllowCredentials=new HeaderProperty("Access-Control-Allow-Credentials");      // 	HTTP Access Control and Server Side Access Control 	W3C Cross-Origin Resource Sharing
+        public static HeaderProperty AccessControlAllowOrigin=new HeaderProperty("Access-Control-Allow-Origin");                // 	HTTP Access Control and Server Side Access Control 	W3C Cross-Origin Resource Sharing
+        public static HeaderProperty AccessControlAllowMethods=new HeaderProperty("Access-Control-Allow-Methods");              // 	HTTP Access Control and Server Side Access Control 	W3C Cross-Origin Resource Sharing
+        public static HeaderProperty AccessControlAllowHeaders=new HeaderProperty("Access-Control-Allow-Headers");              // 	HTTP Access Control and Server Side Access Control 	W3C Cross-Origin Resource Sharing
+        public static HeaderProperty AccessControlMaxAge=new HeaderProperty("Access-Control-Max-Age");                          // 	HTTP Access Control and Server Side Access Control 	W3C Cross-Origin Resource Sharing
+        public static HeaderProperty AccessControlExposeHeaders=new HeaderProperty("Access-Control-Expose-Headers");            // 	HTTP Access Control and Server Side Access Control 	W3C Cross-Origin Resource Sharing
+        public static HeaderProperty AccessControlRequestMethod=new HeaderProperty("Access-Control-Request-Method");            // 	HTTP Access Control and Server Side Access Control 	W3C Cross-Origin Resource Sharing
+        public static HeaderProperty AccessControlRequestHeaders=new HeaderProperty("Access-Control-Request-Headers");          // 	HTTP Access Control and Server Side Access Control 	W3C Cross-Origin Resource Sharing
+        public static HeaderProperty Age=new HeaderProperty("Age");// 			                                                    
+        public static HeaderProperty Allow=new HeaderProperty("Allow");// 			                                                
+        public static HeaderProperty Alternates=new HeaderProperty("Alternates");                                               // 	HTTP Content Negotiation 	RFC 2295, §8.3
+        public static HeaderProperty Authorization=new HeaderProperty("Authorization");                                         // 	包含用服务器验证用户代理的凭证 		
+        public static HeaderProperty CacheControl=new HeaderProperty("Cache-Control");                                          //  HTTP Caching FAQ 	
+        public static HeaderProperty Connection=new HeaderProperty("Connection");                                               // 		
+        public static HeaderProperty ContentEncoding=new HeaderProperty("Content-Encoding");                                    // 		
+        public static HeaderProperty ContentLanguage=new HeaderProperty("Content-Language");                                    // 		
         public static HeaderProperty ContentLength=new HeaderProperty("Content-Length");// 			
         public static HeaderProperty ContentLocation=new HeaderProperty("Content-Location");// 			
-        public static HeaderProperty ContentMD5=new HeaderProperty("Content-MD5");// 		未实现 (查看 bug 232030) 	
+        public static HeaderProperty ContentMD5=new HeaderProperty("Content-MD5");                                              // 	未实现 (查看 bug 232030) 	
         public static HeaderProperty ContentRange=new HeaderProperty("Content-Range");// 			
-        public static HeaderProperty ContentSecurityPolicy=new HeaderProperty("Content-Security-Policy");// 	控制用户代理在一个页面上可以加载使用的资源。 	CSP (Content Security Policy) 	W3C Content Security Policy
-        public static HeaderProperty ContentType=new HeaderProperty("Content-Type");// 	指示服务器文档的MIME 类型。帮助用户代理（浏览器）去处理接收到的数据。 		
-        public static HeaderProperty Cookie=new HeaderProperty("Cookie");// 			RFC 2109
+        public static HeaderProperty ContentSecurityPolicy=new HeaderProperty("Content-Security-Policy");                       // 	控制用户代理在一个页面上可以加载使用的资源。 	CSP (Content Security Policy) 	W3C Content Security Policy
+        public static HeaderProperty ContentType=new HeaderProperty("Content-Type");                                            // 	指示服务器文档的MIME 类型。帮助用户代理（浏览器）去处理接收到的数据。 		
+        public static HeaderProperty Cookie=new HeaderProperty("Cookie");                                                       // 			RFC 2109
         public static HeaderProperty DNT=new HeaderProperty("DNT");// 	设置该值为1， 表明用户明确退出任何形式的网上跟踪。 	Supported by Firefox 4, Firefox 5 for mobile, IE9, and a few major companies. 	Tracking Preference Expression (DNT)
         public static HeaderProperty Date=new HeaderProperty("Date");// 			
         public static HeaderProperty ETag=new HeaderProperty("ETag");// 		HTTP Caching FAQ 	
@@ -121,7 +121,6 @@ namespace Mozi.HttpEmbedded
         {
             
         }
-
         private HeaderProperty(string tag)
         {
             PropertyTag = tag;
