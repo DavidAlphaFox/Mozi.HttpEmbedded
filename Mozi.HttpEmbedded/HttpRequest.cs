@@ -137,11 +137,11 @@ namespace Mozi.HttpEmbedded
                 Array.Copy(data,posCaret,fragement,0,posCR-posCaret);
                 if (index == 0)
                 {
-                    SplitFirstLine(ref req, fragement);
+                    ParseFirstLine(ref req, fragement);
                 }
                 else
                 {
-                    SplitHeaders(ref req, fragement);
+                    ParseHeaders(ref req, fragement);
                 }
 
                 if ((Array.IndexOf(data, ASCIICode.CR, posCR + 1) == posCR + 2))
@@ -153,13 +153,13 @@ namespace Mozi.HttpEmbedded
                 index++;
             }
             //解析Cookie
-            SplitCookie(ref req);
+            ParseCookie(ref req);
             //解析数据
             if (data.Length > posCR + 4)
             {
                 req.Body=new byte[data.Length-(posCR+4)];
                 Array.Copy(data, posCR + 4,req.Body,0,req.Body.Length);
-                SplitPayload(ref req,req.Body);
+                ParsePayload(ref req,req.Body);
             }
             return req;
         }
@@ -171,22 +171,22 @@ namespace Mozi.HttpEmbedded
         /// </summary>
         /// <param name="req"></param>
         /// <param name="data"></param>
-        private static void SplitPayload(ref HttpRequest req,byte[] data)
+        private static void ParsePayload(ref HttpRequest req,byte[] data)
         {
             string formType = req.Headers.GetValue(HeaderProperty.ContentType.PropertyTag);
             if (formType != null)
             {
                 if (formType.Contains("application/x-www-form-urlencoded"))
                 {
-                    SplitPayloadFormUrl(ref req, data);
+                    ParsePayloadFormUrl(ref req, data);
                 }
                 else if (formType.Contains("multipart/form-data"))
                 {
-                    SplitPayloadFormData(ref req, data);
+                    ParsePayloadFormData(ref req, data);
                 }
                 else
                 {
-                    SplitPayloadText(ref  req,data);
+                    ParsePayloadText(ref  req,data);
                 }
             }
         }
@@ -196,7 +196,7 @@ namespace Mozi.HttpEmbedded
         /// </summary>
         /// <param name="req"></param>
         /// <param name="data"></param>
-        private static void SplitPayloadFormUrl(ref HttpRequest req, byte[] data)
+        private static void ParsePayloadFormUrl(ref HttpRequest req, byte[] data)
         {
              req.Post=UrlEncoder.ParseQuery(StringEncoder.Decode(data));
         }
@@ -205,7 +205,7 @@ namespace Mozi.HttpEmbedded
         /// </summary>
         /// <param name="req"></param>
         /// <param name="data"></param>
-        private static void SplitPayloadFormData(ref HttpRequest req, byte[] data)
+        private static void ParsePayloadFormData(ref HttpRequest req, byte[] data)
         {
             string contentType =req.Headers.GetValue(HeaderProperty.ContentType.PropertyTag);
             string boundary = "";
@@ -345,7 +345,7 @@ namespace Mozi.HttpEmbedded
         /// </summary>
         /// <param name="req"></param>
         /// <param name="data"></param>
-        private static void SplitPayloadText(ref HttpRequest req, byte[] data)
+        private static void ParsePayloadText(ref HttpRequest req, byte[] data)
         {
             
         }
@@ -354,7 +354,7 @@ namespace Mozi.HttpEmbedded
         /// </summary>
         /// <param name="req"></param>
         /// <param name="data"></param>
-        private static void SplitHeaders(ref HttpRequest req, byte[] data)
+        private static void ParseHeaders(ref HttpRequest req, byte[] data)
         {
             HeaderProperty hp = HeaderProperty.Parse(data);
             req.Headers.Add(hp.PropertyTag, hp.PropertyValue);
@@ -367,7 +367,7 @@ namespace Mozi.HttpEmbedded
         /// 解析Cookie
         /// </summary>
         /// <param name="req"></param>
-        private static void SplitCookie(ref HttpRequest req)
+        private static void ParseCookie(ref HttpRequest req)
         {
             if (req.Headers.Contains(HeaderProperty.Cookie.PropertyTag))
             {
@@ -380,7 +380,7 @@ namespace Mozi.HttpEmbedded
         /// </summary>
         /// <param name="req"></param>
         /// <param name="data"></param>
-        private static void SplitFirstLine(ref HttpRequest req, byte[] data)
+        private static void ParseFirstLine(ref HttpRequest req, byte[] data)
         {
             //解析起始行
             req.FirstLineData = data;

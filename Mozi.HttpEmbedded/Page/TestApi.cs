@@ -35,6 +35,14 @@ namespace Mozi.HttpEmbedded.Page
         {
             throw new NotImplementedException();
         }
+        /// <summary>
+        /// 列出所有用户
+        /// </summary>
+        /// <returns></returns>
+        public ResponseMessage GetUsers()
+        {
+            throw new NotImplementedException();
+        }
         //TODO 此处重传同名文件有问题
         /// <summary>
         /// 上传文件 支持多文件上传
