@@ -102,6 +102,7 @@
     <Compile Include="HttpResponse.cs" />
     <Compile Include="Serialize\JSONSerializer.cs" />
     <Compile Include="Serialize\XMLSerializer.cs" />
+    <Compile Include="SocketServerUDP.cs" />
     <Compile Include="SocketServer.cs" />
     <Compile Include="ServerEvent.cs" />
     <Compile Include="Source\Mime.cs" />

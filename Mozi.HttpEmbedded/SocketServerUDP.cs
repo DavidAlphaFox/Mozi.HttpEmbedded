@@ -4,12 +4,11 @@ using System.Net.Sockets;
 
 namespace Mozi.HttpEmbedded
 {
-    //TODO 加入定时器并利用POLL判断远端是否断开
-    //TODO 实现链接复用
+    //TODO 实现SOCKET UDP
     /// <summary>
     /// 异步单线程
     /// </summary>
-    public class SocketServer
+    public class SocketServerUDP
     {
         //private static SocketServer _mSocketServer;
 
@@ -56,7 +55,7 @@ namespace Mozi.HttpEmbedded
             get { return _sc; }
         }
 
-        public SocketServer() 
+        public SocketServerUDP() 
         {
             _socketDocker = new ConcurrentDictionary<string, Socket>();
         }
@@ -71,7 +70,7 @@ namespace Mozi.HttpEmbedded
             _iport = port;
             if (_sc == null)
             {
-                _sc = new Socket(AddressFamily.InterNetwork, SocketType.Stream, System.Net.Sockets.ProtocolType.Tcp);
+                _sc = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, System.Net.Sockets.ProtocolType.Udp);
             }
             else
             {
