@@ -1,0 +1,22 @@
+﻿<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <title>模板示例页面</title>
+    <meta http-equiv="content-type" charset="UTF-8">
+    <meta http-equiv="Authorization" content="Jason" />
+    <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1,maximum-scale=1,user-scalable=no">
+</head>
+<body>
+    <!--基本数据类型参数注入-->
+    <h1>${Title}</h1>
+    <p>${Content}</p>
+    <!--复杂类型-->
+    <h1>${Document.Title}</h1>
+    <p>${Document.Content}</p>
+    <!--数组类型-->
+    foreach(var doc in docs)
+    {
+        <div>{doc.Title}</div>
+    }
+</body>
+</html>

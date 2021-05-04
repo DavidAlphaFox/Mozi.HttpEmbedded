@@ -40,7 +40,7 @@ namespace Mozi.HttpEmbedded
         /// </summary>
         public string AcceptEncoding { get; protected set; }
         /// <summary>
-        /// 源地址
+        /// 请求地址
         /// </summary>
         public string Host { get; protected set; }
         /// <summary>

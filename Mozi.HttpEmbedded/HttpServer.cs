@@ -29,7 +29,9 @@ namespace Mozi.HttpEmbedded
 
         //允许和公开的方法
         private RequestMethod[] MethodAllow = new RequestMethod[] { RequestMethod.OPTIONS, RequestMethod.TRACE, RequestMethod.GET, RequestMethod.HEAD, RequestMethod.POST, RequestMethod.COPY, RequestMethod.PROPFIND, RequestMethod.LOCK, RequestMethod.UNLOCK };
+        
         private RequestMethod[] MethodPublic = new RequestMethod[] { RequestMethod.OPTIONS, RequestMethod.GET, RequestMethod.HEAD, RequestMethod.PROPFIND, RequestMethod.PROPPATCH, RequestMethod.MKCOL, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.COPY, RequestMethod.MOVE, RequestMethod.LOCK, RequestMethod.UNLOCK };
+        
         //证书管理器
         private CertManager _certMg;
         //HTTPS开启标识
@@ -335,6 +337,7 @@ namespace Mozi.HttpEmbedded
             Auth.SetUser(userName, userName);
             return this;
         }
+        //TODO 进一步实现GZIP的控制逻辑
         /// <summary>
         /// 启用Gzip
         /// </summary>

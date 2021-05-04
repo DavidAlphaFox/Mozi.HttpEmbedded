@@ -5,7 +5,7 @@ using Mozi.HttpEmbedded.Generic;
 namespace Mozi.HttpEmbedded
 {
     /// <summary>
-    /// 头属性
+    /// HTTP请求头属性
     /// </summary>
     public class HeaderProperty : AbsClassEnum
     {

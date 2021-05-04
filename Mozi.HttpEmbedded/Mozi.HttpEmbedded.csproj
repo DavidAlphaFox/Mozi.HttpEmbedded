@@ -62,6 +62,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccessManager.cs" />
     <Compile Include="ASCIICode.cs" />
     <Compile Include="Attributes\BasicApiAttribute.cs" />
     <Compile Include="Auth\User.cs" />
@@ -150,6 +151,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Docment\Error.html" />
+    <Content Include="Docment\ExamplePage.html" />
     <Content Include="Source\mime.data" />
     <Content Include="WebDav\Icon.png" />
   </ItemGroup>
