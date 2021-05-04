@@ -26,7 +26,7 @@ namespace Mozi.HttpEmbedded.Test
 
             //路由映射
             Router router = Router.Default;
-            router.Map("services/{controller}/{id}");
+            router.Map("services/{controller}/{action}");
 
             //开启WebDAV
             hs.UseWebDav("dav");

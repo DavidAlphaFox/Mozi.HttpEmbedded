@@ -22,7 +22,7 @@ namespace Mozi.HttpEmbedded.Page
         //数据序列化对象
         private ISerializer _dataserializer;
 
-        private readonly List<RouteMapper> _mappers = new List<RouteMapper>() { new RouteMapper() { Pattern = "/{controller}/{id}" }, new RouteMapper() { Pattern = "/{controller}.{id}" } };
+        private readonly List<RouteMapper> _mappers = new List<RouteMapper>() { new RouteMapper() { Pattern = "/{controller}/{action}" }, new RouteMapper() { Pattern = "/{controller}.{action}" } };
 
         public static Router Default
         {
@@ -140,20 +140,20 @@ namespace Mozi.HttpEmbedded.Page
         /// <param name="pattern">
         /// 匹配范式        
         /// <para>
-        ///     范式:<code>api/{controller}/{id}</code> {controller}和{id}为固定参数       
+        ///     范式:<code>api/{controller}/{action}</code> {controller}和{action}为固定参数       
         ///     <list type="table">
         ///         <item><term><c>{controller}</c></term><description>表示继承自<see cref="C:BaseApi"/>的类</description></item>
-        ///         <item><term><c>{id}</c></term><description>类中的非静态方法名</description></item>
+        ///         <item><term><c>{action}</c></term><description>类中的非静态方法名</description></item>
         ///     </list>        
         ///     <example>
         ///         范式1
-        ///         api/{controller}/{id}
+        ///         api/{controller}/{action}
         ///         范式2
-        ///         api/on{controller}/get{id}
+        ///         api/on{controller}/get{action}
         ///         范式3
-        ///         api.{controller}.{id}
+        ///         api.{controller}.{action}
         ///         范式4
-        ///         api.on{controller}.get{id}
+        ///         api.on{controller}.get{action}
         ///     </example>
         /// 
         /// </para>
@@ -230,7 +230,7 @@ namespace Mozi.HttpEmbedded.Page
                 }
                 //替换特殊字符
                 int indCrl = pattern.IndexOf("{controller}", StringComparison.CurrentCulture);
-                int indID = pattern.IndexOf("{id}", StringComparison.CurrentCulture);
+                int indID = pattern.IndexOf("{action}", StringComparison.CurrentCulture);
          
                 Prefix = pattern.Substring(0, indCrl);
                 Link = pattern.Substring(indCrl + 12, indID - indCrl - 12);

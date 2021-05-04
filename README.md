@@ -80,7 +80,7 @@ Mozi.HttpEmbedded在Socket之上使用异步单线程模型,构建了一个HTTP�
     hs.UseStaticFiles("");
     //路由映射
     Router router = Router.Default;
-    router.Map("services/{controller}/{id}");
+    router.Map("services/{controller}/{action}");
     Console.ReadLine();
 
 ~~~
