@@ -3,7 +3,7 @@
     /// <summary>
     /// 内置API
     /// </summary>
-    public class SystemApi:BaseApi
+    public class System:BaseApi
     {
 
     }

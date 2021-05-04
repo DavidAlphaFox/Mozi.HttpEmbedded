@@ -66,9 +66,45 @@ namespace Mozi.HttpEmbedded.Page
                         }
                     }
                     success = true;
-
                 }catch(Exception ex){
                     
+                }
+            }
+            ResponseMessage rm = new ResponseMessage() { success = success };
+            return rm;
+        }
+        /// <summary>
+        /// 将文件存放到指定的路径
+        /// </summary>
+        /// <param name="dir"></param>
+        /// <returns></returns>
+        public ResponseMessage PutFile(string dir)
+        {
+            bool success = false;
+            dir = AppDomain.CurrentDomain.BaseDirectory+ dir.Replace('.','/');
+            if (!Directory.Exists(dir))
+            {
+                Directory.CreateDirectory(dir);
+            }
+            if (Context.Request.Files.Length > 0)
+            {
+                try
+                {
+                    for (int i = 0; i < Context.Request.Files.Length; i++)
+                    {
+                        File f = Context.Request.Files[i];
+                        using (FileStream fs = new FileStream(dir + "/"+f.FileName, FileMode.OpenOrCreate, FileAccess.ReadWrite))
+                        {
+                            fs.Write(f.FileData, 0, f.FileData.Length);
+                            fs.Flush();
+                            fs.Close();
+                        }
+                    }
+                    success = true;
+                }
+                catch (Exception ex)
+                {
+
                 }
             }
             ResponseMessage rm = new ResponseMessage() { success = success };
