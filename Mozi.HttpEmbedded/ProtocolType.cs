@@ -10,19 +10,19 @@ namespace Mozi.HttpEmbedded
         public static  ProtocolType HTTP  = new ProtocolType("HTTP");
         public static  ProtocolType HTTPS = new ProtocolType("HTTPS");
 
-        private string _proxy;
+        private string _protocol;
 
-        public string Proxy
+        public string Protocol
         {
-            get { return _proxy; }
-            set { _proxy = value; }
+            get { return _protocol; }
+            set { _protocol = value; }
         }
 
-        protected override string Tag { get { return Proxy; } }
+        protected override string Tag { get { return _protocol; } }
 
         private ProtocolType(string typeName)
         {
-            _proxy = typeName;
+            _protocol = typeName;
         }
     }
 }

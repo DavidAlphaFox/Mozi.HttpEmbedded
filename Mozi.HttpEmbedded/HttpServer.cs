@@ -49,6 +49,10 @@ namespace Mozi.HttpEmbedded
         /// </summary>
         private Authenticator Auth { get;  set; }
         /// <summary>
+        /// 是否启用访问控制 IP策略
+        /// </summary>
+        public bool EnableAccessControl { get; private set; }
+        /// <summary>
         /// 是否开启压缩
         /// </summary>
         public bool EnableCompress { get; private set; }
@@ -395,7 +399,7 @@ namespace Mozi.HttpEmbedded
         /// 实现代理
         /// </summary>
         /// <returns></returns>
-        public HttpServer UserProxy()
+        public HttpServer UseProxy()
         {
             throw new NotImplementedException();
         }
@@ -459,13 +463,22 @@ namespace Mozi.HttpEmbedded
         {
             _sc.StartServer(_port);
         }
+        /// <summary>
+        /// 是否启用访问控制 IP策略
+        /// </summary>
+        /// <param name="enabled"></param>
+        public void UserAccessControl(bool enabled)
+        {
+            EnableAccessControl = enabled;
+        }
+
         //TODO 实现访问黑名单 基于IP控制策略
         /// <summary>
         /// 检查访问黑名单
         /// </summary>
-        private void CheckIfBlocked()
+        private bool CheckIfBlocked(string ipAddress)
         {
-            
+            return AccessManager.Instance.CheckBlackList(ipAddress);
         }
         /// <summary>
         /// 关闭服务器

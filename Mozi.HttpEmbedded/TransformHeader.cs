@@ -17,6 +17,7 @@ namespace Mozi.HttpEmbedded
         /// </summary>
         private Dictionary<string, string> HeaderData = new Dictionary<string, string>(new StringCompareIgnoreCase())
         {
+
         };
         /// <summary>
         /// 是否包含
