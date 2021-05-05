@@ -11,6 +11,7 @@ namespace Mozi.HttpEmbedded
     //TODO 2020/09/19 增加WebService功能
     //TODO 2020/09/28 增加信号量机制
     //TODO 2021/05/05 实现HTTPS功能
+    //TODO 2021/05/05 实现管道机制pipelining
     /// <summary>
     /// Http服务器
     /// </summary>
@@ -18,6 +19,7 @@ namespace Mozi.HttpEmbedded
     {
         
         private readonly SocketServer _sc=new SocketServer();
+
         private WebDav.DavServer _davserver;
 
         private int _port=80;

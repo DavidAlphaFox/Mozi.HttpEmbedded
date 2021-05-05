@@ -68,11 +68,11 @@ namespace Mozi.HttpEmbedded
         /// </summary>
         public byte[] PackedData { get; protected set; }
         /// <summary>
-        /// 首行数据
+        /// 原始请求首行数据
         /// </summary>
         public byte[] FirstLineData { get; protected set; }
         /// <summary>
-        /// 首行字符串
+        /// 原始请求首行字符串
         /// </summary>
         public string FirstLineString { get; protected set; }
         /// <summary>

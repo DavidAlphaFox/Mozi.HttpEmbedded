@@ -3,11 +3,44 @@
 <head>
     <title>错误信息</title>
     <meta http-equiv="content-type" charset="UTF-8">
-    <meta http-equiv="Authorization" content="Jason"/>
+    <meta http-equiv="Authorization" content="Jason" />
     <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1,maximum-scale=1,user-scalable=no">
+    <style type="text/css">
+        * {
+            font-size: 18px;
+            font-weight: 400;
+            box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            color: #212121;
+            -moz-box-sizing: border-box;
+            -webkit-user-drag: none;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        h1 {
+            font-size: 1rem;
+        }
+
+        h2 {
+            font-size: 0.89rem;
+        }
+
+        h3 {
+            font-size: 0.78rem;
+        }
+
+        h4 {
+            font-size: 0.67rem;
+        }
+    </style>
 </head>
 <body>
-    <h1 style="color: brown">${Error.Title}-${Error.Code}</h1>
+    <h1 style="color: brown">${Error.Code}-${Error.Title}</h1>
     <hr/>
     <p><strong>时间:</strong>${Error.Time}</p>
     <p><strong>内容:</strong>${Error.Description}</p>
