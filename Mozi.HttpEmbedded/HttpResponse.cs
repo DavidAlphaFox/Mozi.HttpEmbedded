@@ -15,7 +15,7 @@ namespace Mozi.HttpEmbedded
         /// <summary>
         /// 协议版本
         /// </summary>
-        public HttpVersion ProxyVersion { get; set; }
+        public HttpVersion ProtocolVersion { get; set; }
         /// <summary>
         /// 状态码
         /// </summary>
@@ -44,7 +44,7 @@ namespace Mozi.HttpEmbedded
         public HttpResponse()
         {
             Headers=new TransformHeader();
-            ProxyVersion = HttpVersion.Version11;
+            ProtocolVersion = HttpVersion.Version11;
             Cookies=new ResponseCookie();
         }
         /// <summary>
@@ -53,7 +53,7 @@ namespace Mozi.HttpEmbedded
         /// <param name="version"></param>
         public void SetVersion(HttpVersion version)
         {
-            ProxyVersion = version;
+            ProtocolVersion = version;
         }
         /// <summary>
         /// 设置状态
@@ -168,7 +168,7 @@ namespace Mozi.HttpEmbedded
         /// <returns></returns>
         public byte[] GetStatusLine()
         {
-            return StringEncoder.Encode(string.Format("HTTP/{0} {1} {2}", ProxyVersion.Version, Status.Code, Status.Text));
+            return StringEncoder.Encode(string.Format("HTTP/{0} {1} {2}", ProtocolVersion.Version, Status.Code, Status.Text));
         }
         /// <summary>
         /// 重定向302

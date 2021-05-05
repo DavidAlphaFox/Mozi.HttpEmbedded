@@ -12,6 +12,9 @@ namespace Mozi.HttpEmbedded.Page
     /// <summary>
     /// 全局路由
     /// </summary>
+    /// <remarks>
+    /// 实例化Router时会自动扫描此程序集内部的API
+    /// </remarks>
     public sealed class Router
     {
         private static Router _r;
@@ -26,7 +29,6 @@ namespace Mozi.HttpEmbedded.Page
 
             new RouteMapper() { Pattern = "/{controller}/{action}" },
             new RouteMapper() { Pattern = "/{controller}.{action}" } 
-
         };
 
         public static Router Default
@@ -70,6 +72,7 @@ namespace Mozi.HttpEmbedded.Page
             //确定路径映射关系
             AccessPoint ap = Match(path);
             //TODO 此处路由有问题，需要改进
+            //TODO 此处考虑加入域控制
             Type cls = apis.Find(x => x.Name.Equals(ap.Controller, StringComparison.OrdinalIgnoreCase));
             MethodInfo method = cls.GetMethod(ap.Action, BindingFlags.Instance | BindingFlags.IgnoreCase | BindingFlags.Public);
             ParameterInfo[] pms = method.GetParameters();

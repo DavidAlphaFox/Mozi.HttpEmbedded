@@ -201,13 +201,13 @@ namespace Mozi.SSDP
         public new TransformHeader GetHeaders()
         {
             TransformHeader headers = new TransformHeader();
-            headers.Add(HeaderProperty.Host, $"{MulticastAddress}:{ProtocolPort}");
-            headers.Add("SERVER", $"{Server}");
-            headers.Add("NT", $"{NT}");
+            headers.Add(HeaderProperty.Host, $"{ MulticastAddress }:{ ProtocolPort }");
+            headers.Add("SERVER", $"{ Server }");
+            headers.Add("NT", $"{ NT }");
             headers.Add("NTS", SSDPType.Alive.ToString());
-            headers.Add("USN", $"{USN}");
-            headers.Add("LOCATION", $"{Location}");
-            headers.Add(HeaderProperty.CacheControl, $"max-age= {CacheTimeout}");
+            headers.Add("USN", $"{ USN }");
+            headers.Add("LOCATION", $"{ Location }");
+            headers.Add(HeaderProperty.CacheControl, $"max-age= { CacheTimeout }");
             return headers;
         }
     }

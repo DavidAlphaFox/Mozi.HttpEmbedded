@@ -21,12 +21,13 @@ namespace Mozi.HttpEmbedded.Common
         /// <summary>
         /// 默认记录器名
         /// </summary>
-        private static string DefaultLoggerName = "error";
+        private static readonly string DefaultLoggerName = "error";
         /// <summary>
         /// 追加式写入日志
         /// </summary>
         /// <param name="name"></param>
         /// <param name="info"></param>
+        /// <param name="level"></param>
         public static void Save(string name, string info, LogLevel level)
         {
             DirectoryInfo dir = new DirectoryInfo(LogDir);
