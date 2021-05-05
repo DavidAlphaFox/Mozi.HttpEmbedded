@@ -3,7 +3,7 @@
     /// <summary>
     /// 传输压缩类型
     /// </summary>
-    public enum TransformEncoding
+    public enum ContentEncoding
     {
         None,
         Gzip,

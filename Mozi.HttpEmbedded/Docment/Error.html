@@ -15,33 +15,32 @@
             -moz-box-sizing: border-box;
             -webkit-user-drag: none;
         }
-
+        body {
+            padding:0;
+            margin:0;
+        }
         ul {
             list-style-type: none;
             padding: 0;
             margin: 0;
         }
-
         h1 {
             font-size: 1rem;
         }
-
         h2 {
             font-size: 0.89rem;
         }
-
         h3 {
             font-size: 0.78rem;
         }
-
         h4 {
             font-size: 0.67rem;
         }
     </style>
 </head>
-<body>
+<body style="padding:0 0.6rem;">
     <h1 style="color: brown">${Error.Code}-${Error.Title}</h1>
-    <hr/>
+    <hr style="color:#dedede;"/>
     <p><strong>时间:</strong>${Error.Time}</p>
     <p><strong>内容:</strong>${Error.Description}</p>
     <p><strong>源:</strong>${Error.Source}</p>

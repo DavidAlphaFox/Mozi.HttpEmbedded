@@ -5,7 +5,7 @@
     /// </summary>
     public class CompressOption
     {
-        public TransformEncoding CompressType { get; set; }
+        public ContentEncoding CompressType { get; set; }
         public int MinContentLenght { get; set; }
         public int CompressLevel    { get; set; }
     }
