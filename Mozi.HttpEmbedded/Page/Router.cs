@@ -22,7 +22,12 @@ namespace Mozi.HttpEmbedded.Page
         //数据序列化对象
         private ISerializer _dataserializer;
 
-        private readonly List<RouteMapper> _mappers = new List<RouteMapper>() { new RouteMapper() { Pattern = "/{controller}/{action}" }, new RouteMapper() { Pattern = "/{controller}.{action}" } };
+        private readonly List<RouteMapper> _mappers = new List<RouteMapper>() { 
+
+            new RouteMapper() { Pattern = "/{controller}/{action}" },
+            new RouteMapper() { Pattern = "/{controller}.{action}" } 
+
+        };
 
         public static Router Default
         {
@@ -65,8 +70,8 @@ namespace Mozi.HttpEmbedded.Page
             //确定路径映射关系
             AccessPoint ap = Match(path);
             //TODO 此处路由有问题，需要改进
-            Type cls = apis.Find(x => x.Name.Equals(ap.Domain, StringComparison.OrdinalIgnoreCase));
-            MethodInfo method = cls.GetMethod(ap.Method, BindingFlags.Instance | BindingFlags.IgnoreCase | BindingFlags.Public);
+            Type cls = apis.Find(x => x.Name.Equals(ap.Controller, StringComparison.OrdinalIgnoreCase));
+            MethodInfo method = cls.GetMethod(ap.Action, BindingFlags.Instance | BindingFlags.IgnoreCase | BindingFlags.Public);
             ParameterInfo[] pms = method.GetParameters();
             object[] args = new object[pms.Length];
 
@@ -95,7 +100,6 @@ namespace Mozi.HttpEmbedded.Page
             {
                 return result;
             }
-
             //调起相关方法 
         }
         /// <summary>
@@ -193,7 +197,6 @@ namespace Mozi.HttpEmbedded.Page
         /// </summary>
         private class RouteMapper
         {
-
             private string _pattern = "";
 
             public string Pattern        
@@ -230,12 +233,13 @@ namespace Mozi.HttpEmbedded.Page
                 }
                 //替换特殊字符
                 int indCrl = pattern.IndexOf("{controller}", StringComparison.CurrentCulture);
-                int indID = pattern.IndexOf("{action}", StringComparison.CurrentCulture);
+                int indAction = pattern.IndexOf("{action}", StringComparison.CurrentCulture);
          
                 Prefix = pattern.Substring(0, indCrl);
-                Link = pattern.Substring(indCrl + 12, indID - indCrl - 12);
+                Link = pattern.Substring(indCrl + 12, indAction - indCrl - 12);
                 Suffix = "";
-                Matcher = new Regex(string.Format("{0}[a-zA-Z]\\w+{1}[a-zA-Z]\\w+{2}", Regex.Escape(Prefix), Regex.Escape(Link), Regex.Escape(Suffix)), RegexOptions.IgnoreCase);
+                Matcher = new Regex(string.Format("^{0}[a-zA-Z]\\w+{1}[a-zA-Z]\\w+{2}$", Regex.Escape(Prefix), Regex.Escape(Link), Regex.Escape(Suffix)), RegexOptions.IgnoreCase);
+                
             }
             /// <summary>
             /// 判断是否匹配路由
@@ -244,8 +248,8 @@ namespace Mozi.HttpEmbedded.Page
             /// <returns></returns>
             public bool Match(string path)
             {
-              
-                if (Matcher.IsMatch(path))
+                var m = Matcher.Match(path);
+                if (m!=null&&m.Success&&m.Index==0)
                 {
                     return true;
                 }
@@ -264,9 +268,9 @@ namespace Mozi.HttpEmbedded.Page
                     ap=new AccessPoint();
                     int indCrl=Prefix.Length;
                     int indLink=path.IndexOf(Link,indCrl+1,StringComparison.CurrentCulture);
-
-                    ap.Domain = path.Substring(indCrl, indLink - indCrl);
-                    ap.Method = path.Substring(indLink + Link.Length);
+                    ap.Domain = Prefix.Replace("/",".");
+                    ap.Controller = path.Substring(indCrl, indLink - indCrl);
+                    ap.Action = path.Substring(indLink + Link.Length);
                 }
                 return ap;
             }
@@ -275,7 +279,8 @@ namespace Mozi.HttpEmbedded.Page
         public class AccessPoint
         {
              public string Domain { get; set; }
-             public string Method { get; set; }
+             public string Controller { get; set; }
+             public string Action { get; set; }
         }
     }
 }
