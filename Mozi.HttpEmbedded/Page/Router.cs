@@ -25,6 +25,9 @@ namespace Mozi.HttpEmbedded.Page
         //数据序列化对象
         private ISerializer _dataserializer;
 
+        /// <summary>
+        /// 路由配置，内置2个默认
+        /// </summary>
         private readonly List<RouteMapper> _mappers = new List<RouteMapper>() { 
 
             new RouteMapper() { Pattern = "/{controller}/{action}" },
@@ -117,10 +120,12 @@ namespace Mozi.HttpEmbedded.Page
             //TODO 此处考虑加入域控制
             Type cls = apis.Find(x => x.Name.Equals(ap.Controller, StringComparison.OrdinalIgnoreCase));
             MethodInfo method = cls.GetMethod(ap.Action, BindingFlags.Instance | BindingFlags.IgnoreCase | BindingFlags.Public);
-            AccessObject target = new AccessObject();
-            target.Target = cls;
-            target.Method = method;
-            target.Params = method != null ? method.GetParameters() : null;
+            AccessObject target = new AccessObject
+            {
+                Target = cls,
+                Method = method,
+                Params = method != null ? method.GetParameters() : null
+            };
             return target;
         }
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Mozi.HttpEmbedded.Cert
 {
@@ -9,16 +10,18 @@ namespace Mozi.HttpEmbedded.Cert
     {
         public CertManager()
         {
-
+            
         }
         /// <summary>
         /// 加载CERT文件
         /// </summary>
-        /// <param name="filepath"></param>
+        /// <param name="filePath"></param>
         /// <returns></returns>
-        public CertManager LoadCert(string filepath)
+        public void LoadCert(string filePath)
         {
-            throw new NotImplementedException();
+            X509Store store = new X509Store();
+            X509Certificate2 cert = new X509Certificate2();
+            cert.Import(new byte[] { }, "", X509KeyStorageFlags.PersistKeySet);
         }
         /// <summary>
         /// 验证

@@ -451,24 +451,17 @@ namespace Mozi.HttpEmbedded
             throw new NotImplementedException();
         }
         /// <summary>
-        /// 载入证书
-        /// </summary>
-        /// <returns></returns>
-        private HttpServer LoadCertification()
-        {
-            throw new NotImplementedException();
-        }
-        /// <summary>
         /// 配置安全证书
         /// <para>
         ///     证书类型为x509
         /// </para>
         /// </summary>
-        /// <param name="path">
+        /// <param name="filePath">
         ///     证书必须为X509 *.pfx
         /// </param>
+        /// <param name="password">证书密码</param>
         /// <returns></returns>
-        public HttpServer SetCertification(string path)
+        public HttpServer SetCertification(string filePath,string password)
         {
             throw new NotImplementedException();
         }
