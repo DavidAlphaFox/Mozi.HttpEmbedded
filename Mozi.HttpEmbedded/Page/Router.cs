@@ -75,9 +75,11 @@ namespace Mozi.HttpEmbedded.Page
             //TODO 此处考虑加入域控制
             Type cls = apis.Find(x => x.Name.Equals(ap.Controller, StringComparison.OrdinalIgnoreCase));
             MethodInfo method = cls.GetMethod(ap.Action, BindingFlags.Instance | BindingFlags.IgnoreCase | BindingFlags.Public);
-            ParameterInfo[] pms = method.GetParameters();
-            object[] args = new object[pms.Length];
 
+            ParameterInfo[] pms = method.GetParameters();
+
+            //开始装配参数
+            object[] args = new object[pms.Length];
             for (int i = 0; i < pms.Length; i++)
             {
                 var argname = pms[i].Name;
@@ -90,8 +92,10 @@ namespace Mozi.HttpEmbedded.Page
                     args[i] = ctx.Request.Post[argname];
                 }
             }
+
+            //实例化对象
             object instance = Activator.CreateInstance(cls);
-            //注入变量
+            //注入上下文变量
             ((BaseApi)instance).Context = ctx;
             //调用方法
             object result=method.Invoke(instance, BindingFlags.IgnoreCase, null, args, CultureInfo.CurrentCulture);
@@ -103,8 +107,23 @@ namespace Mozi.HttpEmbedded.Page
             {
                 return result;
             }
-            //调起相关方法 
         }
+        internal AccessObject GetMethodInfo(HttpContext ctx)
+        {
+            string path = ctx.Request.Path;
+            //确定路径映射关系
+            AccessPoint ap = Match(path);
+            //TODO 此处路由有问题，需要改进
+            //TODO 此处考虑加入域控制
+            Type cls = apis.Find(x => x.Name.Equals(ap.Controller, StringComparison.OrdinalIgnoreCase));
+            MethodInfo method = cls.GetMethod(ap.Action, BindingFlags.Instance | BindingFlags.IgnoreCase | BindingFlags.Public);
+            AccessObject target = new AccessObject();
+            target.Target = cls;
+            target.Method = method;
+            target.Params = method != null ? method.GetParameters() : null;
+            return target;
+        }
+
         /// <summary>
         /// 载入模块
         /// <para>自动扫描程序集中的接口模块</para>
@@ -284,6 +303,13 @@ namespace Mozi.HttpEmbedded.Page
              public string Domain { get; set; }
              public string Controller { get; set; }
              public string Action { get; set; }
+        }
+
+        public class AccessObject
+        {
+            public Type Target { get; set; }
+            public MethodInfo Method { get; set; }
+            public ParameterInfo[] Params { get; set; }
         }
     }
 }

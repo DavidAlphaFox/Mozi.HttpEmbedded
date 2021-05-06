@@ -30,8 +30,10 @@ namespace Mozi.HttpEmbedded.Test
 
             //开启WebDAV
             hs.UseWebDav("dav");
-            Service ser = new Service();
-            ser.Active();
+
+            //开启SSDP服务
+            //Service ser = new Service();
+            //ser.Active();
             Console.ReadLine();
         }
     }

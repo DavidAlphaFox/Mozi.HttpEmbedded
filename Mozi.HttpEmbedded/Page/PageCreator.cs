@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 
 namespace Mozi.HttpEmbedded.Page
 {
@@ -8,6 +9,20 @@ namespace Mozi.HttpEmbedded.Page
     /// </summary>
     public class PageCreator
     {
+        public PageCreator()
+        {
+
+        }
+
+        public PageCreator Load(string filePath)
+        {
+            return this;
+        }
+
+        public PageCreator LoadFromStream(Stream stream)
+        {
+            return this;
+        }
         /// <summary>
         /// 注入全局数据
         /// </summary>

@@ -285,15 +285,29 @@ namespace Mozi.HttpEmbedded
             Router router=Router.Default;
             if (router.Match(context.Request.Path) != null)
             {
-                router.Invoke(context);
+                //router.Invoke(context);
                 //context.Response.Write("<html>"
                 //                       + "<head></head>"
                 //                       + "<body>"
                 //                       + "  <strong>Welcome to a Web Server Developed base on c#!</strong>"
                 //                       + "</body>"
                 //                       + "</html>");
-                context.Response.Write(router.Invoke(context).ToString());
-                return StatusCode.Success;
+                object result=null;
+                try
+                {
+                    result = router.Invoke(context);
+                }catch(Exception ex){
+
+                }
+                if (result != null)
+                {
+                    context.Response.Write(result.ToString());
+                    return StatusCode.Success;
+                }
+                else
+                {
+                    return StatusCode.InternalServerError;
+                }
             }
             return StatusCode.NotFound; 
         }
@@ -450,7 +464,9 @@ namespace Mozi.HttpEmbedded
         ///     证书类型为x509
         /// </para>
         /// </summary>
-        /// <param name="path"></param>
+        /// <param name="path">
+        ///     证书必须为X509 *.pfx
+        /// </param>
         /// <returns></returns>
         public HttpServer SetCertification(string path)
         {

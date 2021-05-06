@@ -21,9 +21,14 @@ namespace Mozi.HttpEmbedded.Page
         /// 取服务器当前时间
         /// </summary>
         /// <returns></returns>
-        public DateTime GetTime()
+        public string GetTime()
         {
-            return DateTime.Now;
+            return DateTime.Now.ToString("r");
+        }
+
+        public string GetAddress()
+        {
+            return Context.Request.Path;
         }
         /// <summary>
         /// 认证用户

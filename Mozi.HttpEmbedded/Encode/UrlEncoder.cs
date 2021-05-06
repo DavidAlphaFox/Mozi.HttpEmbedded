@@ -59,7 +59,12 @@ namespace Mozi.HttpEmbedded.Encode
             foreach (var item in querys)
             {
                 string[] kp = item.Split(new[] { (char)ASCIICode.EQUAL }, StringSplitOptions.RemoveEmptyEntries);
-                res.Add(kp[0], kp[1] ?? "");
+                if (kp.Length > 0)
+                {
+                    var key = kp[0];
+                    var value = kp.Length > 1 ? kp[1] : "";
+                    res.Add(key, value);
+                }
             }
             return res;
         }
