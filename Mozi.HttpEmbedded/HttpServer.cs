@@ -12,6 +12,8 @@ namespace Mozi.HttpEmbedded
     //TODO 2020/09/28 增加信号量机制
     //TODO 2021/05/05 实现HTTPS功能
     //TODO 2021/05/05 实现管道机制pipelining
+    //TODO 2021/05/07 增加分块传输 chunked
+
     /// <summary>
     /// Http服务器
     /// </summary>
@@ -36,6 +38,7 @@ namespace Mozi.HttpEmbedded
         private CertManager _certMg;
         //HTTPS开启标识
         private bool _httpsEnabled = false;
+
         /// <summary>
         /// 支持的HTTP服务协议版本
         /// </summary>
@@ -109,7 +112,7 @@ namespace Mozi.HttpEmbedded
 
         void _sc_AfterServerStop(object sender, ServerArgs args)
         {
-            throw new NotImplementedException();
+            
         }
 
         void _sc_OnReceiveStart(object sender, DataTransferArgs args)
@@ -220,6 +223,8 @@ namespace Mozi.HttpEmbedded
                 }
                 else
                 {
+                    //动态页面默认ContentType为txt/plain
+                    context.Response.Headers.Add(HeaderProperty.ContentType, Mime.GetContentType("txt"));
                     //响应动态页面
                     return HandleRequestRoutePages(ref context);
                 }
@@ -243,7 +248,6 @@ namespace Mozi.HttpEmbedded
 
             foreach (RequestMethod verb in MethodPublic)
                 context.Response.AddHeader("Public", verb.Name);
-
             // Sends 200 OK
             return StatusCode.Success;
         }
@@ -285,13 +289,6 @@ namespace Mozi.HttpEmbedded
             Router router=Router.Default;
             if (router.Match(context.Request.Path) != null)
             {
-                //router.Invoke(context);
-                //context.Response.Write("<html>"
-                //                       + "<head></head>"
-                //                       + "<body>"
-                //                       + "  <strong>Welcome to a Web Server Developed base on c#!</strong>"
-                //                       + "</body>"
-                //                       + "</html>");
                 object result=null;
                 try
                 {
@@ -448,6 +445,7 @@ namespace Mozi.HttpEmbedded
         //TODO HTTPS
         internal HttpServer UseHttps()
         {
+            _httpsEnabled = true;
             throw new NotImplementedException();
         }
         /// <summary>

@@ -76,7 +76,7 @@
     <Compile Include="Generic\AbsClassEnum.cs" />
     <Compile Include="Auth\AuthorizationType.cs" />
     <Compile Include="Auth\Authenticator.cs" />
-    <Compile Include="CacheControl.cs" />
+    <Compile Include="Cache\CacheControl.cs" />
     <Compile Include="Encode\Base64.cs" />
     <Compile Include="Compress\CompressOption.cs" />
     <Compile Include="Compress\GZip.cs" />

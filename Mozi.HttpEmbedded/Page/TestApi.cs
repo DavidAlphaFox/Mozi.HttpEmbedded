@@ -55,6 +55,7 @@ namespace Mozi.HttpEmbedded.Page
         /// <returns></returns>
         public ResponseMessage UploadFile()
         {
+            ResponseMessage rm = new ResponseMessage();
             bool success = false;
             if (Context.Request.Files.Length > 0)
             {
@@ -72,10 +73,10 @@ namespace Mozi.HttpEmbedded.Page
                     }
                     success = true;
                 }catch(Exception ex){
-                    
+                    rm.message = ex.Message;
                 }
             }
-            ResponseMessage rm = new ResponseMessage() { success = success };
+            rm.success = success;
             return rm;
         }
         /// <summary>
@@ -85,6 +86,7 @@ namespace Mozi.HttpEmbedded.Page
         /// <returns></returns>
         public ResponseMessage PutFile(string dir)
         {
+            ResponseMessage rm = new ResponseMessage();
             bool success = false;
             dir = AppDomain.CurrentDomain.BaseDirectory+ dir.Replace('.','/');
             if (!Directory.Exists(dir))
@@ -109,10 +111,10 @@ namespace Mozi.HttpEmbedded.Page
                 }
                 catch (Exception ex)
                 {
-
+                    rm.message = ex.Message;
                 }
             }
-            ResponseMessage rm = new ResponseMessage() { success = success };
+            rm.success = success;
             return rm;
         }
         /// <summary>

@@ -9,14 +9,14 @@ namespace Mozi.HttpEmbedded
     /// </summary>
     public class HeaderProperty : AbsClassEnum
     {
-        public static HeaderProperty Accept         = new HeaderProperty("Accept");             // 	用户代理期望的MIME 类型列表 	HTTP Content Negotiation 	HTTP/1.1
-        public static HeaderProperty AcceptCH       = new HeaderProperty("Accept-CH");          // 
+        public static HeaderProperty Accept         = new HeaderProperty("Accept");                                             // 	用户代理期望的MIME 类型列表 	HTTP Content Negotiation 	HTTP/1.1
+        public static HeaderProperty AcceptCH       = new HeaderProperty("Accept-CH");                                          // 
 
         //    列出配置数据，服务器可据此来选择适当的响应。 	HTTP Client Hints 	
-        public static HeaderProperty AcceptCharset  = new HeaderProperty("Accept-Charset");     // 	列出用户代理支持的字符集。 	HTTP Content Negotiation 	HTTP/1.1
-        public static HeaderProperty AcceptFeatures = new HeaderProperty("Accept-Features");    // 	HTTP Content Negotiation 	RFC 2295, §8.2
-        public static HeaderProperty AcceptEncoding = new HeaderProperty("Accept-Encoding");    // 	列出用户代理支持的压缩方法。 	HTTP Content Negotiation 	HTTP/1.1
-        public static HeaderProperty AcceptLanguage = new HeaderProperty("Accept-Language");    // 	列出用户代理期望的页面语言。 	HTTP Content Negotiation 	HTTP/1.1
+        public static HeaderProperty AcceptCharset  = new HeaderProperty("Accept-Charset");                                     // 	列出用户代理支持的字符集。 	HTTP Content Negotiation 	HTTP/1.1
+        public static HeaderProperty AcceptFeatures = new HeaderProperty("Accept-Features");                                    // 	HTTP Content Negotiation 	RFC 2295, §8.2
+        public static HeaderProperty AcceptEncoding = new HeaderProperty("Accept-Encoding");                                    // 	列出用户代理支持的压缩方法。 	HTTP Content Negotiation 	HTTP/1.1
+        public static HeaderProperty AcceptLanguage = new HeaderProperty("Accept-Language");                                    // 	列出用户代理期望的页面语言。 	HTTP Content Negotiation 	HTTP/1.1
         //Accept-Ranges 			
         public static HeaderProperty AccessControlAllowCredentials=new HeaderProperty("Access-Control-Allow-Credentials");      // 	HTTP Access Control and Server Side Access Control 	W3C Cross-Origin Resource Sharing
         public static HeaderProperty AccessControlAllowOrigin=new HeaderProperty("Access-Control-Allow-Origin");                // 	HTTP Access Control and Server Side Access Control 	W3C Cross-Origin Resource Sharing
@@ -34,27 +34,27 @@ namespace Mozi.HttpEmbedded
         public static HeaderProperty Connection=new HeaderProperty("Connection");                                               // 		
         public static HeaderProperty ContentEncoding=new HeaderProperty("Content-Encoding");                                    // 		
         public static HeaderProperty ContentLanguage=new HeaderProperty("Content-Language");                                    // 		
-        public static HeaderProperty ContentLength=new HeaderProperty("Content-Length");// 			
-        public static HeaderProperty ContentLocation=new HeaderProperty("Content-Location");// 			
+        public static HeaderProperty ContentLength=new HeaderProperty("Content-Length");                                        // 			
+        public static HeaderProperty ContentLocation=new HeaderProperty("Content-Location");                                    // 			
         public static HeaderProperty ContentMD5=new HeaderProperty("Content-MD5");                                              // 	未实现 (查看 bug 232030) 	
-        public static HeaderProperty ContentRange=new HeaderProperty("Content-Range");// 			
+        public static HeaderProperty ContentRange=new HeaderProperty("Content-Range");                                          // 			
         public static HeaderProperty ContentSecurityPolicy=new HeaderProperty("Content-Security-Policy");                       // 	控制用户代理在一个页面上可以加载使用的资源。 	CSP (Content Security Policy) 	W3C Content Security Policy
         public static HeaderProperty ContentType=new HeaderProperty("Content-Type");                                            // 	指示服务器文档的MIME 类型。帮助用户代理（浏览器）去处理接收到的数据。 		
         public static HeaderProperty Cookie=new HeaderProperty("Cookie");                                                       // 			RFC 2109
-        public static HeaderProperty DNT=new HeaderProperty("DNT");// 	设置该值为1， 表明用户明确退出任何形式的网上跟踪。 	Supported by Firefox 4, Firefox 5 for mobile, IE9, and a few major companies. 	Tracking Preference Expression (DNT)
-        public static HeaderProperty Date=new HeaderProperty("Date");// 			
-        public static HeaderProperty ETag=new HeaderProperty("ETag");// 		HTTP Caching FAQ 	
-        public static HeaderProperty Expect=new HeaderProperty("Expect");// 			
-        public static HeaderProperty Expires=new HeaderProperty("Expires");// 		HTTP Caching FAQ 	
-        public static HeaderProperty From=new HeaderProperty("From");// 			
-        public static HeaderProperty Host=new HeaderProperty("Host");// 			
-        public static HeaderProperty IfMatch=new HeaderProperty("If-Match");// 			
-        public static HeaderProperty IfModifiedSince=new HeaderProperty("If-Modified-Since");// 		HTTP Caching FAQ 	
-        public static HeaderProperty IfNoneMatch=new HeaderProperty("If-None-Match");// 		HTTP Caching FAQ 	
-        public static HeaderProperty IfRange=new HeaderProperty("If-Range");// 			
-        public static HeaderProperty IfUnmodifiedSince=new HeaderProperty("If-Unmodified-Since");// 			
-        public static HeaderProperty LastEventID=new HeaderProperty("Last-Event-ID");// 	给出服务器在先前HTTP连接上接收的最后事件的ID。用于同步文本/事件流。 	Server-Sent Events 	Server-Sent Events spec
-        public static HeaderProperty LastModified=new HeaderProperty("Last-Modified");// 		HTTP Caching FAQ 	
+        public static HeaderProperty DNT=new HeaderProperty("DNT");                                                             // 	设置该值为1， 表明用户明确退出任何形式的网上跟踪。 	Supported by Firefox 4, Firefox 5 for mobile, IE9, and a few major companies. 	Tracking Preference Expression (DNT)
+        public static HeaderProperty Date=new HeaderProperty("Date");                                                           // 			
+        public static HeaderProperty ETag=new HeaderProperty("ETag");                                                           // 		HTTP Caching FAQ 	
+        public static HeaderProperty Expect=new HeaderProperty("Expect");                                                       // 			
+        public static HeaderProperty Expires=new HeaderProperty("Expires");                                                     // 		HTTP Caching FAQ 	
+        public static HeaderProperty From=new HeaderProperty("From");                                                           // 			
+        public static HeaderProperty Host=new HeaderProperty("Host");                                                           // 			
+        public static HeaderProperty IfMatch=new HeaderProperty("If-Match");                                                    // 			
+        public static HeaderProperty IfModifiedSince=new HeaderProperty("If-Modified-Since");                                   // 		HTTP Caching FAQ 	
+        public static HeaderProperty IfNoneMatch=new HeaderProperty("If-None-Match");                                           // 		HTTP Caching FAQ 	
+        public static HeaderProperty IfRange=new HeaderProperty("If-Range");                                                    // 			
+        public static HeaderProperty IfUnmodifiedSince=new HeaderProperty("If-Unmodified-Since");                               // 			
+        public static HeaderProperty LastEventID=new HeaderProperty("Last-Event-ID");                                           // 	给出服务器在先前HTTP连接上接收的最后事件的ID。用于同步文本/事件流。 	Server-Sent Events 	Server-Sent Events spec
+        public static HeaderProperty LastModified=new HeaderProperty("Last-Modified");                                          // 		HTTP Caching FAQ 	
         public static HeaderProperty Link=new HeaderProperty("Link");// 	
 
         //等同于HTML标签中的"link"，但它是在HTTP层上，给出一个与获取的资源相关的URL以及关系的种类。

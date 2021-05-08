@@ -1,9 +1,9 @@
 ﻿namespace Mozi.HttpEmbedded
 {
     /// <summary>
-    /// 缓存
+    /// 缓存管理
     /// </summary>
-    class CacheControl
+    public class CacheControl
     {
          
     }

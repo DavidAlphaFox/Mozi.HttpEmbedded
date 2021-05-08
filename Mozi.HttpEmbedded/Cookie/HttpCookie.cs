@@ -29,11 +29,15 @@ namespace Mozi.HttpEmbedded.Cookie
             
         }
 
-        public HttpCookie(string key,string value)
+        public HttpCookie(string name,string value)
         {
-            
+            Name = name;
+            Value = value;
         }
-
+        /// <summary>
+        /// 转为Cookie格式字符串
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
            List<string> data = new List<string> {string.Format("{0}={1}", Name, Value)};
