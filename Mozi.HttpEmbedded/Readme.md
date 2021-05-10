@@ -44,7 +44,7 @@ Mozi.HttpEmbedded在Socket之上使用异步单线程模型,构建了一个HTTP�
 ## 原理及功能
 
 1. HTTP协议  
-	实现HTTP/1.1 HTTP/1.2
+	实现HTTP/1.1
 
 2. 通讯认证  
 	实现基本认证(Basic)
