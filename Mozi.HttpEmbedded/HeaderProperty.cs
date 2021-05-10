@@ -112,10 +112,10 @@ namespace Mozi.HttpEmbedded
         //通常在值为“XMLHttpRequest”时使用
         //        Not standard
 
-        public string PropertyTag { get; set; }
+        public string PropertyName { get; set; }
         public string PropertyValue { get; set; }
 
-        protected override string Tag { get { return PropertyTag; } }
+        protected override string Tag { get { return PropertyName; } }
 
         private HeaderProperty()
         {
@@ -123,7 +123,7 @@ namespace Mozi.HttpEmbedded
         }
         private HeaderProperty(string tag)
         {
-            PropertyTag = tag;
+            PropertyName = tag;
         }
         /// <summary>
         /// 转为字符串
@@ -131,7 +131,7 @@ namespace Mozi.HttpEmbedded
         /// <returns></returns>
         public override string ToString()
         {
-            return string.Format("{0} {1}", PropertyTag, PropertyValue);
+            return string.Format("{0} {1}", PropertyName, PropertyValue);
         }
         /// <summary>
         /// 解析
@@ -142,7 +142,7 @@ namespace Mozi.HttpEmbedded
         {
             var tag = data.Substring(0, data.IndexOf((char)ASCIICode.COLON));
             var value = data.Substring(data.IndexOf((char) ASCIICode.SPACE) + 1);
-            return new HeaderProperty(){PropertyTag = tag,PropertyValue = value};
+            return new HeaderProperty(){PropertyName = tag,PropertyValue = value};
         }
         /// <summary>
         /// 解析
@@ -156,7 +156,7 @@ namespace Mozi.HttpEmbedded
             byte[] btag = new byte[itag], bvalue = new byte[data.Length - itag-2];
             Array.Copy(data,btag,btag.Length);
             Array.Copy(data,itag+2,bvalue,0,bvalue.Length);
-            return new HeaderProperty() { PropertyTag = StringEncoder.Decode(btag), PropertyValue = StringEncoder.Decode(bvalue) };
+            return new HeaderProperty() { PropertyName = StringEncoder.Decode(btag), PropertyValue = StringEncoder.Decode(bvalue) };
         }
     }
 }

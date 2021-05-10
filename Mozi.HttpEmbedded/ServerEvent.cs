@@ -35,15 +35,17 @@ namespace Mozi.HttpEmbedded
 
      public class DataTransferArgs:EventArgs 
      {
-         public byte[] Data { get; set; }
+        public byte[] Data { get; set; }
          //IPV4
-         public string IP { get; set; }
-         public int Port { get; set; }
-         public Socket Socket { get; set; }
+        public string IP { get; set; }
+        public int Port { get; set; }
+        public Socket Socket { get; set; }
+        public Socket Client { get; internal set; }
+        public StateObject State { get; internal set; }
 
-         ~DataTransferArgs()
-         {
+        ~DataTransferArgs()
+        {
              Data = null;
-         }
+        }
      }
 }

@@ -145,7 +145,7 @@ namespace Mozi.HttpEmbedded.Cookie
             List<byte> data = new List<byte>();
             foreach (var cookie in _data)
             {
-                data.AddRange(StringEncoder.Encode(string.Format("{0}: {1}={2}", HeaderProperty.Cookie.PropertyTag, cookie.Key,cookie.Value)));
+                data.AddRange(StringEncoder.Encode(string.Format("{0}: {1}={2}", HeaderProperty.Cookie.PropertyName, cookie.Key,cookie.Value)));
                 data.AddRange(TransformHeader.Carriage);
             }
             return data;
@@ -206,7 +206,7 @@ namespace Mozi.HttpEmbedded.Cookie
             List<byte> data=new List<byte>();
             foreach (var cookie in _cookies)
             {
-                data.AddRange(StringEncoder.Encode(string.Format("{0}: {1}",HeaderProperty.SetCookie.PropertyTag, cookie.ToString())));
+                data.AddRange(StringEncoder.Encode(string.Format("{0}: {1}",HeaderProperty.SetCookie.PropertyName, cookie.ToString())));
                 data.AddRange(TransformHeader.Carriage);
             }
             return data;

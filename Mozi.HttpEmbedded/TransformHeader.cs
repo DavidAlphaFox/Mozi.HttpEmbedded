@@ -62,7 +62,7 @@ namespace Mozi.HttpEmbedded
         /// <returns></returns>
         public TransformHeader Add(HeaderProperty header, string value)
         {
-            Add(header.PropertyTag,value);
+            Add(header.PropertyName,value);
             return this;
         }
         /// <summary>

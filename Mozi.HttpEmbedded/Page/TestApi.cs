@@ -88,7 +88,14 @@ namespace Mozi.HttpEmbedded.Page
         {
             ResponseMessage rm = new ResponseMessage();
             bool success = false;
-            dir = AppDomain.CurrentDomain.BaseDirectory+ dir.Replace('.','/');
+            if (!string.IsNullOrEmpty(dir))
+            {
+                dir = AppDomain.CurrentDomain.BaseDirectory + dir.Replace('.', '/');
+            }
+            else
+            {
+                dir = AppDomain.CurrentDomain.BaseDirectory;
+            }
             if (!Directory.Exists(dir))
             {
                 Directory.CreateDirectory(dir);

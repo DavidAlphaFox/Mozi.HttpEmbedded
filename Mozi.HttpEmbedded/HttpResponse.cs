@@ -178,7 +178,7 @@ namespace Mozi.HttpEmbedded
         /// <returns></returns>
         public StatusCode Redirect(string path)
         {
-            Headers.Add(HeaderProperty.Location.PropertyTag, path);
+            Headers.Add(HeaderProperty.Location.PropertyName, path);
             return StatusCode.Found;
         }
 

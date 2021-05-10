@@ -31,8 +31,8 @@ namespace Mozi.HttpEmbedded.WebDav.Method
             //取资源清单
             IWebDavStoreItem item = GetItemFromCollection(collection, context.Request.Path);
 
-            context.Response.AddHeader(HeaderProperty.ContentType.PropertyTag, Mime.Default);
-            context.Response.AddHeader(HeaderProperty.LastModified.PropertyTag, item.ModificationDate.ToUniversalTime().ToString("R"));
+            context.Response.AddHeader(HeaderProperty.ContentType.PropertyName, Mime.Default);
+            context.Response.AddHeader(HeaderProperty.LastModified.PropertyName, item.ModificationDate.ToUniversalTime().ToString("R"));
 
             return StatusCode.Success;
         }

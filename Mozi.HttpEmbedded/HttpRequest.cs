@@ -173,7 +173,7 @@ namespace Mozi.HttpEmbedded
         /// <param name="data"></param>
         private static void ParsePayload(ref HttpRequest req,byte[] data)
         {
-            string formType = req.Headers.GetValue(HeaderProperty.ContentType.PropertyTag);
+            string formType = req.Headers.GetValue(HeaderProperty.ContentType.PropertyName);
             if (formType != null)
             {
                 if (formType.Contains("application/x-www-form-urlencoded"))
@@ -207,7 +207,7 @@ namespace Mozi.HttpEmbedded
         /// <param name="data"></param>
         private static void ParsePayloadFormData(ref HttpRequest req, byte[] data)
         {
-            string contentType =req.Headers.GetValue(HeaderProperty.ContentType.PropertyTag);
+            string contentType =req.Headers.GetValue(HeaderProperty.ContentType.PropertyName);
             string boundary = "";
             string[] values=contentType.Split(new[]{(char)ASCIICode.SEMICOLON}, StringSplitOptions.RemoveEmptyEntries);
 
@@ -357,7 +357,7 @@ namespace Mozi.HttpEmbedded
         private static void ParseHeaders(ref HttpRequest req, byte[] data)
         {
             HeaderProperty hp = HeaderProperty.Parse(data);
-            req.Headers.Add(hp.PropertyTag, hp.PropertyValue);
+            req.Headers.Add(hp.PropertyName, hp.PropertyValue);
             #if DEBUG
                 Console.WriteLine("{0}:{1}",hp.PropertyTag,hp.PropertyValue);
             #endif
@@ -369,9 +369,9 @@ namespace Mozi.HttpEmbedded
         /// <param name="req"></param>
         private static void ParseCookie(ref HttpRequest req)
         {
-            if (req.Headers.Contains(HeaderProperty.Cookie.PropertyTag))
+            if (req.Headers.Contains(HeaderProperty.Cookie.PropertyName))
             {
-                req.Cookies = RequestCookie.Parse(req.Headers.GetValue(HeaderProperty.Cookie.PropertyTag));
+                req.Cookies = RequestCookie.Parse(req.Headers.GetValue(HeaderProperty.Cookie.PropertyName));
             }
         }
         /// <summary>

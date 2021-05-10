@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net.Sockets;
 using Mozi.HttpEmbedded.Auth;
 using Mozi.HttpEmbedded.Cert;
 using Mozi.HttpEmbedded.Common;
@@ -67,7 +68,7 @@ namespace Mozi.HttpEmbedded
         /// <summary>
         /// 最大接收文件大小 默认10Mb
         /// </summary>
-        public long MaxFileSize { get { return _maxFileSize; } private set { _maxFileSize = value; }
+        public long MaxFileSize { get { return _maxFileSize; } private set { _maxFileSize = value; } }
         /// <summary>
         /// 服务端口
         /// </summary>
@@ -133,7 +134,6 @@ namespace Mozi.HttpEmbedded
             
         }
         //TODO 响应码处理有问题
-        //TODO 此处应判断Content-Length然后继续读流
         /// <summary>
         /// 响应请求
         /// </summary>
@@ -148,7 +148,24 @@ namespace Mozi.HttpEmbedded
             {
                 context.Request = HttpRequest.Parse(args.Data);
                 //TODO HTTP/1.1 通过Connection控制连接 服务器同时对连接进行监测 保证服务器效率
-                //判断Content-Length
+                //TODO 此处应判断Content-Length然后继续读流
+                long contentLength = 0;
+                if (context.Request.Headers.Contains(HeaderProperty.ContentLength.PropertyName)){
+
+                    var propContentLength = context.Request.Headers.GetValue(HeaderProperty.ContentLength.PropertyName);
+                    contentLength = int.Parse(propContentLength);
+
+                } 
+                if (contentLength == 0 || contentLength <= context.Request.Body.Length)
+                {
+
+                }else{
+                       //TODO 此处是否会形成死循环
+                       //继续读流
+                       //args.Socket.BeginReceive(args.State.Buffer, 0, args.State.Buffer.Length, SocketFlags.None, _sc.CallbackReceive, args.State);
+                       return;
+                }
+
                 if (!EnableAuth)
                 {
                     sc = HandleRequest(ref context);
@@ -165,6 +182,11 @@ namespace Mozi.HttpEmbedded
             }
             finally
             {                
+
+            }
+            //最后响应数据     
+            if (args.Socket != null && args.Socket.Connected)
+            {
                 context.Response.AddHeader(HeaderProperty.Server, ServerName);
                 context.Response.SetStatus(sc);
                 args.Socket.Send(context.Response.GetBuffer());
@@ -179,7 +201,7 @@ namespace Mozi.HttpEmbedded
         /// <returns></returns>
         private StatusCode HandleAuth(ref HttpContext context)
         {
-            var authorization = context.Request.Headers.GetValue(HeaderProperty.Authorization.PropertyTag);
+            var authorization = context.Request.Headers.GetValue(HeaderProperty.Authorization.PropertyName);
             if (!string.IsNullOrEmpty(authorization) && Auth.Check(authorization))
             {
                 return HandleRequest(ref context);
@@ -219,7 +241,7 @@ namespace Mozi.HttpEmbedded
                     //响应静态文件
                     if (st.Exists(path, ""))
                     {               
-                        string ifmodifiedsince =context.Request.Headers.GetValue(HeaderProperty.IfModifiedSince.PropertyTag);
+                        string ifmodifiedsince =context.Request.Headers.GetValue(HeaderProperty.IfModifiedSince.PropertyName);
                         if (st.CheckIfModified(path, ifmodifiedsince))
                         {
                             DateTime dtModified = st.GetLastModified(path).ToUniversalTime();
@@ -507,7 +529,7 @@ namespace Mozi.HttpEmbedded
         /// <param name="fileSize"></param>
         public void SetMaxFileSize(long fileSize)
         {
-            _maxFileSize = File;
+            _maxFileSize = fileSize;
         }
         /// <summary>
         /// 设置首页

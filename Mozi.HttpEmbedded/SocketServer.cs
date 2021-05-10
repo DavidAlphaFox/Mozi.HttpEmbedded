@@ -150,7 +150,7 @@ namespace Mozi.HttpEmbedded
         /// 接收数据回调
         /// </summary>
         /// <param name="iar"></param>
-        protected void CallbackReceive(IAsyncResult iar)
+        internal void CallbackReceive(IAsyncResult iar)
         {
             StateObject so = (StateObject)iar.AsyncState;
             Socket client = so.WorkSocket;
@@ -190,8 +190,10 @@ namespace Mozi.HttpEmbedded
                         Data = so.Data.ToArray(),
                         IP = so.IP,
                         Port = so.RemotePort,
-                        Socket = so.WorkSocket
-                 },null,null);
+                        Socket = so.WorkSocket,
+                        Client=client,
+                        State=so
+                    }, null, null) ;
             }
         }
         //TODO 此处开启Socket状态监听，对断开的链接进行关闭销毁
