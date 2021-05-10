@@ -55,7 +55,7 @@ namespace Mozi.HttpEmbedded
         public static HeaderProperty IfUnmodifiedSince=new HeaderProperty("If-Unmodified-Since");                               // 			
         public static HeaderProperty LastEventID=new HeaderProperty("Last-Event-ID");                                           // 	给出服务器在先前HTTP连接上接收的最后事件的ID。用于同步文本/事件流。 	Server-Sent Events 	Server-Sent Events spec
         public static HeaderProperty LastModified=new HeaderProperty("Last-Modified");                                          // 		HTTP Caching FAQ 	
-        public static HeaderProperty Link=new HeaderProperty("Link");// 	
+        public static HeaderProperty Link=new HeaderProperty("Link");                                                           // 	
 
         //等同于HTML标签中的"link"，但它是在HTTP层上，给出一个与获取的资源相关的URL以及关系的种类。
 	
@@ -64,15 +64,15 @@ namespace Mozi.HttpEmbedded
 	
 
         //Introduced in HTTP 1.1's RFC 2068, section 19.6.2.4, it was removed in the final HTTP 1.1 spec, then reintroduced, with some extensions, in RFC 5988
-        public static HeaderProperty Location=new HeaderProperty("Location");// 			
-        public static HeaderProperty MaxForwards=new HeaderProperty("Max-Forwards");// 			
-        public static HeaderProperty Negotiate=new HeaderProperty("Negotiate");// 		HTTP Content Negotiation 	RFC 2295, §8.4
-        public static HeaderProperty Origin=new HeaderProperty("Origin");// 		HTTP Access Control and Server Side Access Control 	More recently defined in the Fetch spec (see Fetch API.) Originally defined in W3C Cross-Origin Resource Sharing
-        public static HeaderProperty Pragma=new HeaderProperty("Pragma");// 		for the pragma: nocache value see HTTP Caching FAQ 	
-        public static HeaderProperty ProxyAuthenticate=new HeaderProperty("Proxy-Authenticate");// 			
-        public static HeaderProperty ProxyAuthorization=new HeaderProperty("Proxy-Authorization");// 			
-        public static HeaderProperty Range=new HeaderProperty("Range");// 			
-        public static HeaderProperty Referer=new HeaderProperty("Referer");// 	
+        public static HeaderProperty Location=new HeaderProperty("Location");                                                   // 			
+        public static HeaderProperty MaxForwards=new HeaderProperty("Max-Forwards");                                            // 			
+        public static HeaderProperty Negotiate=new HeaderProperty("Negotiate");                                                 // 		HTTP Content Negotiation 	RFC 2295, §8.4
+        public static HeaderProperty Origin=new HeaderProperty("Origin");                                                       // 		HTTP Access Control and Server Side Access Control 	More recently defined in the Fetch spec (see Fetch API.) Originally defined in W3C Cross-Origin Resource Sharing
+        public static HeaderProperty Pragma=new HeaderProperty("Pragma");                                                       // 		for the pragma: nocache value see HTTP Caching FAQ 	
+        public static HeaderProperty ProxyAuthenticate=new HeaderProperty("Proxy-Authenticate");                                // 			
+        public static HeaderProperty ProxyAuthorization=new HeaderProperty("Proxy-Authorization");                              // 			
+        public static HeaderProperty Range=new HeaderProperty("Range");                                                         // 			
+        public static HeaderProperty Referer=new HeaderProperty("Referer");                                                     // 	
 
         //（请注意，在HTTP / 0.9规范中引入的正交错误必须在协议的后续版本中保留）
 		

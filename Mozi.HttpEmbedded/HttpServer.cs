@@ -11,7 +11,7 @@ namespace Mozi.HttpEmbedded
     //TODO 2020/09/19 增加WebService功能
     //TODO 2020/09/28 增加信号量机制
     //TODO 2021/05/05 实现HTTPS功能
-    //TODO 2021/05/05 实现管道机制pipelining
+    //TODO 2021/05/05 实现管道机制pipelining 即同一TCP链接允许发起多个HTTP请求 HTTP/1.1
     //TODO 2021/05/07 增加分块传输 chunked
 
     /// <summary>
@@ -26,7 +26,7 @@ namespace Mozi.HttpEmbedded
 
         private int _port=80;
         private int _iporthttps = 443;
-
+        private long _maxFileSize = 10 * 1024 * 1024;
         private string _serverName = "HttpEmbedded";
 
         //允许和公开的方法
@@ -63,6 +63,10 @@ namespace Mozi.HttpEmbedded
         /// 压缩选项
         /// </summary>
         public CompressOption ZipOption { get; private set; }
+        /// <summary>
+        /// 最大接收文件大小 默认10Mb
+        /// </summary>
+        public long MaxFileSize { get { return _maxFileSize; } private set { _maxFileSize = value; }
         /// <summary>
         /// 服务端口
         /// </summary>
@@ -109,17 +113,26 @@ namespace Mozi.HttpEmbedded
             _sc.AfterReceiveEnd += _sc_AfterReceiveEnd;
             _sc.AfterServerStop += _sc_AfterServerStop;
         }
-
-        void _sc_AfterServerStop(object sender, ServerArgs args)
-        {
-            
-        }
-
+        /// <summary>
+        /// 服务器启动事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
         void _sc_OnReceiveStart(object sender, DataTransferArgs args)
         {
            
         }
+        /// <summary>
+        /// 服务器关闭事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        void _sc_AfterServerStop(object sender, ServerArgs args)
+        {
+            
+        }
         //TODO 响应码处理有问题
+        //TODO 此处应判断Content-Length然后继续读流
         /// <summary>
         /// 响应请求
         /// </summary>
@@ -133,6 +146,8 @@ namespace Mozi.HttpEmbedded
             try
             {
                 context.Request = HttpRequest.Parse(args.Data);
+                //TODO HTTP/1.1 通过Connection控制连接 服务器同时对连接进行监测 保证服务器效率
+                //如果有Transfer-Encoding:chunked，如果没有则判断Content-Length
                 if (!EnableAuth)
                 {
                     sc = HandleRequest(ref context);
@@ -152,7 +167,6 @@ namespace Mozi.HttpEmbedded
                 context.Response.AddHeader(HeaderProperty.Server, ServerName);
                 context.Response.SetStatus(sc);
                 args.Socket.Send(context.Response.GetBuffer());
-                //TODO HTTP/1.1 通过Connection控制连接 服务器同时对连接进行监测 保证服务器效率
                 args.Socket.Close(100);
             }
             GC.Collect();
@@ -478,7 +492,6 @@ namespace Mozi.HttpEmbedded
         {
             EnableAccessControl = enabled;
         }
-
         //TODO 实现访问黑名单 基于IP控制策略
         /// <summary>
         /// 检查访问黑名单
@@ -486,6 +499,14 @@ namespace Mozi.HttpEmbedded
         private bool CheckIfBlocked(string ipAddress)
         {
             return AccessManager.Instance.CheckBlackList(ipAddress);
+        }
+        /// <summary>
+        /// 设置最大接收文件大小
+        /// </summary>
+        /// <param name="fileSize"></param>
+        private void SetMaxFileSize(long fileSize)
+        {
+            _maxFileSize = File;
         }
         /// <summary>
         /// 关闭服务器

@@ -2,13 +2,27 @@
 using Mozi.HttpEmbedded.Page;
 using Mozi.SSDP;
 using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using Mozi.HttpEmbedded.Common;
 
 namespace Mozi.HttpEmbedded.Test
 {
+    public delegate void TaskExceptionThrowing(object sender, Exception ex);
+
     static class Program
     {
+        /// <summary>
+        /// 应用程序的主入口点。
+        /// </summary>
         static void Main(string[] args)
         {
+            
+            //AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+
+            //TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;
+
             HttpServer hs = new HttpServer();
             //配置端口并启动服务器
             hs.SetPort(9000).Start();
@@ -35,6 +49,42 @@ namespace Mozi.HttpEmbedded.Test
             //Service ser = new Service();
             //ser.Active();
             Console.ReadLine();
+        }
+
+        /// <summary>
+        /// Task异常
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        static void TaskScheduler_UnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs e)
+        {
+            e.SetObserved();
+            //DONE 对异常进行更详细的记录
+            Log.Save("error", "[TASK]" + e.Exception.Message + Environment.NewLine + (e.Exception.StackTrace ?? ""));
+        }
+
+        static void Application_ThreadExit(object sender, EventArgs e)
+        {
+            Log.Save("error", "程序退出");
+        }
+        /// <summary>
+        /// 跨线程调用异常处理
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            Log.Save("error", e.ExceptionObject.ToString());
+        }
+        /// <summary>
+        /// 主线程未处理异常 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        static void Application_ThreadException(object sender, ThreadExceptionEventArgs e)
+        {
+            //DONE 对异常进行更详细的记录
+            Log.Save("error", e.Exception.Message + Environment.NewLine + (e.Exception.StackTrace ?? ""));
         }
     }
 }

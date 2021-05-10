@@ -13,7 +13,7 @@ namespace Mozi.HttpEmbedded.Common
     {
         private static readonly string LogDir = AppDomain.CurrentDomain.BaseDirectory + @"Log\";
 
-        private static ReaderWriterLockSlim _writeLock = new ReaderWriterLockSlim();
+        private static readonly ReaderWriterLockSlim _writeLock = new ReaderWriterLockSlim();
         /// <summary>
         /// 默认日志文件扩展名
         /// </summary>
