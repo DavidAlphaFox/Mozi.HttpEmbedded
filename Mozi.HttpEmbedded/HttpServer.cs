@@ -19,15 +19,16 @@ namespace Mozi.HttpEmbedded
     /// </summary>
     public class HttpServer
     {
-        
-        private readonly SocketServer _sc=new SocketServer();
 
+        private readonly SocketServer _sc=new SocketServer();
         private WebDav.DavServer _davserver;
 
         private int _port=80;
         private int _iporthttps = 443;
         private long _maxFileSize = 10 * 1024 * 1024;
         private string _serverName = "HttpEmbedded";
+
+        private string _indexPageMatchPattern = "index.html,index.htm";
 
         //允许和公开的方法
         private RequestMethod[] MethodAllow = new RequestMethod[] { RequestMethod.OPTIONS, RequestMethod.TRACE, RequestMethod.GET, RequestMethod.HEAD, RequestMethod.POST, RequestMethod.COPY, RequestMethod.PROPFIND, RequestMethod.LOCK, RequestMethod.UNLOCK };
@@ -147,7 +148,7 @@ namespace Mozi.HttpEmbedded
             {
                 context.Request = HttpRequest.Parse(args.Data);
                 //TODO HTTP/1.1 通过Connection控制连接 服务器同时对连接进行监测 保证服务器效率
-                //如果有Transfer-Encoding:chunked，如果没有则判断Content-Length
+                //判断Content-Length
                 if (!EnableAuth)
                 {
                     sc = HandleRequest(ref context);
@@ -504,9 +505,17 @@ namespace Mozi.HttpEmbedded
         /// 设置最大接收文件大小
         /// </summary>
         /// <param name="fileSize"></param>
-        private void SetMaxFileSize(long fileSize)
+        public void SetMaxFileSize(long fileSize)
         {
             _maxFileSize = File;
+        }
+        /// <summary>
+        /// 设置首页
+        /// </summary>
+        /// <param name="filePath"></param>
+        public void SetIndexPage(string pattern)
+        {
+            _indexPageMatchPattern = pattern;
         }
         /// <summary>
         /// 关闭服务器

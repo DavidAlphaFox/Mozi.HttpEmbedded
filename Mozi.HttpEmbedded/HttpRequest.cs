@@ -164,10 +164,10 @@ namespace Mozi.HttpEmbedded
             return req;
         }
 
+        //TODO 先判断包体是否经过压缩
         /// <summary>
         /// 解析请求体
         /// 区分Content-Type
-        /// //TODO 先判断包体是否经过压缩
         /// </summary>
         /// <param name="req"></param>
         /// <param name="data"></param>

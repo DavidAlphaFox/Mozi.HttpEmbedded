@@ -138,6 +138,7 @@ namespace Mozi.HttpEmbedded
             }
             return this;
         }
+        //TODO 2021/05/10 如果压缩介入，就要对包体进行压缩
         /// <summary>
         /// 从缓冲区中取出数据
         /// </summary>

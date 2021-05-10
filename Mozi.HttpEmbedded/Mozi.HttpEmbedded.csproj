@@ -151,6 +151,7 @@
     <Compile Include="WebService\SOAP.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Docment\DefaultHome.html" />
     <Content Include="Docment\Error.html" />
     <Content Include="Docment\ExamplePage.html" />
     <Content Include="Source\mime.data" />
