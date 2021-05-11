@@ -227,7 +227,7 @@ namespace Mozi.HttpEmbedded
             //分割 form-data
             int indBoundary=-1, indEnd=-1,indCR=-1,indFragFirst=0,indFragNext=0;
 
-            while (Array.IndexOf(data, ASCIICode.MINUS, indBoundary+1) >= 0)
+            while ((indBoundary + 1)<data.Length&&Array.IndexOf(data, ASCIICode.MINUS, indBoundary+1) >= 0)
             {
                 try
                 {
@@ -318,10 +318,11 @@ namespace Mozi.HttpEmbedded
                                 file.FileData = postField;
                                 file.FileIndex = req.Files.Length;
                                 req.Files.Append(file);
-                                FileStream fs =new FileStream(AppDomain.CurrentDomain.BaseDirectory + "\\" + file.FileName.ToString(),FileMode.OpenOrCreate);
-                                fs.Write(file.FileData, 0, file.FileData.Length);
-                                fs.Flush();
-                                fs.Dispose();
+                                //写入临时目录
+                                //FileStream fs =new FileStream(AppDomain.CurrentDomain.BaseDirectory  + file.FileName.ToString(),FileMode.OpenOrCreate);
+                                //fs.Write(file.FileData, 0, file.FileData.Length);
+                                //fs.Flush();
+                                //fs.Dispose();
                             }
                             else
                             {
@@ -332,7 +333,7 @@ namespace Mozi.HttpEmbedded
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Exception parse form-data:{0}",ex.Message);
+                    Console.WriteLine("Exception occurs while parsing multipart/form-data:{0}",ex.Message);
                 }
             }
         }

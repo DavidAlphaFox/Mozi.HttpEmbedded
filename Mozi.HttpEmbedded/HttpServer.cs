@@ -27,6 +27,10 @@ namespace Mozi.HttpEmbedded
         private int _port=80;
         private int _iporthttps = 443;
         private long _maxFileSize = 10 * 1024 * 1024;
+        private long _maxRequestSize = 10 * 1024 * 1024;
+
+        private string _tempPath = "";
+
         private string _serverName = "HttpEmbedded";
 
         private string _indexPageMatchPattern = "index.html,index.htm";
@@ -69,6 +73,7 @@ namespace Mozi.HttpEmbedded
         /// 最大接收文件大小 默认10Mb
         /// </summary>
         public long MaxFileSize { get { return _maxFileSize; } private set { _maxFileSize = value; } }
+        public long MaxRequestSize { get { return _maxRequestSize; } private set { _maxRequestSize = value; } }
         /// <summary>
         /// 服务端口
         /// </summary>
@@ -103,6 +108,14 @@ namespace Mozi.HttpEmbedded
         {
             get { return _serverName; }
             private set { _serverName = value; }
+        }
+        /// <summary>
+        /// 临时文件目录
+        /// </summary>
+        public string TempPath
+        {
+            get { return _tempPath; }
+            private set { _tempPath = value; }
         }
         public HttpServer()
         {
@@ -149,20 +162,20 @@ namespace Mozi.HttpEmbedded
                 context.Request = HttpRequest.Parse(args.Data);
                 //TODO HTTP/1.1 通过Connection控制连接 服务器同时对连接进行监测 保证服务器效率
                 //TODO 此处应判断Content-Length然后继续读流
-                long contentLength = 0;
+                long contentLength = -1;
                 if (context.Request.Headers.Contains(HeaderProperty.ContentLength.PropertyName)){
 
                     var propContentLength = context.Request.Headers.GetValue(HeaderProperty.ContentLength.PropertyName);
                     contentLength = int.Parse(propContentLength);
 
                 } 
-                if (contentLength == 0 || contentLength <= context.Request.Body.Length)
+                if (contentLength == -1 || contentLength <= context.Request.Body.Length)
                 {
 
-                }else{
+                } else {
                        //TODO 此处是否会形成死循环
                        //继续读流
-                       //args.Socket.BeginReceive(args.State.Buffer, 0, args.State.Buffer.Length, SocketFlags.None, _sc.CallbackReceive, args.State);
+                       args.Socket.BeginReceive(args.State.Buffer, 0, args.State.Buffer.Length, SocketFlags.None, _sc.CallbackReceive, args.State);
                        return;
                 }
 
@@ -185,7 +198,7 @@ namespace Mozi.HttpEmbedded
 
             }
             //最后响应数据     
-            if (args.Socket != null && args.Socket.Connected)
+            //if (args.Socket != null && args.Socket.Connected)
             {
                 context.Response.AddHeader(HeaderProperty.Server, ServerName);
                 context.Response.SetStatus(sc);
@@ -530,6 +543,22 @@ namespace Mozi.HttpEmbedded
         public void SetMaxFileSize(long fileSize)
         {
             _maxFileSize = fileSize;
+        }
+        /// <summary>
+        /// 设置最大请求大小
+        /// </summary>
+        /// <param name="size"></param>
+        public void SetMaxRequestSize(long size)
+        {
+            _maxRequestSize = size;
+        }
+        /// <summary>
+        /// 设置临时文件目录
+        /// </summary>
+        /// <param name="path"></param>
+        public void SetTempPath(string path)
+        {
+            _tempPath = path;
         }
         /// <summary>
         /// 设置首页

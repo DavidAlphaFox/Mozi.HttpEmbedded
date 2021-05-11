@@ -29,8 +29,10 @@ namespace Mozi.HttpEmbedded.Page
         /// 路由配置，内置2个默认
         /// </summary>
         private readonly List<RouteMapper> _mappers = new List<RouteMapper>() { 
+
             new RouteMapper() { Pattern = "/{controller}/{action}" },
             new RouteMapper() { Pattern = "/{controller}.{action}" } 
+        
         };
 
         public static Router Default
