@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Text;
 using Mozi.HttpEmbedded.Cookie;
 using Mozi.HttpEmbedded.Encode;
@@ -121,7 +120,7 @@ namespace Mozi.HttpEmbedded
         public static HttpRequest Parse(byte[] data)
         {
             HttpRequest req = new HttpRequest() {PackedData = data};
-            //解析头 判断头部压缩
+            //解析头
             int posCR = 0;
             int posCaret = 0;
             int count = 0;
@@ -152,9 +151,16 @@ namespace Mozi.HttpEmbedded
                 posCaret = posCR+2;
                 index++;
             }
+
+            //头部信息分解
+            //HOST
+            ParseHost(ref req);
+            //UserAgetn
+            ParseUserAgent(ref req);
             //解析Cookie
             ParseCookie(ref req);
-            //解析数据
+            //TODO 此处是否需要分辨GET/POST
+            //解析数据 荷载部分
             if (data.Length > posCR + 4)
             {
                 req.Body=new byte[data.Length-(posCR+4)];
@@ -212,7 +218,6 @@ namespace Mozi.HttpEmbedded
             string[] values=contentType.Split(new[]{(char)ASCIICode.SEMICOLON}, StringSplitOptions.RemoveEmptyEntries);
 
             //取得分割符号boundary
-
             foreach (var s in values)
             {
                 if (s.Trim().StartsWith("boundary"))
@@ -240,7 +245,7 @@ namespace Mozi.HttpEmbedded
 
                     for (int i = 0; i < bBound.Length; i++)
                     {
-                        if ((data.Length>=indBoundary+bBound.Length)&&data[indBoundary + i + 2] != bBound[i])
+                        if ((data.Length>=indBoundary+bBound.Length)&&data.Length>=(indBoundary + i+2-1)&&data[indBoundary + i + 2] != bBound[i])
                         {
                             isFragStart = false;
                         }
@@ -269,7 +274,7 @@ namespace Mozi.HttpEmbedded
                         string fieldName = string.Empty;
                         string fileName = string.Empty;
 
-                        while (Array.IndexOf(fragbody, ASCIICode.CR, posCR + 1) > 0)
+                        while ((posCR+1)<fragbody.Length&&Array.IndexOf(fragbody, ASCIICode.CR, posCR + 1) > 0)
                         {
                             posCR = Array.IndexOf(fragbody, ASCIICode.CR, posCR + 1);
                             //连续两个CR
@@ -284,7 +289,7 @@ namespace Mozi.HttpEmbedded
                                     //Content-Disposition: form-data; name="fieldNameHere"; filename="fieldName.ext"
                                     string disposition = StringEncoder.Decode(fragement);
 
-                                    string[] headers = disposition.Split(new[] {(char) ASCIICode.SEMICOLON},StringSplitOptions.RemoveEmptyEntries);
+                                    string[] headers = disposition.Split(new[] { ((char)ASCIICode.SEMICOLON).ToString()+((char)ASCIICode.SPACE).ToString() },StringSplitOptions.RemoveEmptyEntries);
                                     fieldName = headers[1].Trim().Replace("name=","").Trim((char)ASCIICode.QUOTE);
 
                                     if (headers.Length > 2)
@@ -314,9 +319,10 @@ namespace Mozi.HttpEmbedded
 
                             if (isFile)
                             {
-                                file.FileName = fileName;
+                                file.FileName = HtmlEncoder.EntityCodeToString(fileName);
                                 file.FileData = postField;
                                 file.FileIndex = req.Files.Length;
+                                file.FieldName = fieldName;
                                 req.Files.Append(file);
                                 //写入临时目录
                                 //FileStream fs =new FileStream(AppDomain.CurrentDomain.BaseDirectory  + file.FileName.ToString(),FileMode.OpenOrCreate);
@@ -363,7 +369,24 @@ namespace Mozi.HttpEmbedded
                 Console.WriteLine("{0}:{1}",hp.PropertyTag,hp.PropertyValue);
             #endif
         }
-
+        /// <summary>
+        /// 解析UserAgent
+        /// </summary>
+        /// <param name="req"></param>
+        private static void ParseUserAgent(ref HttpRequest req)
+        {
+            if (req.Headers.Contains(HeaderProperty.UserAgent.PropertyName))
+            {
+                req.UserAgent =req.Headers.GetValue(HeaderProperty.UserAgent.PropertyName);
+            }
+        }
+        private static void ParseHost(ref HttpRequest req)
+        {
+            if (req.Headers.Contains(HeaderProperty.Host.PropertyName))
+            {
+                req.Host = req.Headers.GetValue(HeaderProperty.Host.PropertyName);
+            }
+        }
         /// <summary>
         /// 解析Cookie
         /// </summary>
@@ -407,7 +430,7 @@ namespace Mozi.HttpEmbedded
             req.Protocol = AbsClassEnum.Get<ProtocolType>(sProtoType);
             req.ProtocolVersion = AbsClassEnum.Get<HttpVersion>(sProtoVersion);
         }
-        //TODO 此功能需要重试
+        //TODO 此功能需要重试以进行验证
         /// <summary>
         /// 将数据重播
         /// </summary>
@@ -416,7 +439,7 @@ namespace Mozi.HttpEmbedded
         {
             List<byte> data = new List<byte>();
             //注入状态信息
-            data.AddRange(GetStatusLine());
+            data.AddRange(GetFirstLine());
             data.AddRange(TransformHeader.Carriage);
             //注入默认头部
             data.AddRange(Headers.GetBuffer());
@@ -432,7 +455,7 @@ namespace Mozi.HttpEmbedded
         /// 响应状态
         /// </summary>
         /// <returns></returns>
-        public byte[] GetStatusLine()
+        public byte[] GetFirstLine()
         {
             return StringEncoder.Encode(string.Format("{0} {1} HTTP/{2}", Method.Name,Path, ProtocolVersion.Version));
         }

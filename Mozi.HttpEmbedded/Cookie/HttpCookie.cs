@@ -124,7 +124,11 @@ namespace Mozi.HttpEmbedded.Cookie
                 _data.Add(name,value);
             }
         }
-
+        /// <summary>
+        /// Ω‚Œˆ«Î«ÛCookie
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
         public static RequestCookie Parse(string data)
         {
             RequestCookie hc = new RequestCookie();

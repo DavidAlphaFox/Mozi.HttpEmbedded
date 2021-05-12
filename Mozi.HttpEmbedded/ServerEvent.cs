@@ -48,4 +48,15 @@ namespace Mozi.HttpEmbedded
              Data = null;
         }
      }
+     /// <summary>
+     /// 客户端访问
+     /// </summary>
+     public class ClientAccessArgs : EventArgs
+     {
+        public string Path  { get; set; }
+        public string Query { get; set; }
+        public string IP { get; set; }
+        public int StatusCode { get; set; }
+        public string Message { get; set; }
+     }
 }

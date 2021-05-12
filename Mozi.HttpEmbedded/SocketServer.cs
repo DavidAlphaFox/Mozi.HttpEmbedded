@@ -6,6 +6,7 @@ namespace Mozi.HttpEmbedded
 {
     //TODO 加入定时器并利用POLL判断远端是否断开
     //TODO 实现链接复用
+    //TODO 解决接收文件内存占用过大，无法及时释放的问题
     /// <summary>
     /// 异步单线程
     /// </summary>

@@ -70,6 +70,7 @@
     <Compile Include="Cert\TransmitionCryptType.cs" />
     <Compile Include="Common\UrlTree.cs" />
     <Compile Include="Cookie\CookieManager.cs" />
+    <Compile Include="Encode\HtmlEncoder.cs" />
     <Compile Include="Page\SystemApi.cs" />
     <Compile Include="Serialize\ISerializer.cs" />
     <Compile Include="Encode\UrlEncoder.cs" />
