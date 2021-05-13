@@ -21,6 +21,13 @@ namespace Mozi.HttpEmbedded.Page
 
         public PageCreator LoadFromStream(Stream stream)
         {
+            Prepare();
+            return this;
+        }
+        public PageCreator Prepare()
+        {
+            InjectGlobal();
+            InjectValues();
             return this;
         }
         /// <summary>
@@ -38,6 +45,16 @@ namespace Mozi.HttpEmbedded.Page
         public PageCreator InjectValues()
         {
             return null;
+        }
+
+        public byte[] GetBuffer()
+        {
+            return new byte[]{ };
+        }
+
+        public string GetPage()
+        {
+            return "";
         }
     }
 }

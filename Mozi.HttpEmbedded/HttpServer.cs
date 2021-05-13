@@ -4,6 +4,7 @@ using Mozi.HttpEmbedded.Auth;
 using Mozi.HttpEmbedded.Cert;
 using Mozi.HttpEmbedded.Common;
 using Mozi.HttpEmbedded.Compress;
+using Mozi.HttpEmbedded.Docment;
 using Mozi.HttpEmbedded.Page;
 using Mozi.HttpEmbedded.Source;
 
@@ -161,7 +162,8 @@ namespace Mozi.HttpEmbedded
             {
                 context.Request = HttpRequest.Parse(args.Data);
                 //TODO HTTP/1.1 通过Connection控制连接 服务器同时对连接进行监测 保证服务器效率
-                //TODO 此处应判断Content-Length然后继续读流
+                //DONE 此处应判断Content-Length然后继续读流
+                //TODO 如何解决文件传输内存占用过大的问题
                 long contentLength = -1;
                 if (context.Request.Headers.Contains(HeaderProperty.ContentLength.PropertyName)){
 
@@ -190,6 +192,14 @@ namespace Mozi.HttpEmbedded
             }
             catch (Exception ex)
             {
+                #region 测试片段，模板引擎开发好以后注释掉
+                string doc = DocLoader.Load("Error.html");
+                doc = doc.Replace("${Error.Code}", StatusCode.InternalServerError.Code.ToString());
+                doc=doc.Replace("${Error.Description}", ex.StackTrace ?? ex.StackTrace.ToString());
+                #endregion
+
+                context.Response.Write(doc);
+                context.Response.Headers.Add(HeaderProperty.ContentType, Mime.GetContentType("html"));
                 sc = StatusCode.InternalServerError;
                 Log.Error(ex.Message+":"+ex.StackTrace??"");
             }
@@ -198,7 +208,7 @@ namespace Mozi.HttpEmbedded
 
             }
             //最后响应数据     
-            //if (args.Socket != null && args.Socket.Connected)
+            if (args.Socket != null && args.Socket.Connected)
             {
                 context.Response.AddHeader(HeaderProperty.Server, ServerName);
                 context.Response.SetStatus(sc);
@@ -248,8 +258,14 @@ namespace Mozi.HttpEmbedded
                 //判断资源类型
                 bool isStatic = st.IsStatic(fileext);
                 context.Response.Headers.Add(HeaderProperty.ContentType, contenttype);
+                if (context.Request.Path == "/")
+                {
+                    context.Response.Write(DocLoader.Load("DefaultHome.html"));
+                    context.Response.Headers.Add(HeaderProperty.ContentType, Mime.GetContentType("html"));
+                    return StatusCode.Success;
+                }
                 //静态文件处理
-                if (st.Enabled && isStatic)
+                else if (st.Enabled && isStatic)
                 {
                     //响应静态文件
                     if (st.Exists(path, ""))
@@ -340,12 +356,7 @@ namespace Mozi.HttpEmbedded
             if (router.Match(context.Request.Path) != null)
             {
                 object result=null;
-                try
-                {
-                    result = router.Invoke(context);
-                }catch(Exception ex){
-
-                }
+                result = router.Invoke(context);
                 if (result != null)
                 {
                     context.Response.Write(result.ToString());

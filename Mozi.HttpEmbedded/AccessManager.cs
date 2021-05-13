@@ -9,7 +9,7 @@ namespace Mozi.HttpEmbedded
     {
         public static AccessManager _access;
 
-        private List<string> _blacklist = new List<string>();
+        private readonly List<string> _blacklist = new List<string>();
 
         public static AccessManager Instance
         {

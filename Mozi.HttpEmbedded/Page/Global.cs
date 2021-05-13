@@ -8,11 +8,51 @@ namespace Mozi.HttpEmbedded.Page
     /// </summary>
     public class Global
     {
-        public Dictionary<string,object> _data=new Dictionary<string, object>();
- 
-        public  Global Set()
+        private static Global _global;
+
+        private Dictionary<string, object> _data = new Dictionary<string, object>();
+
+        /// <summary>
+        /// 设置键值
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public Global Set(string key, object value)
         {
+            if (_data.ContainsKey(key))
+            {
+                _data[key] = value;
+            }
+            else
+            {
+                _data.Add(key, value);
+            }
             return this;
+        }
+        /// <summary>
+        /// 获取键值
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public object Get(string key)
+        {
+            return _data[key];
+        }
+        /// <summary>
+        /// 索引器
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public object this[string key]{
+            get
+            {
+                return Get(key);
+            }
+            set
+            {
+                Set(key, value);
+            }
         }
     }
 }

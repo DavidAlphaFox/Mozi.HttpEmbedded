@@ -206,6 +206,7 @@ namespace Mozi.HttpEmbedded
         {
              req.Post=UrlEncoder.ParseQuery(StringEncoder.Decode(data));
         }
+        //TODO 文件流应写入缓冲区
         /// <summary>
         /// 分析请求体 multipart/form-data
         /// </summary>

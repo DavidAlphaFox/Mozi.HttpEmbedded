@@ -70,6 +70,7 @@
     <Compile Include="Cert\TransmitionCryptType.cs" />
     <Compile Include="Common\UrlTree.cs" />
     <Compile Include="Cookie\CookieManager.cs" />
+    <Compile Include="Document\DocLoader.cs" />
     <Compile Include="Encode\HtmlEncoder.cs" />
     <Compile Include="Page\SystemApi.cs" />
     <Compile Include="Serialize\ISerializer.cs" />
@@ -152,9 +153,9 @@
     <Compile Include="WebService\SOAP.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Docment\DefaultHome.html" />
-    <Content Include="Docment\Error.html" />
-    <Content Include="Docment\ExamplePage.html" />
+    <EmbeddedResource Include="Document\DefaultHome.html" />
+    <EmbeddedResource Include="Document\Error.html" />
+    <EmbeddedResource Include="Document\ExamplePage.html" />
     <Content Include="Source\mime.data" />
     <Content Include="WebDav\Icon.png" />
   </ItemGroup>

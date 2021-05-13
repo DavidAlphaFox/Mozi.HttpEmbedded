@@ -10,6 +10,11 @@
         protected HttpResponse Response  { get; set; }
 
         protected HttpContext  Context   { get; set; }
+        /// <summary>
+        /// 重定向
+        /// </summary>
+        /// <param name="url"></param>
+        public abstract void RedirectTo(string url);
 
         public abstract void Get();
 
