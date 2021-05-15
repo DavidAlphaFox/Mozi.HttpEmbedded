@@ -15,7 +15,7 @@ namespace Mozi.HttpEmbedded
         /// <summary>
         /// 通讯头集合
         /// </summary>
-        private Dictionary<string, string> HeaderData = new Dictionary<string, string>(new StringCompareIgnoreCase())
+        private readonly Dictionary<string, string> HeaderData = new Dictionary<string, string>(new StringCompareIgnoreCase())
         {
 
         };

@@ -12,6 +12,7 @@ namespace Mozi.HttpEmbedded
     public class HttpResponse
     {
         private byte[] _body=new byte[0];
+        private string _contentType = "text/plain";
         /// <summary>
         /// 协议版本
         /// </summary>
@@ -23,7 +24,11 @@ namespace Mozi.HttpEmbedded
         /// <summary>
         /// 内容长度
         /// </summary>
-        public int ContengLength {  get  { return _body.Length; } }
+        public int ContentLength {  get  { return _body.Length; } }
+        /// <summary>
+        /// Mime类型
+        /// </summary>
+        public string ContentType { get { return _contentType; } private set { _contentType = value; } }
         /// <summary>
         /// 请求头
         /// </summary>
@@ -59,9 +64,15 @@ namespace Mozi.HttpEmbedded
         /// 设置状态
         /// </summary>
         /// <param name="status"></param>
-        public void SetStatus(StatusCode status)
+        public HttpResponse SetStatus(StatusCode status)
         {
             Status = status;
+            return this;
+        }
+        public HttpResponse SetContentType(string contentType)
+        {
+            _contentType = contentType;
+            return this;
         }
         /// <summary>
         /// 增加头部信息
@@ -156,6 +167,8 @@ namespace Mozi.HttpEmbedded
             data.AddRange(TransformHeader.Carriage);
             //注入包体大小 字节长度
             AddHeader(HeaderProperty.ContentLength, _body.Length.ToString());
+            //注入文档类型
+            AddHeader(HeaderProperty.ContentType, _contentType);
             //注入响应时间
             AddHeader(HeaderProperty.Date, DateTime.Now.ToUniversalTime().ToString("r"));
             //注入默认头部

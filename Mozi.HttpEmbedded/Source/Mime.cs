@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using Mozi.HttpEmbedded.Generic;
 
 namespace Mozi.HttpEmbedded.Source
@@ -459,9 +460,14 @@ namespace Mozi.HttpEmbedded.Source
                 return Types[ext];
             }
         }
+        public static bool IsMedia(string contentType)
+        {
+            Regex reg = new Regex("^(image|video|audio)/.*$");
+            return reg.IsMatch(contentType);
+        }
         /// <summary>
-        /// 默认为HTML
+        /// 默认为application/octet-stream
         /// </summary>
-        public const string Default = "text/html";
+        public const string Default = "application/octet-stream";
     }
 }

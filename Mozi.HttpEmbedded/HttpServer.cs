@@ -216,7 +216,7 @@ namespace Mozi.HttpEmbedded
                     #endregion
 
                     context.Response.Write(doc);
-                    context.Response.Headers.Add(HeaderProperty.ContentType, Mime.GetContentType("html"));
+                    context.Response.SetContentType(Mime.GetContentType("html"));
                     sc = StatusCode.InternalServerError;
                     Log.Error(ex.Message + ":" + ex.StackTrace ?? "");
                 }
@@ -233,7 +233,8 @@ namespace Mozi.HttpEmbedded
 
                 //处理压缩
                 var body = context.Response.Body;
-                if (EnableCompress)
+                //跳过对媒体类型的压缩
+                if (EnableCompress && !Mime.IsMedia(context.Response.ContentType))
                 {
                     if (body.Length > ZipOption.MinContentLenght)
                     {
@@ -288,13 +289,13 @@ namespace Mozi.HttpEmbedded
                 string contenttype = Mime.GetContentType(fileext);
                 //判断资源类型
                 bool isStatic = st.IsStatic(fileext);
-                context.Response.Headers.Add(HeaderProperty.ContentType, contenttype);
+                context.Response.SetContentType(contenttype);
                 if (context.Request.Path == "/")
                 {
                     var doc = DocLoader.Load("DefaultHome.html");
                     doc = doc.Replace("${Info.VersionName}", System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());
                     context.Response.Write(doc);
-                    context.Response.Headers.Add(HeaderProperty.ContentType, Mime.GetContentType("html"));
+                    context.Response.SetContentType(Mime.GetContentType("html"));
                     return StatusCode.Success;
                 }
                 //静态文件处理
@@ -323,7 +324,7 @@ namespace Mozi.HttpEmbedded
                 else
                 {
                     //动态页面默认ContentType为txt/plain
-                    context.Response.Headers.Add(HeaderProperty.ContentType, Mime.GetContentType("txt"));
+                    context.Response.SetContentType(Mime.GetContentType("txt"));
                     //响应动态页面
                     return HandleRequestRoutePages(ref context);
                 }
