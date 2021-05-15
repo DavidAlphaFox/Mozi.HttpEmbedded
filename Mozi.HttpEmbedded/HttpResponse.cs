@@ -111,6 +111,11 @@ namespace Mozi.HttpEmbedded
             Write(StringEncoder.Encode(data));
             return this;
         }
+
+        internal void CompressBody(byte[] body)
+        {
+            _body = body;
+        }
         //TODO 此处需要调试
         /// <summary>
         /// 发送文件

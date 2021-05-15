@@ -230,6 +230,19 @@ namespace Mozi.HttpEmbedded
             {
                 context.Response.AddHeader(HeaderProperty.Server, ServerName);
                 context.Response.SetStatus(sc);
+
+                //处理压缩
+                var body = context.Response.Body;
+                if (EnableCompress)
+                {
+                    if (body.Length > ZipOption.MinContentLenght)
+                    {
+                        body = GZip.Compress(body);
+                        context.Response.CompressBody(body);
+                        context.Response.AddHeader(HeaderProperty.ContentEncoding, "gzip");
+                    }
+                }
+
                 args.Socket.Send(context.Response.GetBuffer());
                 args.Socket.Close(100);
             }
@@ -430,18 +443,20 @@ namespace Mozi.HttpEmbedded
         /// <returns></returns>
         public HttpServer SetUser(string userName, string userPassword)
         {
-            Auth.SetUser(userName, userName);
+            Auth.SetUser(userName, userPassword);
             return this;
         }
         //TODO 进一步实现GZIP的控制逻辑
         /// <summary>
         /// 启用Gzip
         /// </summary>
+        /// <param name="option">此处设置CompressType无效，默认会被设置为<see cref="E:ContentEncoding.Gzip"/></param>
         /// <returns></returns>
         public HttpServer UseGzip(CompressOption option)
         {
             EnableCompress = true;
             ZipOption = option;
+            ZipOption.CompressType = ContentEncoding.Gzip;
             return this;
         }
 

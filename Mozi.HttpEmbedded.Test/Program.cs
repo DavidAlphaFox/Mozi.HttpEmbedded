@@ -33,6 +33,11 @@ namespace Mozi.HttpEmbedded.Test
             //开启静态文件支持
             hs.UseStaticFiles("");
 
+            //开启文件压缩
+            hs.UseGzip(new Compress.CompressOption() { 
+                MinContentLenght=1024,
+                CompressLevel=2
+            });
             //程序集注入
             //1,此方法会扫描程序集内继承自BaseApi或属性标记为[BasicApi]的类
             //2,Http通讯数据标准默认为xml,使用Router.Default.SetDataSerializer(ISerializer ser)更改序列化类型
