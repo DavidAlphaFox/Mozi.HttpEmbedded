@@ -207,16 +207,33 @@ namespace Mozi.HttpEmbedded
              req.Post=UrlEncoder.ParseQuery(StringEncoder.Decode(data));
         }
         //TODO 文件流应写入缓冲区
+        //TODO 此处仅能解析一个文件，继续修改代码
         /// <summary>
         /// 分析请求体 multipart/form-data
         /// </summary>
         /// <param name="req"></param>
         /// <param name="data"></param>
+        /// <example>
+        /// <code>
+        ///   --{boundary}
+        ///   Content-Disposition: form-data; name="{file.fieldname}"; filename="{file.name}"
+        ///   Content-Type: application/octet-stream
+        ///   
+        ///   {file.binary}
+        ///   
+        ///   {boundary}
+        ///   Content-Disposition: form-data; name="{file.fieldname}"; filename="{file.name}"
+        ///   Content-Type: application/octet-stream
+        ///   {file.binary}
+        ///   
+        ///   {boundary}--
+        /// </code>
+        /// </example>
         private static void ParsePayloadFormData(ref HttpRequest req, byte[] data)
         {
             string contentType =req.Headers.GetValue(HeaderProperty.ContentType.PropertyName);
             string boundary = "";
-            string[] values=contentType.Split(new[]{(char)ASCIICode.SEMICOLON}, StringSplitOptions.RemoveEmptyEntries);
+            string[] values=contentType.Split(new[] { ((char)ASCIICode.SEMICOLON).ToString() + ((char)ASCIICode.SPACE).ToString() }, StringSplitOptions.RemoveEmptyEntries);
 
             //取得分割符号boundary
             foreach (var s in values)

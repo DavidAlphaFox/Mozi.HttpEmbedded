@@ -46,6 +46,7 @@ namespace Mozi.HttpEmbedded
         //HTTPS开启标识
         private bool _httpsEnabled = false;
 
+        public DateTime StartTime { get; set; }
         /// <summary>
         /// 支持的HTTP服务协议版本
         /// </summary>
@@ -120,6 +121,7 @@ namespace Mozi.HttpEmbedded
         }
         public HttpServer()
         {
+            StartTime = DateTime.MinValue;
             //配置默认服务器名
             _serverName = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name+ "/" + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
             Auth =new Authenticator();
@@ -158,54 +160,70 @@ namespace Mozi.HttpEmbedded
             HttpContext context=new HttpContext();
             context.Response=new HttpResponse();
             StatusCode sc = StatusCode.Success;
-            try
+            //如果启用了访问IP黑名单控制
+            if (EnableAccessControl && CheckIfBlocked(args.IP))
             {
-                context.Request = HttpRequest.Parse(args.Data);
-                //TODO HTTP/1.1 通过Connection控制连接 服务器同时对连接进行监测 保证服务器效率
-                //DONE 此处应判断Content-Length然后继续读流
-                //TODO 如何解决文件传输内存占用过大的问题
-                long contentLength = -1;
-                if (context.Request.Headers.Contains(HeaderProperty.ContentLength.PropertyName)){
-
-                    var propContentLength = context.Request.Headers.GetValue(HeaderProperty.ContentLength.PropertyName);
-                    contentLength = int.Parse(propContentLength);
-
-                } 
-                if (contentLength == -1 || contentLength <= context.Request.Body.Length)
-                {
-
-                } else {
-                       //TODO 此处是否会形成死循环
-                       //继续读流
-                       args.Socket.BeginReceive(args.State.Buffer, 0, args.State.Buffer.Length, SocketFlags.None, _sc.CallbackReceive, args.State);
-                       return;
-                }
-
-                if (!EnableAuth)
-                {
-                    sc = HandleRequest(ref context);
-                }
-                else
-                {
-                    sc = HandleAuth(ref context);
-                }
+                sc = StatusCode.Forbidden;
             }
-            catch (Exception ex)
+            else
             {
-                #region 测试片段，模板引擎开发好以后注释掉
-                string doc = DocLoader.Load("Error.html");
-                doc = doc.Replace("${Error.Code}", StatusCode.InternalServerError.Code.ToString());
-                doc=doc.Replace("${Error.Description}", ex.StackTrace ?? ex.StackTrace.ToString());
-                #endregion
+                try
+                {
+                    context.Request = HttpRequest.Parse(args.Data);
+                    //TODO HTTP/1.1 通过Connection控制连接 服务器同时对连接进行监测 保证服务器效率
+                    //DONE 此处应判断Content-Length然后继续读流
+                    //TODO 如何解决文件传输内存占用过大的问题
+                    long contentLength = -1;
+                    if (context.Request.Headers.Contains(HeaderProperty.ContentLength.PropertyName))
+                    {
 
-                context.Response.Write(doc);
-                context.Response.Headers.Add(HeaderProperty.ContentType, Mime.GetContentType("html"));
-                sc = StatusCode.InternalServerError;
-                Log.Error(ex.Message+":"+ex.StackTrace??"");
-            }
-            finally
-            {                
+                        var propContentLength = context.Request.Headers.GetValue(HeaderProperty.ContentLength.PropertyName);
+                        contentLength = int.Parse(propContentLength);
 
+                    }
+                    if (contentLength == -1 || contentLength <= context.Request.Body.Length)
+                    {
+
+                    }
+                    else
+                    {
+                        //TODO 此处是否会形成死循环
+                        //继续读流
+                        args.Socket.BeginReceive(args.State.Buffer, 0, args.State.Buffer.Length, SocketFlags.None, _sc.CallbackReceive, args.State);
+                        return;
+                    }
+
+                    if (!EnableAuth)
+                    {
+                        sc = HandleRequest(ref context);
+                    }
+                    else
+                    {
+                        sc = HandleAuth(ref context);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    #region 测试片段，模板引擎开发好以后注释掉
+
+                    string doc = DocLoader.Load("Error.html");
+                    doc = doc.Replace("${Error.Code}", StatusCode.InternalServerError.Code.ToString());
+                    doc = doc.Replace("${Error.Title}", StatusCode.InternalServerError.Text);
+                    doc = doc.Replace("${Error.Time}", DateTime.Now.ToString("r"));
+                    doc = doc.Replace("${Error.Description}", ex.Message);
+                    doc = doc.Replace("${Error.Source}", ex.StackTrace ?? ex.StackTrace.ToString());
+
+                    #endregion
+
+                    context.Response.Write(doc);
+                    context.Response.Headers.Add(HeaderProperty.ContentType, Mime.GetContentType("html"));
+                    sc = StatusCode.InternalServerError;
+                    Log.Error(ex.Message + ":" + ex.StackTrace ?? "");
+                }
+                finally
+                {
+
+                }
             }
             //最后响应数据     
             if (args.Socket != null && args.Socket.Connected)
@@ -260,7 +278,9 @@ namespace Mozi.HttpEmbedded
                 context.Response.Headers.Add(HeaderProperty.ContentType, contenttype);
                 if (context.Request.Path == "/")
                 {
-                    context.Response.Write(DocLoader.Load("DefaultHome.html"));
+                    var doc = DocLoader.Load("DefaultHome.html");
+                    doc = doc.Replace("${Info.VersionName}", System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());
+                    context.Response.Write(doc);
                     context.Response.Headers.Add(HeaderProperty.ContentType, Mime.GetContentType("html"));
                     return StatusCode.Success;
                 }
@@ -529,6 +549,7 @@ namespace Mozi.HttpEmbedded
         /// </summary>
         public void Start()
         {
+            StartTime = DateTime.Now;
             _sc.StartServer(_port);
         }
         /// <summary>
@@ -539,7 +560,7 @@ namespace Mozi.HttpEmbedded
         {
             EnableAccessControl = enabled;
         }
-        //TODO 实现访问黑名单 基于IP控制策略
+        //DONE 实现访问黑名单 基于IP控制策略
         /// <summary>
         /// 检查访问黑名单
         /// </summary>
@@ -547,6 +568,7 @@ namespace Mozi.HttpEmbedded
         {
             return AccessManager.Instance.CheckBlackList(ipAddress);
         }
+        //TODO 此处未实现控制
         /// <summary>
         /// 设置最大接收文件大小
         /// </summary>
@@ -555,6 +577,7 @@ namespace Mozi.HttpEmbedded
         {
             _maxFileSize = fileSize;
         }
+        //TODO 此处未实现控制
         /// <summary>
         /// 设置最大请求大小
         /// </summary>

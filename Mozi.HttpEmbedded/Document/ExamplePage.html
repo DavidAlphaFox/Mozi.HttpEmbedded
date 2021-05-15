@@ -1,7 +1,8 @@
-﻿<!DOCTYPE html>
+﻿/*模板示例页面*/
+<!DOCTYPE html>
 <html lang="zh-cn">
 <head>
-    <title>模板示例页面</title>
+    <title>${Title}</title>
     <meta http-equiv="content-type" charset="UTF-8">
     <meta http-equiv="Authorization" content="Jason" />
     <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1,maximum-scale=1,user-scalable=no">
@@ -14,7 +15,7 @@
     <h1>${Document.Title}</h1>
     <p>${Document.Content}</p>
     <!--数组类型-->
-    foreach(var doc in docs)
+    $foreach(var doc in docs)
     {
         <div>{doc.Title}</div>
     }

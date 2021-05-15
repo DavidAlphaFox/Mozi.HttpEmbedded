@@ -20,7 +20,7 @@ namespace Mozi.HttpEmbedded
         private List<File> _files=new List<File>();
 
         public File this[string name] { get { return GetFile(name); } }        
-        public File this[int ind]{  get { return _files[0]; }}
+        public File this[int ind]{  get { return _files[ind]; }}
 
         /// <summary>
         /// 文件集合

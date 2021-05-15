@@ -8,9 +8,8 @@ namespace Mozi.HttpEmbedded.Page
     /// </summary>
     public class Global
     {
-        private static Global _global;
 
-        private Dictionary<string, object> _data = new Dictionary<string, object>();
+        private readonly Dictionary<string, object> _data = new Dictionary<string, object>();
 
         /// <summary>
         /// 设置键值
