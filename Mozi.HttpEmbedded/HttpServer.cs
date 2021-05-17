@@ -211,7 +211,7 @@ namespace Mozi.HttpEmbedded
                     string doc = DocLoader.Load("Error.html");
                     doc = doc.Replace("${Error.Code}", StatusCode.InternalServerError.Code.ToString());
                     doc = doc.Replace("${Error.Title}", StatusCode.InternalServerError.Text);
-                    doc = doc.Replace("${Error.Time}", DateTime.Now.ToString("r"));
+                    doc = doc.Replace("${Error.Time}", DateTime.Now.ToUniversalTime().ToString("r"));
                     doc = doc.Replace("${Error.Description}", ex.Message);
                     doc = doc.Replace("${Error.Source}", ex.StackTrace ?? ex.StackTrace.ToString());
 

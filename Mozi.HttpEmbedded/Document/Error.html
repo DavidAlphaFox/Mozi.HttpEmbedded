@@ -16,7 +16,7 @@
         h3 { font-size: 0.89rem; }
         h4 { font-size: 0.78rem; }
         h5 { font-size: 0.67rem; }
-        p, p > * { font-size: 0.78rem; }
+        p, p > *,pre { font-size: 0.78rem; }
     </style>
 </head>
 <body style="padding:0 0.6rem;">
@@ -24,6 +24,6 @@
     <hr style="border: 0; border-bottom: 1px solid #dedede;"/>
     <p><strong>时间:</strong>${Error.Time}</p>
     <p><strong>内容:</strong>${Error.Description}</p>
-    <p><strong>源:</strong>${Error.Source}</p>
+    <p><strong>源:</strong><pre>${Error.Source}</pre></p>
 </body>
 </html>
