@@ -35,6 +35,7 @@ namespace Mozi.HttpEmbedded
 
         private string _serverName = "HttpEmbedded";
 
+        //默认首页为index.html,index.htm
         private string _indexPageMatchPattern = "index.html,index.htm";
 
         //允许和公开的方法
@@ -615,7 +616,7 @@ namespace Mozi.HttpEmbedded
             _tempPath = path;
         }
         /// <summary>
-        /// 设置首页
+        /// 设置首页 设置默认首页后会关闭默认页面的返回
         /// </summary>
         /// <param name="filePath"></param>
         public void SetIndexPage(string pattern)

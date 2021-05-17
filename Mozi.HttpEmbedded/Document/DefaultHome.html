@@ -6,20 +6,23 @@
     <meta http-equiv="Authorization" content="Jason" />
     <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1,maximum-scale=1,user-scalable=no">
     <style type="text/css">
-        * { font-size: 18px;font-weight: 400;box-sizing: border-box; -webkit-box-sizing: border-box;color: #212121;-moz-box-sizing: border-box;-webkit-user-drag: none; }
+        * { font-size: 18px;box-sizing: border-box; -webkit-box-sizing: border-box;color: #212121;-moz-box-sizing: border-box;-webkit-user-drag: none; }
         body { padding:0; margin:0; }
         ul { list-style-type: none; padding: 0;margin: 0; }
         body { padding: 0; margin: 0;}
         ul { list-style-type: none;padding: 0;margin: 0;}
-        h1 { font-size: 1rem; }
-        h2 { font-size: 0.89rem; }
-        h3 { font-size: 0.78rem; }
-        h4 { font-size: 0.67rem; }
-        p, p > * { font-size: 0.78rem; }
+        h1 { font-size: 1.22rem; }
+        h2 { font-size: 1rem; }
+        h3 { font-size: 0.89rem; }
+        h4 { font-size: 0.78rem; }
+        h5 { font-size: 0.67rem; }
+        p, p > * { font-size: 0.78rem;line-height:1.22rem; }
     </style>
 </head>
-<body>
-    <h1 style="text-align:center;display:block;color:brown;line-height:2rem;vertical-align:central;">欢迎使用 Mozi.HttpEmbedded${Info.VersionName} </h1>
-    <hr style="border:0;border-bottom:1px solid #dedede;margin:0 0.89rem;" >
+<body style="width:600px;margin:0 auto;">
+    <h1 style="display:block;line-height:2rem;vertical-align:central;">欢迎使用 Mozi.HttpEmbedded</h1>
+    <p>能看到此页面，证明服务器已正常启动，配置一个默认首页就能使此页面不再显示。服务器使用说明请参看源代码和相关文档。</p>
+    <hr style="border: 0; border-bottom: 1px solid #dedede;" />
+    <p><em>版本:v${Info.VersionName}</em></p>
 </body>
 </html>

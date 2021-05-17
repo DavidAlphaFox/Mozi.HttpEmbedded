@@ -7,12 +7,13 @@ using Mozi.HttpEmbedded.Generic;
 namespace Mozi.HttpEmbedded.Auth
 {
     //TODO 认证应区分目录
+    //TODO Basic认证过于简单，不能起到很好的安全效果
     /// <summary>
     /// 认证器
     /// </summary>
     public class Authenticator
     {
-        private List<User> _users=new List<User>(); 
+        private readonly List<User> _users=new List<User>(); 
 
         public AuthorizationType AuthType { get; private set; }
 
@@ -60,7 +61,8 @@ namespace Mozi.HttpEmbedded.Auth
             return this;
         }
         /// <summary>
-        /// 配置用户
+        /// 配置用户 
+        /// 如果用户不存在会追加此用户，如果存在会刷新用户密码。
         /// </summary>
         /// <param name="userName"></param>
         /// <param name="userPassword"></param>

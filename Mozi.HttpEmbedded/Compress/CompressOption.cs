@@ -12,6 +12,9 @@
         /// 启用压缩的MIME类型
         /// </summary>
         public string[] CompressTypes { get; set; }
+        /// <summary>
+        /// 是否对代理进行压缩
+        /// </summary>
         public bool CompressProxied { get; set; }
 
         public CompressOption()

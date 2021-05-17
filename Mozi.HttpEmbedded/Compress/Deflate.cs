@@ -4,9 +4,9 @@ using System.IO.Compression;
 namespace Mozi.HttpEmbedded.Compress
 {
     /// <summary>
-    /// GZip压缩
+    /// Deflate压缩
     /// </summary>
-    public static class GZip
+    public static class Deflate
     {
         /// <summary>
         /// 压缩
@@ -18,7 +18,7 @@ namespace Mozi.HttpEmbedded.Compress
             //Transform string into byte[]    
             byte[] byteArray;
             MemoryStream ms = new MemoryStream();
-            GZipStream sw = new GZipStream(ms,CompressionMode.Compress);
+            DeflateStream sw = new DeflateStream(ms, CompressionMode.Compress);
             sw.Write(value, 0, value.Length);
             sw.Flush();
             sw.Dispose();
@@ -36,8 +36,8 @@ namespace Mozi.HttpEmbedded.Compress
         {
             byte[] byteArray;
             MemoryStream ms = new MemoryStream(value);
-            MemoryStream msOut=new MemoryStream();
-            GZipStream sr = new GZipStream(ms,CompressionMode.Decompress);
+            MemoryStream msOut = new MemoryStream();
+            DeflateStream sr = new DeflateStream(ms, CompressionMode.Decompress);
             sr.CopyTo(msOut);
             sr.Dispose();
             byteArray = msOut.ToArray();

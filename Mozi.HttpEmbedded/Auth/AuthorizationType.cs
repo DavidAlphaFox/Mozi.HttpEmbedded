@@ -13,12 +13,12 @@ namespace Mozi.HttpEmbedded.Auth
         /// 基本认证 明文传输 不安全
         /// </summary>
         public static readonly AuthorizationType Basic    = new AuthorizationType("Basic");
-        //public static AuthType Digest   = new AuthType("Digest");
-        //public static AuthType WSSE     = new AuthType("WSSE");
+
+        //TODO 未实现高级认证
+        internal static AuthorizationType Digest   = new AuthorizationType("Digest");
+        internal static AuthorizationType WSSE     = new AuthorizationType("WSSE");
 
         private string _name;
-
-        
 
         public string Name
         {
