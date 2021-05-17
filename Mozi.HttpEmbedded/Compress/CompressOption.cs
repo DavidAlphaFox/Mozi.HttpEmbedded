@@ -8,5 +8,15 @@
         public ContentEncoding CompressType { get; set; }
         public int MinContentLenght { get; set; }
         public int CompressLevel    { get; set; }
+        /// <summary>
+        /// 启用压缩的MIME类型
+        /// </summary>
+        public string[] CompressTypes { get; set; }
+        public bool CompressProxied { get; set; }
+
+        public CompressOption()
+        {
+            CompressTypes = new string[] { "text/html" };
+        }
     }
 }

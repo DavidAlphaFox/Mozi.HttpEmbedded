@@ -460,6 +460,11 @@ namespace Mozi.HttpEmbedded.Source
                 return Types[ext];
             }
         }
+        /// <summary>
+        /// 判断扩展是否为媒体类型
+        /// </summary>
+        /// <param name="contentType"></param>
+        /// <returns></returns>
         public static bool IsMedia(string contentType)
         {
             Regex reg = new Regex("^(image|video|audio)/.*$");

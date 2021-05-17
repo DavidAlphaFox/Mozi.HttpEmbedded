@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Net.Sockets;
 using Mozi.HttpEmbedded.Auth;
 using Mozi.HttpEmbedded.Cert;
@@ -233,8 +234,11 @@ namespace Mozi.HttpEmbedded
 
                 //处理压缩
                 var body = context.Response.Body;
-                //跳过对媒体类型的压缩
-                if (EnableCompress && !Mime.IsMedia(context.Response.ContentType))
+                //判断客户机支持的压缩类型
+                var acceptEncoding = context.Request.Headers.GetValue(HeaderProperty.AcceptEncoding.PropertyName)?? "";
+                var acceptEncodings = acceptEncoding.Split(new string[] { ", " }, StringSplitOptions.RemoveEmptyEntries).ToList();
+                //忽略对媒体类型的压缩
+                if (EnableCompress && !Mime.IsMedia(context.Response.ContentType)&&acceptEncodings.Contains("gzip"))
                 {
                     if (body.Length > ZipOption.MinContentLenght)
                     {
