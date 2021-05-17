@@ -240,7 +240,7 @@ namespace Mozi.HttpEmbedded
                 //忽略对媒体类型的压缩
                 if (EnableCompress && !Mime.IsMedia(context.Response.ContentType)&&acceptEncodings.Contains("gzip"))
                 {
-                    if (body.Length > ZipOption.MinContentLenght)
+                    if (body.Length > ZipOption.MinContentLength)
                     {
                         body = GZip.Compress(body);
                         context.Response.CompressBody(body);

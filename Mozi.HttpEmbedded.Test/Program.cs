@@ -35,7 +35,7 @@ namespace Mozi.HttpEmbedded.Test
 
             //开启文件压缩
             hs.UseGzip(new Compress.CompressOption() { 
-                MinContentLenght=1024,
+                MinContentLength=1024,
                 CompressLevel=2
             });
             //程序集注入

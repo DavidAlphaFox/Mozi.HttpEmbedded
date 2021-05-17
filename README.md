@@ -74,13 +74,25 @@ Mozi.HttpEmbedded在Socket之上使用异步单线程模型,构建了一个HTTP�
     HttpServer hs = new HttpServer();
     //配置端口并启动服务器
     hs.SetPort(9000).Start();
+
     //开启认证
     hs.UseAuth(AuthorizationType.Basic).SetUser("admin", "admin");
+
+    //开启文件压缩
+    hs.UseGzip(new Compress.CompressOption() { 
+        MinContentLength=1024,
+        CompressLevel=2
+    });
+
     //开启静态文件支持
     hs.UseStaticFiles("");
+	//配置虚拟目录 虚拟目录下的文件可以随意访问
+	hs.SetVirtualDirectory("config", AppDomain.CurrentDomain.BaseDirectory + @"Config\");
+
     //路由映射
     Router router = Router.Default;
     router.Map("services/{controller}/{action}");
+
     Console.ReadLine();
 
 ~~~
