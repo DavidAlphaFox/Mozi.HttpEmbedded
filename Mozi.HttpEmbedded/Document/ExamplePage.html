@@ -15,7 +15,7 @@
     <h1>${Document.Title}</h1>
     <p>${Document.Content}</p>
     <!--数组类型-->
-    $foreach(var doc in docs)
+    $for(docs)
     {
         <div>{doc.Title}</div>
     }

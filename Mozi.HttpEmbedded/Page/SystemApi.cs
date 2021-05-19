@@ -127,22 +127,6 @@ namespace Mozi.HttpEmbedded.Page
             return rm;
         }
         /// <summary>
-        /// GET
-        /// </summary>
-        /// <returns></returns>
-        public ResponseMessage Get()
-        {
-            throw new NotImplementedException();
-        }
-        /// <summary>
-        /// POST
-        /// </summary>
-        /// <returns></returns>
-        public ResponseMessage Post()
-        {
-            throw new NotImplementedException();
-        }
-        /// <summary>
         /// 列出所有API
         /// </summary>
         /// <returns></returns>
