@@ -1,15 +1,15 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <package >
   <metadata>
     <id>Mozi.HttpEmbedded</id>
-    <version>1.1.8</version>
+    <version>1.2.1</version>
     <title>Mozi.HttpEmbedded</title>
     <authors>JasonWcx</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="expression">MIT</license>
     <projectUrl>https://gitee.com/myui_admin/mozi</projectUrl>
     <description>嵌入式HTTP应用服务器</description>
-    <releaseNotes>第一个预览版</releaseNotes>
+    <releaseNotes>1.2.1版本</releaseNotes>
     <copyright>JasonWcx</copyright>
     <tags></tags>
   </metadata>

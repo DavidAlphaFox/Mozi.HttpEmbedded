@@ -176,6 +176,7 @@ namespace Mozi.HttpEmbedded
                 try
                 {
                     context.Request = HttpRequest.Parse(args.Data);
+                    context.Request.ClientAddress = args.IP;
                     //TODO HTTP/1.1 通过Connection控制连接 服务器同时对连接进行监测 保证服务器效率
                     //DONE 此处应判断Content-Length然后继续读流
                     //TODO 如何解决文件传输内存占用过大的问题
@@ -210,8 +211,7 @@ namespace Mozi.HttpEmbedded
                 }
                 catch (Exception ex)
                 {
-                    #region 测试片段，模板引擎开发好以后注释掉
-
+                    //返回错误信息页面
                     string doc = DocLoader.Load("Error.html");
                     PageCreator pc = new PageCreator();
                     pc.LoadFromText(doc);
@@ -223,7 +223,6 @@ namespace Mozi.HttpEmbedded
                         Source = ex.StackTrace ?? ex.StackTrace.ToString(),
                     });
                     pc.Prepare();
-                    #endregion
 
                     context.Response.Write(pc.GetBuffer());
                     context.Response.SetContentType(Mime.GetContentType("html"));
@@ -272,6 +271,7 @@ namespace Mozi.HttpEmbedded
             var authorization = context.Request.Headers.GetValue(HeaderProperty.Authorization.PropertyName);
             if (!string.IsNullOrEmpty(authorization) && Auth.Check(authorization))
             {
+                context.Request.IsAuthorized = true;
                 return HandleRequest(ref context);
             }
             else

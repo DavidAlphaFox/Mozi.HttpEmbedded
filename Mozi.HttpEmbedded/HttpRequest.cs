@@ -91,7 +91,22 @@ namespace Mozi.HttpEmbedded
         /// Cookie
         /// </summary>
         public RequestCookie Cookies { get; protected set; }
-
+        /// <summary>
+        /// 客户机IP地址
+        /// </summary>
+        public string ClientAddress { get; internal set; }
+        /// <summary>
+        /// 客户机是否已通过认证
+        /// </summary>
+        public bool IsAuthorized { get; internal set; }
+        /// <summary>
+        /// 客户机接受的语言选项
+        /// </summary>
+        public string[] AcceptLanguage { get; private set; }
+        public string Referer { get; private set; }
+        /// <summary>
+        /// 构造函数
+        /// </summary>
         public HttpRequest()
         {
             ProtocolVersion = HttpVersion.Version11;
@@ -155,8 +170,13 @@ namespace Mozi.HttpEmbedded
             //头部信息分解
             //HOST
             ParseHost(ref req);
-            //UserAgetn
+            //User-Agent
             ParseUserAgent(ref req);
+            //Accept-Language
+            ParseAcceptLanguage(ref req);
+            //Referer
+            ParseReferer(ref req);
+
             //解析Cookie
             ParseCookie(ref req);
             //TODO 此处是否需要分辨GET/POST
@@ -398,12 +418,35 @@ namespace Mozi.HttpEmbedded
                 req.UserAgent =req.Headers.GetValue(HeaderProperty.UserAgent.PropertyName);
             }
         }
+        /// <summary>
+        /// 解析请求目标主机地址
+        /// </summary>
+        /// <param name="req"></param>
         private static void ParseHost(ref HttpRequest req)
         {
             if (req.Headers.Contains(HeaderProperty.Host.PropertyName))
             {
                 req.Host = req.Headers.GetValue(HeaderProperty.Host.PropertyName);
             }
+        }        
+        /// <summary>
+        /// 解析来源页面地址
+        /// </summary>
+        /// <param name="req"></param>
+        private static void ParseReferer(ref HttpRequest req)
+        {
+            if (req.Headers.Contains(HeaderProperty.Referer.PropertyName))
+            {
+                req.Referer = req.Headers.GetValue(HeaderProperty.Referer.PropertyName);
+            }
+        }
+        /// <summary>
+        /// 解析接受语言排序
+        /// </summary>
+        /// <param name="req"></param>
+        private static void ParseAcceptLanguage(ref HttpRequest req)
+        {
+
         }
         /// <summary>
         /// 解析Cookie
@@ -416,6 +459,7 @@ namespace Mozi.HttpEmbedded
                 req.Cookies = RequestCookie.Parse(req.Headers.GetValue(HeaderProperty.Cookie.PropertyName));
             }
         }
+
         /// <summary>
         /// 解析首行数据
         /// 方法 查询 协议
