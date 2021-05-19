@@ -77,6 +77,9 @@ namespace Mozi.HttpEmbedded
         /// 最大接收文件大小 默认10Mb
         /// </summary>
         public long MaxFileSize { get { return _maxFileSize; } private set { _maxFileSize = value; } }
+        /// <summary>
+        /// 最大请求长度
+        /// </summary>
         public long MaxRequestSize { get { return _maxRequestSize; } private set { _maxRequestSize = value; } }
         /// <summary>
         /// 服务端口
@@ -124,6 +127,7 @@ namespace Mozi.HttpEmbedded
         public HttpServer()
         {
             StartTime = DateTime.MinValue;
+            this.Timezone = System.TimeZone.CurrentTimeZone.GetUtcOffset(DateTime.Now).Hours.ToString();
             //配置默认服务器名
             _serverName = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name+ "/" + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
             Auth =new Authenticator();

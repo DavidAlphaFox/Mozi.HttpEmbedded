@@ -24,24 +24,23 @@ namespace Mozi.HttpEmbedded.Page
         /// 取服务器当前时间
         /// </summary>
         /// <returns></returns>
+        [Description("获取服务器时间 UTC")]
         public string GetTime()
         {
-            return DateTime.Now.ToString("r");
+            return DateTime.Now.ToUniversalTime().ToString("r");
         }
 
-        public string GetAddress()
-        {
-            return Context.Request.Path;
-        }
         /// <summary>
-        /// 认证用户
+        /// 验证用户
         /// </summary>
         /// <param name="username"></param>
         /// <param name="password"></param>
         /// <returns></returns>
+        [Description("验证用户")]
         public ResponseMessage AuthUser(string username,string password)
         {
-            throw new NotImplementedException();
+            ResponseMessage rm = new ResponseMessage();
+            return rm;
         }
         /// <summary>
         /// 列出所有用户
@@ -185,6 +184,7 @@ namespace Mozi.HttpEmbedded.Page
                 }
             }
             rm.data = apis;
+            rm.success = true;
             return rm;
         }
     }
