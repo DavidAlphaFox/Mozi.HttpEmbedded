@@ -17,7 +17,7 @@ namespace Mozi.HttpEmbedded
     /// </summary>
     public class FileCollection
     {
-        private List<File> _files=new List<File>();
+        private readonly List<File> _files=new List<File>();
 
         public File this[string name] { get { return GetFile(name); } }        
         public File this[int ind]{  get { return _files[ind]; }}

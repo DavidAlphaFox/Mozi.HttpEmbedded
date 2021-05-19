@@ -616,7 +616,8 @@ namespace Mozi.HttpEmbedded
             _tempPath = path;
         }
         /// <summary>
-        /// 设置首页 设置默认首页后会关闭默认页面的返回
+        /// 设置首页 
+        /// <para>设置默认首页后会关闭默认页面的返回</para>
         /// </summary>
         /// <param name="filePath"></param>
         public void SetIndexPage(string pattern)

@@ -73,7 +73,6 @@
     <Compile Include="Cookie\CookieManager.cs" />
     <Compile Include="Document\DocLoader.cs" />
     <Compile Include="Encode\HtmlEncoder.cs" />
-    <Compile Include="Page\SystemApi.cs" />
     <Compile Include="Serialize\ISerializer.cs" />
     <Compile Include="Encode\UrlEncoder.cs" />
     <Compile Include="Generic\AbsClassEnum.cs" />
@@ -99,7 +98,7 @@
     <Compile Include="Page\Global.cs" />
     <Compile Include="Page\PageCreator.cs" />
     <Compile Include="Page\Router.cs" />
-    <Compile Include="Page\TestApi.cs" />
+    <Compile Include="Page\SystemApi.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ProtocolType.cs" />
     <Compile Include="HttpRequest.cs" />

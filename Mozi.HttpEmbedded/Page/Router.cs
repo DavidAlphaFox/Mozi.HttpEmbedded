@@ -21,7 +21,7 @@ namespace Mozi.HttpEmbedded.Page
 
         private List<Assembly> _assemblies = new List<Assembly>();
 
-        private List<Type> apis = new List<Type>();
+        private readonly List<Type> _apis = new List<Type>();
         //数据序列化对象
         private ISerializer _dataserializer;
 
@@ -77,7 +77,7 @@ namespace Mozi.HttpEmbedded.Page
             AccessPoint ap = Match(path);
             //TODO 此处路由有问题，需要改进
             //TODO 此处考虑加入域控制
-            Type cls = apis.Find(x => x.Name.Equals(ap.Controller, StringComparison.OrdinalIgnoreCase));
+            Type cls = _apis.Find(x => x.Name.Equals(ap.Controller, StringComparison.OrdinalIgnoreCase));
             MethodInfo method = cls.GetMethod(ap.Action, BindingFlags.Instance | BindingFlags.IgnoreCase | BindingFlags.Public);
 
             ParameterInfo[] pms = method.GetParameters();
@@ -119,7 +119,7 @@ namespace Mozi.HttpEmbedded.Page
             AccessPoint ap = Match(path);
             //TODO 此处路由有问题，需要改进
             //TODO 此处考虑加入域控制
-            Type cls = apis.Find(x => x.Name.Equals(ap.Controller, StringComparison.OrdinalIgnoreCase));
+            Type cls = _apis.Find(x => x.Name.Equals(ap.Controller, StringComparison.OrdinalIgnoreCase));
             MethodInfo method = cls.GetMethod(ap.Action, BindingFlags.Instance | BindingFlags.IgnoreCase | BindingFlags.Public);
             AccessObject target = new AccessObject
             {
@@ -143,7 +143,7 @@ namespace Mozi.HttpEmbedded.Page
         }
         /// <summary>
         /// 载入模块
-        /// <para>自动扫描程序集中的接口模块</para>
+        /// <para>自动扫描程序集中继承自<see cref="T:BaseApi"/>的类，或者类标记为<see cref="T:BasicApiAttribute"/></para>
         /// </summary>
         /// <param name="ass"></param>
         /// <returns></returns>
@@ -155,14 +155,14 @@ namespace Mozi.HttpEmbedded.Page
         /// <summary>
         /// 单独注册某个接口模块
         /// </summary>
-        /// <param name="type">参数需继承自<see cref="T:BaseApi"/>，或者标记为<see cref="T:BasicApiAttribute"/>,其他类型无法注册</param>
+        /// <param name="type">参数需继承自<see cref="T:BaseApi"/>的类，或者类标记为<see cref="T:BasicApiAttribute"/>,其他类型无法注册</param>
         /// <returns></returns>
         public Router Register(Type type)
         {
             var attribute = type.GetCustomAttributes(typeof(BasicApiAttribute), false);
             if(type.IsSubclassOf(typeof(BaseApi))|| attribute.Length>0)
             {
-                apis.Add(type);
+                _apis.Add(type);
             }
             return this;
         }
@@ -219,6 +219,14 @@ namespace Mozi.HttpEmbedded.Page
         public void SetDataSerializer(ISerializer ser)
         {
             this._dataserializer = ser;
+        }
+        /// <summary>
+        /// 返回所有的API类
+        /// </summary>
+        /// <returns></returns>
+        internal List<Type> GetTypes()
+        {
+            return _apis;
         }
         /// <summary>
         /// 路由映射
