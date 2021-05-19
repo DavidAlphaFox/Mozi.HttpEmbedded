@@ -83,7 +83,7 @@ namespace Mozi.HttpEmbedded.WebDav.Method
 
 
             //转换成字节码
-            byte[] responseBytes =StringEncoder.Encode(responseDoc.InnerXml);
+            byte[] responseBytes = StringEncoder.Encode(responseDoc.InnerXml);
             context.Response.Write(responseBytes);
             context.Response.Headers.Add(HeaderProperty.ContentType.PropertyName, "text/xml");
 
@@ -201,7 +201,7 @@ namespace Mozi.HttpEmbedded.WebDav.Method
         /// <returns>
         /// <see cref="XmlDocument" /> containing the response body
         /// </returns>
-        private XmlDocument ResponseDocument(HttpContext context, bool propname,StatusCode status)
+        private XmlDocument ResponseDocument(HttpContext context, bool propname, StatusCode status)
         {
             // 实例XML文档
             XmlDocument responseDoc = new XmlDocument();
@@ -248,15 +248,15 @@ namespace Mozi.HttpEmbedded.WebDav.Method
 
                 propstatElement.AppendChild(propElement);
 
-               
+
                 //TODO 此处响应状态码 检查是否正确
-                WebDavProperty statusProperty = new WebDavProperty("status", "HTTP/1.1 " + status.Code.ToString()+" "+status.Text.ToString());
+                WebDavProperty statusProperty = new WebDavProperty("status", "HTTP/1.1 " + status.Code.ToString() + " " + status.Text.ToString());
                 propstatElement.AppendChild(statusProperty.ToXmlElement(responseDoc));
 
-               
+
                 responseElement.AppendChild(propstatElement);
 
-               
+
                 responseDoc.DocumentElement.AppendChild(responseElement);
             }
 
@@ -276,7 +276,7 @@ namespace Mozi.HttpEmbedded.WebDav.Method
         /// </returns>
         private XmlElement PropChildElement(WebDavProperty webDavProperty, XmlDocument xmlDocument, IWebDavStoreItem iWebDavStoreItem, bool isPropname)
         {
-           
+
             if (isPropname)
             {
                 webDavProperty.Value = string.Empty;

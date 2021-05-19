@@ -10,7 +10,7 @@ namespace Mozi.HttpEmbedded.Page
     /// <summary>
     /// 内置接口 API接口使用示范 
     /// </summary>
-    public class Runtime:BaseApi
+    public class Runtime : BaseApi
     {
         /// <summary>
         /// 无参方法
@@ -37,7 +37,7 @@ namespace Mozi.HttpEmbedded.Page
         /// <param name="password"></param>
         /// <returns></returns>
         [Description("验证用户")]
-        public ResponseMessage AuthUser(string username,string password)
+        public ResponseMessage AuthUser(string username, string password)
         {
             ResponseMessage rm = new ResponseMessage();
             return rm;
@@ -63,10 +63,10 @@ namespace Mozi.HttpEmbedded.Page
             {
                 try
                 {
-                    for(int i = 0; i < Context.Request.Files.Length; i++)
+                    for (int i = 0; i < Context.Request.Files.Length; i++)
                     {
                         File f = Context.Request.Files[i];
-                        using (FileStream fs = new FileStream(AppDomain.CurrentDomain.BaseDirectory + f.FileName, FileMode.OpenOrCreate,FileAccess.ReadWrite))
+                        using (FileStream fs = new FileStream(AppDomain.CurrentDomain.BaseDirectory + f.FileName, FileMode.OpenOrCreate, FileAccess.ReadWrite))
                         {
                             fs.Write(f.FileData, 0, f.FileData.Length);
                             fs.Flush();
@@ -74,7 +74,9 @@ namespace Mozi.HttpEmbedded.Page
                         }
                     }
                     success = true;
-                }catch(Exception ex){
+                }
+                catch (Exception ex)
+                {
                     rm.message = ex.Message;
                 }
             }
@@ -109,7 +111,7 @@ namespace Mozi.HttpEmbedded.Page
                     for (int i = 0; i < Context.Request.Files.Length; i++)
                     {
                         File f = Context.Request.Files[i];
-                        using (FileStream fs = new FileStream(dir + "/"+f.FileName, FileMode.OpenOrCreate, FileAccess.ReadWrite))
+                        using (FileStream fs = new FileStream(dir + "/" + f.FileName, FileMode.OpenOrCreate, FileAccess.ReadWrite))
                         {
                             fs.Write(f.FileData, 0, f.FileData.Length);
                             fs.Flush();
@@ -135,10 +137,11 @@ namespace Mozi.HttpEmbedded.Page
             ResponseMessage rm = new ResponseMessage();
             List<Type> types = Router.Default.GetTypes();
             List<ApiInfo> apis = new List<ApiInfo>();
-            foreach(var type in types)
+            foreach (var type in types)
             {
                 MethodInfo[] methods = type.GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
-                foreach (var m in methods) {
+                foreach (var m in methods)
+                {
                     ApiInfo api = new ApiInfo
                     {
                         domain = type.Namespace,
@@ -150,17 +153,17 @@ namespace Mozi.HttpEmbedded.Page
                     {
                         api.description = ((DescriptionAttribute)attrs[0]).Description;
                     }
-                    
-                    ParameterInfo[] pms=m.GetParameters();
+
+                    ParameterInfo[] pms = m.GetParameters();
                     if (pms.Length > 0)
                     {
                         api.args = new List<ApiParam>();
-                        foreach(var p in pms)
+                        foreach (var p in pms)
                         {
                             api.args.Add(new ApiParam()
                             {
-                                paramname=p.Name,
-                                paramtype=p.ParameterType.Name,
+                                paramname = p.Name,
+                                paramtype = p.ParameterType.Name,
                             });
                         }
                     }
@@ -177,10 +180,10 @@ namespace Mozi.HttpEmbedded.Page
     /// </summary>
     public class ResponseMessage
     {
-        public bool   success { get; set; }
-        public int    code    { get; set; }
+        public bool success { get; set; }
+        public int code { get; set; }
         public string message { get; set; }
-        public object data    { get; set; }
+        public object data { get; set; }
     }
     /// <summary>
     /// API信息
@@ -191,7 +194,7 @@ namespace Mozi.HttpEmbedded.Page
         public string controller { get; set; }
         public string methodname { get; set; }
         public string description { get; set; }
-        public List<ApiParam> args {get;set;}
+        public List<ApiParam> args { get; set; }
     }
     /// <summary>
     /// API参数信息

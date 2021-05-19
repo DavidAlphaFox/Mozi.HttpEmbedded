@@ -33,7 +33,7 @@ namespace Mozi.HttpEmbedded.Common
         {
             tree = new LinkedList<string>();
             List<string> segements = GetSegement(path);
-            foreach(var seg in segements)
+            foreach (var seg in segements)
             {
                 tree.AddLast(seg);
             }

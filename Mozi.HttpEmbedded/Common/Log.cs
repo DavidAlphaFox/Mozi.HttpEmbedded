@@ -35,7 +35,8 @@ namespace Mozi.HttpEmbedded.Common
             {
                 dir.Create();
             }
-            Parallel.Invoke(() => {
+            Parallel.Invoke(() =>
+            {
                 try
                 {
                     _writeLock.EnterWriteLock();

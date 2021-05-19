@@ -15,8 +15,8 @@ namespace Mozi.HttpEmbedded
         public static readonly HttpVersion Version09 = new HttpVersion("0.9");
         public static readonly HttpVersion Version10 = new HttpVersion("1.0");
         public static readonly HttpVersion Version11 = new HttpVersion("1.1");
-       // public static readonly HttpVersion Version12 = new HttpVersion("1.2");
-        
+        // public static readonly HttpVersion Version12 = new HttpVersion("1.2");
+
         /// <summary>
         /// 1. 二进制协议
         ///     HTTP/1.1 版的头信息肯定是文本（ASCII编码），数据体可以是文本，也可以是二进制。HTTP/2 则是一个彻底的二进制协议，头信息和数据体都是二进制，并且统称为”帧”：头信息帧和数据帧。

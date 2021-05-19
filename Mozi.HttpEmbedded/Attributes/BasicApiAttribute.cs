@@ -9,7 +9,7 @@ namespace Mozi.HttpEmbedded.Attributes
     /// API属性标记
     /// </summary>
     [AttributeUsage(AttributeTargets.Class)]
-    public class BasicApiAttribute:Attribute
+    public class BasicApiAttribute : Attribute
     {
 
     }

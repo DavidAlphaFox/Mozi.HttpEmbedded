@@ -18,10 +18,10 @@ namespace Mozi.HttpEmbedded.Page
         private readonly Dictionary<string, object> _params = new Dictionary<string, object>(new StringCompareIgnoreCase());
 
         private readonly Dictionary<string, IEnumerable<object>> _datas = new Dictionary<string, IEnumerable<object>>(new StringCompareIgnoreCase());
-        
-        private string _template="";
 
-        private string _page="";
+        private string _template = "";
+
+        private string _page = "";
 
         public PageCreator()
         {
@@ -66,9 +66,9 @@ namespace Mozi.HttpEmbedded.Page
         {
             Regex regParam = new Regex("\\${[A-Za-z0-9_]+(\\.[A-Za-z0-9_]+)?}");
             MatchCollection matchesParam = regParam.Matches(_page);
-            foreach(var m in matchesParam)
+            foreach (var m in matchesParam)
             {
-                var param = m.ToString().Trim(new char[] { '$','{', '}' });
+                var param = m.ToString().Trim(new char[] { '$', '{', '}' });
                 if (!param.Contains("."))
                 {
                     _page = _page.Replace(m.ToString(), GetParameter(param).ToString());
@@ -78,8 +78,8 @@ namespace Mozi.HttpEmbedded.Page
                     string[] target = param.Split(new char[] { '.' });
                     object pValue = _params[target[0]];
 
-                    PropertyInfo props = pValue.GetType().GetProperty(target[1],BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase);
-                    var targetValue=props.GetValue(pValue, null);
+                    PropertyInfo props = pValue.GetType().GetProperty(target[1], BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase);
+                    var targetValue = props.GetValue(pValue, null);
                     _page = _page.Replace(m.ToString(), targetValue.ToString());
                 }
             }
@@ -107,7 +107,7 @@ namespace Mozi.HttpEmbedded.Page
         /// <param name="paramName">参数名</param>
         /// <param name="paramValue">参数值</param>
         /// <returns></returns>
-        public PageCreator SetParameter(string paramName,object paramValue)
+        public PageCreator SetParameter(string paramName, object paramValue)
         {
             if (_params.ContainsKey(paramName))
             {
@@ -125,7 +125,7 @@ namespace Mozi.HttpEmbedded.Page
         /// <param name="dataName"></param>
         /// <param name="data"></param>
         /// <returns></returns>
-        internal PageCreator RegData(string dataName,IEnumerable<object> data)
+        internal PageCreator RegData(string dataName, IEnumerable<object> data)
         {
             if (_datas.ContainsKey(dataName))
             {

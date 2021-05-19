@@ -11,7 +11,7 @@ namespace Mozi.HttpEmbedded
     /// </summary>
     public class HttpResponse
     {
-        private byte[] _body=new byte[0];
+        private byte[] _body = new byte[0];
         private string _contentType = "text/plain";
         /// <summary>
         /// 协议版本
@@ -24,7 +24,7 @@ namespace Mozi.HttpEmbedded
         /// <summary>
         /// 内容长度
         /// </summary>
-        public int ContentLength {  get  { return _body.Length; } }
+        public int ContentLength { get { return _body.Length; } }
         /// <summary>
         /// Mime类型
         /// </summary>
@@ -48,9 +48,9 @@ namespace Mozi.HttpEmbedded
 
         public HttpResponse()
         {
-            Headers=new TransformHeader();
+            Headers = new TransformHeader();
             ProtocolVersion = HttpVersion.Version11;
-            Cookies=new ResponseCookie();
+            Cookies = new ResponseCookie();
         }
         /// <summary>
         /// 设置协议版本
@@ -81,7 +81,7 @@ namespace Mozi.HttpEmbedded
         /// <returns></returns>
         public HttpResponse AddHeader(HeaderProperty head, string value)
         {
-            Headers.Add(head,value);
+            Headers.Add(head, value);
             return this;
         }
         /// <summary>
@@ -92,7 +92,7 @@ namespace Mozi.HttpEmbedded
         /// <returns></returns>
         public HttpResponse AddHeader(string item, string value)
         {
-            Headers.Add(item,value);
+            Headers.Add(item, value);
             return this;
         }
         /// <summary>
@@ -108,7 +108,7 @@ namespace Mozi.HttpEmbedded
             else
             {
                 Array.Resize(ref _body, _body.Length + data.Length);
-                Array.Copy(data,_body,data.Length);
+                Array.Copy(data, _body, data.Length);
             }
             return this;
         }
@@ -161,9 +161,9 @@ namespace Mozi.HttpEmbedded
         /// <returns></returns>
         public byte[] GetBuffer()
         {
-            List<byte> data=new List<byte>();
+            List<byte> data = new List<byte>();
             //注入状态信息
-            data.AddRange(GetStatusLine()); 
+            data.AddRange(GetStatusLine());
             data.AddRange(TransformHeader.Carriage);
             //注入包体大小 字节长度
             AddHeader(HeaderProperty.ContentLength, _body.Length.ToString());

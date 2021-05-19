@@ -8,7 +8,7 @@
         /// <summary>
         /// 请求对象
         /// </summary>
-        public HttpRequest Request   { get; set; }
+        public HttpRequest Request { get; set; }
         /// <summary>
         /// 响应对象
         /// </summary>

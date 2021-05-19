@@ -5,45 +5,45 @@ namespace Mozi.HttpEmbedded
     /// <summary>
     /// 请求方法
     /// </summary>
-    public class RequestMethod:AbsClassEnum
+    public class RequestMethod : AbsClassEnum
     {
         //HTTP/0.9
         /// <summary>
         /// GET方法请求一个指定资源的表示形式. 使用GET的请求应该只被用于获取数据.
         /// </summary>
-        public static RequestMethod GET=new RequestMethod("GET");
+        public static RequestMethod GET = new RequestMethod("GET");
 
         //HTTP/1.0
         /// <summary>
         /// HEAD方法请求一个与GET请求的响应相同的响应，但没有响应体.
         /// </summary>
-        public static RequestMethod HEAD=new RequestMethod("HEAD");
+        public static RequestMethod HEAD = new RequestMethod("HEAD");
         /// <summary>
         /// POST方法用于将实体提交到指定的资源，通常导致在服务器上的状态变化或副作用.
         /// </summary>
-        public static RequestMethod POST=new RequestMethod("POST");
+        public static RequestMethod POST = new RequestMethod("POST");
 
         //HTTP/1.1
         /// <summary>
         /// PUT方法用请求有效载荷替换目标资源的所有当前表示。
         /// </summary>
-        public static RequestMethod PUT=new RequestMethod("PUT");
+        public static RequestMethod PUT = new RequestMethod("PUT");
         /// <summary>
         /// DELETE方法删除指定的资源。
         /// </summary>
-        public static RequestMethod DELETE=new RequestMethod("DELETE");
+        public static RequestMethod DELETE = new RequestMethod("DELETE");
         /// <summary>
         /// CONNECT方法建立一个到由目标资源标识的服务器的隧道。
         /// </summary>
-        public static RequestMethod CONNECT=new RequestMethod("CONNECT");
+        public static RequestMethod CONNECT = new RequestMethod("CONNECT");
         /// <summary>
         /// OPTIONS方法用于描述目标资源的通信选项。
         /// </summary>
-        public static RequestMethod OPTIONS=new RequestMethod("OPTIONS");
+        public static RequestMethod OPTIONS = new RequestMethod("OPTIONS");
         /// <summary>
         /// TRACE方法沿着到目标资源的路径执行一个消息环回测试。
         /// </summary>
-        public static RequestMethod TRACE=new RequestMethod("TRACE");
+        public static RequestMethod TRACE = new RequestMethod("TRACE");
         /// <summary>
         /// PATCH方法用于对资源应用部分修改。
         /// </summary>

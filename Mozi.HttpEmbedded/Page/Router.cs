@@ -28,11 +28,11 @@ namespace Mozi.HttpEmbedded.Page
         /// <summary>
         /// 路由配置，内置2个默认
         /// </summary>
-        private readonly List<RouteMapper> _mappers = new List<RouteMapper>() { 
+        private readonly List<RouteMapper> _mappers = new List<RouteMapper>() {
 
             new RouteMapper() { Pattern = "/{controller}/{action}" },
-            new RouteMapper() { Pattern = "/{controller}.{action}" } 
-        
+            new RouteMapper() { Pattern = "/{controller}.{action}" }
+
         };
 
         public static Router Default
@@ -102,7 +102,7 @@ namespace Mozi.HttpEmbedded.Page
             //注入上下文变量
             ((BaseApi)instance).Context = ctx;
             //调用方法
-            object result=method.Invoke(instance, BindingFlags.IgnoreCase, null, args, CultureInfo.CurrentCulture);
+            object result = method.Invoke(instance, BindingFlags.IgnoreCase, null, args, CultureInfo.CurrentCulture);
             if (_dataserializer != null)
             {
                 return _dataserializer.Encode(result);
@@ -160,7 +160,7 @@ namespace Mozi.HttpEmbedded.Page
         public Router Register(Type type)
         {
             var attribute = type.GetCustomAttributes(typeof(BasicApiAttribute), false);
-            if(type.IsSubclassOf(typeof(BaseApi))|| attribute.Length>0)
+            if (type.IsSubclassOf(typeof(BaseApi)) || attribute.Length > 0)
             {
                 _apis.Add(type);
             }
@@ -193,7 +193,7 @@ namespace Mozi.HttpEmbedded.Page
         /// <returns></returns>
         public Router Map(string pattern)
         {
-            _mappers.Add(new RouteMapper(){Pattern = pattern});
+            _mappers.Add(new RouteMapper() { Pattern = pattern });
             return this;
         }
         /// <summary>
@@ -235,23 +235,23 @@ namespace Mozi.HttpEmbedded.Page
         {
             private string _pattern = "";
 
-            public string Pattern        
+            public string Pattern
             {
                 get
                 {
-                    return _pattern; 
-                    
-                } 
+                    return _pattern;
+
+                }
                 set
                 {
                     _pattern = value;
                     ApplyPattern(value);
-                } 
+                }
             }
 
             private string Prefix { get; set; }
             private string Suffix { get; set; }
-            private string Link   { get; set; }
+            private string Link { get; set; }
             private string IdName { get; set; }
             private Regex Matcher { get; set; }
 
@@ -270,12 +270,12 @@ namespace Mozi.HttpEmbedded.Page
                 //替换特殊字符
                 int indCrl = pattern.IndexOf("{controller}", StringComparison.CurrentCulture);
                 int indAction = pattern.IndexOf("{action}", StringComparison.CurrentCulture);
-         
+
                 Prefix = pattern.Substring(0, indCrl);
                 Link = pattern.Substring(indCrl + 12, indAction - indCrl - 12);
                 Suffix = "";
                 Matcher = new Regex(string.Format("^{0}[a-zA-Z]\\w+{1}[a-zA-Z]\\w+{2}$", Regex.Escape(Prefix), Regex.Escape(Link), Regex.Escape(Suffix)), RegexOptions.IgnoreCase);
-                
+
             }
             /// <summary>
             /// 判断是否匹配路由
@@ -285,7 +285,7 @@ namespace Mozi.HttpEmbedded.Page
             public bool Match(string path)
             {
                 var m = Matcher.Match(path);
-                if (m!=null&&m.Success&&m.Index==0)
+                if (m != null && m.Success && m.Index == 0)
                 {
                     return true;
                 }
@@ -301,10 +301,10 @@ namespace Mozi.HttpEmbedded.Page
                 AccessPoint ap = null;
                 if (Match(path))
                 {
-                    ap=new AccessPoint();
-                    int indCrl=Prefix.Length;
-                    int indLink=path.IndexOf(Link,indCrl+1,StringComparison.CurrentCulture);
-                    ap.Domain = Prefix.Replace("/",".");
+                    ap = new AccessPoint();
+                    int indCrl = Prefix.Length;
+                    int indLink = path.IndexOf(Link, indCrl + 1, StringComparison.CurrentCulture);
+                    ap.Domain = Prefix.Replace("/", ".");
                     ap.Controller = path.Substring(indCrl, indLink - indCrl);
                     ap.Action = path.Substring(indLink + Link.Length);
                 }
@@ -314,9 +314,9 @@ namespace Mozi.HttpEmbedded.Page
 
         public class AccessPoint
         {
-             public string Domain { get; set; }
-             public string Controller { get; set; }
-             public string Action { get; set; }
+            public string Domain { get; set; }
+            public string Controller { get; set; }
+            public string Action { get; set; }
         }
 
         public class AccessObject

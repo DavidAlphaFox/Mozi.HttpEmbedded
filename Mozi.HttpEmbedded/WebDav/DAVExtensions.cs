@@ -62,7 +62,7 @@ namespace Mozi.HttpEmbedded.WebDav
             IWebDavStoreCollection collection = store.Root;
             IWebDavStoreItem item = null;
             //ÅÐ¶Ï¸ùÂ·¾¶
-            item = collection.GetItemByName(store.Root.ItemPath+"\\"+path);
+            item = collection.GetItemByName(store.Root.ItemPath + "\\" + path);
             return item;
         }
     }

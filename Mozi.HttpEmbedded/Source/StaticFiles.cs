@@ -35,7 +35,7 @@ namespace Mozi.HttpEmbedded.Source
         {
             //初始化根路径为AppDomain基目录
             _root = AppDomain.CurrentDomain.BaseDirectory;
-            init();    
+            init();
         }
         /// <summary>
         /// 设置静态文件根目录
@@ -57,7 +57,7 @@ namespace Mozi.HttpEmbedded.Source
                 }
                 else
                 {
-                    _root = AppDomain.CurrentDomain.BaseDirectory +root;
+                    _root = AppDomain.CurrentDomain.BaseDirectory + root;
                 }
             }
             return this;
@@ -100,7 +100,7 @@ namespace Mozi.HttpEmbedded.Source
         /// </summary>
         private void init()
         {
-           //载入MIME类型
+            //载入MIME类型
         }
         /// <summary>
         /// 判断是否静态文件
@@ -137,7 +137,7 @@ namespace Mozi.HttpEmbedded.Source
             {
                 var prefix = "/" + d.Name + "/";
                 //Config/files1.xml;
-                if (path.StartsWith(prefix,StringComparison.OrdinalIgnoreCase))
+                if (path.StartsWith(prefix, StringComparison.OrdinalIgnoreCase))
                 {
                     return true;
                 }
@@ -159,7 +159,7 @@ namespace Mozi.HttpEmbedded.Source
             {
                 var prefix = "/" + d.Name + "/";
                 //Config/files1.xml;
-                if (path.StartsWith(prefix,StringComparison.OrdinalIgnoreCase) && System.IO.File.Exists(d.Path + path.Substring(prefix.Length)))
+                if (path.StartsWith(prefix, StringComparison.OrdinalIgnoreCase) && System.IO.File.Exists(d.Path + path.Substring(prefix.Length)))
                 {
                     return d.Path + path.Substring(prefix.Length);
                 }
@@ -183,7 +183,7 @@ namespace Mozi.HttpEmbedded.Source
             {
                 filepath = GetVirtualFilePhysicalDirectory(path);
             }
-            DateTime dtModified=System.IO.File.GetLastWriteTime(filepath);
+            DateTime dtModified = System.IO.File.GetLastWriteTime(filepath);
             try
             {
                 if (!string.IsNullOrEmpty(ifModifiedSince))
@@ -191,7 +191,7 @@ namespace Mozi.HttpEmbedded.Source
                     DateTime dtSince = DateTime.ParseExact(ifModifiedSince, "ddd, dd MMM yyyy HH:mm:ss GMT",
                                                         CultureInfo.InvariantCulture,
                                                         DateTimeStyles.AdjustToUniversal).ToLocalTime();
-                    if ((dtModified - dtSince).TotalSeconds<1)
+                    if ((dtModified - dtSince).TotalSeconds < 1)
                     {
                         return false;
                     }
@@ -199,7 +199,7 @@ namespace Mozi.HttpEmbedded.Source
             }
             catch
             {
-                
+
             }
             return true;
         }
@@ -223,7 +223,7 @@ namespace Mozi.HttpEmbedded.Source
         /// <param name="path"></param>
         /// <param name="ext"></param>
         /// <returns></returns>
-        public byte[] Load(string path,string ext)
+        public byte[] Load(string path, string ext)
         {
             var filepath = _root + path;
             if (IsVirtualFile(path))
@@ -245,9 +245,9 @@ namespace Mozi.HttpEmbedded.Source
         /// <param name="offset"></param>
         /// <param name="end"></param>
         /// <returns></returns>
-        public byte[] Load(string path,string ext,int offset,int end)
+        public byte[] Load(string path, string ext, int offset, int end)
         {
-            if (end > offset&&offset>=0)
+            if (end > offset && offset >= 0)
             {
                 var filepath = _root + path;
                 if (IsVirtualFile(path))

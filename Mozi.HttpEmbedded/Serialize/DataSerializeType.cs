@@ -8,6 +8,6 @@
         Customize = -1,
         XML = 0,
         JSON = 1,
-        ProtoBuf=2
+        ProtoBuf = 2
     }
 }

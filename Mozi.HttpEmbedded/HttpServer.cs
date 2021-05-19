@@ -23,10 +23,10 @@ namespace Mozi.HttpEmbedded
     public class HttpServer
     {
 
-        private readonly SocketServer _sc=new SocketServer();
+        private readonly SocketServer _sc = new SocketServer();
         private WebDav.DavServer _davserver;
 
-        private int _port=80;
+        private int _port = 80;
         private int _iporthttps = 443;
         private long _maxFileSize = 10 * 1024 * 1024;
         private long _maxRequestSize = 10 * 1024 * 1024;
@@ -40,9 +40,9 @@ namespace Mozi.HttpEmbedded
 
         //允许和公开的方法
         private RequestMethod[] MethodAllow = new RequestMethod[] { RequestMethod.OPTIONS, RequestMethod.TRACE, RequestMethod.GET, RequestMethod.HEAD, RequestMethod.POST, RequestMethod.COPY, RequestMethod.PROPFIND, RequestMethod.LOCK, RequestMethod.UNLOCK };
-        
+
         private RequestMethod[] MethodPublic = new RequestMethod[] { RequestMethod.OPTIONS, RequestMethod.GET, RequestMethod.HEAD, RequestMethod.PROPFIND, RequestMethod.PROPPATCH, RequestMethod.MKCOL, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.COPY, RequestMethod.MOVE, RequestMethod.LOCK, RequestMethod.UNLOCK };
-        
+
         //证书管理器
         private CertManager _certMg;
         //HTTPS开启标识
@@ -52,7 +52,7 @@ namespace Mozi.HttpEmbedded
         /// <summary>
         /// 支持的HTTP服务协议版本
         /// </summary>
-        public HttpVersion  ProtocolVersion { get; set; }
+        public HttpVersion ProtocolVersion { get; set; }
         /// <summary>
         /// 是否使用基本认证
         /// </summary>
@@ -60,7 +60,7 @@ namespace Mozi.HttpEmbedded
         /// <summary>
         /// 认证器
         /// </summary>
-        private Authenticator Auth { get;  set; }
+        private Authenticator Auth { get; set; }
         /// <summary>
         /// 是否启用访问控制 IP策略
         /// </summary>
@@ -94,7 +94,8 @@ namespace Mozi.HttpEmbedded
         /// </summary>
         internal int PortHTTPS
         {
-            get { return _iporthttps; } private set { _iporthttps = value; }
+            get { return _iporthttps; }
+            private set { _iporthttps = value; }
         }
         /// <summary>
         /// 时区
@@ -129,8 +130,8 @@ namespace Mozi.HttpEmbedded
             StartTime = DateTime.MinValue;
             this.Timezone = System.TimeZone.CurrentTimeZone.GetUtcOffset(DateTime.Now).Hours.ToString();
             //配置默认服务器名
-            _serverName = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name+ "/" + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
-            Auth =new Authenticator();
+            _serverName = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name + "/" + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            Auth = new Authenticator();
             _sc.OnServerStart += _sc_OnServerStart;
             _sc.OnClientConnect += _sc_OnClientConnect;
             _sc.OnReceiveStart += _sc_OnReceiveStart;
@@ -144,7 +145,7 @@ namespace Mozi.HttpEmbedded
         /// <param name="args"></param>
         void _sc_OnReceiveStart(object sender, DataTransferArgs args)
         {
-           
+
         }
         /// <summary>
         /// 服务器关闭事件
@@ -153,7 +154,7 @@ namespace Mozi.HttpEmbedded
         /// <param name="args"></param>
         void _sc_AfterServerStop(object sender, ServerArgs args)
         {
-            
+
         }
         //TODO 响应码处理有问题
         /// <summary>
@@ -163,8 +164,8 @@ namespace Mozi.HttpEmbedded
         /// <param name="args"></param>
         void _sc_AfterReceiveEnd(object sender, DataTransferArgs args)
         {
-            HttpContext context=new HttpContext();
-            context.Response=new HttpResponse();
+            HttpContext context = new HttpContext();
+            context.Response = new HttpResponse();
             StatusCode sc = StatusCode.Success;
             //如果启用了访问IP黑名单控制
             if (EnableAccessControl && CheckIfBlocked(args.IP))
@@ -215,7 +216,8 @@ namespace Mozi.HttpEmbedded
                     string doc = DocLoader.Load("Error.html");
                     PageCreator pc = new PageCreator();
                     pc.LoadFromText(doc);
-                    pc.SetParameter("Error", new {
+                    pc.SetParameter("Error", new
+                    {
                         Code = StatusCode.InternalServerError.Code.ToString(),
                         Title = StatusCode.InternalServerError.Text,
                         Time = DateTime.Now.ToUniversalTime().ToString("r"),
@@ -243,10 +245,10 @@ namespace Mozi.HttpEmbedded
                 //处理压缩
                 var body = context.Response.Body;
                 //判断客户机支持的压缩类型
-                var acceptEncoding = context.Request.Headers.GetValue(HeaderProperty.AcceptEncoding.PropertyName)?? "";
+                var acceptEncoding = context.Request.Headers.GetValue(HeaderProperty.AcceptEncoding.PropertyName) ?? "";
                 var acceptEncodings = acceptEncoding.Split(new string[] { ", " }, StringSplitOptions.RemoveEmptyEntries).ToList();
                 //忽略对媒体类型的压缩
-                if (EnableCompress && !Mime.IsMedia(context.Response.ContentType)&&acceptEncodings.Contains("gzip"))
+                if (EnableCompress && !Mime.IsMedia(context.Response.ContentType) && acceptEncodings.Contains("gzip"))
                 {
                     if (body.Length > ZipOption.MinContentLength)
                     {
@@ -276,7 +278,7 @@ namespace Mozi.HttpEmbedded
             }
             else
             {
-                context.Response.AddHeader(HeaderProperty.WWWAuthenticate, string.Format("{0} realm=\"{1}\"", Auth.AuthType.Name,AuthorizationType.REALM));
+                context.Response.AddHeader(HeaderProperty.WWWAuthenticate, string.Format("{0} realm=\"{1}\"", Auth.AuthType.Name, AuthorizationType.REALM));
                 return StatusCode.Unauthorized;
             }
         }
@@ -294,7 +296,7 @@ namespace Mozi.HttpEmbedded
             {
                 return HandleRequestOptions(ref context);
             }
-            if (method == RequestMethod.GET || method == RequestMethod.POST || method == RequestMethod.HEAD||method==RequestMethod.PUT ||method == RequestMethod.DELETE||method==RequestMethod.TRACE||method==RequestMethod.CONNECT)
+            if (method == RequestMethod.GET || method == RequestMethod.POST || method == RequestMethod.HEAD || method == RequestMethod.PUT || method == RequestMethod.DELETE || method == RequestMethod.TRACE || method == RequestMethod.CONNECT)
             {
                 StaticFiles st = StaticFiles.Default;
                 var path = context.Request.Path;
@@ -313,7 +315,7 @@ namespace Mozi.HttpEmbedded
                         VersionName = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString(),
                     });
                     pc.Prepare();
-                    
+
                     context.Response.Write(pc.GetBuffer());
                     context.Response.SetContentType(Mime.GetContentType("html"));
                     return StatusCode.Success;
@@ -323,8 +325,8 @@ namespace Mozi.HttpEmbedded
                 {
                     //响应静态文件
                     if (st.Exists(path, ""))
-                    {               
-                        string ifmodifiedsince =context.Request.Headers.GetValue(HeaderProperty.IfModifiedSince.PropertyName);
+                    {
+                        string ifmodifiedsince = context.Request.Headers.GetValue(HeaderProperty.IfModifiedSince.PropertyName);
                         if (st.CheckIfModified(path, ifmodifiedsince))
                         {
                             DateTime dtModified = st.GetLastModified(path).ToUniversalTime();
@@ -379,7 +381,7 @@ namespace Mozi.HttpEmbedded
             RequestMethod method = context.Request.Method;
             if (EnableWebDav)
             {
-               return _davserver.ProcessRequest(ref context);
+                return _davserver.ProcessRequest(ref context);
             }
             return StatusCode.Forbidden;
             //RequestMethod.PROPFIND,RequestMethod.PROPPATCH RequestMethod.MKCOL RequestMethod.COPY RequestMethod.MOVE RequestMethod.LOCK RequestMethod.UNLOCK
@@ -406,10 +408,10 @@ namespace Mozi.HttpEmbedded
         /// <param name="context"></param>
         private StatusCode HandleRequestRoutePages(ref HttpContext context)
         {
-            Router router=Router.Default;
+            Router router = Router.Default;
             if (router.Match(context.Request.Path) != null)
             {
-                object result=null;
+                object result = null;
                 result = router.Invoke(context);
                 if (result != null)
                 {
@@ -421,7 +423,7 @@ namespace Mozi.HttpEmbedded
                     return StatusCode.InternalServerError;
                 }
             }
-            return StatusCode.NotFound; 
+            return StatusCode.NotFound;
         }
 
         void _sc_OnServerStart(object sender, ServerArgs args)
@@ -498,7 +500,7 @@ namespace Mozi.HttpEmbedded
         /// <param name="name"></param>
         /// <param name="path"></param>
         /// <returns></returns>
-        public HttpServer SetVirtualDirectory(string name,string path)
+        public HttpServer SetVirtualDirectory(string name, string path)
         {
             if (StaticFiles.Default.Enabled)
             {
@@ -519,7 +521,7 @@ namespace Mozi.HttpEmbedded
             {
                 _davserver = new WebDav.DavServer();
                 _davserver.SetStore(root);
-             }
+            }
             return this;
         }
         //TODO 实现一个反向代理服务
@@ -558,7 +560,7 @@ namespace Mozi.HttpEmbedded
         {
             _serverName = serverName;
             return this;
-        }        
+        }
         //TODO HTTPS
         internal HttpServer UseHttps()
         {
@@ -576,7 +578,7 @@ namespace Mozi.HttpEmbedded
         /// </param>
         /// <param name="password">证书密码</param>
         /// <returns></returns>
-        public HttpServer SetCertification(string filePath,string password)
+        public HttpServer SetCertification(string filePath, string password)
         {
             throw new NotImplementedException();
         }

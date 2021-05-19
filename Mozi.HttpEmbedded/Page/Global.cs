@@ -43,7 +43,8 @@ namespace Mozi.HttpEmbedded.Page
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        public object this[string key]{
+        public object this[string key]
+        {
             get
             {
                 return Get(key);

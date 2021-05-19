@@ -35,7 +35,7 @@ namespace Mozi.HttpEmbedded
         /// <returns></returns>
         public string GetValue(string key)
         {
-            return HeaderData.ContainsKey(key)?HeaderData[key]:null;
+            return HeaderData.ContainsKey(key) ? HeaderData[key] : null;
         }
         /// <summary>
         /// 增加头部信息
@@ -43,7 +43,7 @@ namespace Mozi.HttpEmbedded
         /// <param name="key"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public  TransformHeader Add(string key, string value)
+        public TransformHeader Add(string key, string value)
         {
             if (HeaderData.ContainsKey(key))
             {
@@ -62,7 +62,7 @@ namespace Mozi.HttpEmbedded
         /// <returns></returns>
         public TransformHeader Add(HeaderProperty header, string value)
         {
-            Add(header.PropertyName,value);
+            Add(header.PropertyName, value);
             return this;
         }
         /// <summary>
@@ -71,16 +71,16 @@ namespace Mozi.HttpEmbedded
         /// <returns></returns>
         public byte[] GetBuffer()
         {
-            List<byte> buffer=new List<byte>();
+            List<byte> buffer = new List<byte>();
             foreach (var item in HeaderData)
             {
-                buffer.AddRange(Encoding.UTF8.GetBytes(string.Format("{0}: {1}",item.Key,item.Value)));
+                buffer.AddRange(Encoding.UTF8.GetBytes(string.Format("{0}: {1}", item.Key, item.Value)));
                 buffer.AddRange(Carriage);
             }
             return buffer.ToArray();
         }
 
-        public  string this[string key]
+        public string this[string key]
         {
             get { return HeaderData[key]; }
             set { HeaderData[key] = value; }

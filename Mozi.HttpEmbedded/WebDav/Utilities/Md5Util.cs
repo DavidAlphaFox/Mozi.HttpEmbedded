@@ -9,11 +9,11 @@ namespace Mozi.HttpEmbedded.WebDav.Utilities
     {
         public static string Md5Hash4Utf8String(string s)
         {
-            byte[] bytes =StringEncoder.Encode(s);
+            byte[] bytes = StringEncoder.Encode(s);
 
             MD5 md5 = MD5.Create();
             byte[] hashBytes = md5.ComputeHash(bytes);
- 
+
             return HexStringFromBytes(hashBytes);
         }
         public static string HexStringFromBytes(byte[] bytes)

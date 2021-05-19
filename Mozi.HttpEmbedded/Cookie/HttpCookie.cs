@@ -12,24 +12,24 @@ namespace Mozi.HttpEmbedded.Cookie
     /// </remarks>
     public class HttpCookie
     {
-         public string Name           { get; set; }
-         public string Value          { get; set; }
-         [Obsolete("HTTP/1.1不再使用此值")]
-         public string Expires        { get; set; }
-         public int    MaxAge         { get; set; }
-         public string Path           { get; set; }
-         public string Domain         { get; set; }
-         public SameSiteMode SameSite { get; set; }
-         public bool   Secure         { get; set; }
-         public bool   HttpOnly       { get; set; }
-         //Secure和HttpOnly
+        public string Name { get; set; }
+        public string Value { get; set; }
+        [Obsolete("HTTP/1.1不再使用此值")]
+        public string Expires { get; set; }
+        public int MaxAge { get; set; }
+        public string Path { get; set; }
+        public string Domain { get; set; }
+        public SameSiteMode SameSite { get; set; }
+        public bool Secure { get; set; }
+        public bool HttpOnly { get; set; }
+        //Secure和HttpOnly
 
         public HttpCookie()
         {
-            
+
         }
 
-        public HttpCookie(string name,string value)
+        public HttpCookie(string name, string value)
         {
             Name = name;
             Value = value;
@@ -40,26 +40,26 @@ namespace Mozi.HttpEmbedded.Cookie
         /// <returns></returns>
         public override string ToString()
         {
-           List<string> data = new List<string> {string.Format("{0}={1}", Name, Value)};
-           if (MaxAge != 0)
-           {
-               data.Add(string.Format("max-age={0}",MaxAge)); 
-           }
-           data.Add(string.Format("path={0}",Path??"/"));
-           data.Add(string.Format("domain={0}",Domain??""));
-           if (SameSite != SameSiteMode.None)
-           {
-               data.Add(string.Format("SameSite={0}",Enum.GetName(typeof(SameSiteMode),SameSite)));
-           }
-           if (Secure)
-           {
-               data.Add("Secure");
-           }
-           if (HttpOnly)
-           {
-               data.Add("HttpOnly");
-           }
-           return string.Join(new string(new []{(char)ASCIICode.SPACE,(char)ASCIICode.SEMICOLON}), data);
+            List<string> data = new List<string> { string.Format("{0}={1}", Name, Value) };
+            if (MaxAge != 0)
+            {
+                data.Add(string.Format("max-age={0}", MaxAge));
+            }
+            data.Add(string.Format("path={0}", Path ?? "/"));
+            data.Add(string.Format("domain={0}", Domain ?? ""));
+            if (SameSite != SameSiteMode.None)
+            {
+                data.Add(string.Format("SameSite={0}", Enum.GetName(typeof(SameSiteMode), SameSite)));
+            }
+            if (Secure)
+            {
+                data.Add("Secure");
+            }
+            if (HttpOnly)
+            {
+                data.Add("HttpOnly");
+            }
+            return string.Join(new string(new[] { (char)ASCIICode.SPACE, (char)ASCIICode.SEMICOLON }), data);
         }
     }
     /// <summary>
@@ -121,7 +121,7 @@ namespace Mozi.HttpEmbedded.Cookie
             }
             else
             {
-                _data.Add(name,value);
+                _data.Add(name, value);
             }
         }
         /// <summary>
@@ -132,11 +132,11 @@ namespace Mozi.HttpEmbedded.Cookie
         public static RequestCookie Parse(string data)
         {
             RequestCookie hc = new RequestCookie();
-            string[] kps = data.Split(new string[] {"; "}, StringSplitOptions.RemoveEmptyEntries);
+            string[] kps = data.Split(new string[] { "; " }, StringSplitOptions.RemoveEmptyEntries);
             foreach (var kp in kps)
             {
                 var startIndex = kp.IndexOf((char)ASCIICode.EQUAL);
-                hc.Append(kp.Substring(0,startIndex),kp.Substring(startIndex+1));
+                hc.Append(kp.Substring(0, startIndex), kp.Substring(startIndex + 1));
             }
             return hc;
         }
@@ -149,7 +149,7 @@ namespace Mozi.HttpEmbedded.Cookie
             List<byte> data = new List<byte>();
             foreach (var cookie in _data)
             {
-                data.AddRange(StringEncoder.Encode(string.Format("{0}: {1}={2}", HeaderProperty.Cookie.PropertyName, cookie.Key,cookie.Value)));
+                data.AddRange(StringEncoder.Encode(string.Format("{0}: {1}={2}", HeaderProperty.Cookie.PropertyName, cookie.Key, cookie.Value)));
                 data.AddRange(TransformHeader.Carriage);
             }
             return data;
@@ -207,10 +207,10 @@ namespace Mozi.HttpEmbedded.Cookie
         /// <returns></returns>
         public List<byte> GetBuffer()
         {
-            List<byte> data=new List<byte>();
+            List<byte> data = new List<byte>();
             foreach (var cookie in _cookies)
             {
-                data.AddRange(StringEncoder.Encode(string.Format("{0}: {1}",HeaderProperty.SetCookie.PropertyName, cookie.ToString())));
+                data.AddRange(StringEncoder.Encode(string.Format("{0}: {1}", HeaderProperty.SetCookie.PropertyName, cookie.ToString())));
                 data.AddRange(TransformHeader.Carriage);
             }
             return data;

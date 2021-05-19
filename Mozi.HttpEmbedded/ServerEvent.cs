@@ -3,40 +3,41 @@ using System.Net.Sockets;
 
 namespace Mozi.HttpEmbedded
 {
-     public delegate void ServerStart(object sender, ServerArgs args);
+    public delegate void ServerStart(object sender, ServerArgs args);
 
-     public delegate void AfterServerStop(object sender, ServerArgs args);
+    public delegate void AfterServerStop(object sender, ServerArgs args);
 
-     public delegate void ClientDisConnect(object sender, ClientConnectArgs ars);
+    public delegate void ClientDisConnect(object sender, ClientConnectArgs ars);
 
-     public delegate void ClientConnect(object sender, ClientConnectArgs args);
+    public delegate void ClientConnect(object sender, ClientConnectArgs args);
 
-     public delegate void ReceiveStart(object sender, DataTransferArgs args);
+    public delegate void ReceiveStart(object sender, DataTransferArgs args);
 
-     public delegate void ReceiveEnd(object sender, DataTransferArgs args);
-     
-     public class ServerArgs:EventArgs{
+    public delegate void ReceiveEnd(object sender, DataTransferArgs args);
 
-         public DateTime StartTime { get; set; }
-         public DateTime StopTime  { get; set; }
-     }
-     
-     public class ClientConnectArgs:EventArgs 
-     {
-         private Socket _socket;
+    public class ServerArgs : EventArgs
+    {
 
-         public Socket Client 
-         {
-             get { return _socket; }
-             set { _socket = value; }
-         }
+        public DateTime StartTime { get; set; }
+        public DateTime StopTime { get; set; }
+    }
 
-     }
+    public class ClientConnectArgs : EventArgs
+    {
+        private Socket _socket;
 
-     public class DataTransferArgs:EventArgs 
-     {
+        public Socket Client
+        {
+            get { return _socket; }
+            set { _socket = value; }
+        }
+
+    }
+
+    public class DataTransferArgs : EventArgs
+    {
         public byte[] Data { get; set; }
-         //IPV4
+        //IPV4
         public string IP { get; set; }
         public int Port { get; set; }
         public Socket Socket { get; set; }
@@ -45,18 +46,18 @@ namespace Mozi.HttpEmbedded
 
         ~DataTransferArgs()
         {
-             Data = null;
+            Data = null;
         }
-     }
-     /// <summary>
-     /// 客户端访问
-     /// </summary>
-     public class ClientAccessArgs : EventArgs
-     {
-        public string Path  { get; set; }
+    }
+    /// <summary>
+    /// 客户端访问
+    /// </summary>
+    public class ClientAccessArgs : EventArgs
+    {
+        public string Path { get; set; }
         public string Query { get; set; }
         public string IP { get; set; }
         public int StatusCode { get; set; }
         public string Message { get; set; }
-     }
+    }
 }

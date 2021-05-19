@@ -433,7 +433,7 @@ namespace Mozi.HttpEmbedded.Source
         {
             if (!Types.ContainsKey(ext))
             {
-                Types.Add(ext,contentType);
+                Types.Add(ext, contentType);
             }
         }
         /// <summary>
@@ -451,7 +451,7 @@ namespace Mozi.HttpEmbedded.Source
         /// <returns></returns>
         public static string GetContentType(string ext)
         {
-            if (string.IsNullOrEmpty(ext)||!Types.ContainsKey(ext))
+            if (string.IsNullOrEmpty(ext) || !Types.ContainsKey(ext))
             {
                 return Default;
             }

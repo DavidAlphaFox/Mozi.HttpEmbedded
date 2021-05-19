@@ -18,7 +18,7 @@ namespace Mozi.HttpEmbedded.Compress
             //Transform string into byte[]    
             byte[] byteArray;
             MemoryStream ms = new MemoryStream();
-            GZipStream sw = new GZipStream(ms,CompressionMode.Compress);
+            GZipStream sw = new GZipStream(ms, CompressionMode.Compress);
             sw.Write(value, 0, value.Length);
             sw.Flush();
             sw.Dispose();
@@ -36,8 +36,8 @@ namespace Mozi.HttpEmbedded.Compress
         {
             byte[] byteArray;
             MemoryStream ms = new MemoryStream(value);
-            MemoryStream msOut=new MemoryStream();
-            GZipStream sr = new GZipStream(ms,CompressionMode.Decompress);
+            MemoryStream msOut = new MemoryStream();
+            GZipStream sr = new GZipStream(ms, CompressionMode.Decompress);
             sr.CopyTo(msOut);
             sr.Dispose();
             byteArray = msOut.ToArray();

@@ -17,7 +17,7 @@ namespace Mozi.HttpEmbedded
         protected int _iport = 80;
 
         protected int _maxListenCount = 100;
-        protected readonly ConcurrentDictionary<string,Socket> _socketDocker;
+        protected readonly ConcurrentDictionary<string, Socket> _socketDocker;
         protected Socket _sc;
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace Mozi.HttpEmbedded
             get { return _sc; }
         }
 
-        public SocketServer() 
+        public SocketServer()
         {
             _socketDocker = new ConcurrentDictionary<string, Socket>();
         }
@@ -82,31 +82,31 @@ namespace Mozi.HttpEmbedded
             //允许端口复用
             _sc.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
             _sc.Bind(endpoint);
-            _sc.Listen(_maxListenCount);            
+            _sc.Listen(_maxListenCount);
             //回调服务器启动事件
-            if (OnServerStart != null) 
+            if (OnServerStart != null)
             {
-                OnServerStart(this, new ServerArgs() { StartTime=DateTime.Now,StopTime=DateTime.MinValue });
+                OnServerStart(this, new ServerArgs() { StartTime = DateTime.Now, StopTime = DateTime.MinValue });
             }
             _sc.BeginAccept(new AsyncCallback(CallbackAccept), _sc);
         }
         /// <summary>
         /// 关闭服务器
         /// </summary>
-        public void StopServer() 
+        public void StopServer()
         {
             _socketDocker.Clear();
             try
             {
                 _sc.Shutdown(SocketShutdown.Both);
-                if (AfterServerStop != null) 
+                if (AfterServerStop != null)
                 {
                     AfterServerStop(_sc, null);
                 }
             }
-            catch 
-            { 
-            
+            catch
+            {
+
             }
         }
         /// <summary>
@@ -120,14 +120,15 @@ namespace Mozi.HttpEmbedded
             //接受新连接传入
             server.BeginAccept(CallbackAccept, server);
 
-            if (OnClientConnect != null) 
+            if (OnClientConnect != null)
             {
-                OnClientConnect.BeginInvoke(this, new ClientConnectArgs() { 
-                    Client=client
-                },null,null);
+                OnClientConnect.BeginInvoke(this, new ClientConnectArgs()
+                {
+                    Client = client
+                }, null, null);
             }
-            StateObject so = new StateObject() 
-            { 
+            StateObject so = new StateObject()
+            {
                 WorkSocket = client,
                 Id = Guid.NewGuid().ToString(),
                 IP = ((System.Net.IPEndPoint)client.RemoteEndPoint).Address.ToString(),
@@ -142,7 +143,7 @@ namespace Mozi.HttpEmbedded
                     OnReceiveStart.BeginInvoke(this, new DataTransferArgs(), null, null);
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 var ex2 = ex;
             }
@@ -158,15 +159,18 @@ namespace Mozi.HttpEmbedded
             if (client.Connected)
             {
                 int iByteRead = client.EndReceive(iar);
-                   
-                if (iByteRead >0)
+
+                if (iByteRead > 0)
                 {
                     //置空数据连接
                     so.ResetBuffer(iByteRead);
-                    if (client.Available > 0){
+                    if (client.Available > 0)
+                    {
                         //Thread.Sleep(10);
                         client.BeginReceive(so.Buffer, 0, so.Buffer.Length, SocketFlags.None, CallbackReceive, so);
-                    }else{
+                    }
+                    else
+                    {
                         InvokeAfterReceiveEnd(so, client);
                     }
                 }
@@ -175,13 +179,13 @@ namespace Mozi.HttpEmbedded
                     InvokeAfterReceiveEnd(so, client);
                 }
             }
-            else 
+            else
             {
                 InvokeAfterReceiveEnd(so, client);
             }
         }
-        private void InvokeAfterReceiveEnd(StateObject so,Socket client)
-        { 
+        private void InvokeAfterReceiveEnd(StateObject so, Socket client)
+        {
             RemoveClientSocket(so);
             if (AfterReceiveEnd != null)
             {
@@ -192,9 +196,9 @@ namespace Mozi.HttpEmbedded
                         IP = so.IP,
                         Port = so.RemotePort,
                         Socket = so.WorkSocket,
-                        Client=client,
-                        State=so
-                    }, null, null) ;
+                        Client = client,
+                        State = so
+                    }, null, null);
             }
         }
         //TODO 此处开启Socket状态监听，对断开的链接进行关闭销毁

@@ -14,7 +14,7 @@
     /// </summary>
     public enum UserGroup
     {
-        User=0,
-        Admin=1 //管理组
-    } 
+        User = 0,
+        Admin = 1 //管理组
+    }
 }

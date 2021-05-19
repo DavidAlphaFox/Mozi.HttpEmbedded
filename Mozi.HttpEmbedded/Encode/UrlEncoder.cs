@@ -9,10 +9,10 @@ namespace Mozi.HttpEmbedded.Encode
     /// </summary>
     public static class UrlEncoder
     {
-        private static readonly char[] From = { ' ', '"','#','%','&','(', ')', '+',',','/',':', ';','<','=', '>','?', '@','\\','|' };
+        private static readonly char[] From = { ' ', '"', '#', '%', '&', '(', ')', '+', ',', '/', ':', ';', '<', '=', '>', '?', '@', '\\', '|' };
 
-        private static readonly string[] To = { "%20", "%22", "%23", "%25", "%26", "%28", "%29", "%2B", "%2C", "%2F", "%3A", "%3B", "%3C", "%3D", "%3E","%3F", "%40", "%5C", "%7C"};
-        
+        private static readonly string[] To = { "%20", "%22", "%23", "%25", "%26", "%28", "%29", "%2B", "%2C", "%2F", "%3A", "%3B", "%3C", "%3D", "%3E", "%3F", "%40", "%5C", "%7C" };
+
         /// <summary>
         /// URLÌØÊâ×Ö·û½âÂë
         /// </summary>
@@ -55,7 +55,7 @@ namespace Mozi.HttpEmbedded.Encode
         public static Dictionary<string, string> ParseQuery(string data)
         {
             data = Decode(data);
-            Dictionary<string, string> res=new Dictionary<string, string>();
+            Dictionary<string, string> res = new Dictionary<string, string>();
             string[] querys = data.Split(new[] { (char)ASCIICode.AND }, StringSplitOptions.RemoveEmptyEntries);
             foreach (var item in querys)
             {

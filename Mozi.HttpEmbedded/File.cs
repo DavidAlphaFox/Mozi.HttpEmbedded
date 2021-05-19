@@ -7,27 +7,27 @@ namespace Mozi.HttpEmbedded
     /// </summary>
     public class File
     {
-        public string FileName  { get; set; }
+        public string FileName { get; set; }
         public string FieldName { get; set; }
-        public int FileIndex    { get; set; }
-        public byte[] FileData  { get; set; }
+        public int FileIndex { get; set; }
+        public byte[] FileData { get; set; }
     }
     /// <summary>
     /// 文件集合
     /// </summary>
     public class FileCollection
     {
-        private readonly List<File> _files=new List<File>();
+        private readonly List<File> _files = new List<File>();
 
-        public File this[string name] { get { return GetFile(name); } }        
-        public File this[int ind]{  get { return _files[ind]; }}
+        public File this[string name] { get { return GetFile(name); } }
+        public File this[int ind] { get { return _files[ind]; } }
 
         /// <summary>
         /// 文件集合
         /// </summary>
         public List<File> Files { get { return _files; } }
 
-        public int Length { get { return _files.Count; }}
+        public int Length { get { return _files.Count; } }
 
         public File GetFile(string name)
         {

@@ -13,14 +13,14 @@ namespace Mozi.HttpEmbedded.Auth
     /// </summary>
     public class Authenticator
     {
-        private readonly List<User> _users=new List<User>(); 
+        private readonly List<User> _users = new List<User>();
 
         public AuthorizationType AuthType { get; private set; }
 
         public virtual bool Check(string data)
         {
-            string authHead = data.Substring(0,data.IndexOf((char)ASCIICode.SPACE));
-            string authBody = data.Substring(data.IndexOf((char) ASCIICode.SPACE) + 1);
+            string authHead = data.Substring(0, data.IndexOf((char)ASCIICode.SPACE));
+            string authBody = data.Substring(data.IndexOf((char)ASCIICode.SPACE) + 1);
             AuthorizationType authType = AbsClassEnum.Get<AuthorizationType>(authHead);
 
             if (authType != null)
@@ -28,7 +28,7 @@ namespace Mozi.HttpEmbedded.Auth
                 if (authType.Equals(AuthorizationType.Basic))
                 {
                     string userinfo = Base64.From(authBody);
-                    var indBnd = userinfo.IndexOf((char) ASCIICode.COLON);
+                    var indBnd = userinfo.IndexOf((char)ASCIICode.COLON);
                     string username = userinfo.Substring(0, indBnd);
                     string password = userinfo.Substring(indBnd + 1);
                     return IsValidUser(username, password);
@@ -48,7 +48,7 @@ namespace Mozi.HttpEmbedded.Auth
         /// <returns></returns>
         private bool IsValidUser(string userName, string userPassword)
         {
-            return _users.Any(x =>x.UserGroup==UserGroup.Admin&& x.UserName.Equals(userName) && x.Password.Equals(userPassword));
+            return _users.Any(x => x.UserGroup == UserGroup.Admin && x.UserName.Equals(userName) && x.Password.Equals(userPassword));
         }
         /// <summary>
         /// 设置认证类型
@@ -72,7 +72,7 @@ namespace Mozi.HttpEmbedded.Auth
             var user = _users.Find(x => x.UserName.Equals(userName));
             if (user == null)
             {
-                _users.Add(new User() {UserName = userName, Password = userPassword,UserGroup=UserGroup.Admin});
+                _users.Add(new User() { UserName = userName, Password = userPassword, UserGroup = UserGroup.Admin });
             }
             else
             {
@@ -88,24 +88,24 @@ namespace Mozi.HttpEmbedded.Auth
         /// <summary>
         /// 质询要素
         /// </summary>
-        public  string[] ElementsChallenge;
+        public string[] ElementsChallenge;
         /// <summary>
         /// 响应要素
         /// </summary>
-        public  string[] ElementsResponse;
+        public string[] ElementsResponse;
 
-        public readonly Dictionary<string,object>  Challenge=new Dictionary<string, object>();
+        public readonly Dictionary<string, object> Challenge = new Dictionary<string, object>();
 
-        public  Dictionary<string,object> Response = new Dictionary<string, object>();
+        public Dictionary<string, object> Response = new Dictionary<string, object>();
 
-        public  abstract AuthDatagraph Parse(string data);
+        public abstract AuthDatagraph Parse(string data);
         /// <summary>
         /// 设置质询要素
         /// </summary>
         /// <param name="key"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public AuthDatagraph SetClgElement(string key,object value)
+        public AuthDatagraph SetClgElement(string key, object value)
         {
             if (Challenge.ContainsKey(key))
             {
@@ -113,17 +113,17 @@ namespace Mozi.HttpEmbedded.Auth
             }
             else
             {
-                Challenge.Add(key,value);
+                Challenge.Add(key, value);
             }
             return this;
         }
 
         public string GetChallenge()
         {
-            List<string> clgs=new List<string>();
+            List<string> clgs = new List<string>();
             foreach (var o in Challenge)
             {
-                clgs.Add(string.Format("{0}=\"{1}\"",o.Key,o.Value));
+                clgs.Add(string.Format("{0}=\"{1}\"", o.Key, o.Value));
             }
             var clg = string.Format("{0} {1}", this.GetType().Name, string.Join(",", clgs));
             return clg;
@@ -147,7 +147,7 @@ namespace Mozi.HttpEmbedded.Auth
     ///// </summary>
     //public class Basic : AuthDatagraph
     //{
-        
+
     //    /// <summary>
     //    /// 取得返回字符串
     //    /// </summary>

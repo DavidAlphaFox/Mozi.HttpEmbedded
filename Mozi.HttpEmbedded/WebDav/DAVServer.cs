@@ -9,9 +9,9 @@ namespace Mozi.HttpEmbedded.WebDav
     /// <summary>
     /// WebDAV服务器
     /// </summary>
-    public class DavServer 
+    public class DavServer
     {
-        private  IWebDavStore _store;
+        private IWebDavStore _store;
         /// <summary>
         /// WEBDAV 方法列表
         /// </summary>

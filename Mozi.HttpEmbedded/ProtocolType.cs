@@ -7,8 +7,8 @@ namespace Mozi.HttpEmbedded
     /// </summary>
     public class ProtocolType : AbsClassEnum
     {
-        public static  ProtocolType HTTP  = new ProtocolType("HTTP");
-        public static  ProtocolType HTTPS = new ProtocolType("HTTPS");
+        public static ProtocolType HTTP = new ProtocolType("HTTP");
+        public static ProtocolType HTTPS = new ProtocolType("HTTPS");
 
         private string _protocol;
 

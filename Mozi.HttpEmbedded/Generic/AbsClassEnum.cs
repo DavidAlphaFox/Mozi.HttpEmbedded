@@ -14,18 +14,18 @@ namespace Mozi.HttpEmbedded.Generic
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        public static T Get<T>(string name) where T:AbsClassEnum
+        public static T Get<T>(string name) where T : AbsClassEnum
         {
             //T t = Activator.CreateInstance<T>();
             FieldInfo[] pis = typeof(T).GetFields(BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Static);
             foreach (var info in pis)
             {
-                object oc =info.GetValue(null);
+                object oc = info.GetValue(null);
                 if (oc != null)
                 {
-                    if (((T)oc).Tag.Equals(name,StringComparison.OrdinalIgnoreCase))
+                    if (((T)oc).Tag.Equals(name, StringComparison.OrdinalIgnoreCase))
                     {
-                      return (T)oc;
+                        return (T)oc;
                     };
                 }
             }

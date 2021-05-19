@@ -7,7 +7,7 @@
     {
         public ContentEncoding CompressType { get; set; }
         public int MinContentLength { get; set; }
-        public int CompressLevel    { get; set; }
+        public int CompressLevel { get; set; }
         /// <summary>
         /// 启用压缩的MIME类型
         /// </summary>
