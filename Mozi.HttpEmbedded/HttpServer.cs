@@ -213,15 +213,19 @@ namespace Mozi.HttpEmbedded
                     #region 测试片段，模板引擎开发好以后注释掉
 
                     string doc = DocLoader.Load("Error.html");
-                    doc = doc.Replace("${Error.Code}", StatusCode.InternalServerError.Code.ToString());
-                    doc = doc.Replace("${Error.Title}", StatusCode.InternalServerError.Text);
-                    doc = doc.Replace("${Error.Time}", DateTime.Now.ToUniversalTime().ToString("r"));
-                    doc = doc.Replace("${Error.Description}", ex.Message);
-                    doc = doc.Replace("${Error.Source}", ex.StackTrace ?? ex.StackTrace.ToString());
-
+                    PageCreator pc = new PageCreator();
+                    pc.LoadFromText(doc);
+                    pc.SetParameter("Error", new {
+                        Code = StatusCode.InternalServerError.Code.ToString(),
+                        Title = StatusCode.InternalServerError.Text,
+                        Time = DateTime.Now.ToUniversalTime().ToString("r"),
+                        Description = ex.Message,
+                        Source = ex.StackTrace ?? ex.StackTrace.ToString(),
+                    });
+                    pc.Prepare();
                     #endregion
 
-                    context.Response.Write(doc);
+                    context.Response.Write(pc.GetBuffer());
                     context.Response.SetContentType(Mime.GetContentType("html"));
                     sc = StatusCode.InternalServerError;
                     Log.Error(ex.Message + ":" + ex.StackTrace ?? "");
@@ -302,8 +306,15 @@ namespace Mozi.HttpEmbedded
                 if (context.Request.Path == "/")
                 {
                     var doc = DocLoader.Load("DefaultHome.html");
-                    doc = doc.Replace("${Info.VersionName}", System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());
-                    context.Response.Write(doc);
+                    PageCreator pc = new PageCreator();
+                    pc.LoadFromText(doc);
+                    pc.SetParameter("Info", new
+                    {
+                        VersionName = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString(),
+                    });
+                    pc.Prepare();
+                    
+                    context.Response.Write(pc.GetBuffer());
                     context.Response.SetContentType(Mime.GetContentType("html"));
                     return StatusCode.Success;
                 }

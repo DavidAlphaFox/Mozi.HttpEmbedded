@@ -10,7 +10,7 @@ namespace Mozi.HttpEmbedded.Page
     /// <summary>
     /// 内置接口 API接口使用示范 
     /// </summary>
-    public class System:BaseApi
+    public class Runtime:BaseApi
     {
         /// <summary>
         /// 无参方法
