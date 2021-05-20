@@ -73,6 +73,7 @@
     <Compile Include="Cookie\CookieManager.cs" />
     <Compile Include="Document\DocLoader.cs" />
     <Compile Include="Encode\HtmlEncoder.cs" />
+    <Compile Include="Languages.cs" />
     <Compile Include="Serialize\ISerializer.cs" />
     <Compile Include="Encode\UrlEncoder.cs" />
     <Compile Include="Generic\AbsClassEnum.cs" />

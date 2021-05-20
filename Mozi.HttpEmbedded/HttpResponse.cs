@@ -14,7 +14,7 @@ namespace Mozi.HttpEmbedded
         private byte[] _body = new byte[0];
         private string _contentType = "text/plain";
         /// <summary>
-        /// 协议版本
+        /// HTTP协议版本
         /// </summary>
         public HttpVersion ProtocolVersion { get; set; }
         /// <summary>
@@ -37,6 +37,10 @@ namespace Mozi.HttpEmbedded
         /// 压缩类型
         /// </summary>
         public string ContentEncoding { get; set; }
+        /// <summary>
+        /// 文档是否被压缩过
+        /// </summary>
+        public bool ContentEncoded { get; private set; }
         /// <summary>
         /// 请求数据体
         /// </summary>
@@ -122,10 +126,14 @@ namespace Mozi.HttpEmbedded
             Write(StringEncoder.Encode(data));
             return this;
         }
-
+        /// <summary>
+        /// 写入压缩的数据
+        /// </summary>
+        /// <param name="body"></param>
         internal void CompressBody(byte[] body)
         {
             _body = body;
+            ContentEncoded = true;
         }
         //TODO 此处需要调试
         /// <summary>

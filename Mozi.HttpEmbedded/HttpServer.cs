@@ -128,7 +128,7 @@ namespace Mozi.HttpEmbedded
         public HttpServer()
         {
             StartTime = DateTime.MinValue;
-            this.Timezone = System.TimeZone.CurrentTimeZone.GetUtcOffset(DateTime.Now).Hours.ToString();
+            this.Timezone = String.Format("UTC{0:+00;-00;}:00",System.TimeZone.CurrentTimeZone.GetUtcOffset(DateTime.Now).Hours);
             //配置默认服务器名
             _serverName = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name + "/" + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
             Auth = new Authenticator();
@@ -330,8 +330,11 @@ namespace Mozi.HttpEmbedded
                         if (st.CheckIfModified(path, ifmodifiedsince))
                         {
                             DateTime dtModified = st.GetLastModified(path).ToUniversalTime();
-                            context.Response.Headers.Add(HeaderProperty.LastModified, dtModified.ToString("r"));
-                            context.Response.Write(st.Load(path, ""));
+                            context.Response.AddHeader(HeaderProperty.LastModified, dtModified.ToString("r"));
+                            context.Response.Write(st.Load(path, ""));                            
+                            
+                            //ETag 仅测试 不具备判断缓存的能力
+                            context.Response.AddHeader(HeaderProperty.ETag, String.Format("{0:x2}:{1:x2}", dtModified.ToUniversalTime().Ticks, context.Response.ContentLength));
                         }
                         else
                         {

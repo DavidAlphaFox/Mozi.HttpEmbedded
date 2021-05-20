@@ -54,6 +54,7 @@ namespace Mozi.HttpEmbedded
         /// 内容类型
         /// </summary>
         public string ContentType { get; protected set; }
+        public string ContentCharset { get; protected set; }
         /// <summary>
         /// 内容大小
         /// </summary>
@@ -86,7 +87,6 @@ namespace Mozi.HttpEmbedded
         /// 文件
         /// </summary>
         public FileCollection Files { get; protected set; }
-
         /// <summary>
         /// Cookie
         /// </summary>
@@ -102,7 +102,10 @@ namespace Mozi.HttpEmbedded
         /// <summary>
         /// 客户机接受的语言选项
         /// </summary>
-        public string[] AcceptLanguage { get; private set; }
+        public LanguageOrder[] AcceptLanguage { get; private set; }
+        /// <summary>
+        /// 请求的来源地址
+        /// </summary>
         public string Referer { get; private set; }
         /// <summary>
         /// 构造函数
@@ -169,14 +172,15 @@ namespace Mozi.HttpEmbedded
 
             //头部信息分解
             //HOST
-            ParseHost(ref req);
+            ParseHeaderHost(ref req);
             //User-Agent
-            ParseUserAgent(ref req);
+            ParseHeaderUserAgent(ref req);
             //Accept-Language
-            ParseAcceptLanguage(ref req);
+            ParseHeaderAcceptLanguage(ref req);
             //Referer
-            ParseReferer(ref req);
-
+            ParseHeaderReferer(ref req);
+            //Content-Type
+            ParseHeaderContentType(ref req);
             //解析Cookie
             ParseCookie(ref req);
             //TODO 此处是否需要分辨GET/POST
@@ -226,8 +230,9 @@ namespace Mozi.HttpEmbedded
         {
             req.Post = UrlEncoder.ParseQuery(StringEncoder.Decode(data));
         }
-        //TODO 文件流应写入缓冲区
-        //TODO 此处仅能解析一个文件，继续修改代码
+        //TODO 文件流应写入缓冲区,否则会造成内存占用过大
+        //DONE 此处仅能解析一个文件，继续修改代码
+        //TODO multipart/form-data 也能提交文本内容，此处未能很好的处理
         /// <summary>
         /// 分析请求体 multipart/form-data
         /// </summary>
@@ -403,15 +408,15 @@ namespace Mozi.HttpEmbedded
         {
             HeaderProperty hp = HeaderProperty.Parse(data);
             req.Headers.Add(hp.PropertyName, hp.PropertyValue);
-#if DEBUG
+            #if DEBUG
                 Console.WriteLine("{0}:{1}",hp.PropertyTag,hp.PropertyValue);
-#endif
+            #endif
         }
         /// <summary>
         /// 解析UserAgent
         /// </summary>
         /// <param name="req"></param>
-        private static void ParseUserAgent(ref HttpRequest req)
+        private static void ParseHeaderUserAgent(ref HttpRequest req)
         {
             if (req.Headers.Contains(HeaderProperty.UserAgent.PropertyName))
             {
@@ -422,7 +427,7 @@ namespace Mozi.HttpEmbedded
         /// 解析请求目标主机地址
         /// </summary>
         /// <param name="req"></param>
-        private static void ParseHost(ref HttpRequest req)
+        private static void ParseHeaderHost(ref HttpRequest req)
         {
             if (req.Headers.Contains(HeaderProperty.Host.PropertyName))
             {
@@ -433,7 +438,7 @@ namespace Mozi.HttpEmbedded
         /// 解析来源页面地址
         /// </summary>
         /// <param name="req"></param>
-        private static void ParseReferer(ref HttpRequest req)
+        private static void ParseHeaderReferer(ref HttpRequest req)
         {
             if (req.Headers.Contains(HeaderProperty.Referer.PropertyName))
             {
@@ -442,11 +447,55 @@ namespace Mozi.HttpEmbedded
         }
         /// <summary>
         /// 解析接受语言排序
+        /// 	语法：<code>zh-cn,zh;q=0.8,en-us;q=0.5,en;q=0.3</code>
+        /// 	分割符号为,
         /// </summary>
         /// <param name="req"></param>
-        private static void ParseAcceptLanguage(ref HttpRequest req)
+        private static void ParseHeaderAcceptLanguage(ref HttpRequest req)
         {
+            if (req.Headers.Contains(HeaderProperty.AcceptLanguage.PropertyName))
+            {
+                var language=req.Headers.GetValue(HeaderProperty.AcceptLanguage.PropertyName)??"";
+                var languages = language.Split(new char[] { (char)ASCIICode.COMMA },StringSplitOptions.RemoveEmptyEntries);
+                req.AcceptLanguage = new LanguageOrder[languages.Length];
+                try
+                {
+                    for (int i = 0; i < languages.Length; i++)
+                    {
+                        var lan = languages[i];
+                        var lans = lan.Split(new char[] { (char)ASCIICode.COMMA }, StringSplitOptions.RemoveEmptyEntries);
+                        req.AcceptLanguage[i] = new LanguageOrder()
+                        {
+                            LanguageName = lans[0],
+                            Weight = lans.Length > 1 ? int.Parse(lans[1]) : 1
+                        };
+                    }
+                }
+                catch
+                {
 
+                }
+            }
+        }
+        /// <summary>
+        /// 解析文档类型
+        /// </summary>
+        /// <param name="req"></param>
+        private static void ParseHeaderContentType(ref HttpRequest req)
+        {
+            if (req.Headers.Contains(HeaderProperty.ContentType.PropertyName))
+            {
+                var contentType=req.Headers.GetValue(HeaderProperty.ContentType.PropertyName);
+                string[] cts = contentType.Split(new[] { ((char)ASCIICode.SEMICOLON).ToString() + ((char)ASCIICode.SPACE).ToString() }, StringSplitOptions.RemoveEmptyEntries);
+                if (cts.Length > 0)
+                {
+                    req.ContentType = cts[0];
+                    if (cts.Length > 1)
+                    {
+                        req.ContentCharset = cts[1];
+                    }
+                }
+            }
         }
         /// <summary>
         /// 解析Cookie
