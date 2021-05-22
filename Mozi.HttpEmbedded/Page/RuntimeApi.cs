@@ -148,7 +148,7 @@ namespace Mozi.HttpEmbedded.Page
                         controller = type.Name,
                         methodname = m.Name
                     };
-                    var attrs = type.GetCustomAttributes(typeof(DescriptionAttribute), false);
+                    var attrs = m.GetCustomAttributes(typeof(DescriptionAttribute), false);
                     if (attrs.Length > 0)
                     {
                         api.description = ((DescriptionAttribute)attrs[0]).Description;
@@ -195,6 +195,7 @@ namespace Mozi.HttpEmbedded.Page
         public string methodname { get; set; }
         public string description { get; set; }
         public List<ApiParam> args { get; set; }
+        public string returntype { get; set; }
     }
     /// <summary>
     /// API参数信息

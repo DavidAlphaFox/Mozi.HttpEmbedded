@@ -248,7 +248,6 @@ namespace Mozi.HttpEmbedded.Page
                     ApplyPattern(value);
                 }
             }
-
             private string Prefix { get; set; }
             private string Suffix { get; set; }
             private string Link { get; set; }

@@ -1,12 +1,7 @@
-﻿using Mozi.HttpEmbedded.Generic;
-using System;
-
-namespace Mozi.HttpEmbedded
+﻿namespace Mozi.HttpEmbedded
 {
     public class Languages
     {
-
-
 
     }
 

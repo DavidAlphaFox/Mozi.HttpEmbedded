@@ -8,7 +8,7 @@ namespace Mozi.HttpEmbedded.Cert
     public class TransmitionCryptType : AbsClassEnum
     {
         private string _tag = "";
-        protected override string Tag => _tag;
+        protected override string Tag { get { return _tag; } }
 
         public static readonly TransmitionCryptType SSL30 = new TransmitionCryptType("SSL30");
         public static readonly TransmitionCryptType TLS10 = new TransmitionCryptType("TLS10");
