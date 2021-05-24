@@ -1,6 +1,6 @@
 ﻿using Mozi.HttpEmbedded.Generic;
 
-namespace Mozi.HttpEmbedded.Cert
+namespace Mozi.HttpEmbedded.Secure
 {
     /// <summary>
     /// 传输加密类型
@@ -8,6 +8,7 @@ namespace Mozi.HttpEmbedded.Cert
     public class TransmitionCryptType : AbsClassEnum
     {
         private string _tag = "";
+
         protected override string Tag { get { return _tag; } }
 
         public static readonly TransmitionCryptType SSL30 = new TransmitionCryptType("SSL30");

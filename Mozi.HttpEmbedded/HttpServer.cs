@@ -176,6 +176,11 @@ namespace Mozi.HttpEmbedded
             {
                 try
                 {
+                    //HTTPS 协议处理
+                    if (_httpsEnabled)
+                    {
+
+                    }
                     context.Request = HttpRequest.Parse(args.Data);
                     context.Request.ClientAddress = args.IP;
                     //TODO HTTP/1.1 通过Connection控制连接 服务器同时对连接进行监测 保证服务器效率
@@ -532,7 +537,7 @@ namespace Mozi.HttpEmbedded
         /// 实现代理
         /// </summary>
         /// <returns></returns>
-        public HttpServer UseProxy()
+        internal HttpServer UseProxy()
         {
             throw new NotImplementedException();
         }
@@ -541,7 +546,7 @@ namespace Mozi.HttpEmbedded
         /// </summary>
         /// <param name="page"></param>
         /// <returns></returns>
-        public HttpServer UseErrorPage(string page)
+        internal HttpServer UseErrorPage(string page)
         {
             throw new NotImplementedException();
         }
@@ -550,7 +555,7 @@ namespace Mozi.HttpEmbedded
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
-        public HttpServer UseTempPath(string path)
+        internal HttpServer UseTempPath(string path)
         {
             throw new NotImplementedException();
         }
@@ -565,25 +570,11 @@ namespace Mozi.HttpEmbedded
             return this;
         }
         //TODO HTTPS
-        internal HttpServer UseHttps()
+        public CertManager UseHttps()
         {
+            _certMg = new CertManager();
             _httpsEnabled = true;
-            throw new NotImplementedException();
-        }
-        /// <summary>
-        /// 配置安全证书
-        /// <para>
-        ///     证书类型为x509
-        /// </para>
-        /// </summary>
-        /// <param name="filePath">
-        ///     证书必须为X509 *.pfx
-        /// </param>
-        /// <param name="password">证书密码</param>
-        /// <returns></returns>
-        public HttpServer SetCertification(string filePath, string password)
-        {
-            throw new NotImplementedException();
+            return _certMg;
         }
         /// <summary>
         /// 启动服务器

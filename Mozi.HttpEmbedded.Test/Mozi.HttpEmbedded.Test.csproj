@@ -5647,6 +5647,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="admin\Readme.md" />
+    <Content Include="Cert\servercert.pfx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="Readme.md" />
   </ItemGroup>
   <ItemGroup>
@@ -5656,5 +5659,6 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

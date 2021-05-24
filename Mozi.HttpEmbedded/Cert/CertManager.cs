@@ -6,30 +6,50 @@ namespace Mozi.HttpEmbedded.Cert
     /// <summary>
     /// SSL证书管理
     /// </summary>
-    internal class CertManager
+    public sealed class CertManager
     {
+        private X509Certificate cert;
         public CertManager()
         {
-
+           
         }
         /// <summary>
-        /// 加载CERT文件
+        /// 配置安全证书
+        /// <para>
+        ///     证书类型为x509
+        /// </para>
         /// </summary>
-        /// <param name="filePath"></param>
+        /// <param name="filePath">
+        ///     证书必须为X509 *.pfx
+        /// </param>
+        /// <param name="password">证书密码</param>
         /// <returns></returns>
-        public void LoadCert(string filePath)
+        public void LoadCert(string filePath,string password)
         {
-            X509Store store = new X509Store();
-            X509Certificate2 cert = new X509Certificate2();
-            cert.Import(new byte[] { }, "", X509KeyStorageFlags.PersistKeySet);
+            cert = new X509Certificate(filePath, password);
+            Valid();
         }
         /// <summary>
         /// 验证
         /// </summary>
         /// <returns></returns>
-        public bool Valid()
+        private void Valid()
         {
-            throw new NotImplementedException();
+            //验证有效期
+            var periodStart= cert.GetEffectiveDateString();
+            var periodEnd = cert.GetExpirationDateString();
+
+            if(DateTime.Today.ToUniversalTime().CompareTo(DateTime.ParseExact(periodStart,"yyyy/M/d H:mm:ss",null)) < 0)
+            {
+                throw new Exception("证书有效期还没有开始");
+            }
+
+            if (DateTime.Today.ToUniversalTime().CompareTo(DateTime.ParseExact(periodEnd,"yyyy/M/d H:mm:ss", null)) > 0)
+            {
+                throw new Exception("证书已过有效期");
+            }
+
+            //TODO 验证证书的域名绑定
         }
     }
 }
