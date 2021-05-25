@@ -178,6 +178,7 @@ namespace Mozi.HttpEmbedded.Page
     /// <summary>
     /// 标准消息封装
     /// </summary>
+    [Serializable]
     public class ResponseMessage
     {
         public bool success { get; set; }
@@ -188,6 +189,7 @@ namespace Mozi.HttpEmbedded.Page
     /// <summary>
     /// API信息
     /// </summary>
+    [Serializable]
     public class ApiInfo
     {
         public string domain { get; set; }
@@ -200,6 +202,7 @@ namespace Mozi.HttpEmbedded.Page
     /// <summary>
     /// API参数信息
     /// </summary>
+    [Serializable]
     public class ApiParam
     {
         public string paramname { get; set; }

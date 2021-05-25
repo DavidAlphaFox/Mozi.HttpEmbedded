@@ -52,7 +52,9 @@ namespace Mozi.HttpEmbedded.Serialize
             using (StringWriter writer = new StringWriter())
             {
                 serializer.Serialize(writer, data);
+                writer.Flush();
                 content = writer.ToString();
+                writer.Dispose();
             };
             return content;
         }
