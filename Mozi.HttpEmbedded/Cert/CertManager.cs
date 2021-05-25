@@ -8,11 +8,13 @@ namespace Mozi.HttpEmbedded.Cert
     /// </summary>
     public sealed class CertManager
     {
-        private X509Certificate cert;
+        private X509Certificate _cert;
+
         public CertManager()
         {
-           
+
         }
+
         /// <summary>
         /// 配置安全证书
         /// <para>
@@ -26,7 +28,7 @@ namespace Mozi.HttpEmbedded.Cert
         /// <returns></returns>
         public void LoadCert(string filePath,string password)
         {
-            cert = new X509Certificate(filePath, password);
+            _cert = new X509Certificate(filePath, password);
             Valid();
         }
         /// <summary>
@@ -36,8 +38,8 @@ namespace Mozi.HttpEmbedded.Cert
         private void Valid()
         {
             //验证有效期
-            var periodStart= cert.GetEffectiveDateString();
-            var periodEnd = cert.GetExpirationDateString();
+            var periodStart= _cert.GetEffectiveDateString();
+            var periodEnd = _cert.GetExpirationDateString();
 
             if(DateTime.Today.ToUniversalTime().CompareTo(DateTime.ParseExact(periodStart,"yyyy/M/d H:mm:ss",null)) < 0)
             {

@@ -7,6 +7,7 @@ using Mozi.HttpEmbedded.Common;
 using Mozi.HttpEmbedded.Compress;
 using Mozi.HttpEmbedded.Docment;
 using Mozi.HttpEmbedded.Page;
+using Mozi.HttpEmbedded.Secure;
 using Mozi.HttpEmbedded.Source;
 
 namespace Mozi.HttpEmbedded
@@ -179,6 +180,7 @@ namespace Mozi.HttpEmbedded
                     //HTTPS 协议处理
                     if (_httpsEnabled)
                     {
+                        TLSProtocol proto = TLSProtocol.Parse(args.Data);
 
                     }
                     context.Request = HttpRequest.Parse(args.Data);
