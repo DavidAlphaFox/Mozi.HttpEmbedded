@@ -21,7 +21,7 @@ namespace Mozi.HttpEmbedded.Secure
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        public static TLSProtocol Parse(byte[] data)
+        public static TLSProtocol ParseClientHello(byte[] data)
         {
             TLSProtocol proto = new TLSProtocol();
             //ContentType

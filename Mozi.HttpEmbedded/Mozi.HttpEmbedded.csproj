@@ -68,7 +68,6 @@
     <Compile Include="Cache\Global.cs" />
     <Compile Include="Cert\CertManager.cs" />
     <Compile Include="Secure\CipherSuite.cs" />
-    <Compile Include="Secure\ExtensionType.cs" />
     <Compile Include="Secure\TLSProtocol.cs" />
     <Compile Include="Secure\TLSVersion.cs" />
     <Compile Include="Common\UrlTree.cs" />

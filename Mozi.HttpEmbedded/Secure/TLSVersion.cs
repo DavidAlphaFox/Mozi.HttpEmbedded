@@ -7,8 +7,8 @@ namespace Mozi.HttpEmbedded.Secure
     /// </summary>
     public class TLSVersion : AbsClassEnum
     {
-        private string _tag = "";
-        private int _code = 0;
+        private readonly string _tag = "";
+        private readonly int _code = 0;
 
         protected override string Tag { get { return _tag; } }
         public int Code { get { return _code; } }

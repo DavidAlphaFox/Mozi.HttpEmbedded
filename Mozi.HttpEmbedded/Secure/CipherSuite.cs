@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Mozi.HttpEmbedded.Generic;
-
-namespace Mozi.HttpEmbedded.Secure
+﻿namespace Mozi.HttpEmbedded.Secure
 {
     /// <summary>
     /// 密码套件类型
     /// </summary>
     enum  CipherSuite
     {
-       TLS_NULL_WITH_NULL_NULL = 0x00, 
+        TLS_NULL_WITH_NULL_NULL = 0x00, 
 
         TLS_RSA_WITH_NULL_MD5 =  0x01, 
         TLS_RSA_WITH_NULL_SHA =  0x02 ,

@@ -180,7 +180,7 @@ namespace Mozi.HttpEmbedded
                     //HTTPS 协议处理
                     if (_httpsEnabled)
                     {
-                        TLSProtocol proto = TLSProtocol.Parse(args.Data);
+                        TLSProtocol proto = TLSProtocol.ParseClientHello(args.Data);
 
                     }
                     context.Request = HttpRequest.Parse(args.Data);
