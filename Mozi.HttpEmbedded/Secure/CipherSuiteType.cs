@@ -3,7 +3,7 @@
     /// <summary>
     /// 密码套件类型
     /// </summary>
-    internal enum  CipherSuiteType
+    internal enum  CipherSuiteType:ushort
     {
         TLS_AES_128_CCM_8_SHA256 = 4869,        //表示 TLS_AES_128_CCM_8_SHA256 密码套件
         TLS_AES_128_CCM_SHA256 = 4868,        //表示 TLS_AES_128_CCM_SHA256 密码套件

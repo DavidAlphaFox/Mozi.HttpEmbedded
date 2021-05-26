@@ -1,10 +1,40 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Mozi.HttpEmbedded.Secure
 {
 
-    internal abstract class TLSPackage
+    internal static class Others 
+    {
+        /// <summary>
+        /// 数据翻转
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public static byte[] Revert(this byte[] data)
+        {
+            Array.Reverse(data);
+            return data;
+        }
+
+        public static long ToTimestamp(this DateTime date)
+        {
+            var mills = (DateTime.Now.ToUniversalTime() - DateTime.ParseExact("yyyy-MM-dd HH:mm:ss", "1970-01-01 00:00:00", null)).TotalMilliseconds;
+            return (long)mills;
+        }
+
+        public static byte[] ToBytes(this ushort num)
+        {
+            return BitConverter.GetBytes(num);
+        }
+        public static byte[] ToBytes(this long num)
+        {
+            return BitConverter.GetBytes(num);
+        }
+    }
+
+    internal class TLSPackage
     {
         //1字节
         public byte ContentType { get; set; }
@@ -13,66 +43,390 @@ namespace Mozi.HttpEmbedded.Secure
         //2字节
         public ushort Length { get; set; }
 
+        public byte[] PackageRawData { get; set; }
+        
+        public  byte[] Pack()
+        {
+            List<byte> bytes = new List<byte>();
+            bytes.Add(ContentType);
+            var arrVersion = BitConverter.GetBytes(Version);
+            var arrLength = BitConverter.GetBytes((ushort)PackageRawData.Length);
+            Array.Reverse(arrVersion);
+            Array.Reverse(arrLength);
+            bytes.AddRange(arrVersion);
+            bytes.AddRange(arrLength);
+            if (PackageRawData != null)
+            {
+                bytes.AddRange(PackageRawData);
+            }
+            return bytes.ToArray();
+        }
+        public static byte[] Pack(byte contentType,byte version,SessionPackage sp)
+        {
+            TLSPackage tp = new TLSPackage()
+            {
+                ContentType = contentType,
+                Version = version,
+                PackageRawData = sp.Pack()
+            };
+            return tp.Pack();
+        }
+
+        public static TLSPackage Parse(byte[] data)
+        {
+            TLSPackage tp = new TLSPackage();
+            //ContentType
+            tp.ContentType = data[0];
+            //Version
+            tp.Version = BitConverter.ToUInt16(data, 1);
+            //Protocol Content Length
+            var arrLength1 = new byte[2];
+            Array.Copy(data, 3, arrLength1, 0, 2);
+            Array.Reverse(arrLength1);
+            tp.Length = BitConverter.ToUInt16(arrLength1, 0);
+            //ShakeProtocol
+
+            var blockContent = new byte[tp.Length];
+            Array.Copy(data, 5, blockContent, 0, blockContent.Length);
+            tp.PackageRawData = blockContent;
+            return tp;
+        }
+        public TLSPackage()
+        {
+            
+        }
     }
-    internal class HelloPackage : TLSPackage
+
+    internal abstract class SessionPackage
+    {
+        public abstract byte[] Pack();
+        public abstract SessionPackage Parse(byte[] data);
+        public byte[] PackageRawData { get; set; }
+    }
+
+    internal class HelloPackage : SessionPackage
     {
         public ShakePackage ShakeProtocol { get; set; }
+
+        public override byte[] Pack()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override SessionPackage Parse(byte[] data)
+        {
+            throw new NotImplementedException();
+        }
     }
-    /// <summary>
-    /// Server Hello包
-    /// <para>
-    ///     Server Hello
-    //      Certificate
-    //      Server Key Exchange
-    //      Server Hello Done
-    /// </para>
-    /// </summary>
-    internal class ServerHelloPackage : TLSPackage
+    internal enum HandShakeType:byte
     {
+        ClientHello = 1,
+        ServerHello = 2,
+        NewSessionTicket = 4,
+        Certificate = 11,
+        ServerKeyExchange = 12,
+        ServerHelloDone = 14,
+        ClientKeyExchange = 16
+    }
+    internal abstract class ShakePackage:SessionPackage
+    {
+        //1字节
+        public byte HandShakeType { get; set; }
+        //3字节 uint24
+        public UInt32 Length { get; set; }
+        //2字节
+        public UInt16 Version { get; set; }
+        //32字节
+        public RandomInfo Random { get; set; }
+        //1字节
+        public byte SessionIdLength { get; set; }
+        public byte[] SessionId { get; set; }
 
     }
-    internal class CertificatePackage : TLSPackage
+    internal class ClientHelloPackage : ShakePackage
     {
+        //2字节
+        public UInt16 CipherSuitesLength { get; set; }
+        //每2个字节区分一个CipherSuite
+        public List<CipherSuiteType> CipherSuites { get; set; }
+        //1字节
+        public byte CompressionMethodsLength { get; set; }
+        //2字节一组
+        public List<CompressMethodInfo> CompressionMethods { get; set; }
+        //2字节
+        public UInt16 ExtensionsLength { get; set; }
+        public List<ExtensionInfo> Extensions { get; set; }
 
+        public override byte[] Pack()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override SessionPackage Parse(byte[] data)
+        {
+            ClientHelloPackage shake = new ClientHelloPackage();
+            shake.HandShakeType = data[0];
+            var arrLength2 = new byte[3];
+            Array.Copy(data, 1, arrLength2, 0, 3);
+            Array.Reverse(arrLength2);
+            shake.Length = BitConverter.ToUInt16(arrLength2, 0);
+            shake.Version = BitConverter.ToUInt16(data, 4);
+            //Random
+            var blockRandom = new byte[32];
+            Array.Copy(data, 6, blockRandom, 0, 32);
+            shake.Random = new RandomInfo();
+            var random = shake.Random;
+
+            var blockTime = new byte[4];
+            var blockSead = new byte[28];
+            Array.Copy(blockRandom, blockTime, 4);
+            Array.Reverse(blockTime);
+            Array.Copy(blockRandom, 0, blockSead, 0, 28);
+            random.Timestamp = BitConverter.ToUInt32(blockTime, 0);
+            random.Random = blockSead;
+
+            //Seesion
+            shake.SessionIdLength = data[38];
+            if (shake.SessionIdLength > 0)
+            {
+                var arrSession = new byte[shake.SessionIdLength];
+                Array.Copy(data, 39, arrSession, 0, shake.SessionIdLength);
+            }
+            //CipherSuites
+            var arrLength3 = new byte[2];
+            Array.Copy(data, 39 + shake.SessionIdLength, arrLength3, 0, 2);
+            Array.Reverse(arrLength3);
+            shake.CipherSuitesLength = BitConverter.ToUInt16(arrLength3, 0);
+            var blockCipherSuites = new byte[shake.CipherSuitesLength];
+            Array.Copy(data, 39 + shake.SessionIdLength + 2, blockCipherSuites, 0, shake.CipherSuitesLength);
+            //解析
+            shake.CipherSuites = new List<CipherSuiteType>();
+            for (int i = 0; i < shake.CipherSuitesLength / 2; i++)
+            {
+                var arrCipher = new byte[2];
+                Array.Copy(blockCipherSuites, i * 2, arrCipher, 0, 2);
+                Array.Reverse(arrCipher);
+                shake.CipherSuites.Add((CipherSuiteType)Enum.Parse(typeof(CipherSuiteType), BitConverter.ToUInt16(arrCipher, 0).ToString()));
+            }
+            //CompressionMethod
+            shake.CompressionMethodsLength = data[39 + shake.SessionIdLength + 2 + shake.CipherSuitesLength];
+            var blockCompressionMethod = new byte[shake.CompressionMethodsLength];
+            Array.Copy(data, 39 + shake.SessionIdLength + 2 + shake.CipherSuitesLength, blockCompressionMethod, 0, shake.CompressionMethodsLength);
+            shake.CompressionMethods = new List<CompressMethodInfo>();
+            for (int i = 0; i < shake.CompressionMethodsLength; i++)
+            {
+                shake.CompressionMethods.Add(new CompressMethodInfo()
+                {
+                    Method = data[39 + shake.SessionIdLength + 2 + shake.CipherSuitesLength + 1 + i]
+                });
+            }
+            //Extension
+            var arrLenght4 = new byte[2];
+            Array.Copy(data, 39 + shake.SessionIdLength + 2 + shake.CipherSuitesLength + shake.CompressionMethodsLength + 1, arrLenght4, 0, 2);
+            Array.Reverse(arrLenght4);
+            shake.ExtensionsLength = BitConverter.ToUInt16(arrLenght4, 0);
+            if (shake.ExtensionsLength > 0)
+            {
+                shake.Extensions = new List<ExtensionInfo>();
+                //忽略扩展
+                shake.Extensions.Add(new ExtensionInfo()
+                {
+                    ExtensionLength = 1,
+                    ExtensionType = 511
+                });
+            }
+            return shake;
+        }
     }
-    internal class ServerKeyExchangePackage : TLSPackage
+    internal class ServerHelloPackage : ShakePackage
     {
+        public CipherSuiteType CipherSuite { get; set; }
+        public CompressMethodInfo CompressMethod { get; set; }
+        //2字节
+        public ushort ExtensionsLength { get; set; }
 
+        public List<ExtensionInfo> Extensions { get; set; }
+
+        public override byte[] Pack()
+        {
+            List<byte> arrData = new List<byte>();
+            //Random
+            arrData.AddRange(DateTime.Now.ToTimestamp().ToBytes().Revert());
+            //Sead
+            arrData.AddRange(new byte[] { 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06 ,0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x060,0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x060,0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06 });
+            //Session
+            if (SessionId!=null&&SessionId.Length>0) {
+                arrData.AddRange(SessionId);
+                arrData.Insert(0,(byte)SessionId.Length);
+            }
+            else
+            {
+                arrData.Insert(0,(byte)0);
+            }
+            //Cipher Suite
+            arrData.AddRange(BitConverter.GetBytes((ushort)CipherSuite).Revert());
+            //Compress Method 
+            arrData.Add(0);
+            //Extension Info
+            ushort lenExts = 0;
+            if(Extensions != null&& Extensions.Count > 0)
+            {
+                foreach(ExtensionInfo v in Extensions)
+                {
+                    arrData.AddRange(v.Pack());
+                }
+                lenExts = (ushort)(Extensions.Sum(x => x.ExtensionLength) + Extensions.Count * 4);
+            }
+            arrData.InsertRange(0, lenExts.ToBytes().Revert());
+
+            //最后插入类型长度            
+            arrData.InsertRange(0, TLSVersion.TLS10.Code.ToBytes().Revert());
+            //uint24 3字节
+            byte[] arrLen = BitConverter.GetBytes(arrData.Count).Revert();
+            Array.Resize(ref arrLen, 3);
+            arrData.InsertRange(0, arrLen);
+            arrData.InsertRange(0, ((ushort)HandShakeType).ToBytes().Revert());
+            return arrData.ToArray();
+        }
+
+        public override SessionPackage Parse(byte[] data)
+        {
+            throw new NotImplementedException();
+        }
     }
-    internal class SeverHellDonePackage : TLSPackage
+    internal class CertificatePackage : SessionPackage
     {
+        public byte HandShakeType { get; set; }
+        //3字节 uint24
+        public UInt32 Length { get; set; }
+        //2字节
+        public UInt16 Version { get; set; }
+        //3字节 uint32
+        public ulong CertificateLength { get; set; }
+        //证书序列 每张证书都必须是 ASN.1Cert 结构
+        public List<Certificate> Certificates { get; set; }
 
+        public override byte[] Pack()
+        {
+            List<byte> arrData = new List<byte>();
+
+            //证书
+
+            //最后插入类型长度            
+            arrData.InsertRange(0, TLSVersion.TLS10.Code.ToBytes().Revert());
+            //uint24 3字节
+            byte[] arrLen = BitConverter.GetBytes(arrData.Count).Revert();
+            Array.Resize(ref arrLen, 3);
+            arrData.InsertRange(0, arrLen);
+            arrData.InsertRange(0, ((ushort)HandShakeType).ToBytes().Revert());
+            return arrData.ToArray();
+        }
+
+        public override SessionPackage Parse(byte[] data)
+        {
+            throw new NotImplementedException();
+        }
+
+        public class Certificate
+        {
+
+        }
+    }
+    internal class ServerKeyExchangePackage : SessionPackage
+    {
+        public override byte[] Pack()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override SessionPackage Parse(byte[] data)
+        {
+            throw new NotImplementedException();
+        }
+    }
+    internal class SeverHelloDonePackage : SessionPackage
+    {
+        public override byte[] Pack()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override SessionPackage Parse(byte[] data)
+        {
+            throw new NotImplementedException();
+        }
     }
     internal class ApplicationData
     {
 
     }
-    internal class ApplicationDataPackage : TLSPackage
+    internal class ApplicationDataPackage : SessionPackage
     {
+        public override byte[] Pack()
+        {
+            throw new NotImplementedException();
+        }
 
+        public override SessionPackage Parse(byte[] data)
+        {
+            throw new NotImplementedException();
+        }
     }
-    internal class EncryptedAlertPackage:TLSPackage
+    internal class EncryptedAlertPackage : SessionPackage
     {
+        public override byte[] Pack()
+        {
+            throw new NotImplementedException();
+        }
 
+        public override SessionPackage Parse(byte[] data)
+        {
+            throw new NotImplementedException();
+        }
     }
-    internal class NewSessionPackage : TLSPackage
+    internal class NewSessionPackage : SessionPackage
     {
+        public override byte[] Pack()
+        {
+            throw new NotImplementedException();
+        }
 
+        public override SessionPackage Parse(byte[] data)
+        {
+            throw new NotImplementedException();
+        }
     }
 
-    internal class ChangeCipherSpecPackage : TLSPackage
+    internal class ChangeCipherSpecPackage : SessionPackage
     {
+        public byte[] CipherMessage { get; set; }
+        public override byte[] Pack()
+        {
+            throw new NotImplementedException();
+        }
 
+        public override SessionPackage Parse(byte[] data)
+        {
+            throw new NotImplementedException();
+        }
     }
 
-    internal class EncryptedHandShakePackage : TLSPackage
+    internal class EncryptedHandShakePackage : SessionPackage
     {
+        public override byte[] Pack()
+        {
+            throw new NotImplementedException();
+        }
 
+        public override SessionPackage Parse(byte[] data)
+        {
+            throw new NotImplementedException();
+        }
     }
     /// <summary>
     /// TLS协议解析
     /// </summary>
-    internal class TLSProtocol:TLSPackage
+    internal class TLSProtocol
     {
 
         public static object Parse(byte data)
@@ -88,87 +442,15 @@ namespace Mozi.HttpEmbedded.Secure
         /// <returns></returns>
         public static HelloPackage ParseClientHello(byte[] data)
         {
+            TLSPackage tp = TLSPackage.Parse(data);
             HelloPackage proto = new HelloPackage();
-            //ContentType
-            proto.ContentType = data[0];
-            //Version
-            proto.Version = BitConverter.ToUInt16(data, 1);
-            //Protocol Content Length
-            var arrLength1 = new byte[2];
-            Array.Copy(data, 3, arrLength1, 0,2);
-            Array.Reverse(arrLength1);
-            proto.Length = BitConverter.ToUInt16(arrLength1,0);
             //ShakeProtocol
-            proto.ShakeProtocol = new ClientHandShakePackage();
+            proto.ShakeProtocol = new ClientHelloPackage();
 
-            var blockContent = new byte[proto.Length];
-            Array.Copy(data, 5, blockContent, 0, blockContent.Length);
+            var blockContent =tp.PackageRawData;
+            var shake = (ClientHelloPackage)proto.ShakeProtocol;
+            proto.ShakeProtocol = (ClientHelloPackage)shake.Parse(blockContent);
 
-            var shake = (ClientHandShakePackage)proto.ShakeProtocol;
-            shake.HandShakeType = blockContent[0];
-            var arrLength2 = new byte[3];
-            Array.Copy(data, 1, arrLength2, 0, 3);
-            Array.Reverse(arrLength2);
-            shake.Length = BitConverter.ToUInt16(arrLength2,0);
-            shake.Version = BitConverter.ToUInt16(data, 4);
-            //Random
-            var blockRandom = new byte[32];
-            Array.Copy(blockContent, 6, blockRandom, 0,32);
-            shake.Random = new RandomInfo();
-            var random = shake.Random;
-
-            var blockTime = new byte[4];
-            var blockSead = new byte[28];
-            Array.Copy(blockRandom, blockTime, 4);
-            Array.Reverse(blockTime);
-            Array.Copy(blockRandom, 0, blockSead, 0, 28);
-            random.Timestamp = BitConverter.ToUInt32(blockTime, 0);
-            random.Random = blockSead;
-
-            //Seesion
-            shake.SessionIdLength = blockContent[38];
-            if (shake.SessionIdLength > 0)
-            {
-                var arrSession = new byte[shake.SessionIdLength];
-                Array.Copy(blockContent, 39, arrSession, 0, shake.SessionIdLength);
-            }
-            //CipherSuites
-            var arrLength3 = new byte[2];
-            Array.Copy(blockContent, 39+shake.SessionIdLength, arrLength3, 0, 2);
-            Array.Reverse(arrLength3);
-            shake.CipherSuitesLength = BitConverter.ToUInt16(arrLength3, 0);
-            var blockCipherSuites = new byte[shake.CipherSuitesLength];
-            Array.Copy(blockContent, 39 + shake.SessionIdLength + 2, blockCipherSuites, 0, shake.CipherSuitesLength);
-            //解析
-            shake.CipherSuites = new List<CipherSuiteType>();
-            for(int i = 0; i < shake.CipherSuitesLength / 2; i++)
-            {
-                var arrCipher = new byte[2];
-                Array.Copy(blockCipherSuites, i * 2, arrCipher,0, 2);
-                Array.Reverse(arrCipher);
-                shake.CipherSuites.Add((CipherSuiteType)Enum.Parse(typeof(CipherSuiteType), BitConverter.ToUInt16(arrCipher, 0).ToString()));
-            }
-            //CompressionMethod
-            shake.CompressionMethodsLength = blockContent[39 + shake.SessionIdLength + 2 +shake.CipherSuitesLength];
-            var blockCompressionMethod = new byte[shake.CompressionMethodsLength];
-            Array.Copy(blockContent, 39 + shake.SessionIdLength + 2+ shake.CipherSuitesLength, blockCompressionMethod, 0, shake.CompressionMethodsLength);
-            shake.CompressionMethods = new List<CompressMethodInfo>();
-            for(int i = 0; i < shake.CompressionMethodsLength; i++)
-            {
-                shake.CompressionMethods.Add(new CompressMethodInfo() {
-                    Method = blockContent[39 + shake.SessionIdLength + 2 + shake.CipherSuitesLength+1+i]
-                }); 
-            }
-            //Extension
-            var arrLenght4 = new byte[2];
-            Array.Copy(blockContent, 39 + shake.SessionIdLength + 2 + shake.CipherSuitesLength + shake.CompressionMethodsLength + 1, arrLenght4, 0, 2);
-            Array.Reverse(arrLenght4);
-            shake.ExtensionsLength = BitConverter.ToUInt16(arrLenght4, 0);
-            //忽略扩展
-            shake.Extensions.Add(new ExtensionInfo() { 
-                ExtensionLength=1,
-                ExtensionType=511
-            });
             return proto;
         }
 
@@ -189,71 +471,31 @@ namespace Mozi.HttpEmbedded.Secure
         public static byte[] PackServerHello()
         {
             List<byte> bytes = new List<byte>();
+            var contentType = (byte)TLSContentType.HANDSHAKE;
+            var version = (byte)TLSVersion.TLS10.Code;
             //Server Hello
+            ServerHelloPackage sh = new ServerHelloPackage();
             //Certificate
+            CertificatePackage cert = new CertificatePackage();
             //Server Key Exchange
+            ServerKeyExchangePackage sk = new ServerKeyExchangePackage();
             //Server Hello Done
+            SeverHelloDonePackage sd = new SeverHelloDonePackage();
+
+            bytes.AddRange(TLSPackage.Pack(contentType,version,sh));
+            bytes.AddRange(TLSPackage.Pack(contentType, version,cert));
+            bytes.AddRange(TLSPackage.Pack(contentType, version,sk));
+            bytes.AddRange(TLSPackage.Pack(contentType, version,sd));
+
             return bytes.ToArray();
         }
-
-       
     }
-    internal enum TLSContentType
+    internal enum TLSContentType:byte
     {
          CHANGE_CIPHER_SPEC=20,
          ALERT=21,
          HANDSHAKE=22,
          APPLICATION_DATA=23
-    }
-    internal enum HandShakeType
-    {
-        ClientHello=1,
-        ServerHello=2,
-        NewSessionTicket=4,
-        Certificate=11,
-        ServerKeyExchange=12,
-        ServerHelloDone=14,
-        ClientKeyExchange=16
-    }
-    internal abstract class ShakePackage
-    {
-        //1字节
-        public byte HandShakeType { get; set; }
-        //3字节 uint24
-        public UInt32 Length { get; set; }
-        //2字节
-        public UInt16 Version { get; set; }
-        //32字节
-        public RandomInfo Random { get; set; }
-        //1字节
-        public byte SessionIdLength { get; set; }
-        public string SessionId { get; set; }
-
-    }
-    internal class ClientHandShakePackage:ShakePackage
-    {
-        //2字节
-        public UInt16 CipherSuitesLength { get; set; }
-        //每2个字节区分一个CipherSuite
-        public List<CipherSuiteType> CipherSuites { get; set; }
-        //1字节
-        public byte CompressionMethodsLength { get; set; }
-        //2字节一组
-        public List<CompressMethodInfo> CompressionMethods { get; set; }
-        //2字节
-        public UInt16 ExtensionsLength { get; set; }
-        public List<ExtensionInfo> Extensions { get; set; }
-
-     }
-     internal class ServerHandShakePackage : ShakePackage
-     {
-        public CipherSuiteType CipherSuite { get; set; }
-        public CompressMethodInfo CompressMethod { get; set; }
-        //2字节
-        public UInt16 ExtensionsLength { get; set; }
-
-        public List<ExtensionInfo> Extensions { get; set; }
-
     }
 
         //1字节
@@ -267,6 +509,17 @@ namespace Mozi.HttpEmbedded.Secure
         public UInt16 ExtensionType { get; set; }
         //2字节
         public UInt16 ExtensionLength { get; set; }
+
+        public byte[] RawData { get; set; }
+
+        public  byte[] Pack()
+        {
+            List<byte> arrData = new List<byte>();
+            arrData.AddRange(RawData);
+            arrData.InsertRange(0, ((ushort)RawData.Length).ToBytes().Revert());
+            arrData.InsertRange(0, ExtensionType.ToBytes().Revert());
+            return arrData.ToArray();
+        }
      }
      internal class RenegotiationInfo {
         public byte Renegotiation { get; set; }

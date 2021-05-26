@@ -69,6 +69,7 @@
     <Compile Include="Cert\CertManager.cs" />
     <Compile Include="Secure\CipherSuiteType.cs" />
     <Compile Include="Secure\SessionManager.cs" />
+    <Compile Include="Secure\TLSHandShakeType.cs" />
     <Compile Include="Secure\TLSProtocol.cs" />
     <Compile Include="Secure\TLSVersion.cs" />
     <Compile Include="Common\UrlTree.cs" />
