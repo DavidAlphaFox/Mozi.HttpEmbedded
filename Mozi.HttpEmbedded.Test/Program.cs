@@ -1,8 +1,6 @@
 ﻿using Mozi.HttpEmbedded.Auth;
 using Mozi.HttpEmbedded.Page;
-using Mozi.SSDP;
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Mozi.HttpEmbedded.Common;
@@ -26,9 +24,9 @@ namespace Mozi.HttpEmbedded.Test
             HttpServer hs = new HttpServer();
 
             //启用HTTPS 
-            //hs.UseHttps().LoadCert(AppDomain.CurrentDomain.BaseDirectory + @"Cert\ServerCert.pfx", "12345678");
+            hs.UseHttps().LoadCert(AppDomain.CurrentDomain.BaseDirectory + @"Cert\ServerCert.pfx", "12345678");
             //配置端口并启动服务器
-            hs.SetPort(9000).Start();
+            hs.SetPort(443).Start();
 
             //开启认证
             hs.UseAuth(AuthorizationType.Basic).SetUser("admin", "admin");
