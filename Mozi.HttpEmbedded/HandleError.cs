@@ -5,7 +5,7 @@ namespace Mozi.HttpEmbedded
     /// <summary>
     /// ÇëÇó´íÎó
     /// </summary>
-    class HandleError
+    internal class HandleError
     {
         public string Title { get; set; }
         public DateTime Time { get; set; }

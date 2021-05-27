@@ -133,9 +133,9 @@ namespace Mozi.HttpEmbedded.Secure
         //1字节
         public byte HandShakeType { get; set; }
         //3字节 uint24
-        public UInt32 Length { get; set; }
+        public uint Length { get; set; }
         //2字节
-        public UInt16 Version { get; set; }
+        public ushort Version { get; set; }
         //32字节
         public RandomInfo Random { get; set; }
         //1字节
@@ -146,7 +146,7 @@ namespace Mozi.HttpEmbedded.Secure
     internal class ClientHelloPackage : ShakePackage
     {
         //2字节
-        public UInt16 CipherSuitesLength { get; set; }
+        public ushort CipherSuitesLength { get; set; }
         //每2个字节区分一个CipherSuite
         public List<CipherSuiteType> CipherSuites { get; set; }
         //1字节
@@ -154,7 +154,7 @@ namespace Mozi.HttpEmbedded.Secure
         //2字节一组
         public List<CompressMethodInfo> CompressionMethods { get; set; }
         //2字节
-        public UInt16 ExtensionsLength { get; set; }
+        public ushort ExtensionsLength { get; set; }
         public List<ExtensionInfo> Extensions { get; set; }
 
         public override byte[] Pack()
@@ -298,10 +298,10 @@ namespace Mozi.HttpEmbedded.Secure
     {
         public byte HandShakeType { get; set; }
         //3字节 uint24
-        public UInt32 Length { get; set; }
+        public uint Length { get; set; }
         //2字节
-        public UInt16 Version { get; set; }
-        //3字节 uint32
+        public ushort Version { get; set; }
+        //3字节 uint24
         public ulong CertificateLength { get; set; }
         //证书序列 每张证书都必须是 ASN.1Cert 结构
         public List<Certificate> Certificates { get; set; }
@@ -329,11 +329,52 @@ namespace Mozi.HttpEmbedded.Secure
 
         public class Certificate
         {
+            //3字节 uint24
+            public ulong CertificateLength { get; set; }
+            //1字节
+            public byte version { get; set; }
+            //9字节
+            public byte[] serialnumber { get; set; }
+            //9字节
+            public byte[] signature { get; set; }
+            public List<RDNSequence> issuer { get; set;}
+            public Validity validity { get; set; }
+            public List<RDNSequence> subject { get; set; }
+        }
 
+        public class RDNSequence
+        {
+            public ushort ItemType { get; set; }
+            public ushort ItemLength { get; set; }
+            //3字节
+            public UInt32 ItemId { get; set; }
+
+            public string ItemContent { get; set; }
+        }
+
+        //证书有效期 格林威治时间UNIX TIMSTAMP
+        public class Validity
+        {
+            public long notBefore { get; set; }
+            public long notAfter { get; set; }
+        }
+
+        public class PublicKeyInfo
+        {
+            public ushort KeyType { get;set }
+            public ushort KeyLength { get; set; }
+            public ushort Padding { get; set; }
+            /**/
+            //中间还有内容
+            /**/
+            public byte[] Key { get; set; }
         }
     }
     internal class ServerKeyExchangePackage : SessionPackage
     {
+        public byte HandShakeType { get; set; }
+        //uint24 3字节
+        public ulong Length { get; set; }
         public override byte[] Pack()
         {
             throw new NotImplementedException();
@@ -346,6 +387,9 @@ namespace Mozi.HttpEmbedded.Secure
     }
     internal class SeverHelloDonePackage : SessionPackage
     {
+        public byte HandShakeType { get; set; }
+        //uint24 3字节
+        public ulong Length { get; set; }
         public override byte[] Pack()
         {
             throw new NotImplementedException();
@@ -506,9 +550,9 @@ namespace Mozi.HttpEmbedded.Secure
      internal class ExtensionInfo
      {
         //2字节
-        public UInt16 ExtensionType { get; set; }
+        public ushort ExtensionType { get; set; }
         //2字节
-        public UInt16 ExtensionLength { get; set; }
+        public ushort ExtensionLength { get; set; }
 
         public byte[] RawData { get; set; }
 
@@ -565,7 +609,8 @@ namespace Mozi.HttpEmbedded.Secure
         user_canceled=90,
         no_renegotiation=100
      }
-    struct Alert {
+    struct Alert 
+    {
         AlertLevel level;
         AlertDescription description;
     }

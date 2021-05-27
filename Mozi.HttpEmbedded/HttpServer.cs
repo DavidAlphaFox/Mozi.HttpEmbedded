@@ -501,6 +501,7 @@ namespace Mozi.HttpEmbedded
         }
         /// <summary>
         /// 允许静态文件访问
+        /// <para>设置后静态文件目录会变为HTTP的根目录，可以直接访问其下的子路径</para>
         /// </summary>
         /// <param name="root">静态文件根目录</param>
         /// <returns></returns>
@@ -636,7 +637,7 @@ namespace Mozi.HttpEmbedded
         }
         /// <summary>
         /// 设置首页 
-        /// <para>设置默认首页后会关闭默认页面的返回</para>
+        /// <para>设置默认首页后会关闭默认页面的返回,多个页面用","分割，优先访问前面的地址</para>
         /// </summary>
         /// <param name="filePath"></param>
         public void SetIndexPage(string pattern)
