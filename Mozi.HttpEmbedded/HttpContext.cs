@@ -13,5 +13,9 @@
         /// 响应对象
         /// </summary>
         public HttpResponse Response { get; set; }
+        /// <summary>
+        /// 服务器对象
+        /// </summary>
+        public HttpServer Server { get; set; }
     }
 }

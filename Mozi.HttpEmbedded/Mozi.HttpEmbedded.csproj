@@ -67,6 +67,7 @@
     <Compile Include="Auth\User.cs" />
     <Compile Include="Cache\Global.cs" />
     <Compile Include="Cert\CertManager.cs" />
+    <Compile Include="Common\Encrypt.cs" />
     <Compile Include="Secure\CipherSuiteType.cs" />
     <Compile Include="Secure\SessionManager.cs" />
     <Compile Include="Secure\TLSHandShakeType.cs" />

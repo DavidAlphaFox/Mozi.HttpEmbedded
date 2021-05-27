@@ -11,6 +11,7 @@ namespace Mozi.HttpEmbedded
         public string FieldName { get; set; }
         public int FileIndex { get; set; }
         public byte[] FileData { get; set; }
+        internal string FileTempSavePath { get; set; }
     }
     /// <summary>
     /// 文件集合

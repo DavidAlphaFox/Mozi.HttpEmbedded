@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.IO;
 using Mozi.HttpEmbedded.Cookie;
 using Mozi.HttpEmbedded.Encode;
 using Mozi.HttpEmbedded.Generic;
@@ -33,7 +34,6 @@ namespace Mozi.HttpEmbedded
         /// POST 索引可忽略大小写
         /// </summary>
         public Dictionary<string, string> Post = new Dictionary<string, string>(new StringCompareIgnoreCase());
-
         /// <summary>
         /// 可接受压缩算法
         /// </summary>
@@ -54,6 +54,9 @@ namespace Mozi.HttpEmbedded
         /// 内容类型
         /// </summary>
         public string ContentType { get; protected set; }
+        /// <summary>
+        /// 内容编码类型
+        /// </summary>
         public string ContentCharset { get; protected set; }
         /// <summary>
         /// 内容大小
@@ -188,6 +191,7 @@ namespace Mozi.HttpEmbedded
             if (data.Length > posCR + 4)
             {
                 req.Body = new byte[data.Length - (posCR + 4)];
+                //TODO 此处又重新生成一个数据对象，导致内存占用过大
                 Array.Copy(data, posCR + 4, req.Body, 0, req.Body.Length);
                 ParsePayload(ref req, req.Body);
             }
@@ -366,15 +370,32 @@ namespace Mozi.HttpEmbedded
                                 file.FileData = postField;
                                 file.FileIndex = req.Files.Length;
                                 file.FieldName = fieldName;
+                                //file.FileTempSavePath = AppDomain.CurrentDomain.BaseDirectory + @"Temp\" + file.FileName.ToString();
                                 req.Files.Append(file);
-                                //写入临时目录
-                                //FileStream fs =new FileStream(AppDomain.CurrentDomain.BaseDirectory  + file.FileName.ToString(),FileMode.OpenOrCreate);
-                                //fs.Write(file.FileData, 0, file.FileData.Length);
+                                ////写入临时目录
+                                //FileStream fs = new FileStream(file.FileTempSavePath, FileMode.OpenOrCreate);
+                                //int length = fragbody.Length - (posCR + 4);
+                                //int blockSize = 1024;
+                                //int count = length / blockSize;
+                                //byte[] blockData = new byte[blockSize];
+                                //int mode = length % blockSize;
+                                //for (int i = 0; i < count; i++)
+                                //{
+                                //    Array.Copy(fragbody, posCR + 4 + i * blockData.Length, blockData, 0, blockData.Length);
+                                //    fs.Write(blockData, 0, blockData.Length);
+                                //}
+                                //if (mode > 0)
+                                //{
+                                //    Array.Resize(ref blockData, mode);
+                                //    Array.Copy(fragbody, posCR + 4 + blockSize * count, blockData, 0, blockData.Length);
+                                //    fs.Write(blockData, 0, blockData.Length);
+                                //}
                                 //fs.Flush();
                                 //fs.Dispose();
                             }
                             else
                             {
+                                //var postField = new byte[fragbody.Length - (posCR + 4)];
                                 req.Query.Add(fieldName, StringEncoder.Decode(postField));
                             }
                         }
@@ -386,7 +407,7 @@ namespace Mozi.HttpEmbedded
                 }
             }
         }
-        //TODO 后续扩展支撑，暂时不实现
+        //TODO 后续扩展实现，暂时不实现
         /// <summary>
         /// 分析请求体 文本类型
         ///     application/json

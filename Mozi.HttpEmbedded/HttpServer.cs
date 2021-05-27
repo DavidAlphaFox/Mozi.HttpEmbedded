@@ -31,8 +31,10 @@ namespace Mozi.HttpEmbedded
         private int _iporthttps = 443;
         private long _maxFileSize = 10 * 1024 * 1024;
         private long _maxRequestSize = 10 * 1024 * 1024;
-
-        private string _tempPath = "";
+        /// <summary>
+        /// 默认为程序集运行路径的TEMP目录
+        /// </summary>
+        private string _tempPath = AppDomain.CurrentDomain.BaseDirectory+@"Temp\";
 
         private string _serverName = "HttpEmbedded";
 
@@ -167,6 +169,7 @@ namespace Mozi.HttpEmbedded
         {
             HttpContext context = new HttpContext();
             context.Response = new HttpResponse();
+            context.Server = this;
             StatusCode sc = StatusCode.Success;
             //如果启用了访问IP黑名单控制
             if (EnableAccessControl && CheckIfBlocked(args.IP))
@@ -447,7 +450,10 @@ namespace Mozi.HttpEmbedded
             //throw new NotImplementedException();
         }
         /// <summary>
-        /// 配置服务端口
+        /// 配置服务端口 
+        /// <para>
+        /// 在调用<see cref="Start"/>之前设置参数
+        /// </para>
         /// </summary>
         /// <param name="port"></param>
         /// <returns></returns>
@@ -484,7 +490,7 @@ namespace Mozi.HttpEmbedded
         /// <summary>
         /// 启用Gzip
         /// </summary>
-        /// <param name="option">此处设置CompressType无效，默认会被设置为<see cref="E:ContentEncoding.Gzip"/></param>
+        /// <param name="option">此处设置CompressType无效，默认会被设置为<see cref="E:ContentEncoding.Gzip"/>。CompressLevel设置也无效</param>
         /// <returns></returns>
         public HttpServer UseGzip(CompressOption option)
         {
@@ -493,7 +499,6 @@ namespace Mozi.HttpEmbedded
             ZipOption.CompressType = ContentEncoding.Gzip;
             return this;
         }
-
         /// <summary>
         /// 允许静态文件访问
         /// </summary>
