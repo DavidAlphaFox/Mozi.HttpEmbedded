@@ -27,7 +27,7 @@ namespace Mozi.HttpEmbedded.Page
         [Description("获取服务器时间 UTC")]
         public string GetTime()
         {
-            return DateTime.Now.ToUniversalTime().ToString("r");
+            return DateTime.UtcNow.ToString("r");
         }
 
         /// <summary>

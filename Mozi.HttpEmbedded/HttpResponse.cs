@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using Mozi.HttpEmbedded.Cookie;
 using Mozi.HttpEmbedded.Encode;
+using Mozi.HttpEmbedded.Source;
 
 namespace Mozi.HttpEmbedded
 {
@@ -13,6 +14,9 @@ namespace Mozi.HttpEmbedded
     {
         private byte[] _body = new byte[0];
         private string _contentType = "text/plain";
+
+        private string _charset = "";
+
         /// <summary>
         /// HTTP协议版本
         /// </summary>
@@ -37,6 +41,8 @@ namespace Mozi.HttpEmbedded
         /// 压缩类型
         /// </summary>
         public string ContentEncoding { get; set; }
+        //内容编码集
+        public string Charset { get { return _charset; } set { _charset = value; } }
         /// <summary>
         /// 文档是否被压缩过
         /// </summary>
@@ -143,7 +149,11 @@ namespace Mozi.HttpEmbedded
         /// <returns></returns>
         public HttpResponse SendFile(string filepath)
         {
+            FileInfo fi = new FileInfo(filepath);
             FileStream fs = new FileStream(filepath, FileMode.Open, FileAccess.Read);
+            SetContentType(Mime.Default);
+            //RFC6266
+            AddHeader(HeaderProperty.ContentDisposition, string.Format("attachment; filename=\"{0}\"; filename*=utf-8''{1}",fi.Name,UrlEncoder.Encode(fi.Name)));
             MemoryStream ms = new MemoryStream();
             try
             {
@@ -176,7 +186,7 @@ namespace Mozi.HttpEmbedded
             //注入包体大小 字节长度
             AddHeader(HeaderProperty.ContentLength, _body.Length.ToString());
             //注入文档类型
-            AddHeader(HeaderProperty.ContentType, _contentType);
+            AddHeader(HeaderProperty.ContentType, _contentType+(!string.IsNullOrEmpty(Charset)?";"+ Charset : ""));
             //注入响应时间
             AddHeader(HeaderProperty.Date, DateTime.Now.ToUniversalTime().ToString("r"));
             //注入默认头部

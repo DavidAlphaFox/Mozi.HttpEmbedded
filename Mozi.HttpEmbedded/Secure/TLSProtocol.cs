@@ -361,7 +361,7 @@ namespace Mozi.HttpEmbedded.Secure
 
         public class PublicKeyInfo
         {
-            public ushort KeyType { get;set }
+            public ushort KeyType { get; set; }
             public ushort KeyLength { get; set; }
             public ushort Padding { get; set; }
             /**/

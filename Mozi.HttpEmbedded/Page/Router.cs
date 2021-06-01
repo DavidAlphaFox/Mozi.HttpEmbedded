@@ -101,15 +101,23 @@ namespace Mozi.HttpEmbedded.Page
             object instance = Activator.CreateInstance(cls);
             //注入上下文变量
             ((BaseApi)instance).Context = ctx;
+            
             //调用方法
             object result = method.Invoke(instance, BindingFlags.IgnoreCase, null, args, CultureInfo.CurrentCulture);
-            if (_dataserializer != null)
+            if (method.ReturnType != typeof(void))
             {
-                return _dataserializer.Encode(result);
+                if (_dataserializer != null)
+                {
+                    return _dataserializer.Encode(result);
+                }
+                else
+                {
+                    return result;
+                }
             }
             else
             {
-                return result;
+                return null;
             }
         }
         internal AccessObject GetMethodInfo(HttpContext ctx)

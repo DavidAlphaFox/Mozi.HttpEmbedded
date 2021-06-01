@@ -13,6 +13,9 @@ namespace Mozi.HttpEmbedded
     /// </summary>
     public class HttpRequest
     {
+        /// <summary>
+        /// 协议类型,参看<see cref="ProtocolType"/>值
+        /// </summary>
         public ProtocolType Protocol { get; protected set; }
         /// <summary>
         /// 协议版本

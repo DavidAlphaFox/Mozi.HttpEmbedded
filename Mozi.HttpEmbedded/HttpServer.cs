@@ -17,7 +17,6 @@ namespace Mozi.HttpEmbedded
     //TODO 2021/05/05 实现HTTPS功能
     //TODO 2021/05/05 实现管道机制pipelining 即同一TCP链接允许发起多个HTTP请求 HTTP/1.1
     //TODO 2021/05/07 增加分块传输 chunked
-
     /// <summary>
     /// Http服务器
     /// </summary>
@@ -31,6 +30,10 @@ namespace Mozi.HttpEmbedded
         private int _iporthttps = 443;
         private long _maxFileSize = 10 * 1024 * 1024;
         private long _maxRequestSize = 10 * 1024 * 1024;
+
+        //禁止直接IP访问，但应排除本地地址127.0.0.1
+        private bool _forbideIPAccess = false;
+
         /// <summary>
         /// 默认为程序集运行路径的TEMP目录
         /// </summary>
@@ -50,7 +53,9 @@ namespace Mozi.HttpEmbedded
         private CertManager _certMg;
         //HTTPS开启标识
         private bool _httpsEnabled = false;
-
+        /// <summary>
+        /// 服务器启动时间
+        /// </summary>
         public DateTime StartTime { get; set; }
         /// <summary>
         /// 支持的HTTP服务协议版本
@@ -425,17 +430,14 @@ namespace Mozi.HttpEmbedded
             Router router = Router.Default;
             if (router.Match(context.Request.Path) != null)
             {
+                //判断返回结果
                 object result = null;
                 result = router.Invoke(context);
                 if (result != null)
                 {
-                    context.Response.Write(result.ToString());
-                    return StatusCode.Success;
+                    context.Response.Write(result.ToString());  
                 }
-                else
-                {
-                    return StatusCode.InternalServerError;
-                }
+                return StatusCode.Success;
             }
             return StatusCode.NotFound;
         }
@@ -651,5 +653,10 @@ namespace Mozi.HttpEmbedded
         {
             _sc.StopServer();
         }
+
+        //public void ForbideIPAccess()
+        //{
+        //    _forbideIPAccess = true;
+        //}
     }
 }

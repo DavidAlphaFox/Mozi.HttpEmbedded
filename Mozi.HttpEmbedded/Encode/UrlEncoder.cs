@@ -23,7 +23,7 @@ namespace Mozi.HttpEmbedded.Encode
             for (int i = 0; i < To.Length; i++)
             {
                 string s = To[i];
-                while (data.Contains(s))
+                if (data.Contains(s))
                 {
                     data = data.Replace(s, To[i]);
                 }
@@ -40,7 +40,7 @@ namespace Mozi.HttpEmbedded.Encode
             for (int i = 0; i < From.Length; i++)
             {
                 char s = From[i];
-                while (data.Contains(s.ToString()))
+                if (data.Contains(s.ToString()))
                 {
                     data = data.Replace(s.ToString(), To[i]);
                 }

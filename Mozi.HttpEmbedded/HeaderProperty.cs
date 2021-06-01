@@ -32,7 +32,8 @@ namespace Mozi.HttpEmbedded
         public static HeaderProperty Authorization = new HeaderProperty("Authorization");                                         // 	包含用服务器验证用户代理的凭证 		
         public static HeaderProperty CacheControl = new HeaderProperty("Cache-Control");                                          //  HTTP Caching FAQ 	
         public static HeaderProperty Connection = new HeaderProperty("Connection");                                               // 		
-        public static HeaderProperty ContentEncoding = new HeaderProperty("Content-Encoding");                                    // 		
+        public static HeaderProperty ContentEncoding = new HeaderProperty("Content-Encoding");
+        public static HeaderProperty ContentDisposition = new HeaderProperty("Content-Disposition");
         public static HeaderProperty ContentLanguage = new HeaderProperty("Content-Language");                                    // 		
         public static HeaderProperty ContentLength = new HeaderProperty("Content-Length");                                        // 			
         public static HeaderProperty ContentLocation = new HeaderProperty("Content-Location");                                    // 			
