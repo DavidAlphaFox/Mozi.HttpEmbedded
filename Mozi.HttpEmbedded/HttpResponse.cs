@@ -142,6 +142,7 @@ namespace Mozi.HttpEmbedded
             ContentEncoded = true;
         }
         //TODO 此处需要调试
+        //Transfer-Encoding
         /// <summary>
         /// 发送文件
         /// </summary>

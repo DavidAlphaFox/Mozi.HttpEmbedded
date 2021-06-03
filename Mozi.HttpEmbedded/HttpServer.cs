@@ -319,6 +319,7 @@ namespace Mozi.HttpEmbedded
                 string fileext = GetFileExt(path);
                 string contenttype = Mime.GetContentType(fileext);
                 //判断资源类型
+                //TODO 此处应特殊处理某些类型的文件，比如.asp|.aspx|.jsp
                 bool isStatic = st.IsStatic(fileext);
                 context.Response.SetContentType(contenttype);
                 if (context.Request.Path == "/")

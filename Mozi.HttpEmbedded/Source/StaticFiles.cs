@@ -62,6 +62,7 @@ namespace Mozi.HttpEmbedded.Source
             }
             return this;
         }
+        //TODO 此处应考虑可以设置绝对路径
         /// <summary>
         /// 设置虚拟目录
         /// </summary>

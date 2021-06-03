@@ -33,7 +33,7 @@ namespace Mozi.HttpEmbedded.Test
 
             //开启静态文件支持
             hs.UseStaticFiles("");
-
+            hs.SetVirtualDirectory("Config", "Config");
             //开启文件压缩
             hs.UseGzip(new Compress.CompressOption() { 
                 MinContentLength=1024,

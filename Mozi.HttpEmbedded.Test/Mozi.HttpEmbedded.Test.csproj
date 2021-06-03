@@ -5585,6 +5585,7 @@
     <Content Include="admin\notepad.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Config\example.txt" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="admin\assets\fonts\fontawesome-webfont.eot">
