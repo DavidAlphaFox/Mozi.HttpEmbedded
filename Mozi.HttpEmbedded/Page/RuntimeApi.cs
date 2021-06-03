@@ -111,7 +111,8 @@ namespace Mozi.HttpEmbedded.Page
                     for (int i = 0; i < Context.Request.Files.Length; i++)
                     {
                         File f = Context.Request.Files[i];
-                        using (FileStream fs = new FileStream(dir + "/" + f.FileName, FileMode.OpenOrCreate, FileAccess.ReadWrite))
+                        System.IO.File.Delete(dir + "/" + f.FileName);
+                        using (FileStream fs = new FileStream(dir + "/" + f.FileName, FileMode.Create, FileAccess.ReadWrite))
                         {
                             fs.Write(f.FileData, 0, f.FileData.Length);
                             fs.Flush();
