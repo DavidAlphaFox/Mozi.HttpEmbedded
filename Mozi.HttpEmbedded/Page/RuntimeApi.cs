@@ -40,6 +40,12 @@ namespace Mozi.HttpEmbedded.Page
         public ResponseMessage AuthUser(string username, string password)
         {
             ResponseMessage rm = new ResponseMessage();
+            var server = Context.Server;
+            if (server != null && server.Auth != null && server.Auth.IsValidUser(username, password))
+            {
+                rm.success = true;
+                rm.message = "验证成功";
+            }
             return rm;
         }
         /// <summary>
@@ -66,7 +72,9 @@ namespace Mozi.HttpEmbedded.Page
                     for (int i = 0; i < Context.Request.Files.Length; i++)
                     {
                         File f = Context.Request.Files[i];
-                        using (FileStream fs = new FileStream(AppDomain.CurrentDomain.BaseDirectory + f.FileName, FileMode.OpenOrCreate, FileAccess.ReadWrite))
+                        string filePath = AppDomain.CurrentDomain.BaseDirectory + f.FileName;
+                        System.IO.File.Delete(filePath);
+                        using (FileStream fs = new FileStream(filePath, FileMode.OpenOrCreate, FileAccess.ReadWrite))
                         {
                             fs.Write(f.FileData, 0, f.FileData.Length);
                             fs.Flush();
@@ -88,6 +96,7 @@ namespace Mozi.HttpEmbedded.Page
         /// </summary>
         /// <param name="dir">路径名以“.”分割,例如dir1.dir2.dir，不要在路径名中包含不符合路径命名的特殊字符</param>
         /// <returns></returns>
+        [Description("上传文件到指定的路径，路径为相对路径")]
         public ResponseMessage PutFile(string dir)
         {
             ResponseMessage rm = new ResponseMessage();
@@ -111,8 +120,9 @@ namespace Mozi.HttpEmbedded.Page
                     for (int i = 0; i < Context.Request.Files.Length; i++)
                     {
                         File f = Context.Request.Files[i];
-                        System.IO.File.Delete(dir + "/" + f.FileName);
-                        using (FileStream fs = new FileStream(dir + "/" + f.FileName, FileMode.Create, FileAccess.ReadWrite))
+                        string filePath = dir + "/" + f.FileName;
+                        System.IO.File.Delete(filePath);
+                        using (FileStream fs = new FileStream(filePath, FileMode.Create, FileAccess.ReadWrite))
                         {
                             fs.Write(f.FileData, 0, f.FileData.Length);
                             fs.Flush();
@@ -175,6 +185,21 @@ namespace Mozi.HttpEmbedded.Page
             rm.success = true;
             return rm;
         }
+
+        public ResponseMessage Get()
+        {
+            ResponseMessage rm = new ResponseMessage();
+            rm.data = Context.Request.Query;
+            rm.success = true;
+            return rm;
+        }
+        public ResponseMessage Post()
+        {
+            ResponseMessage rm = new ResponseMessage();
+            rm.data = Context.Request.Query;
+            rm.success = true;
+            return rm;
+        }
     }
     /// <summary>
     /// 标准消息封装
@@ -186,6 +211,10 @@ namespace Mozi.HttpEmbedded.Page
         public int code { get; set; }
         public string message { get; set; }
         public object data { get; set; }
+        public override string ToString()
+        {
+            return string.Format("success:{0},code:{1},message:{2},data:{3}",success,code,message,data);
+        }
     }
     /// <summary>
     /// API信息

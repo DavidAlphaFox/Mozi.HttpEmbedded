@@ -46,7 +46,7 @@ namespace Mozi.HttpEmbedded.Auth
         /// <param name="userName"></param>
         /// <param name="userPassword"></param>
         /// <returns></returns>
-        private bool IsValidUser(string userName, string userPassword)
+        public bool IsValidUser(string userName, string userPassword)
         {
             return _users.Any(x => x.UserGroup == UserGroup.Admin && x.UserName.Equals(userName) && x.Password.Equals(userPassword));
         }

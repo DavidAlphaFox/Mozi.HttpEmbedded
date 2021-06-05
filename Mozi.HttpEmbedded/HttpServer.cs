@@ -68,7 +68,7 @@ namespace Mozi.HttpEmbedded
         /// <summary>
         /// 认证器
         /// </summary>
-        private Authenticator Auth { get; set; }
+        public Authenticator Auth { get; private set; }
         /// <summary>
         /// 是否启用访问控制 IP策略
         /// </summary>

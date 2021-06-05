@@ -55,6 +55,9 @@ namespace Mozi.HttpEmbedded.Test
             //Service ser = new Service();
             //ser.Active();
             Console.ReadLine();
+
+            //请访问地址 http://{ip}:{port}/admin/index.html
+
         }
 
         /// <summary>

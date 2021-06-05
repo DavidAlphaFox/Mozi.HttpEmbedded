@@ -76,7 +76,7 @@ namespace Mozi.HttpEmbedded.Page
             //确定路径映射关系
             AccessPoint ap = Match(path);
             //TODO 此处路由有问题，需要改进
-            //TODO 此处考虑加入域控制
+            //TODO 此处考虑加入域控制，否则会出现api重复
             Type cls = _apis.Find(x => x.Name.Equals(ap.Controller, StringComparison.OrdinalIgnoreCase));
             MethodInfo method = cls.GetMethod(ap.Action, BindingFlags.Instance | BindingFlags.IgnoreCase | BindingFlags.Public);
 
@@ -137,7 +137,7 @@ namespace Mozi.HttpEmbedded.Page
             };
             return target;
         }
-
+        //TODO 加入域控制
         /// <summary>
         /// 载入模块
         /// <para>自动扫描程序集中的接口模块</para>
@@ -149,6 +149,7 @@ namespace Mozi.HttpEmbedded.Page
             LoadApiFromAssembly(ass);
             return this;
         }
+        //TODO 加入域控制
         /// <summary>
         /// 载入模块
         /// <para>自动扫描程序集中继承自<see cref="T:BaseApi"/>的类，或者类标记为<see cref="T:BasicApiAttribute"/></para>

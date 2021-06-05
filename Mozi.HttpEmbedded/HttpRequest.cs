@@ -253,12 +253,15 @@ namespace Mozi.HttpEmbedded
         ///   
         ///   {file.binary}
         ///   
-        ///   {boundary}
+        ///   --{boundary}
         ///   Content-Disposition: form-data; name="{file.fieldname}"; filename="{file.name}"
         ///   Content-Type: application/octet-stream
-        ///   {file.binary}
         ///   
-        ///   {boundary}--
+        ///   {file.binary}
+        ///   --{boundary}
+        ///   Content-Disposition: form-data; name="{field.name}"
+        ///   
+        ///   --{boundary}--
         /// </code>
         /// </example>
         private static void ParsePayloadFormData(ref HttpRequest req, byte[] data)
@@ -280,7 +283,7 @@ namespace Mozi.HttpEmbedded
             byte[] bBound = StringEncoder.Encode(boundary);
 
             //分割 form-data
-            int indBoundary = -1, indEnd = -1, indCR = -1, indFragFirst = 0, indFragNext = 0;
+            int indBoundary = -1,indFragFirst/*分割起点*/ = 0, indFragNext/*下段分割起点*/ = 0;
 
             while ((indBoundary + 1) < data.Length && Array.IndexOf(data, ASCIICode.MINUS, indBoundary + 1) >= 0)
             {
@@ -306,38 +309,37 @@ namespace Mozi.HttpEmbedded
                         //跳过分割
                         indBoundary += bBound.Length + 2 + 2;
                     }
+
                     //分割信息段
                     if (isFragStart && indFragNext > 0)
                     {
-                        //Console.WriteLine("发现片段{0}-{1},长度{2}Byte", indFragFirst, indFragNext, indFragNext - indFragFirst);
-                        int posCR = 0;
-                        int posCaret = 0;
-                        int index = 0;
+                        //Console.WriteLine("发现片段{0}-{1},长度{2} Byte", indFragFirst, indFragNext, indFragNext - indFragFirst);
+                        int posCR = 0,posCaret = 0,index = 0;
 
-                        byte[] fragbody = new byte[indFragNext - indFragFirst];
+                        byte[] fragment = new byte[indFragNext - indFragFirst];
 
-                        Array.Copy(data, indFragFirst, fragbody, 0, indFragNext - indFragFirst);
+                        Array.Copy(data, indFragFirst, fragment, 0, indFragNext - indFragFirst);
 
-                        File file = new File();
                         bool isFile = false;
 
                         string fieldName = string.Empty;
                         string fileName = string.Empty;
 
-                        while ((posCR + 1) < fragbody.Length && Array.IndexOf(fragbody, ASCIICode.CR, posCR + 1) > 0)
+                        //提取字段头属性
+                        while (posCR <= fragment.Length && (posCR = Array.IndexOf(fragment, ASCIICode.CR, posCR + 1)) > 0)
                         {
-                            posCR = Array.IndexOf(fragbody, ASCIICode.CR, posCR + 1);
+                            //TODO 对普通字段的处理有问题
                             //连续两个CR
-                            if (posCR > 0 && Array.IndexOf(fragbody, ASCIICode.CR, posCR + 1) != posCR + 2)
+                            if (Array.IndexOf(fragment, ASCIICode.CR, posCR + 1) != posCR + 2)
                             {
-                                byte[] fragement = new byte[posCR - posCaret];
-                                Array.Copy(fragbody, posCaret, fragement, 0, posCR - posCaret);
+                                byte[] fraghead = new byte[posCR - posCaret];
+                                Array.Copy(fragment, posCaret, fraghead, 0, posCR - posCaret);
                                 //1段为名称信息
                                 if (index == 1)
                                 {
                                     //内容描述信息
-                                    //Content-Disposition: form-data; name="fieldNameHere"; filename="fieldName.ext"
-                                    string disposition = StringEncoder.Decode(fragement);
+                                    //Content-Disposition: form-data; name="{field.name}"; filename="{file.name}"
+                                    string disposition = StringEncoder.Decode(fraghead);
 
                                     string[] headers = disposition.Split(new[] { ((char)ASCIICode.SEMICOLON).ToString() + ((char)ASCIICode.SPACE).ToString() }, StringSplitOptions.RemoveEmptyEntries);
                                     fieldName = headers[1].Trim().Replace("name=", "").Trim((char)ASCIICode.QUOTE);
@@ -364,11 +366,12 @@ namespace Mozi.HttpEmbedded
                         //解析数据
                         if (data.Length > posCR + 4)
                         {
-                            var postField = new byte[fragbody.Length - (posCR + 4)];
-                            Array.Copy(fragbody, posCR + 4, postField, 0, postField.Length);
+                            var postField = new byte[fragment.Length - (posCR + 4)];
+                            Array.Copy(fragment, posCR + 4, postField, 0, postField.Length);
 
                             if (isFile)
                             {
+                                File file = new File();
                                 file.FileName = HtmlEncoder.EntityCodeToString(fileName);
                                 file.FileData = postField;
                                 file.FileIndex = req.Files.Length;
