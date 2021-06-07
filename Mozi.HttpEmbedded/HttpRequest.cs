@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using System.IO;
 using Mozi.HttpEmbedded.Cookie;
 using Mozi.HttpEmbedded.Encode;
 using Mozi.HttpEmbedded.Generic;
@@ -314,7 +313,7 @@ namespace Mozi.HttpEmbedded
                     if (isFragStart && indFragNext > 0)
                     {
                         //Console.WriteLine("发现片段{0}-{1},长度{2} Byte", indFragFirst, indFragNext, indFragNext - indFragFirst);
-                        int posCR = 0,posCaret = 0,index = 0;
+                        int posCR = 0,posCaret/*分割起始位*/ = 0,index = 0;
 
                         byte[] fragment = new byte[indFragNext - indFragFirst];
 
@@ -325,48 +324,63 @@ namespace Mozi.HttpEmbedded
                         string fieldName = string.Empty;
                         string fileName = string.Empty;
 
+                        ///<example>
+                        ///-----------------------------97671069125495\r\nContent-Disposition: form-data; name=\"mailaddress\"\r\n\r\nabcdefg\r\n
+                        ///</example>
+
                         //提取字段头属性
-                        while (posCR <= fragment.Length && (posCR = Array.IndexOf(fragment, ASCIICode.CR, posCR + 1)) > 0)
+                        while ((posCR = Array.IndexOf(fragment, ASCIICode.CR, posCR + 1)) > 0)
                         {
                             //TODO 对普通字段的处理有问题
+                            
+                            byte[] fraghead = new byte[posCR - posCaret];
+                            Array.Copy(fragment, posCaret, fraghead, 0, posCR - posCaret);
+
+                            //Content-Disposition
+                            if (index == 1)
+                            {
+                                //内容描述信息
+                                //Content-Disposition: form-data; name="{field.name}"; filename="{file.name}"
+                                string disposition = StringEncoder.Decode(fraghead);
+
+                                string[] headers = disposition.Split(new[] { ((char)ASCIICode.SEMICOLON).ToString() + ((char)ASCIICode.SPACE).ToString() }, StringSplitOptions.RemoveEmptyEntries);
+                                fieldName = headers[1].Trim().Replace("name=", "").Trim((char)ASCIICode.QUOTE);
+
+                                if (headers.Length > 2)
+                                {
+                                    fileName = headers[2];
+                                    if (fileName.Contains("filename="))
+                                    {
+                                        isFile = true;
+                                        fileName = fileName.Trim().Replace("filename=", "").Trim((char)ASCIICode.QUOTE);
+                                    }
+                                }
+                            }
+                            //Content-Type
+                            if (index == 2)
+                            {
+
+                            }
+
+                            //跳过分割字节段
+                            posCaret = posCR + 2;
+                            index++;
+
                             //连续两个CR
                             if (Array.IndexOf(fragment, ASCIICode.CR, posCR + 1) != posCR + 2)
                             {
-                                byte[] fraghead = new byte[posCR - posCaret];
-                                Array.Copy(fragment, posCaret, fraghead, 0, posCR - posCaret);
-                                //1段为名称信息
-                                if (index == 1)
-                                {
-                                    //内容描述信息
-                                    //Content-Disposition: form-data; name="{field.name}"; filename="{file.name}"
-                                    string disposition = StringEncoder.Decode(fraghead);
 
-                                    string[] headers = disposition.Split(new[] { ((char)ASCIICode.SEMICOLON).ToString() + ((char)ASCIICode.SPACE).ToString() }, StringSplitOptions.RemoveEmptyEntries);
-                                    fieldName = headers[1].Trim().Replace("name=", "").Trim((char)ASCIICode.QUOTE);
-
-                                    if (headers.Length > 2)
-                                    {
-                                        fileName = headers[2];
-                                        if (fileName.Contains("filename="))
-                                        {
-                                            isFile = true;
-                                            fileName = fileName.Trim().Replace("filename=", "").Trim((char)ASCIICode.QUOTE);
-                                        }
-                                    }
-                                }
                             }
                             else
                             {
                                 break;
                             }
-                            //跳过分割字节段
-                            posCaret = posCR + 2;
-                            index++;
                         }
                         //解析数据
                         if (data.Length > posCR + 4)
                         {
-                            var postField = new byte[fragment.Length - (posCR + 4)];
+                            //内容末端还有两个字符(\r\n)，故此处再减两个字节
+                            var postField = new byte[fragment.Length - (posCR + 4+2)];
                             Array.Copy(fragment, posCR + 4, postField, 0, postField.Length);
 
                             if (isFile)
@@ -517,9 +531,9 @@ namespace Mozi.HttpEmbedded
                 if (cts.Length > 0)
                 {
                     req.ContentType = cts[0];
-                    if (cts.Length > 1)
+                    if (cts.Length > 2)
                     {
-                        req.ContentCharset = cts[1];
+                        req.ContentCharset = cts[2];
                     }
                 }
             }
