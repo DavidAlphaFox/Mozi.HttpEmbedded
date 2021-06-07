@@ -103,11 +103,11 @@ namespace Mozi.HttpEmbedded.Page
             bool success = false;
             if (!string.IsNullOrEmpty(dir))
             {
-                dir = AppDomain.CurrentDomain.BaseDirectory + dir.Replace('.', '/');
+                dir = Context.Server.ServerRoot + dir.Replace('.', '/');
             }
             else
             {
-                dir = AppDomain.CurrentDomain.BaseDirectory;
+                dir = Context.Server.ServerRoot;
             }
             if (!Directory.Exists(dir))
             {

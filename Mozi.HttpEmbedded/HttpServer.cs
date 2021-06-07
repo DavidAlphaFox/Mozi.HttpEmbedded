@@ -38,6 +38,7 @@ namespace Mozi.HttpEmbedded
         /// 默认为程序集运行路径的TEMP目录
         /// </summary>
         private string _tempPath = AppDomain.CurrentDomain.BaseDirectory+@"Temp\";
+        private string _serverRoot = AppDomain.CurrentDomain.BaseDirectory;
 
         private string _serverName = "HttpEmbedded";
 
@@ -132,6 +133,11 @@ namespace Mozi.HttpEmbedded
         {
             get { return _tempPath; }
             private set { _tempPath = value; }
+        }
+        public string ServerRoot
+        {
+            get { return _serverRoot; }
+            private set { _serverRoot = value; }
         }
         public HttpServer()
         {

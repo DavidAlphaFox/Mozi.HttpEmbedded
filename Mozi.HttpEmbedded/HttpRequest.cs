@@ -267,7 +267,8 @@ namespace Mozi.HttpEmbedded
         {
             string contentType = req.Headers.GetValue(HeaderProperty.ContentType.PropertyName);
             string boundary = "";
-            string[] values = contentType.Split(new[] { ((char)ASCIICode.SEMICOLON).ToString() + ((char)ASCIICode.SPACE).ToString() }, StringSplitOptions.RemoveEmptyEntries);
+            //此处仅用；分割，提高通用性
+            string[] values = contentType.Split(new[] { ((char)ASCIICode.SEMICOLON).ToString()}, StringSplitOptions.RemoveEmptyEntries);
 
             //取得分割符号boundary
             foreach (var s in values)
@@ -343,7 +344,7 @@ namespace Mozi.HttpEmbedded
                                 //Content-Disposition: form-data; name="{field.name}"; filename="{file.name}"
                                 string disposition = StringEncoder.Decode(fraghead);
 
-                                string[] headers = disposition.Split(new[] { ((char)ASCIICode.SEMICOLON).ToString() + ((char)ASCIICode.SPACE).ToString() }, StringSplitOptions.RemoveEmptyEntries);
+                                string[] headers = disposition.Split(new[] { ((char)ASCIICode.SEMICOLON).ToString() }, StringSplitOptions.RemoveEmptyEntries);
                                 fieldName = headers[1].Trim().Replace("name=", "").Trim((char)ASCIICode.QUOTE);
 
                                 if (headers.Length > 2)
