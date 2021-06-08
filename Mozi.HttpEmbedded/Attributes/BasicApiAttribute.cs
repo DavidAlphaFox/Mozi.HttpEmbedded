@@ -13,13 +13,4 @@ namespace Mozi.HttpEmbedded.Attributes
     {
 
     }
-
-    /// <summary>
-    /// 禁止访问的方法
-    /// </summary>
-    [AttributeUsage(AttributeTargets.Method)]
-    internal class ForbiddenMethodAttribute : Attribute
-    {
-
-    }
 }

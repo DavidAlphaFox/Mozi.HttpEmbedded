@@ -13,11 +13,12 @@ namespace Mozi.HttpEmbedded.Source
     /// </summary>
     internal sealed class StaticFiles
     {
-        public bool Enabled { get; set; }
+        
 
         private string _root;
         private static StaticFiles _staticfiles;
 
+        public bool Enabled { get; set; }
         public static StaticFiles Default
         {
             get { return _staticfiles ?? (_staticfiles = new StaticFiles()); }
@@ -35,7 +36,7 @@ namespace Mozi.HttpEmbedded.Source
         {
             //初始化根路径为AppDomain基目录
             _root = AppDomain.CurrentDomain.BaseDirectory;
-            init();
+            Init();
         }
         /// <summary>
         /// 设置静态文件根目录
@@ -48,7 +49,7 @@ namespace Mozi.HttpEmbedded.Source
             {
                 if (!root.EndsWith("\\"))
                 {
-                    root = root + "\\";
+                    root += "\\";
                 }
                 //TODO 区分相对路径和绝对路径
                 if (Path.IsPathRooted(root))
@@ -74,7 +75,7 @@ namespace Mozi.HttpEmbedded.Source
         {
             if (!realpath.EndsWith("\\"))
             {
-                realpath = realpath + "\\";
+                realpath += "\\";
             }
 
             var dir = VirtualDirs.Find(x => x.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
@@ -99,7 +100,7 @@ namespace Mozi.HttpEmbedded.Source
         /// <summary>
         /// 初始化
         /// </summary>
-        private void init()
+        private void Init()
         {
             //载入MIME类型
         }
@@ -189,9 +190,8 @@ namespace Mozi.HttpEmbedded.Source
             {
                 if (!string.IsNullOrEmpty(ifModifiedSince))
                 {
-                    DateTime dtSince = DateTime.ParseExact(ifModifiedSince, "ddd, dd MMM yyyy HH:mm:ss GMT",
-                                                        CultureInfo.InvariantCulture,
-                                                        DateTimeStyles.AdjustToUniversal).ToLocalTime();
+                    DateTime dtSince = DateTime.ParseExact(ifModifiedSince, "ddd, dd MMM yyyy HH:mm:ss GMT", CultureInfo.InvariantCulture,DateTimeStyles.AdjustToUniversal).ToLocalTime();
+                    
                     if ((dtModified - dtSince).TotalSeconds < 1)
                     {
                         return false;
@@ -209,7 +209,7 @@ namespace Mozi.HttpEmbedded.Source
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
-        public DateTime GetLastModified(string path)
+        public DateTime GetLastModifiedTime(string path)
         {
             var filepath = _root + path;
             if (IsVirtualFile(path))
@@ -257,7 +257,7 @@ namespace Mozi.HttpEmbedded.Source
                 }
                 using (FileStream fs = new FileStream(filepath, FileMode.Open))
                 {
-                    byte[] data = new byte[fs.Length];
+                    byte[] data = new byte[end - offset + 1];
                     fs.Read(data, offset, end - offset + 1);
                     return data;
                 }

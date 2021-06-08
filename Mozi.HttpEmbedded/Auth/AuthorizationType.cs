@@ -7,7 +7,7 @@ namespace Mozi.HttpEmbedded.Auth
     /// </summary>
     public class AuthorizationType : AbsClassEnum
     {
-        public const string REALM = "HttpEmbedded";
+        public const string REALM/*提示明文*/ = "HttpEmbedded";
 
         /// <summary>
         /// 基本认证 明文传输 不安全

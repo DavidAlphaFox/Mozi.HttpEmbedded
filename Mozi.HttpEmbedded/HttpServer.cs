@@ -352,7 +352,7 @@ namespace Mozi.HttpEmbedded
                         string ifmodifiedsince = context.Request.Headers.GetValue(HeaderProperty.IfModifiedSince.PropertyName);
                         if (st.CheckIfModified(path, ifmodifiedsince))
                         {
-                            DateTime dtModified = st.GetLastModified(path).ToUniversalTime();
+                            DateTime dtModified = st.GetLastModifiedTime(path).ToUniversalTime();
                             context.Response.AddHeader(HeaderProperty.LastModified, dtModified.ToString("r"));
                             context.Response.Write(st.Load(path, ""));                            
                             

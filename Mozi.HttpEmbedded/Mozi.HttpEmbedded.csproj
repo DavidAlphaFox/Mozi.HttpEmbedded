@@ -64,6 +64,7 @@
     <Compile Include="AccessManager.cs" />
     <Compile Include="ASCIICode.cs" />
     <Compile Include="Attributes\BasicApiAttribute.cs" />
+    <Compile Include="Attributes\HttpMethodAttribute.cs" />
     <Compile Include="Auth\User.cs" />
     <Compile Include="Cache\Global.cs" />
     <Compile Include="Cert\CertManager.cs" />
