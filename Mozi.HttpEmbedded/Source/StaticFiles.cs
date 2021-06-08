@@ -111,7 +111,7 @@ namespace Mozi.HttpEmbedded.Source
         /// <returns></returns>
         public bool IsStatic(string ext)
         {
-            if (!string.IsNullOrEmpty(ext) && Mime.Types.ContainsKey(ext))
+            if (!string.IsNullOrEmpty(ext) && Mime.Types.ContainsKey(ext)&&!Mime.IsScript(ext))
             {
                 return true;
             }

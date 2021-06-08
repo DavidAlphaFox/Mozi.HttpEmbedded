@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using Mozi.HttpEmbedded.Generic;
 
@@ -424,6 +425,12 @@ namespace Mozi.HttpEmbedded.Source
             {"zac","application/x-zaurus-zac"},
             {"zip","application/zip"},
         };
+
+        /// <summary>
+        /// 服务端脚本
+        /// </summary>
+        private static readonly string[] ScriptExts = new string[] { };
+
         /// <summary>
         /// 增加MIME类型
         /// </summary>
@@ -459,6 +466,15 @@ namespace Mozi.HttpEmbedded.Source
             {
                 return Types[ext];
             }
+        }
+        /// <summary>
+        /// 是否是服务端脚本
+        /// </summary>
+        /// <param name="ext"></param>
+        /// <returns></returns>
+        public static bool IsScript(string ext)
+        {
+            return ScriptExts.Contains(ext);
         }
         /// <summary>
         /// 判断扩展是否为媒体类型
