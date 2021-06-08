@@ -17,6 +17,18 @@ namespace Mozi.HttpEmbedded
     //TODO 2021/05/05 实现HTTPS功能
     //TODO 2021/05/05 实现管道机制pipelining 即同一TCP链接允许发起多个HTTP请求 HTTP/1.1
     //TODO 2021/05/07 增加分块传输 chunked
+
+    //Transfer-Encoding: chunked 主要是为解决服务端无法预测Content-Length的问题
+    
+    /*断点续传*/
+    //client->  
+    //    HTTP GET /document.ext
+    //    Range: bytes 0-1024, 1025-2048, 2049- 
+    //server->
+    //    HTTP/1.1 206 206 Partial Content| HTTP/1.1 Range Not Satisfiable
+    //    Content-Range:bytes 0-1024/4048
+    /**/
+    
     /// <summary>
     /// Http服务器
     /// </summary>
@@ -328,6 +340,7 @@ namespace Mozi.HttpEmbedded
                 //TODO 此处应特殊处理某些类型的文件，比如.asp|.aspx|.jsp
                 bool isStatic = st.IsStatic(fileext);
                 context.Response.SetContentType(contenttype);
+
                 if (context.Request.Path == "/")
                 {
                     var doc = DocLoader.Load("DefaultHome.html");
@@ -384,50 +397,7 @@ namespace Mozi.HttpEmbedded
             }
             return StatusCode.Success;
         }
-        /// <summary>
-        /// 处理METHOD-OPTIONS请求
-        /// </summary>
-        /// <param name="context"></param>
-        /// <returns></returns>
-        private StatusCode HandleRequestOptions(ref HttpContext context)
-        {
-            foreach (RequestMethod verb in MethodAllow)
-                context.Response.AddHeader("Allow", verb.Name);
-
-            foreach (RequestMethod verb in MethodPublic)
-                context.Response.AddHeader("Public", verb.Name);
-            // Sends 200 OK
-            return StatusCode.Success;
-        }
-        /// <summary>
-        /// 处理WebDAV请求
-        /// </summary>
-        private StatusCode HandleRequestWebDAV(ref HttpContext context)
-        {
-            RequestMethod method = context.Request.Method;
-            if (EnableWebDav)
-            {
-                return _davserver.ProcessRequest(ref context);
-            }
-            return StatusCode.Forbidden;
-            //RequestMethod.PROPFIND,RequestMethod.PROPPATCH RequestMethod.MKCOL RequestMethod.COPY RequestMethod.MOVE RequestMethod.LOCK RequestMethod.UNLOCK
-        }
-        /// <summary>
-        /// 取URL资源扩展名
-        /// </summary>
-        /// <param name="path"></param>
-        /// <returns></returns>
-        private string GetFileExt(string path)
-        {
-            string[] file = path.Split(new[] { (char)ASCIICode.QUESTION }, StringSplitOptions.RemoveEmptyEntries);
-            string ext = "";
-            string purepath = file[0];
-            if (purepath.LastIndexOf((char)ASCIICode.DOT) >= 0)
-            {
-                ext = purepath.Substring(purepath.LastIndexOf((char)ASCIICode.DOT) + 1);
-            }
-            return ext;
-        }
+ 
         /// <summary>
         /// 路由页面
         /// </summary>
@@ -449,6 +419,59 @@ namespace Mozi.HttpEmbedded
             return StatusCode.NotFound;
         }
 
+        //TODO 静态文件统一处理
+        private StatusCode HandleRequestStaticFile(ref HttpContext context)
+        {
+            //全量发送
+
+            //部分发送
+            return StatusCode.Success;
+        }
+        /// <summary>
+        /// 处理METHOD-OPTIONS请求
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        private StatusCode HandleRequestOptions(ref HttpContext context)
+        {
+            foreach (RequestMethod verb in MethodAllow)
+                context.Response.AddHeader("Allow", verb.Name);
+            foreach (RequestMethod verb in MethodPublic)
+                context.Response.AddHeader("Public", verb.Name);
+            // Sends 200 OK
+            return StatusCode.Success;
+        }
+        /// <summary>
+        /// 处理WebDAV请求
+        /// </summary>
+        private StatusCode HandleRequestWebDAV(ref HttpContext context)
+        {
+            RequestMethod method = context.Request.Method;
+            if (EnableWebDav)
+            {
+                return _davserver.ProcessRequest(ref context);
+            }
+            return StatusCode.Forbidden;
+            //RequestMethod.PROPFIND,RequestMethod.PROPPATCH RequestMethod.MKCOL RequestMethod.COPY RequestMethod.MOVE RequestMethod.LOCK RequestMethod.UNLOCK
+        }
+
+
+        /// <summary>
+        /// 取URL资源扩展名
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        private string GetFileExt(string path)
+        {
+            string[] file = path.Split(new[] { (char)ASCIICode.QUESTION }, StringSplitOptions.RemoveEmptyEntries);
+            string ext = "";
+            string purepath = file[0];
+            if (purepath.LastIndexOf((char)ASCIICode.DOT) >= 0)
+            {
+                ext = purepath.Substring(purepath.LastIndexOf((char)ASCIICode.DOT) + 1);
+            }
+            return ext;
+        }
         void _sc_OnServerStart(object sender, ServerArgs args)
         {
             //throw new NotImplementedException();

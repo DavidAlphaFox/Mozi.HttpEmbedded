@@ -92,7 +92,7 @@ namespace Mozi.HttpEmbedded.Page
             return rm;
         }
         /// <summary>
-        /// 将文件存放到指定的路径
+        /// 将文件存放到指定的路径，以程序启动路径为根目录<see cref="F:AppDomain.CurrentDomain.BaseDirectory"/>
         /// </summary>
         /// <param name="dir">路径名以“.”分割,例如dir1.dir2.dir，不要在路径名中包含不符合路径命名的特殊字符</param>
         /// <returns></returns>
@@ -185,7 +185,10 @@ namespace Mozi.HttpEmbedded.Page
             rm.success = true;
             return rm;
         }
-
+        /// <summary>
+        /// 测试Get方法
+        /// </summary>
+        /// <returns></returns>
         public ResponseMessage Get()
         {
             ResponseMessage rm = new ResponseMessage();
@@ -193,10 +196,25 @@ namespace Mozi.HttpEmbedded.Page
             rm.success = true;
             return rm;
         }
+        /// <summary>
+        /// 测试POST方法
+        /// </summary>
+        /// <returns></returns>
         public ResponseMessage Post()
         {
             ResponseMessage rm = new ResponseMessage();
             rm.data = Context.Request.Query;
+            rm.success = true;
+            return rm;
+        }
+        /// <summary>
+        /// 主要用于判断头信息是否被正常解析
+        /// </summary>
+        /// <returns></returns>
+        public ResponseMessage GetHeaders()
+        {
+            ResponseMessage rm = new ResponseMessage();
+            rm.data = Context.Request.Headers.GetAll();
             rm.success = true;
             return rm;
         }

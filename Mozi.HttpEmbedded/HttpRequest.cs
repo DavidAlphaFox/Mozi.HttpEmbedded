@@ -186,6 +186,8 @@ namespace Mozi.HttpEmbedded
             ParseHeaderReferer(ref req);
             //Content-Type
             ParseHeaderContentType(ref req);
+            //Range
+            ParseHeaderRange(ref req);
             //解析Cookie
             ParseCookie(ref req);
             //TODO 此处是否需要分辨GET/POST
@@ -538,6 +540,17 @@ namespace Mozi.HttpEmbedded
                     }
                 }
             }
+        }
+        /// <summary>
+        /// 解析文档请求范围 
+        /// <para>
+        ///     此功能主要应用于断点续传
+        /// </para>
+        /// </summary>
+        /// <param name="req"></param>
+        private static void ParseHeaderRange(ref HttpRequest req)
+        {
+
         }
         /// <summary>
         /// 解析Cookie

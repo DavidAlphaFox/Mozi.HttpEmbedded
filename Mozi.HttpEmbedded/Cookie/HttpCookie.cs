@@ -132,11 +132,11 @@ namespace Mozi.HttpEmbedded.Cookie
         public static RequestCookie Parse(string data)
         {
             RequestCookie hc = new RequestCookie();
-            string[] kps = data.Split(new string[] { "; " }, StringSplitOptions.RemoveEmptyEntries);
+            string[] kps = data.Split(new char[] { (char)ASCIICode.SEMICOLON }, StringSplitOptions.RemoveEmptyEntries);
             foreach (var kp in kps)
             {
                 var startIndex = kp.IndexOf((char)ASCIICode.EQUAL);
-                hc.Append(kp.Substring(0, startIndex), kp.Substring(startIndex + 1));
+                hc.Append(kp.Substring(0, startIndex).Trim(), kp.Substring(startIndex + 1));
             }
             return hc;
         }

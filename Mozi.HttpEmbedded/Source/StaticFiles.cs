@@ -267,16 +267,21 @@ namespace Mozi.HttpEmbedded.Source
                 return new byte[] { };
             }
         }
-        ///// <summary>
-        ///// 取文件大小
-        ///// </summary>
-        ///// <param name="path"></param>
-        ///// <returns></returns>
-        //public long GetFileSize(string path)
-        //{
-        //    FileInfo fi = new FileInfo(path);
-        //    return fi.Length;
-        //}
+        /// <summary>
+        /// 获取文件大小
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        internal long GetFileSize(string path)
+        {
+            var filepath = _root + path;
+            if (IsVirtualFile(path))
+            {
+                filepath = GetVirtualFilePhysicalDirectory(path);
+            }
+            FileInfo fi = new FileInfo(filepath);
+            return fi.Length;
+        }
     }
     /// <summary>
     /// 发布的目录

@@ -80,6 +80,10 @@ namespace Mozi.HttpEmbedded
             return buffer.ToArray();
         }
 
+        public Dictionary<string, string> GetAll()
+        {
+            return HeaderData;
+        }
         public string this[string key]
         {
             get { return HeaderData[key]; }
