@@ -424,6 +424,7 @@ namespace Mozi.HttpEmbedded.Source
             {"z","application/x-compress"},
             {"zac","application/x-zaurus-zac"},
             {"zip","application/zip"},
+            {"auk","application/octet-stream" }
         };
 
         /// <summary>

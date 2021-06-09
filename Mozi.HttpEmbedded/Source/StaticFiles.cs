@@ -8,8 +8,13 @@ namespace Mozi.HttpEmbedded.Source
 {
     //TODO 加入扩展名黑名单
     //DONE 加入虚拟目录
+
     /// <summary>
     /// 静态资源管理
+    /// <para>
+    ///     1，所有传入路径使用 ‘/’作为路径分隔符
+    ///     2，所有路径名忽略大小写
+    /// </para>
     /// </summary>
     internal sealed class StaticFiles
     {
@@ -17,7 +22,7 @@ namespace Mozi.HttpEmbedded.Source
 
         private string _root;
         private static StaticFiles _staticfiles;
-
+        
         public bool Enabled { get; set; }
         public static StaticFiles Default
         {
@@ -36,6 +41,7 @@ namespace Mozi.HttpEmbedded.Source
         {
             //初始化根路径为AppDomain基目录
             _root = AppDomain.CurrentDomain.BaseDirectory;
+            _root = _root.Replace(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
             Init();
         }
         /// <summary>
@@ -47,9 +53,9 @@ namespace Mozi.HttpEmbedded.Source
         {
             if (!string.IsNullOrEmpty(root))
             {
-                if (!root.EndsWith("\\"))
+                if (!root.EndsWith("/"))
                 {
-                    root += "\\";
+                    root += "/";
                 }
                 //TODO 区分相对路径和绝对路径
                 if (Path.IsPathRooted(root))
@@ -60,6 +66,7 @@ namespace Mozi.HttpEmbedded.Source
                 {
                     _root = AppDomain.CurrentDomain.BaseDirectory + root;
                 }
+                _root = _root.Replace(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
             }
             return this;
         }
@@ -73,9 +80,12 @@ namespace Mozi.HttpEmbedded.Source
         /// <remarks>虚拟路径名不能与ROOT路径的子路径名重复，否则设置会被忽略</remarks>
         public StaticFiles SetVirtualDirectory(string name, string realpath)
         {
-            if (!realpath.EndsWith("\\"))
+            
+            realpath = realpath.Replace(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
+
+            if (!realpath.EndsWith("/"))
             {
-                realpath += "\\";
+                realpath += "/";
             }
 
             var dir = VirtualDirs.Find(x => x.Name.Equals(name, StringComparison.OrdinalIgnoreCase));

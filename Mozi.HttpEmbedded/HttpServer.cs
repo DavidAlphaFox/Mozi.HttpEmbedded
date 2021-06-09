@@ -6,6 +6,7 @@ using Mozi.HttpEmbedded.Cert;
 using Mozi.HttpEmbedded.Common;
 using Mozi.HttpEmbedded.Compress;
 using Mozi.HttpEmbedded.Docment;
+using Mozi.HttpEmbedded.Encode;
 using Mozi.HttpEmbedded.Page;
 using Mozi.HttpEmbedded.Secure;
 using Mozi.HttpEmbedded.Source;
@@ -334,6 +335,10 @@ namespace Mozi.HttpEmbedded
             {
                 StaticFiles st = StaticFiles.Default;
                 var path = context.Request.Path;
+
+                //URL解码
+                path = UrlEncoder.Decode(path);
+
                 string fileext = GetFileExt(path);
                 string contenttype = Mime.GetContentType(fileext);
                 //判断资源类型
@@ -341,7 +346,7 @@ namespace Mozi.HttpEmbedded
                 bool isStatic = st.IsStatic(fileext);
                 context.Response.SetContentType(contenttype);
 
-                if (context.Request.Path == "/")
+                if (path == "/")
                 {
                     var doc = DocLoader.Load("DefaultHome.html");
                     PageCreator pc = new PageCreator();
