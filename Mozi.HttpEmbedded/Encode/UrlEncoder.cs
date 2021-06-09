@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Mozi.HttpEmbedded.Encode
 {
-    //DONE 解决汉字转码的问题
+    //DONE 解决URL汉字转码的问题
     /// <summary>
     /// URL特殊字符转码
     /// </summary>
