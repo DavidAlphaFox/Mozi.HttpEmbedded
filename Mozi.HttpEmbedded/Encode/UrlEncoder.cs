@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace Mozi.HttpEmbedded.Encode
 {
+    //DONE 解决汉字转码的问题
     /// <summary>
     /// URL特殊字符转码
     /// </summary>
@@ -19,6 +20,7 @@ namespace Mozi.HttpEmbedded.Encode
         /// <returns></returns>
         public static string Decode(string data)
         {
+            //特殊字符
             for (int i = 0; i < To.Length; i++)
             {
                 string s = To[i];
@@ -26,6 +28,29 @@ namespace Mozi.HttpEmbedded.Encode
                 {
                     data = data.Replace(s, To[i]);
                 }
+            }
+
+            //其他宽字符
+            var startIndex = -1;
+            var endIndex = -1;
+            for(int i = 0; i < data.Length; i++)
+            {
+                var item = data[i];
+                if (startIndex == -1 && item.Equals((char)ASCIICode.PERCENT))
+                {
+                    startIndex = i;
+                }
+                if (item.Equals((char)ASCIICode.PERCENT) &&!data[i+2].Equals((char)ASCIICode.PERCENT))
+                {
+                    endIndex = i+2;
+                }
+            }
+            if (startIndex != -1)
+            {
+
+                var groupMath = data.Substring(startIndex, endIndex - startIndex + 1);
+                data = data.Replace(groupMath, StringEncoder.Decode(Hex.From(groupMath.Replace((char)ASCIICode.PERCENT, (char)ASCIICode.SPACE))));
+
             }
             return data;
         }

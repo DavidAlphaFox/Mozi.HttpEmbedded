@@ -22,7 +22,8 @@ namespace Mozi.HttpEmbedded.Source
 
         private string _root;
         private static StaticFiles _staticfiles;
-        
+        private static readonly char PathSeparator = Path.AltDirectorySeparatorChar;
+
         public bool Enabled { get; set; }
         public static StaticFiles Default
         {
@@ -41,7 +42,7 @@ namespace Mozi.HttpEmbedded.Source
         {
             //初始化根路径为AppDomain基目录
             _root = AppDomain.CurrentDomain.BaseDirectory;
-            _root = _root.Replace(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
+            _root = _root.Replace(Path.DirectorySeparatorChar, PathSeparator);
             Init();
         }
         /// <summary>
@@ -53,9 +54,9 @@ namespace Mozi.HttpEmbedded.Source
         {
             if (!string.IsNullOrEmpty(root))
             {
-                if (!root.EndsWith("/"))
+                if (!root.EndsWith(PathSeparator.ToString()))
                 {
-                    root += "/";
+                    root += PathSeparator;
                 }
                 //TODO 区分相对路径和绝对路径
                 if (Path.IsPathRooted(root))
@@ -64,7 +65,7 @@ namespace Mozi.HttpEmbedded.Source
                 }
                 else
                 {
-                    _root = AppDomain.CurrentDomain.BaseDirectory + root;
+                    _root += root;
                 }
                 _root = _root.Replace(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
             }
@@ -83,9 +84,9 @@ namespace Mozi.HttpEmbedded.Source
             
             realpath = realpath.Replace(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
 
-            if (!realpath.EndsWith("/"))
+            if (!realpath.EndsWith(PathSeparator.ToString()))
             {
-                realpath += "/";
+                realpath += PathSeparator;
             }
 
             var dir = VirtualDirs.Find(x => x.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
@@ -147,7 +148,7 @@ namespace Mozi.HttpEmbedded.Source
         {
             foreach (var d in VirtualDirs)
             {
-                var prefix = "/" + d.Name + "/";
+                var prefix = PathSeparator + d.Name + PathSeparator;
                 //Config/files1.xml;
                 if (path.StartsWith(prefix, StringComparison.OrdinalIgnoreCase))
                 {
@@ -169,7 +170,7 @@ namespace Mozi.HttpEmbedded.Source
         {
             foreach (var d in VirtualDirs)
             {
-                var prefix = "/" + d.Name + "/";
+                var prefix = PathSeparator + d.Name + PathSeparator;
                 //Config/files1.xml;
                 if (path.StartsWith(prefix, StringComparison.OrdinalIgnoreCase) && System.IO.File.Exists(d.Path + path.Substring(prefix.Length)))
                 {
