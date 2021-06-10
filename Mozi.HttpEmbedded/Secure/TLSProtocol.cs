@@ -5,7 +5,7 @@ using System.Linq;
 namespace Mozi.HttpEmbedded.Secure
 {
 
-    internal static class Others 
+    public static class Others 
     {
         /// <summary>
         /// 数据翻转
@@ -20,7 +20,7 @@ namespace Mozi.HttpEmbedded.Secure
 
         public static long ToTimestamp(this DateTime date)
         {
-            var mills = (DateTime.Now.ToUniversalTime() - DateTime.ParseExact("yyyy-MM-dd HH:mm:ss", "1970-01-01 00:00:00", null)).TotalMilliseconds;
+            var mills = (date.ToUniversalTime() - DateTime.ParseExact("yyyy-MM-dd HH:mm:ss", "1970-01-01 00:00:00", null)).TotalMilliseconds;
             return (long)mills;
         }
 

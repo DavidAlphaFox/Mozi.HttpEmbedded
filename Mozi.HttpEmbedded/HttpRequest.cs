@@ -249,20 +249,20 @@ namespace Mozi.HttpEmbedded
         /// <example>
         /// <code>
         ///   --{boundary}
-        ///   Content-Disposition: form-data; name="{file.fieldname}"; filename="{file.name}"
-        ///   Content-Type: application/octet-stream
-        ///   
-        ///   {file.binary}
-        ///   
-        ///   --{boundary}
-        ///   Content-Disposition: form-data; name="{file.fieldname}"; filename="{file.name}"
-        ///   Content-Type: application/octet-stream
-        ///   
-        ///   {file.binary}
-        ///   --{boundary}
-        ///   Content-Disposition: form-data; name="{field.name}"
-        ///   
-        ///   --{boundary}--
+        ///   Content-Disposition: form-data; name="{file.fieldname}"; filename="{file.name}"\r\n
+        ///   Content-Type: application/octet-stream\r\n
+        ///   \r\n
+        ///   {file.binary}\r\n
+        ///   \r\n
+        ///   --{boundary}\r\n
+        ///   Content-Disposition: form-data; name="{file.fieldname}"; filename="{file.name}"\r\n
+        ///   Content-Type: application/octet-stream\r\n
+        ///   \r\n
+        ///   {file.binary}\r\n
+        ///   --{boundary}\r\n
+        ///   Content-Disposition: form-data; name="{field.name}"\r\n
+        ///   \r\n
+        ///   --{boundary}--\r\n
         /// </code>
         /// </example>
         private static void ParsePayloadFormData(ref HttpRequest req, byte[] data)
@@ -328,7 +328,11 @@ namespace Mozi.HttpEmbedded
                         string fileName = string.Empty;
 
                         ///<example>
-                        ///-----------------------------97671069125495\r\nContent-Disposition: form-data; name=\"mailaddress\"\r\n\r\nabcdefg\r\n
+                        ///-----------------------------97671069125495\r\n
+                        ///Content-Disposition: form-data; name=\"mailaddress\"\r\n
+                        ///\r\n
+                        ///abcdefg
+                        ///\r\n
                         ///</example>
 
                         //提取字段头属性

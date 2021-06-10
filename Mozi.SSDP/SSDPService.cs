@@ -8,7 +8,7 @@ namespace Mozi.SSDP
     /// <summary>
     /// SSDP协议实现
     /// </summary>
-    public class Service
+    public class SSDPService
     {
         private RequestMethod MSEARCH = new RequestMethod("M-SEARCH");
         private RequestMethod NOTIFY = new RequestMethod("NOTIFY");
@@ -57,7 +57,7 @@ namespace Mozi.SSDP
         
         };
 
-        public Service()
+        public SSDPService()
         {
             _socket = new UDPSocket();
             _socket.AfterReceiveEnd += _socket_AfterReceiveEnd;
@@ -74,7 +74,7 @@ namespace Mozi.SSDP
         /// 激活
         /// </summary>
         /// <returns></returns>
-        public Service Active()
+        public SSDPService Active()
         {
             _socket.StartServer(SSDPProtocol.ProtocolPort);
             _timer.Change(0, NotificationPeriod);
@@ -84,7 +84,7 @@ namespace Mozi.SSDP
         /// 关闭
         /// </summary>
         /// <returns></returns>
-        public Service Showdown()
+        public SSDPService Showdown()
         {
             _socket.StopServer();
             _timer.Change(Timeout.Infinite, Timeout.Infinite);

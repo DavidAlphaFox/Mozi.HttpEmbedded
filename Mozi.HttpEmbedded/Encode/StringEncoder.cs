@@ -1,5 +1,6 @@
 namespace Mozi.HttpEmbedded.Encode
 {
+    //服务端统一采取UTF-8编码
     /// <summary>
     /// 字符串编码
     /// </summary>
@@ -14,7 +15,5 @@ namespace Mozi.HttpEmbedded.Encode
         {
             return System.Text.Encoding.UTF8.GetString(data);
         }
-
-
     }
 }
