@@ -20,7 +20,7 @@ namespace Mozi.HttpEmbedded.Secure
 
         public static long ToTimestamp(this DateTime date)
         {
-            var mills = (date.ToUniversalTime() - DateTime.ParseExact("yyyy-MM-dd HH:mm:ss", "1970-01-01 00:00:00", null)).TotalMilliseconds;
+            var mills = (date.ToUniversalTime() -new DateTime(1970,1,1,0,0,0)).TotalMilliseconds;
             return (long)mills;
         }
 

@@ -61,6 +61,7 @@ namespace Mozi.HttpEmbedded.Page
         /// 上传文件 支持多文件上传
         /// </summary>
         /// <returns></returns>
+        [Description("上传文件")]
         public ResponseMessage UploadFile()
         {
             ResponseMessage rm = new ResponseMessage();
@@ -191,9 +192,11 @@ namespace Mozi.HttpEmbedded.Page
         /// <returns></returns>
         public ResponseMessage Get()
         {
-            ResponseMessage rm = new ResponseMessage();
-            rm.data = Context.Request.Query;
-            rm.success = true;
+            ResponseMessage rm = new ResponseMessage
+            {
+                data = Context.Request.Query,
+                success = true
+            };
             return rm;
         }
         /// <summary>
@@ -202,9 +205,11 @@ namespace Mozi.HttpEmbedded.Page
         /// <returns></returns>
         public ResponseMessage Post()
         {
-            ResponseMessage rm = new ResponseMessage();
-            rm.data = Context.Request.Query;
-            rm.success = true;
+            ResponseMessage rm = new ResponseMessage
+            {
+                data = Context.Request.Query,
+                success = true
+            };
             return rm;
         }
         /// <summary>
@@ -213,9 +218,23 @@ namespace Mozi.HttpEmbedded.Page
         /// <returns></returns>
         public ResponseMessage GetHeaders()
         {
-            ResponseMessage rm = new ResponseMessage();
-            rm.data = Context.Request.Headers.GetAll();
-            rm.success = true;
+            ResponseMessage rm = new ResponseMessage
+            {
+                data = Context.Request.Headers.GetAll(),
+                success = true
+            };
+            return rm;
+        }
+        /// <summary>
+        /// 全局缓存-内存型
+        /// </summary>
+        /// <returns></returns>
+        internal ResponseMessage Cache()
+        {
+            ResponseMessage rm = new ResponseMessage
+            {
+                success = true
+            };
             return rm;
         }
     }

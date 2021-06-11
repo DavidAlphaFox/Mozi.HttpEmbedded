@@ -54,6 +54,17 @@ namespace Mozi.HttpEmbedded.Test
             //开启SSDP服务
             //Service ser = new Service();
             //ser.Active();
+
+            //开启状态服务
+            SSDP.StateService state = new SSDP.StateService()
+            {
+                Port = 12353,
+                RemoteHost = "100.100.0.105"
+            };
+            state.ApplyDevice("Mozi.StateService", "80018001");
+            state.SetState("alive");
+            state.Init();
+            state.Activate();
             Console.ReadLine();
 
             //请访问地址 http://{ip}:{port}/admin/index.html

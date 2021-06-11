@@ -16,7 +16,7 @@ namespace Mozi.SSDP
 
         private int _port = 13453;
 
-        private string _host;
+        private string _host = "127.0.0.1";
 
         protected Socket _sc;
 
@@ -51,7 +51,7 @@ namespace Mozi.SSDP
             }
         }
         /// <summary>
-        /// 服务器启动事件
+        /// 服务启动事件
         /// </summary>
         public event ServerStart OnServerStart;
         /// <summary>
@@ -63,7 +63,7 @@ namespace Mozi.SSDP
         /// </summary>
         public event ReceiveEnd AfterReceiveEnd;
         /// <summary>
-        /// 服务器停用事件
+        /// 服务停用事件
         /// </summary>
         public event AfterServerStop AfterServerStop;
         public string RemoteHost
@@ -77,13 +77,22 @@ namespace Mozi.SSDP
         public int Port
         {
             get { return _port; }
+            set { _port = value; }
+        }
+        /// <summary>
+        /// 设置心跳周期
+        /// </summary>
+        public int Interval
+        {
+            get { return _interval; }
+            set { _interval = value; }
         }
         public Socket SocketMain
         {
             get { return _sc; }
         }
 
-        public void Start()
+        public void Activate()
         {
             active = true;
             _timeLooper.Change(0, _interval);
@@ -92,18 +101,10 @@ namespace Mozi.SSDP
         /// <summary>
         /// 关闭服务器
         /// </summary>
-        public void StopServer()
+        public void Inactivate()
         {
             active = false;
             _timeLooper.Change(Timeout.Infinite, Timeout.Infinite);
-        }
-        /// <summary>
-        /// 设置心跳周期
-        /// </summary>
-        /// <param name="millseconds"></param>
-        public void SetInterval(int millseconds)
-        {
-            _interval = millseconds;
         }
         public void TimerCallbackInvoker(object sender)
         {
@@ -131,12 +132,11 @@ namespace Mozi.SSDP
         }
 
         /// <summary>
-        /// 启动服务器
+        /// 初始化
         /// </summary>
         /// <param name="port"></param>
-        public void Init(int port)
+        public void Init()
         {
-            _port = port;
             if (_sc == null)
             {
                 _sc = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, System.Net.Sockets.ProtocolType.Udp);
@@ -147,36 +147,37 @@ namespace Mozi.SSDP
             }
             IPEndPoint endpoint = new IPEndPoint(IPAddress.Any, _port);
             //允许端口复用
-            _sc.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
-            _sc.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.IpTimeToLive, 1000);
-            _sc.Bind(endpoint);
+            _sc.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true); 
+            _sc.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.IpTimeToLive, 100);
 
-            //回调服务器启动事件
-            UDPStateObject so = new UDPStateObject()
-            {
-                WorkSocket = _sc,
-                Id = Guid.NewGuid().ToString(),
-                //IP = ((System.Net.IPEndPoint)client.RemoteEndPoint).Address.ToString(),
-                //RemotePort = ((System.Net.IPEndPoint)client.RemoteEndPoint).Port,
-                RemoteEndPoint = new IPEndPoint(IPAddress.Any, 0)
-            };
+            //_sc.Bind(endpoint);
 
-            if (OnServerStart != null)
-            {
-                OnServerStart(this, new ServerArgs() { StartTime = DateTime.Now, StopTime = DateTime.MinValue });
-            }
-            try
-            {
-                _sc.BeginReceiveFrom(so.Buffer, 0, StateObject.BufferSize, SocketFlags.None, ref so.RemoteEndPoint, CallbackReceive, so);
-                if (OnReceiveStart != null)
-                {
-                    OnReceiveStart.BeginInvoke(this, new DataTransferArgs(), null, null);
-                }
-            }
-            catch (Exception ex)
-            {
-                var ex2 = ex;
-            }
+            ////回调服务器启动事件
+            //UDPStateObject so = new UDPStateObject()
+            //{
+            //    WorkSocket = _sc,
+            //    Id = Guid.NewGuid().ToString(),
+            //    //IP = ((System.Net.IPEndPoint)client.RemoteEndPoint).Address.ToString(),
+            //    //RemotePort = ((System.Net.IPEndPoint)client.RemoteEndPoint).Port,
+            //    RemoteEndPoint = new IPEndPoint(IPAddress.Any, 0)
+            //};
+
+            //if (OnServerStart != null)
+            //{
+            //    OnServerStart(this, new ServerArgs() { StartTime = DateTime.Now, StopTime = DateTime.MinValue });
+            //}
+            //try
+            //{
+            //    _sc.BeginReceiveFrom(so.Buffer, 0, StateObject.BufferSize, SocketFlags.None, ref so.RemoteEndPoint, CallbackReceive, so);
+            //    if (OnReceiveStart != null)
+            //    {
+            //        OnReceiveStart.BeginInvoke(this, new DataTransferArgs(), null, null);
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    var ex2 = ex;
+            //}
         }
 
         public void Notify()
@@ -262,20 +263,22 @@ namespace Mozi.SSDP
             
             byte[] stateName = StateName.ToBytes();
             byte[] deviceName = DeviceName.ToBytes();
-            byte[] deviceId = DeviceId.ToBytes();
-            arr.AddRange(stateName);
-            arr.InsertRange(0,((ushort)stateName.Length).ToBytes());
-
-            arr.AddRange(deviceName);
-            arr.InsertRange(0, ((ushort)deviceName.Length).ToBytes());
-
-            arr.AddRange(deviceId);
-            arr.InsertRange(0, ((ushort)deviceId.Length).ToBytes());
-
+            byte[] deviceId = DeviceId.ToBytes();            
             Timestamp = DateTime.Now.ToTimestamp();
+
             arr.AddRange(Timestamp.ToBytes());
 
+            arr.InsertRange(0, deviceId);
+            arr.InsertRange(0, ((ushort)deviceId.Length).ToBytes());
+
+            arr.InsertRange(0, deviceName);
+            arr.InsertRange(0, ((ushort)deviceName.Length).ToBytes());
+
+            arr.InsertRange(0, stateName);
+            arr.InsertRange(0,((ushort)stateName.Length).ToBytes());
+
             arr.InsertRange(0, ((ushort)arr.Count).ToBytes());
+
             return arr.ToArray();
         }
 
@@ -290,7 +293,7 @@ namespace Mozi.SSDP
     {
         public static byte[] ToBytes(this string data)
         {
-            return System.Text.ASCIIEncoding.ASCII.GetBytes(data);
+            return System.Text.Encoding.ASCII.GetBytes(data);
         }
     }
 }
