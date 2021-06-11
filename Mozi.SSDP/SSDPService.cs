@@ -17,7 +17,9 @@ namespace Mozi.SSDP
         private UDPSocket _socket;
         private Timer _timer;
         private IPEndPoint _remoteEP;
-
+        //
+        private string _server = "";
+            
         /// <summary>
         /// 广播消息周期
         /// </summary>
@@ -67,14 +69,14 @@ namespace Mozi.SSDP
 
         private void _socket_AfterReceiveEnd(object sender, DataTransferArgs args)
         {
-            Console.WriteLine("*********收到数据*********,{0}\n{1}\n*******END********", args.IP,System.Text.Encoding.UTF8.GetString(args.Data));
+            Console.WriteLine("*********收到数据[{0}]*********\r\n{1}\r\n*******END********", args.IP,System.Text.Encoding.UTF8.GetString(args.Data));
         }
 
         /// <summary>
         /// 激活
         /// </summary>
         /// <returns></returns>
-        public SSDPService Active()
+        public SSDPService Activate()
         {
             _socket.StartServer(SSDPProtocol.ProtocolPort);
             _timer.Change(0, NotificationPeriod);
@@ -84,7 +86,7 @@ namespace Mozi.SSDP
         /// 关闭
         /// </summary>
         /// <returns></returns>
-        public SSDPService Showdown()
+        public SSDPService Inactivate()
         {
             _socket.StopServer();
             _timer.Change(Timeout.Infinite, Timeout.Infinite);
@@ -177,7 +179,7 @@ namespace Mozi.SSDP
             resp.AddHeader(HeaderProperty.CacheControl, $"max-age={CacheTimeout}");
             resp.AddHeader("EXT", "");
             resp.AddHeader(HeaderProperty.Location, "http://127.0.0.1/desc.xml");
-            resp.AddHeader("Server", "");
+            resp.AddHeader("Server", _server);
             resp.AddHeader("ST", "mozi-embedded:simplehost");
             resp.AddHeader("USN", "mozi-embedded:simplehost");
             resp.SetStatus(StatusCode.Success);
@@ -201,13 +203,13 @@ namespace Mozi.SSDP
         public new TransformHeader GetHeaders()
         {
             TransformHeader headers = new TransformHeader();
-            headers.Add(HeaderProperty.Host, $"{ MulticastAddress }:{ ProtocolPort }");
-            headers.Add("SERVER", $"{ Server }");
-            headers.Add("NT", $"{ NT }");
+            headers.Add(HeaderProperty.Host, $"{MulticastAddress}:{ProtocolPort }");
+            headers.Add("SERVER", $"{Server}");
+            headers.Add("NT", $"{NT}");
             headers.Add("NTS", SSDPType.Alive.ToString());
-            headers.Add("USN", $"{ USN }");
-            headers.Add("LOCATION", $"{ Location }");
-            headers.Add(HeaderProperty.CacheControl, $"max-age= { CacheTimeout }");
+            headers.Add("USN", $"{USN}");
+            headers.Add("LOCATION", $"{Location}");
+            headers.Add(HeaderProperty.CacheControl, $"max-age= {CacheTimeout}");
             return headers;
         }
     }

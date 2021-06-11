@@ -3,17 +3,14 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
-using Mozi.HttpEmbedded;
-using Mozi.HttpEmbedded.Secure;
 
-namespace Mozi.SSDP
+namespace Mozi.StateService
 {
     /// <summary>
     /// 状态服务
     /// </summary>
-    public class StateService
+    public class HeartBeatService
     {
-
         private int _port = 13453;
 
         private string _host = "127.0.0.1";
@@ -24,21 +21,23 @@ namespace Mozi.SSDP
 
         private readonly Timer _timeLooper;
 
-        private int _interval=30*1000;
-        
-        private readonly StatePackage _sp=new StatePackage 
-        { 
-            DeviceName="Mozi",
-            DeviceId="00010001",
-            StateName="alive"
+        private int _interval = 30 * 1000;
+
+        private readonly StatePackage _sp = new StatePackage
+        {
+            DeviceName = "Mozi",
+            DeviceId = "00010001",
+            StateName = "alive",
+            Version = 1,
+            AppVersion = "1.0.0"
         };
 
-        public StateService()
+        public HeartBeatService()
         {
-             _timeLooper = new Timer(TimerCallbackInvoker, this, Timeout.Infinite, Timeout.Infinite);
+            _timeLooper = new Timer(TimerCallbackInvoker, this, Timeout.Infinite, Timeout.Infinite);
         }
 
-        ~StateService()
+        ~HeartBeatService()
         {
             if (_timeLooper != null)
             {
@@ -50,22 +49,6 @@ namespace Mozi.SSDP
                 _sc.Dispose();
             }
         }
-        /// <summary>
-        /// 服务启动事件
-        /// </summary>
-        public event ServerStart OnServerStart;
-        /// <summary>
-        /// 数据接收开始事件
-        /// </summary>
-        public event ReceiveStart OnReceiveStart;
-        /// <summary>
-        /// 数据接收完成事件
-        /// </summary>
-        public event ReceiveEnd AfterReceiveEnd;
-        /// <summary>
-        /// 服务停用事件
-        /// </summary>
-        public event AfterServerStop AfterServerStop;
         public string RemoteHost
         {
             get { return _host; }
@@ -91,7 +74,9 @@ namespace Mozi.SSDP
         {
             get { return _sc; }
         }
-
+        /// <summary>
+        /// 激活
+        /// </summary>
         public void Activate()
         {
             active = true;
@@ -99,7 +84,7 @@ namespace Mozi.SSDP
         }
 
         /// <summary>
-        /// 关闭服务器
+        /// 停止活动
         /// </summary>
         public void Inactivate()
         {
@@ -108,7 +93,7 @@ namespace Mozi.SSDP
         }
         public void TimerCallbackInvoker(object sender)
         {
-            if (this.active)
+            if (active)
             {
                 Notify();
             }
@@ -118,14 +103,14 @@ namespace Mozi.SSDP
             }
         }
 
-        public StateService ApplyDevice(string deviceName,string deviceId)
+        public HeartBeatService ApplyDevice(string deviceName, string deviceId)
         {
             _sp.DeviceName = deviceName;
             _sp.DeviceId = deviceId;
             return this;
         }
 
-        public StateService SetState(string stateName)
+        public HeartBeatService SetState(string stateName)
         {
             _sp.StateName = stateName;
             return this;
@@ -139,7 +124,7 @@ namespace Mozi.SSDP
         {
             if (_sc == null)
             {
-                _sc = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, System.Net.Sockets.ProtocolType.Udp);
+                _sc = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
             }
             else
             {
@@ -147,7 +132,7 @@ namespace Mozi.SSDP
             }
             IPEndPoint endpoint = new IPEndPoint(IPAddress.Any, _port);
             //允许端口复用
-            _sc.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true); 
+            _sc.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
             _sc.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.IpTimeToLive, 100);
 
             //_sc.Bind(endpoint);
@@ -187,86 +172,42 @@ namespace Mozi.SSDP
                 _sc.SendTo(_sp.Pack(), new IPEndPoint(IPAddress.Parse(_host), _port));
             }
         }
-        /// <summary>
-        /// 接收数据回调
-        /// </summary>
-        /// <param name="iar"></param>
-        protected void CallbackReceive(IAsyncResult iar)
-        {
-            UDPStateObject so = (UDPStateObject)iar.AsyncState;
-            Socket client = so.WorkSocket;
-
-            EndPoint remote = (IPEndPoint)so.RemoteEndPoint;
-
-            int iByteRead = client.EndReceiveFrom(iar, ref remote);
-
-            if (iByteRead > 0)
-            {
-                //置空数据连接
-                so.ResetBuffer(iByteRead);
-                if (client.Available > 0)
-                {
-                    so.RemoteEndPoint = remote;
-                    client.BeginReceiveFrom(so.Buffer, 0, so.Buffer.Length, SocketFlags.None, ref so.RemoteEndPoint, new AsyncCallback(CallbackReceive), so);
-                }
-                else
-                {
-                    InvokeAfterReceiveEnd(so, client, (IPEndPoint)remote);
-                }
-            }
-            else
-            {
-                InvokeAfterReceiveEnd(so, client, (IPEndPoint)remote);
-            }
-        }
-        private void InvokeAfterReceiveEnd(UDPStateObject so, Socket client, EndPoint remote)
-        {
-            if (AfterReceiveEnd != null)
-            {
-                AfterReceiveEnd.BeginInvoke(this,
-                    new DataTransferArgs()
-                    {
-                        Data = so.Data.ToArray(),
-                        IP = ((IPEndPoint)remote).Address.ToString(),
-                        Port = ((IPEndPoint)remote).Port,
-                        Socket = so.WorkSocket
-                    }, null, null);
-            }
-            UDPStateObject stateobject = new UDPStateObject()
-            {
-                WorkSocket = _sc,
-                Id = Guid.NewGuid().ToString(),
-                //IP = ((System.Net.IPEndPoint)client.RemoteEndPoint).Address.ToString(),
-                //RemotePort = ((System.Net.IPEndPoint)client.RemoteEndPoint).Port,
-                RemoteEndPoint = new IPEndPoint(IPAddress.Any, 0)
-            };
-            _sc.BeginReceiveFrom(so.Buffer, 0, so.Buffer.Length, SocketFlags.None, ref so.RemoteEndPoint, new AsyncCallback(CallbackReceive), so);
-        }
     }
 
     //statename:alive|byebye|busy|idle
 
+    /// <summary>
+    /// 状态包
+    /// </summary>
     public class StatePackage
     {
-        public ushort PackageLength     { get; set; }
-        public ushort StateNameLength   { get; set; }
-        public string StateName         { get; set; }
-        public ushort DeviceNameLength  { get; set; }
-        public string DeviceName        { get; set; }
-        public string DeviceIdLength    { get; set; }
-        public string DeviceId          { get; set; }
-        public long   Timestamp         { get; set; }
+        public byte Version { get; set; }
+        public ushort PackageLength { get; set; }
+        public ushort StateNameLength { get; set; }
+        public string StateName { get; set; }
+        public ushort DeviceNameLength { get; set; }
+        public string DeviceName { get; set; }
+        public ushort DeviceIdLength { get; set; }
+        public string DeviceId { get; set; }
+        public ushort AppVersionLength { get; set; }
+        public string AppVersion { get; set; }
+        public long Timestamp { get; set; }
 
         public byte[] Pack()
         {
             List<byte> arr = new List<byte>();
-            
+
             byte[] stateName = StateName.ToBytes();
             byte[] deviceName = DeviceName.ToBytes();
-            byte[] deviceId = DeviceId.ToBytes();            
+            byte[] deviceId = DeviceId.ToBytes();
+            byte[] appVersion = AppVersion.ToBytes();
+
             Timestamp = DateTime.Now.ToTimestamp();
 
             arr.AddRange(Timestamp.ToBytes());
+
+            arr.InsertRange(0, appVersion);
+            arr.InsertRange(0, ((ushort)appVersion.Length).ToBytes());
 
             arr.InsertRange(0, deviceId);
             arr.InsertRange(0, ((ushort)deviceId.Length).ToBytes());
@@ -275,16 +216,44 @@ namespace Mozi.SSDP
             arr.InsertRange(0, ((ushort)deviceName.Length).ToBytes());
 
             arr.InsertRange(0, stateName);
-            arr.InsertRange(0,((ushort)stateName.Length).ToBytes());
+            arr.InsertRange(0, ((ushort)stateName.Length).ToBytes());
 
             arr.InsertRange(0, ((ushort)arr.Count).ToBytes());
-
+            arr.Insert(0, Version);
             return arr.ToArray();
         }
 
-        public static StateObject Parse()
+        public static StatePackage Parse(byte[] pg)
         {
-            StateObject state = new StateObject();
+            StatePackage state = new StatePackage();
+            state.Version = pg[0];
+
+            int bodyLen = pg.ToUInt16(1);
+            byte[] body = new byte[bodyLen];
+            Array.Copy(pg, 3, body, 0, bodyLen);
+
+            state.StateNameLength = body.ToUInt16(0);
+            state.DeviceNameLength = body.ToUInt16(2 + state.StateNameLength);
+            state.DeviceIdLength = body.ToUInt16(2 * 2 + state.StateNameLength + state.DeviceNameLength);
+            state.AppVersionLength = body.ToUInt16(2 * 3 + state.StateNameLength + state.DeviceNameLength + state.DeviceIdLength);
+
+            state.Timestamp = body.ToInt64(2 * 4 + state.StateNameLength + state.DeviceNameLength + state.DeviceIdLength + state.AppVersionLength);
+
+            byte[] stateName = new byte[state.StateNameLength];
+            byte[] deviceName = new byte[state.DeviceNameLength];
+            byte[] deviceId = new byte[state.DeviceIdLength];
+            byte[] appVersion = new byte[state.AppVersionLength];
+
+            Array.Copy(body, 2, stateName, 0, state.StateNameLength);
+            Array.Copy(body, 2 * 2 + state.StateNameLength, deviceName, 0, state.DeviceNameLength);
+            Array.Copy(body, 2 * 3 + state.StateNameLength + state.DeviceNameLength, deviceId, 0, state.DeviceIdLength);
+            Array.Copy(body, 2 * 4 + state.StateNameLength + state.DeviceNameLength + state.DeviceIdLength, appVersion, 0, state.AppVersionLength);
+
+            state.StateName = stateName.AsString();
+            state.DeviceName = deviceName.AsString();
+            state.DeviceId = deviceId.AsString();
+            state.AppVersion = appVersion.AsString();
+
             return state;
         }
     }
@@ -294,6 +263,10 @@ namespace Mozi.SSDP
         public static byte[] ToBytes(this string data)
         {
             return System.Text.Encoding.ASCII.GetBytes(data);
+        }
+        public static string AsString(this byte[] data)
+        {
+            return System.Text.Encoding.ASCII.GetString(data);
         }
     }
 }

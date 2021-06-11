@@ -1,38 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Mozi.HttpEmbedded.Extension;
 
 namespace Mozi.HttpEmbedded.Secure
 {
-
-    public static class Others 
-    {
-        /// <summary>
-        /// 数据翻转
-        /// </summary>
-        /// <param name="data"></param>
-        /// <returns></returns>
-        public static byte[] Revert(this byte[] data)
-        {
-            Array.Reverse(data);
-            return data;
-        }
-
-        public static long ToTimestamp(this DateTime date)
-        {
-            var mills = (date.ToUniversalTime() -new DateTime(1970,1,1,0,0,0)).TotalMilliseconds;
-            return (long)mills;
-        }
-
-        public static byte[] ToBytes(this ushort num)
-        {
-            return BitConverter.GetBytes(num);
-        }
-        public static byte[] ToBytes(this long num)
-        {
-            return BitConverter.GetBytes(num);
-        }
-    }
 
     internal class TLSPackage
     {

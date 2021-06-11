@@ -4,6 +4,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Mozi.HttpEmbedded.Common;
+using Mozi.StateService;
 
 namespace Mozi.HttpEmbedded.Test
 {
@@ -52,15 +53,16 @@ namespace Mozi.HttpEmbedded.Test
             hs.UseWebDav("dav");
 
             //开启SSDP服务
-            //Service ser = new Service();
-            //ser.Active();
+            SSDP.SSDPService ser = new SSDP.SSDPService();
+            ser.Activate();
 
             //开启状态服务
-            SSDP.StateService state = new SSDP.StateService()
+            HeartBeatService state = new HeartBeatService()
             {
                 Port = 12353,
                 RemoteHost = "100.100.0.105"
             };
+
             state.ApplyDevice("Mozi.StateService", "80018001");
             state.SetState("alive");
             state.Init();

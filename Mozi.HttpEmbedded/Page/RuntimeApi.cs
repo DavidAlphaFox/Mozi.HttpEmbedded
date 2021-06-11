@@ -225,6 +225,8 @@ namespace Mozi.HttpEmbedded.Page
             };
             return rm;
         }
+
+        //TODO 支持增删改查，缓存过期
         /// <summary>
         /// 全局缓存-内存型
         /// </summary>
