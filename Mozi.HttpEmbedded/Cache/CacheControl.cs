@@ -1,4 +1,7 @@
-﻿namespace Mozi.HttpEmbedded
+﻿using System;
+using Mozi.HttpEmbedded.Extension;
+
+namespace Mozi.HttpEmbedded
 {
     /// <summary>
     /// 缓存管理
@@ -17,6 +20,17 @@
         private CacheControl()
         {
 
+        }
+        /// <summary>
+        /// ETAG生成器
+        /// </summary>
+        /// <param name="lastModifyTime"></param>
+        /// <param name="fileSize"></param>
+        /// <returns></returns>
+        public static string GenerateETag(DateTime lastModifyTime,int fileSize)
+        {
+            var time = BitConverter.ToString(BitConverter.GetBytes(lastModifyTime.ToUniversalTime().ToTimestamp())).Replace("-","").ToLower();
+            return string.Format("{0}:{1}",time, fileSize);
         }
     }
 }
