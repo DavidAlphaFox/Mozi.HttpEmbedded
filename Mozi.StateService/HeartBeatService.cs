@@ -6,6 +6,7 @@ using System.Threading;
 
 namespace Mozi.StateService
 {
+    //TODO 是否考虑建立双向心跳服务，类似于握手
     /// <summary>
     /// 状态服务
     /// </summary>
@@ -28,12 +29,15 @@ namespace Mozi.StateService
             DeviceName = "Mozi",
             DeviceId = "00010001",
             StateName = "alive",
-            Version = 1,
+            Version ='1',
             AppVersion = "1.0.0"
         };
 
+        private  IPEndPoint _endPoint;
+
         public HeartBeatService()
         {
+            InitRemoteEndpoint();
             _timeLooper = new Timer(TimerCallbackInvoker, this, Timeout.Infinite, Timeout.Infinite);
         }
 
@@ -52,7 +56,10 @@ namespace Mozi.StateService
         public string RemoteHost
         {
             get { return _host; }
-            set { _host = value; }
+            set {
+                _host = value;
+                InitRemoteEndpoint();
+            }
         }
         /// <summary>
         /// 端口
@@ -60,7 +67,10 @@ namespace Mozi.StateService
         public int Port
         {
             get { return _port; }
-            set { _port = value; }
+            set { 
+                _port = value;
+                InitRemoteEndpoint();
+            }
         }
         /// <summary>
         /// 设置心跳周期
@@ -102,11 +112,18 @@ namespace Mozi.StateService
 
             }
         }
-
-        public HeartBeatService ApplyDevice(string deviceName, string deviceId)
+        /// <summary>
+        /// 配置终端信息
+        /// </summary>
+        /// <param name="deviceName"></param>
+        /// <param name="deviceId"></param>
+        /// <param name="appVersion"></param>
+        /// <returns></returns>
+        public HeartBeatService ApplyDevice(string deviceName, string deviceId,string appVersion)
         {
             _sp.DeviceName = deviceName;
             _sp.DeviceId = deviceId;
+            _sp.AppVersion = appVersion;
             return this;
         }
 
@@ -130,12 +147,14 @@ namespace Mozi.StateService
             {
                 _sc.Close();
             }
-            IPEndPoint endpoint = new IPEndPoint(IPAddress.Any, _port);
             //允许端口复用
             _sc.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
             _sc.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.IpTimeToLive, 100);
         }
-
+        private void InitRemoteEndpoint()
+        {
+            _endPoint = new IPEndPoint(IPAddress.Parse(_host), _port);
+        }
         public void Notify()
         {
             if (!string.IsNullOrEmpty(_host))
@@ -152,7 +171,7 @@ namespace Mozi.StateService
     /// </summary>
     public class StatePackage
     {
-        public byte Version { get; set; }
+        public char Version { get; set; }
         public ushort PackageLength { get; set; }
         public ushort StateNameLength { get; set; }
         public string StateName { get; set; }
@@ -190,14 +209,14 @@ namespace Mozi.StateService
             arr.InsertRange(0, ((ushort)stateName.Length).ToBytes());
 
             arr.InsertRange(0, ((ushort)arr.Count).ToBytes());
-            arr.Insert(0, Version);
+            arr.Insert(0, (byte)Version);
             return arr.ToArray();
         }
 
         public static StatePackage Parse(byte[] pg)
         {
             StatePackage state = new StatePackage();
-            state.Version = pg[0];
+            state.Version = (char)pg[0];
 
             int bodyLen = pg.ToUInt16(1);
             byte[] body = new byte[bodyLen];

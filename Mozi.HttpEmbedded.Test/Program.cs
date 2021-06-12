@@ -59,11 +59,11 @@ namespace Mozi.HttpEmbedded.Test
             //开启状态服务
             HeartBeatService state = new HeartBeatService()
             {
-                Port = 12353,
+                Port = 13453,
                 RemoteHost = "100.100.0.105"
             };
 
-            state.ApplyDevice("Mozi.StateService", "80018001");
+            state.ApplyDevice("Mozi.StateService", "80018001","1.2.3");
             state.SetState("alive");
             state.Init();
             state.Activate();

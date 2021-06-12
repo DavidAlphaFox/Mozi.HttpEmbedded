@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Net;
 using System.Net.Sockets;
-using Mozi.StateService;
 
-namespace Mozi.SSDP
+namespace Mozi.StateService
 {
     /// <summary>
     /// UDP套接字
@@ -14,7 +13,7 @@ namespace Mozi.SSDP
 
         protected Socket _sc;
 
-        private EndPoint _endPoint=new IPEndPoint(IPAddress.Any, 13453);
+        private EndPoint _endPoint = new IPEndPoint(IPAddress.Any, 13453);
 
         public UDPSocket()
         {
@@ -75,7 +74,7 @@ namespace Mozi.SSDP
             _iport = port;
             if (_sc == null)
             {
-                _sc = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, System.Net.Sockets.ProtocolType.Udp);
+                _sc = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
             }
             else
             {
@@ -84,7 +83,7 @@ namespace Mozi.SSDP
             _endPoint = new IPEndPoint(IPAddress.Any, _iport);
             //允许端口复用
             _sc.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
-            _sc.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.MulticastTimeToLive, 32);
+            _sc.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.IpTimeToLive, 32);
             _sc.Bind(_endPoint);
 
             //回调服务器启动事件
@@ -134,7 +133,7 @@ namespace Mozi.SSDP
                 if (client.Available > 0)
                 {
                     so.RemoteEndPoint = remote;
-                    client.BeginReceiveFrom(so.Buffer, 0, so.Buffer.Length, SocketFlags.None, ref so.RemoteEndPoint,new AsyncCallback(CallbackReceive), so);
+                    client.BeginReceiveFrom(so.Buffer, 0, so.Buffer.Length, SocketFlags.None, ref so.RemoteEndPoint, new AsyncCallback(CallbackReceive), so);
                 }
                 else
                 {
@@ -163,8 +162,8 @@ namespace Mozi.SSDP
             {
                 WorkSocket = _sc,
                 Id = Guid.NewGuid().ToString(),
-                IP = ((System.Net.IPEndPoint)client.RemoteEndPoint).Address.ToString(),
-                RemotePort = ((System.Net.IPEndPoint)client.RemoteEndPoint).Port,
+                IP = ((IPEndPoint)client.RemoteEndPoint).Address.ToString(),
+                RemotePort = ((IPEndPoint)client.RemoteEndPoint).Port,
                 RemoteEndPoint = new IPEndPoint(IPAddress.Any, 0)
             };
             _sc.BeginReceiveFrom(so.Buffer, 0, so.Buffer.Length, SocketFlags.None, ref so.RemoteEndPoint, new AsyncCallback(CallbackReceive), so);

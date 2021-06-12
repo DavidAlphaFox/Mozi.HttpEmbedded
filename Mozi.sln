@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mozi.SSDP", "Mozi.SSDP\Mozi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mozi.StateService", "Mozi.StateService\Mozi.StateService.csproj", "{BBE7558C-DBB2-4B69-82CD-D442FE232F02}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mozi.HttpEmbedded.Test.Net5", "Mozi.HttpEmbedded.Test.Net5\Mozi.HttpEmbedded.Test.Net5.csproj", "{005B5A0D-A690-4E40-85B3-3E9C0BA4B22D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mozi.HttpEmbedded.Test.Net5", "Mozi.HttpEmbedded.Test.Net5\Mozi.HttpEmbedded.Test.Net5.csproj", "{005B5A0D-A690-4E40-85B3-3E9C0BA4B22D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
