@@ -7,7 +7,7 @@ namespace Mozi.StateService
     /// </summary>
     public class HeartBeatGateway
     {
-        private UDPSocket _socket;
+        private readonly UDPSocket _socket;
 
         public HeartBeatGateway()
         {

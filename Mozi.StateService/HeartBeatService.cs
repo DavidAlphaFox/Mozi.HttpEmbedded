@@ -12,7 +12,9 @@ namespace Mozi.StateService
     /// </summary>
     public class HeartBeatService
     {
-        private int _port = 13453;
+        public const int DefaultPort = 13453; 
+
+        private int _port = DefaultPort;
 
         private string _host = "127.0.0.1";
 
@@ -28,9 +30,10 @@ namespace Mozi.StateService
         {
             DeviceName = "Mozi",
             DeviceId = "00010001",
-            StateName = "alive",
+            StateName = 0x31,
             Version =0x31,
-            AppVersion = "1.0.0"
+            AppVersion = "1.0.0",
+            UserName="",
         };
 
         private  IPEndPoint _endPoint;
@@ -105,7 +108,7 @@ namespace Mozi.StateService
         {
             if (active)
             {
-                Notify();
+                SendPack();
             }
             else
             {
@@ -126,10 +129,20 @@ namespace Mozi.StateService
             _sp.AppVersion = appVersion;
             return this;
         }
-
-        public HeartBeatService SetState(string stateName)
+        /// <summary>
+        /// 设置用户名
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public HeartBeatService SetUserName(string userName)
         {
-            _sp.StateName = stateName;
+            _sp.UserName = userName;
+            return this;
+        }
+
+        public HeartBeatService SetState(HeartBeatState stateName)
+        {
+            _sp.StateName = stateName.ToCharByte();
             return this;
         }
 
@@ -155,16 +168,47 @@ namespace Mozi.StateService
         {
             _endPoint = new IPEndPoint(IPAddress.Parse(_host), _port);
         }
-        public void Notify()
+        public void SendPack()
         {
             if (!string.IsNullOrEmpty(_host))
             {
                 _sc.SendTo(_sp.Pack(), new IPEndPoint(IPAddress.Parse(_host), _port));
             }
         }
+
+        public void Alive()
+        {
+            SetState(HeartBeatState.Alive);
+        }
+
+        public void Leave()
+        {
+            SetState(HeartBeatState.Byebye);
+        }
+
+        public void Busy()
+        {
+            SetState(HeartBeatState.Busy);
+        }
+        public void Idle()
+        {
+            SetState(HeartBeatState.Idle);
+        }
+    }
+    /// <summary>
+    /// 客户机状态类型
+    /// </summary>
+    public enum HeartBeatState
+    {
+        Unknown=0,
+        Alive=1,
+        Byebye=2,
+        Busy=3,
+        Idle=4,
+        Offline=5
     }
 
-    //statename:alive|byebye|busy|idle
+    //statename:alive|byebye|busy|idle|offline
 
     /// <summary>
     /// 状态数据协议包
@@ -173,28 +217,31 @@ namespace Mozi.StateService
     {
         public byte Version { get; set; }
         public ushort PackageLength { get; set; }
-        public ushort StateNameLength { get; set; }
-        public string StateName { get; set; }
+        public byte StateName { get; set; }
         public ushort DeviceNameLength { get; set; }
         public string DeviceName { get; set; }
         public ushort DeviceIdLength { get; set; }
         public string DeviceId { get; set; }
         public ushort AppVersionLength { get; set; }
-        public string AppVersion { get; set; }
+        public string AppVersion { get; set; }        
+        public ushort UserNameLength { get; set; }
+        public string UserName { get; set; }
         public long Timestamp { get; set; }
 
         public byte[] Pack()
         {
             List<byte> arr = new List<byte>();
 
-            byte[] stateName = StateName.ToBytes();
             byte[] deviceName = DeviceName.ToBytes();
             byte[] deviceId = DeviceId.ToBytes();
             byte[] appVersion = AppVersion.ToBytes();
+            byte[] userName = UserName.ToBytes();
 
             Timestamp = DateTime.Now.ToTimestamp();
 
             arr.AddRange(Timestamp.ToBytes());
+            arr.InsertRange(0, userName);
+            arr.InsertRange(0, ((ushort)userName.Length).ToBytes());
 
             arr.InsertRange(0, appVersion);
             arr.InsertRange(0, ((ushort)appVersion.Length).ToBytes());
@@ -205,11 +252,10 @@ namespace Mozi.StateService
             arr.InsertRange(0, deviceName);
             arr.InsertRange(0, ((ushort)deviceName.Length).ToBytes());
 
-            arr.InsertRange(0, stateName);
-            arr.InsertRange(0, ((ushort)stateName.Length).ToBytes());
+            arr.Insert(0, StateName);
 
             arr.InsertRange(0, ((ushort)arr.Count).ToBytes());
-            arr.Insert(0, (byte)Version);
+            arr.Insert(0, Version);
             return arr.ToArray();
         }
 
@@ -217,32 +263,31 @@ namespace Mozi.StateService
         {
             HeartBeatPackage state = new HeartBeatPackage();
             state.Version = pg[0];
+            state.PackageLength = pg.ToUInt16(1);
+            byte[] body = new byte[state.PackageLength];
+            Array.Copy(pg, 3, body, 0, body.Length);
 
-            int bodyLen = pg.ToUInt16(1);
-            byte[] body = new byte[bodyLen];
-            Array.Copy(pg, 3, body, 0, bodyLen);
+            state.StateName = body[0];
+            state.DeviceNameLength = body.ToUInt16(1);
+            state.DeviceIdLength = body.ToUInt16(2 * 1 + 1 + state.DeviceNameLength);
+            state.AppVersionLength = body.ToUInt16(2 * 2 + 1 + state.DeviceNameLength + state.DeviceIdLength);
+            state.UserNameLength = body.ToUInt16(2 * 3 + 1 + state.DeviceNameLength + state.DeviceIdLength+state.AppVersionLength);
+            state.Timestamp = body.ToInt64(2 * 4 + 1 + state.DeviceNameLength + state.DeviceIdLength + state.AppVersionLength+state.UserNameLength);
 
-            state.StateNameLength = body.ToUInt16(0);
-            state.DeviceNameLength = body.ToUInt16(2 + state.StateNameLength);
-            state.DeviceIdLength = body.ToUInt16(2 * 2 + state.StateNameLength + state.DeviceNameLength);
-            state.AppVersionLength = body.ToUInt16(2 * 3 + state.StateNameLength + state.DeviceNameLength + state.DeviceIdLength);
-
-            state.Timestamp = body.ToInt64(2 * 4 + state.StateNameLength + state.DeviceNameLength + state.DeviceIdLength + state.AppVersionLength);
-
-            byte[] stateName = new byte[state.StateNameLength];
             byte[] deviceName = new byte[state.DeviceNameLength];
             byte[] deviceId = new byte[state.DeviceIdLength];
             byte[] appVersion = new byte[state.AppVersionLength];
+            byte[] userName = new byte[state.UserNameLength];
 
-            Array.Copy(body, 2, stateName, 0, state.StateNameLength);
-            Array.Copy(body, 2 * 2 + state.StateNameLength, deviceName, 0, state.DeviceNameLength);
-            Array.Copy(body, 2 * 3 + state.StateNameLength + state.DeviceNameLength, deviceId, 0, state.DeviceIdLength);
-            Array.Copy(body, 2 * 4 + state.StateNameLength + state.DeviceNameLength + state.DeviceIdLength, appVersion, 0, state.AppVersionLength);
+            Array.Copy(body, 2 * 1 + 1, deviceName, 0, state.DeviceNameLength);
+            Array.Copy(body, 2 * 2 + 1 + state.DeviceNameLength, deviceId, 0, state.DeviceIdLength);
+            Array.Copy(body, 2 * 3 + 1 + state.DeviceNameLength + state.DeviceIdLength, appVersion, 0, state.AppVersionLength);
+            Array.Copy(body, 2 * 4 + 1 + state.DeviceNameLength + state.DeviceIdLength, userName, 0, state.UserNameLength);
 
-            state.StateName = stateName.AsString();
             state.DeviceName = deviceName.AsString();
             state.DeviceId = deviceId.AsString();
             state.AppVersion = appVersion.AsString();
+            state.UserName = userName.AsString();
 
             return state;
         }
@@ -257,6 +302,11 @@ namespace Mozi.StateService
         public static string AsString(this byte[] data)
         {
             return System.Text.Encoding.ASCII.GetString(data);
+        }
+
+        public static byte ToCharByte(this HeartBeatState state)
+        {
+            return ((int)state).ToCharByte();
         }
     }
 }

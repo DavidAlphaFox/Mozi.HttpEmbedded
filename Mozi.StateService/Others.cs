@@ -49,5 +49,22 @@ namespace Mozi.StateService
         {
             return BitConverter.ToInt64(data, startIndex);
         }
+
+        public static int ToCharInt(this byte data)
+        {
+            return Convert.ToInt32(data);
+        }
+
+        public static byte ToCharByte(this int data)
+        {
+            if (data >= byte.MinValue && data <= byte.MaxValue)
+            {
+                return Convert.ToByte((byte)data);
+            }
+            else
+            {
+                return 0;
+            }
+        }
     }
 }
