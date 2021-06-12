@@ -122,6 +122,7 @@ namespace Mozi.HttpEmbedded
 
             if (OnClientConnect != null)
             {
+                //TODO .NetCore不再支持异步委托，需要重新实现
                 OnClientConnect.BeginInvoke(this, new ClientConnectArgs()
                 {
                     Client = client

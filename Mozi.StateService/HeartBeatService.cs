@@ -134,35 +134,6 @@ namespace Mozi.StateService
             //允许端口复用
             _sc.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
             _sc.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.IpTimeToLive, 100);
-
-            //_sc.Bind(endpoint);
-
-            ////回调服务器启动事件
-            //UDPStateObject so = new UDPStateObject()
-            //{
-            //    WorkSocket = _sc,
-            //    Id = Guid.NewGuid().ToString(),
-            //    //IP = ((System.Net.IPEndPoint)client.RemoteEndPoint).Address.ToString(),
-            //    //RemotePort = ((System.Net.IPEndPoint)client.RemoteEndPoint).Port,
-            //    RemoteEndPoint = new IPEndPoint(IPAddress.Any, 0)
-            //};
-
-            //if (OnServerStart != null)
-            //{
-            //    OnServerStart(this, new ServerArgs() { StartTime = DateTime.Now, StopTime = DateTime.MinValue });
-            //}
-            //try
-            //{
-            //    _sc.BeginReceiveFrom(so.Buffer, 0, StateObject.BufferSize, SocketFlags.None, ref so.RemoteEndPoint, CallbackReceive, so);
-            //    if (OnReceiveStart != null)
-            //    {
-            //        OnReceiveStart.BeginInvoke(this, new DataTransferArgs(), null, null);
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    var ex2 = ex;
-            //}
         }
 
         public void Notify()
