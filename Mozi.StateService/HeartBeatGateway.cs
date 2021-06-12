@@ -1,12 +1,13 @@
 ﻿using System;
-using System.Net;
 
 namespace Mozi.StateService
 {
+    /// <summary>
+    /// 心跳网关服务器
+    /// </summary>
     public class HeartBeatGateway
     {
         private UDPSocket _socket;
-        private EndPoint _endPoint = new IPEndPoint(IPAddress.Any, 13453);
 
         public HeartBeatGateway()
         {
@@ -26,12 +27,12 @@ namespace Mozi.StateService
         {
             try
             {
-                StatePackage pg = StatePackage.Parse(args.Data);
-                Console.WriteLine("设备：{0},编号：{1},版本：{2},时间：{3}", pg.DeviceName,pg.DeviceId,pg.AppVersion,pg.Timestamp);
+                HeartBeatPackage pg = HeartBeatPackage.Parse(args.Data);
+                Console.WriteLine("设备：{0},编号：{1},状态：{2} 版本：{3},时间：{4}", pg.DeviceName,pg.DeviceId,pg.StateName,pg.AppVersion,pg.Timestamp);
             }
-            catch
+            catch(Exception ex)
             {
-
+                var ex2 = ex;
             }
         }
     }

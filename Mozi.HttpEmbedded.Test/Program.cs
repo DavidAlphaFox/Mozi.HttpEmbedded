@@ -56,17 +56,6 @@ namespace Mozi.HttpEmbedded.Test
             SSDP.SSDPService ser = new SSDP.SSDPService();
             ser.Activate();
 
-            //开启状态服务
-            HeartBeatService state = new HeartBeatService()
-            {
-                Port = 13453,
-                RemoteHost = "100.100.0.105"
-            };
-
-            state.ApplyDevice("Mozi.StateService", "80018001","1.2.3");
-            state.SetState("alive");
-            state.Init();
-            state.Activate();
             Console.ReadLine();
 
             //请访问地址 http://{ip}:{port}/admin/index.html

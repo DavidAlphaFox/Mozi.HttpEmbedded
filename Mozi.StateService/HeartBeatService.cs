@@ -24,12 +24,12 @@ namespace Mozi.StateService
 
         private int _interval = 30 * 1000;
 
-        private readonly StatePackage _sp = new StatePackage
+        private readonly HeartBeatPackage _sp = new HeartBeatPackage
         {
             DeviceName = "Mozi",
             DeviceId = "00010001",
             StateName = "alive",
-            Version ='1',
+            Version =0x31,
             AppVersion = "1.0.0"
         };
 
@@ -167,11 +167,11 @@ namespace Mozi.StateService
     //statename:alive|byebye|busy|idle
 
     /// <summary>
-    /// 状态包
+    /// 状态数据协议包
     /// </summary>
-    public class StatePackage
+    public class HeartBeatPackage
     {
-        public char Version { get; set; }
+        public byte Version { get; set; }
         public ushort PackageLength { get; set; }
         public ushort StateNameLength { get; set; }
         public string StateName { get; set; }
@@ -213,10 +213,10 @@ namespace Mozi.StateService
             return arr.ToArray();
         }
 
-        public static StatePackage Parse(byte[] pg)
+        public static HeartBeatPackage Parse(byte[] pg)
         {
-            StatePackage state = new StatePackage();
-            state.Version = (char)pg[0];
+            HeartBeatPackage state = new HeartBeatPackage();
+            state.Version = pg[0];
 
             int bodyLen = pg.ToUInt16(1);
             byte[] body = new byte[bodyLen];

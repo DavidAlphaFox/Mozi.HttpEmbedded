@@ -162,8 +162,7 @@ namespace Mozi.StateService
             {
                 WorkSocket = _sc,
                 Id = Guid.NewGuid().ToString(),
-                IP = ((IPEndPoint)client.RemoteEndPoint).Address.ToString(),
-                RemotePort = ((IPEndPoint)client.RemoteEndPoint).Port,
+                //IP = ((IPEndPoint)remote).Address.ToString(),
                 RemoteEndPoint = new IPEndPoint(IPAddress.Any, 0)
             };
             _sc.BeginReceiveFrom(so.Buffer, 0, so.Buffer.Length, SocketFlags.None, ref so.RemoteEndPoint, new AsyncCallback(CallbackReceive), so);
