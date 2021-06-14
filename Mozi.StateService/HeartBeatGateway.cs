@@ -119,6 +119,7 @@ namespace Mozi.StateService
         {
             try
             {
+                GC.Collect();
                 HeartBeatPackage pg = HeartBeatPackage.Parse(args.Data);
                 ClientAliveInfo ca = new ClientAliveInfo()
                 {
