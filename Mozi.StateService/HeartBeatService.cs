@@ -140,7 +140,7 @@ namespace Mozi.StateService
             return this;
         }
 
-        public HeartBeatService SetState(HeartBeatState stateName)
+        public HeartBeatService SetState(ClientLifeState stateName)
         {
             _sp.StateName = stateName.ToCharByte();
             return this;
@@ -178,40 +178,42 @@ namespace Mozi.StateService
 
         public void Alive()
         {
-            SetState(HeartBeatState.Alive);
+            SetState(ClientLifeState.Alive);
         }
 
         public void Leave()
         {
-            SetState(HeartBeatState.Byebye);
+            SetState(ClientLifeState.Byebye);
         }
 
         public void Busy()
         {
-            SetState(HeartBeatState.Busy);
+            SetState(ClientLifeState.Busy);
         }
         public void Idle()
         {
-            SetState(HeartBeatState.Idle);
+            SetState(ClientLifeState.Idle);
         }
     }
     /// <summary>
     /// 客户机状态类型
     /// </summary>
-    public enum HeartBeatState
+    public enum ClientLifeState
     {
         Unknown=0,
         Alive=1,
         Byebye=2,
         Busy=3,
-        Idle=4,
-        Offline=5
+        Idle=4
     }
 
     //statename:alive|byebye|busy|idle|offline
 
     /// <summary>
     /// 状态数据协议包
+    /// <para>
+    /// 所有字符串均按ASCII编码，字符集不能超过ASCII
+    /// </para>
     /// </summary>
     public class HeartBeatPackage
     {
@@ -261,9 +263,11 @@ namespace Mozi.StateService
 
         public static HeartBeatPackage Parse(byte[] pg)
         {
-            HeartBeatPackage state = new HeartBeatPackage();
-            state.Version = pg[0];
-            state.PackageLength = pg.ToUInt16(1);
+            HeartBeatPackage state = new HeartBeatPackage
+            {
+                Version = pg[0],
+                PackageLength = pg.ToUInt16(1)
+            };
             byte[] body = new byte[state.PackageLength];
             Array.Copy(pg, 3, body, 0, body.Length);
 
@@ -304,7 +308,7 @@ namespace Mozi.StateService
             return System.Text.Encoding.ASCII.GetString(data);
         }
 
-        public static byte ToCharByte(this HeartBeatState state)
+        public static byte ToCharByte(this ClientLifeState state)
         {
             return ((int)state).ToCharByte();
         }

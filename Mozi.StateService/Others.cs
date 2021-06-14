@@ -20,7 +20,11 @@ namespace Mozi.StateService
             var mills = (date.ToUniversalTime() - new DateTime(1970, 1, 1, 0, 0, 0)).TotalMilliseconds;
             return (long)mills;
         }
-
+        public static DateTime ToDateTime(this long timestamp)
+        {
+            var dtMin= new DateTime(1970, 1, 1, 0, 0, 0);
+            return dtMin.AddMilliseconds(timestamp).ToLocalTime();
+        }
         public static byte[] ToBytes(this ushort num)
         {
             return BitConverter.GetBytes(num);

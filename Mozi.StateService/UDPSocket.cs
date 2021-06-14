@@ -165,7 +165,7 @@ namespace Mozi.StateService
                 //IP = ((IPEndPoint)remote).Address.ToString(),
                 RemoteEndPoint = new IPEndPoint(IPAddress.Any, 0)
             };
-            _sc.BeginReceiveFrom(so.Buffer, 0, so.Buffer.Length, SocketFlags.None, ref so.RemoteEndPoint, new AsyncCallback(CallbackReceive), so);
+            _sc.BeginReceiveFrom(stateobject.Buffer, 0, stateobject.Buffer.Length, SocketFlags.None, ref stateobject.RemoteEndPoint, new AsyncCallback(CallbackReceive), stateobject);
         }
     }
 }

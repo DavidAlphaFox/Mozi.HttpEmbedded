@@ -29,6 +29,7 @@ namespace Mozi.HttpEmbedded
         ~StateObject()
         {
             Buffer = null;
+            Data = null;
         }
     }
 }

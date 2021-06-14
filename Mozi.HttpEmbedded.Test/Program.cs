@@ -64,7 +64,7 @@ namespace Mozi.HttpEmbedded.Test
             };
 
             state.ApplyDevice("Mozi.StateService", "80018001", "1.2.3");
-            state.SetState(HeartBeatState.Alive);
+            state.SetState(ClientLifeState.Alive);
             state.Init();
             state.Activate();
 
