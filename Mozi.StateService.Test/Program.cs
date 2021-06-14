@@ -4,6 +4,7 @@ namespace Mozi.StateService.Test
 {
     class Program
     {
+        static HeartBeatGateway hg = new HeartBeatGateway();
         static void Main(string[] args)
         {
             ////开启状态服务
@@ -18,9 +19,14 @@ namespace Mozi.StateService.Test
             //state.Init();
             //state.Activate();
 
-            HeartBeatGateway hg = new HeartBeatGateway();
+            hg.OnClientStateChange += Hg_OnClientStateChange;
             hg.Start(13453);
             Console.ReadLine();
+        }
+
+        private static void Hg_OnClientStateChange(object sender, ClientAliveInfo clientInfo, ClientState oldState, ClientState newState)
+        {
+            Console.Title = hg.Clients.Count.ToString();
         }
     }
 }

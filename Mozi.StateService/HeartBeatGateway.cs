@@ -46,12 +46,14 @@ namespace Mozi.StateService
     public class HeartBeatGateway
     {
         private readonly UDPSocket _socket;
-
+        private int _timeoutOffline = 180;
         //public event ClientStateChange OnClientAlive;
         //public event ClientStateChange OnClientLeave;
         public event ClientStateChange OnClientStateChange;
 
         private List<ClientAliveInfo> _clients = new List<ClientAliveInfo>();
+
+        public List<ClientAliveInfo> Clients { get { return _clients; } }
 
         public HeartBeatGateway()
         {
@@ -68,14 +70,59 @@ namespace Mozi.StateService
         {
             _socket.Shutdown();
         }
+        /// <summary>
+        /// 设置终端状态
+        /// </summary>
+        /// <param name="ca"></param>
+        /// <param name="state"></param>
         public void SetClientState(ClientAliveInfo ca,ClientState state)
         {
+            var client = _clients.Find(x => x.DeviceName.Equals(ca.DeviceName) && x.DeviceId.Equals(ca.DeviceId));
+            if (client != null)
+            {
+                var clientOldState = client.ClientState;
+                ca.ClientState = state;
+                if (client.ClientState != clientOldState && OnClientStateChange != null)
+                {
+                    try
+                    {
+                        OnClientStateChange.BeginInvoke(this, client, clientOldState, client.ClientState, null, null);
+                    }
+                    finally
+                    {
 
+                    }
+                }
+            }
         }
-        public void UpdateClient(ClientAliveInfo ca,ClientLifeState state)
+        /// <summary>
+        /// 将终端置于失效状态
+        /// </summary>
+        /// <param name="ca"></param>
+        public void SetClientDead(ClientAliveInfo ca)
+        {
+            SetClientState(ca, ClientState.Dead);
+        }
+
+        public void CheckClientState()
+        {
+            foreach(var client in _clients)
+            {
+                if ((DateTime.Now - client.BeatTime).TotalSeconds > _timeoutOffline)
+                {
+                    SetClientState(client, ClientState.Offline);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 保存终端信息
+        /// </summary>
+        /// <param name="ca"></param>
+        public void UpdateClient(ClientAliveInfo ca)
         {
             var client = _clients.Find(x => x.DeviceName.Equals(ca.DeviceName) && x.DeviceId.Equals(ca.DeviceId));
-            if (_clients != null)
+            if (client != null)
             {
                 client.AppVersion = ca.AppVersion;
                 client.State = ca.State;
@@ -89,32 +136,22 @@ namespace Mozi.StateService
             }
             //统一设置跳动时间
             client.BeatTime = DateTime.Now;
-
-            var clientOldState = client.ClientState;
            
-            if (state == ClientLifeState.Byebye)
+            if (client.State == ClientLifeState.Byebye)
             {
-                client.ClientState = ClientState.Offline;
                 client.LeaveTime = DateTime.Now;
+                SetClientState(client, ClientState.Offline);
             }
             else
             {
-                client.ClientState = ClientState.On;
-            }
-
-            if (client.ClientState != clientOldState&&OnClientStateChange!=null)
-            {
-                try
-                {
-                    OnClientStateChange.BeginInvoke(this, client, clientOldState, client.ClientState, null, null);
-                }
-                finally
-                {
-
-                }
+                SetClientState(client, ClientState.On);
             }
         }
-
+        /// <summary>
+        /// 数据接收完成回调
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
         private void _socket_AfterReceiveEnd(object sender, DataTransferArgs args)
         {
             try
@@ -125,7 +162,11 @@ namespace Mozi.StateService
                 {
                     DeviceName = pg.DeviceName,
                     DeviceId = pg.DeviceId,
+                    AppVersion=pg.AppVersion,
+                    UserName=pg.UserName,
+                    State=(ClientLifeState)Enum.Parse(typeof(ClientLifeState),pg.StateName.ToCharInt().ToString())
                 };
+                UpdateClient(ca);
                 Console.WriteLine("设备{0},编号{1},状态{2},版本{3},时间{4},{5}", pg.DeviceName,pg.DeviceId,pg.StateName,pg.AppVersion,pg.Timestamp,args.IP);
             }
             catch(Exception ex)
