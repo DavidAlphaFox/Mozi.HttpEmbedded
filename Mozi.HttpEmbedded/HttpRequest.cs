@@ -173,6 +173,7 @@ namespace Mozi.HttpEmbedded
                 //跳过分割字节段
                 posCaret = posCR + 2;
                 index++;
+                //TODO 置空对象
             }
 
             //头部信息分解
@@ -197,7 +198,7 @@ namespace Mozi.HttpEmbedded
                 req.Body = new byte[data.Length - (posCR + 4)];
                 //TODO 此处又重新生成一个数据对象，导致内存占用过大
                 Array.Copy(data, posCR + 4, req.Body, 0, req.Body.Length);
-                ParsePayload(ref req, req.Body);
+                ParsePayload(ref req,req.Body);
             }
             return req;
         }
@@ -209,7 +210,7 @@ namespace Mozi.HttpEmbedded
         /// </summary>
         /// <param name="req"></param>
         /// <param name="data"></param>
-        private static void ParsePayload(ref HttpRequest req, byte[] data)
+        private static void ParsePayload(ref HttpRequest req,byte[] data)
         {
             string formType = req.Headers.GetValue(HeaderProperty.ContentType.PropertyName);
             if (formType != null)
@@ -425,6 +426,9 @@ namespace Mozi.HttpEmbedded
                                 //var postField = new byte[fragbody.Length - (posCR + 4)];
                                 req.Query.Add(fieldName, StringEncoder.Decode(postField));
                             }
+                            //TODO 置空对象
+                            fragment = null;
+                            postField = null;
                         }
                     }
                 }
@@ -637,6 +641,7 @@ namespace Mozi.HttpEmbedded
             Headers = null;
             HeaderData = null;
             Files = null;
+            AcceptLanguage = null;
         }
     }
 }

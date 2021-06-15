@@ -7,6 +7,7 @@ using System.Threading;
 namespace Mozi.StateService
 {
     //TODO 是否考虑建立双向心跳服务，类似于握手
+    //TODO 是否考虑设置一个备份地址
     /// <summary>
     /// 状态服务
     /// </summary>

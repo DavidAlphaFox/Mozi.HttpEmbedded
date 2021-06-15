@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net.Sockets;
+using System.IO;
 
 namespace Mozi.HttpEmbedded
 {
@@ -15,8 +16,10 @@ namespace Mozi.HttpEmbedded
         public const int BufferSize = 1024;
         public List<byte> Data = new List<byte>();
         public byte[] Buffer = new byte[BufferSize * 4];
+
         public string IP { get; set; }
 
+        //TODO 此处会造成内存占用过大的问题
         //TODO 此处没有完整处理包体，会有多读取的冗余数据
         public void ResetBuffer(int count)
         {
@@ -25,9 +28,9 @@ namespace Mozi.HttpEmbedded
             Data.AddRange(data);
             Buffer = new byte[BufferSize];
         }
-
         ~StateObject()
         {
+            Data.Clear();
             Buffer = null;
             Data = null;
         }

@@ -213,6 +213,7 @@ namespace Mozi.HttpEmbedded
                     }
                     context.Request = HttpRequest.Parse(args.Data);
                     context.Request.ClientAddress = args.IP;
+
                     //TODO HTTP/1.1 通过Connection控制连接 服务器同时对连接进行监测 保证服务器效率
                     //DONE 此处应判断Content-Length然后继续读流
                     //TODO 如何解决文件传输内存占用过大的问题
@@ -226,7 +227,7 @@ namespace Mozi.HttpEmbedded
                     }
                     if (contentLength == -1 || contentLength <= context.Request.Body.Length)
                     {
-
+                       
                     }
                     else
                     {
@@ -296,7 +297,7 @@ namespace Mozi.HttpEmbedded
                 args.Socket.Send(context.Response.GetBuffer());
                 args.Socket.Close(100);
             }
-            GC.Collect();
+            GC.Collect(1);
         }
         /// <summary>
         /// 处理认证

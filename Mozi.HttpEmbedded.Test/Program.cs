@@ -53,14 +53,14 @@ namespace Mozi.HttpEmbedded.Test
             hs.UseWebDav("dav");
 
             //开启SSDP服务
-            SSDP.SSDPService ser = new SSDP.SSDPService();
-            ser.Activate();
+            SSDP.SSDPService ssdp = new SSDP.SSDPService();
+            ssdp.Activate();
 
             ////开启状态服务
             HeartBeatService state = new HeartBeatService()
             {
                 Port = 13453,
-                RemoteHost = "100.100.0.105"
+                RemoteHost = "100.100.0.111"
             };
 
             state.ApplyDevice("Mozi.StateService", "80018001", "1.2.3");

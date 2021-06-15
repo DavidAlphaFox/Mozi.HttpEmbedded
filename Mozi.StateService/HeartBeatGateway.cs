@@ -47,6 +47,9 @@ namespace Mozi.StateService
     {
         private readonly UDPSocket _socket;
         private int _timeoutOffline = 180;
+        private int _port = 13453;
+        public  int Port { get { return _port; } }
+
         //public event ClientStateChange OnClientAlive;
         //public event ClientStateChange OnClientLeave;
         public event ClientStateChange OnClientStateChange;
@@ -60,10 +63,17 @@ namespace Mozi.StateService
             _socket = new UDPSocket();
             _socket.AfterReceiveEnd += _socket_AfterReceiveEnd;
         }
-
+        /// <summary>
+        /// 以默认端口启动<see cref="F:Port"/>
+        /// </summary>
+        public void Start()
+        {
+            Start(_port);
+        }
         public void Start(int port)
         {
-            _socket.Start(port);
+            _port = port;
+            _socket.Start(_port);
         }
 
         public void Shutdown()

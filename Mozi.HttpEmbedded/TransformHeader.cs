@@ -89,5 +89,10 @@ namespace Mozi.HttpEmbedded
             get { return HeaderData[key]; }
             set { HeaderData[key] = value; }
         }
+
+        ~TransformHeader()
+        {
+
+        }
     }
 }
