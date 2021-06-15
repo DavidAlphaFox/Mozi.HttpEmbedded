@@ -119,7 +119,7 @@ namespace Mozi.StateService
         /// 保存终端信息
         /// </summary>
         /// <param name="ca"></param>
-        public void UpdateClient(ClientAliveInfo ca)
+        public ClientAliveInfo UpdateClient(ClientAliveInfo ca)
         {
             var client = _clients.Find(x => x.DeviceName.Equals(ca.DeviceName) && x.DeviceId.Equals(ca.DeviceId));
             if (client != null)
@@ -146,6 +146,7 @@ namespace Mozi.StateService
             {
                 SetClientState(client, ClientState.On);
             }
+            return client;
         }
         /// <summary>
         /// 数据接收完成回调
@@ -164,10 +165,10 @@ namespace Mozi.StateService
                     DeviceId = pg.DeviceId,
                     AppVersion=pg.AppVersion,
                     UserName=pg.UserName,
-                    State=(ClientLifeState)Enum.Parse(typeof(ClientLifeState),pg.StateName.ToCharInt().ToString())
+                    State=(ClientLifeState)Enum.Parse(typeof(ClientLifeState),pg.StateName.ToCharString())
                 };
-                UpdateClient(ca);
-                Console.WriteLine("设备{0},编号{1},状态{2},版本{3},时间{4},{5}", pg.DeviceName,pg.DeviceId,pg.StateName,pg.AppVersion,pg.Timestamp,args.IP);
+                var client=UpdateClient(ca);
+                Console.WriteLine("{4:yyyyMMdd HH:mm:ss}|设备{0},编号{1},状态{2},版本{3},{5}", client.DeviceName, client.DeviceId, client.State, client.AppVersion, client.BeatTime,args.IP);
             }
             catch(Exception ex)
             {

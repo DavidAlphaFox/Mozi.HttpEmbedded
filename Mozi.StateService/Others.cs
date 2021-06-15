@@ -54,9 +54,9 @@ namespace Mozi.StateService
             return BitConverter.ToInt64(data, startIndex);
         }
 
-        public static int ToCharInt(this byte data)
+        public static string ToCharString(this byte data)
         {
-            return Convert.ToInt32(data);
+            return System.Text.Encoding.ASCII.GetString(new byte[] { data });
         }
 
         public static byte ToCharByte(this int data)
