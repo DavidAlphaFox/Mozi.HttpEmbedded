@@ -1,12 +1,13 @@
 # Mozi.StateService 心跳服务
 
-# 项目介绍
+## 项目介绍
 
-Mozi.StateService是一个心跳服务组件，包含两个主要的应用对象
-# 1.HeartBeatService
+Mozi.StateService是一个心跳服务组件，包含两个主要的应用对象  
+
+### HeartBeatService
     心跳客户端  
 
-# 2.HeartBeatGateway
+### HeartBeatGateway
     心跳网关  
 
 ## 使用说明
