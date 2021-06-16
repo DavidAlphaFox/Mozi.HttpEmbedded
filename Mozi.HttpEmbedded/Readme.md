@@ -88,9 +88,16 @@ Mozi.HttpEmbedded在Socket之上使用异步单线程模型,构建了一个HTTP�
     hs.UseStaticFiles("");
 	//配置虚拟目录 虚拟目录下的文件可以随意访问
 	hs.SetVirtualDirectory("config", AppDomain.CurrentDomain.BaseDirectory + @"Config\");
+	
+	Router router = Router.Default;
+
+	//注入API
+    //1,此方法会扫描程序集内继承自BaseApi或属性标记为[BasicApi]的类
+    //2,Http通讯数据标准默认为xml,使用Router.Default.SetDataSerializer(ISerializer ser)更改序列化类型
+    router.Register($"{dllpath}");
+	router.SetDataSerializer(new JSONSerializer());
 
     //路由映射
-    Router router = Router.Default;
     router.Map("services/{controller}/{action}");
 
     Console.ReadLine();

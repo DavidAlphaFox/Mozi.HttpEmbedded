@@ -53,8 +53,8 @@ namespace Mozi.HttpEmbedded.Test
             hs.UseWebDav("dav");
 
             //开启SSDP服务
-            SSDP.SSDPService ssdp = new SSDP.SSDPService();
-            ssdp.Activate();
+            //SSDP.SSDPService ssdp = new SSDP.SSDPService();
+            //ssdp.Activate();
 
             ////开启状态服务
             HeartBeatService state = new HeartBeatService()

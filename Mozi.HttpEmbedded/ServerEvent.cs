@@ -47,6 +47,7 @@ namespace Mozi.HttpEmbedded
         ~DataTransferArgs()
         {
             Data = null;
+            State = null;
         }
     }
     /// <summary>
