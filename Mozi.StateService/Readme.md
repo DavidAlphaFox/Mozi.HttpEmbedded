@@ -1,13 +1,22 @@
-ï»¿using System;
+#Mozi.StateService ĞÄÌø·şÎñ
 
-namespace Mozi.StateService.Test
-{
-    class Program
-    {
+#ÏîÄ¿½éÉÜ
+
+Mozi.StateServiceÊÇÒ»¸öĞÄÌø·şÎñ×é¼ş£¬°üº¬Á½¸öÖ÷ÒªµÄÓ¦ÓÃ¶ÔÏó
+1.HeartBeatService
+    ĞÄÌø¿Í»§¶Ë
+2.HeartBeatGateway
+    ĞÄÌøÍø¹Ø
+
+##Ê¹ÓÃËµÃ÷
+
+~~~csharp
+
         static HeartBeatGateway hg = new HeartBeatGateway();
+
         static void Main(string[] args)
         {
-            //å¼€å¯çŠ¶æ€æœåŠ¡
+            //¿ªÆô×´Ì¬·şÎñ
             HeartBeatService state = new HeartBeatService()
             {
                 Port = 13453,
@@ -19,15 +28,13 @@ namespace Mozi.StateService.Test
             state.Init();
             state.Activate();
             state.SetState(ClientLifeState.Idle);
-            //æœåŠ¡ç½‘å…³
+
+            //·şÎñÍø¹Ø
             hg.OnClientStateChange += Hg_OnClientStateChange;
             hg.Start(13453);
             Console.ReadLine();
         }
+~~~
+### By [Jason][1] on Jun. 5,2021
 
-        private static void Hg_OnClientStateChange(object sender, ClientAliveInfo clientInfo, ClientState oldState, ClientState newState)
-        {
-            Console.Title = hg.Clients.Count.ToString();
-        }
-    }
-}
+[1]:mailto:brotherqian@163.com
