@@ -115,10 +115,12 @@ namespace Mozi.HttpEmbedded
         /// <param name="iar"></param>
         protected void CallbackAccept(IAsyncResult iar)
         {
-            Socket server = (Socket)iar.AsyncState;
-            Socket client = server.EndAccept(iar);
+            Socket server = (Socket)iar.AsyncState;            
             //接受新连接传入
             server.BeginAccept(CallbackAccept, server);
+
+            Socket client = server.EndAccept(iar);
+
 
             if (OnClientConnect != null)
             {

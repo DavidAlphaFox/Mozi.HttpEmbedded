@@ -65,6 +65,9 @@ namespace Mozi.StateService
                 InitRemoteEndpoint();
             }
         }
+
+        public bool StateChangeNotifyImmediately { get; set; }
+
         /// <summary>
         /// 端口
         /// </summary>
@@ -143,7 +146,12 @@ namespace Mozi.StateService
 
         public HeartBeatService SetState(ClientLifeState stateName)
         {
+            var oldState = _sp.StateName;
             _sp.StateName = stateName.ToCharByte();
+            if (oldState != _sp.StateName&&StateChangeNotifyImmediately)
+            {
+                SendPack();
+            }
             return this;
         }
 
@@ -169,11 +177,12 @@ namespace Mozi.StateService
         {
             _endPoint = new IPEndPoint(IPAddress.Parse(_host), _port);
         }
+
         public void SendPack()
         {
             if (!string.IsNullOrEmpty(_host))
             {
-                _sc.SendTo(_sp.Pack(), new IPEndPoint(IPAddress.Parse(_host), _port));
+                _sc.SendTo(_sp.Pack(), _endPoint);
             }
         }
 

@@ -297,7 +297,7 @@ namespace Mozi.HttpEmbedded
                 args.Socket.Send(context.Response.GetBuffer());
                 args.Socket.Close(100);
             }
-            GC.Collect(1);
+            GC.Collect();
         }
         /// <summary>
         /// 处理认证
@@ -460,8 +460,6 @@ namespace Mozi.HttpEmbedded
             return StatusCode.Forbidden;
             //RequestMethod.PROPFIND,RequestMethod.PROPPATCH RequestMethod.MKCOL RequestMethod.COPY RequestMethod.MOVE RequestMethod.LOCK RequestMethod.UNLOCK
         }
-
-
         /// <summary>
         /// 取URL资源扩展名
         /// </summary>
@@ -482,7 +480,6 @@ namespace Mozi.HttpEmbedded
         {
             //throw new NotImplementedException();
         }
-
         void _sc_OnClientConnect(object sender, ClientConnectArgs args)
         {
             //throw new NotImplementedException();
@@ -524,7 +521,7 @@ namespace Mozi.HttpEmbedded
             Auth.SetUser(userName, userPassword);
             return this;
         }
-        //TODO 进一步实现GZIP的控制逻辑
+        //DONE 进一步实现GZIP的控制逻辑
         /// <summary>
         /// 启用Gzip
         /// </summary>

@@ -104,6 +104,8 @@ namespace Mozi.HttpEmbedded.Page
             
             //调用方法
             object result = method.Invoke(instance, BindingFlags.IgnoreCase, null, args, CultureInfo.CurrentCulture);
+            //对象置空
+            instance = null;
             if (method.ReturnType != typeof(void))
             {
                 if (_dataserializer != null)

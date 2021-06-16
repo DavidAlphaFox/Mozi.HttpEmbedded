@@ -8,17 +8,18 @@ namespace Mozi.StateService.Test
         static void Main(string[] args)
         {
             ////开启状态服务
-            //HeartBeatService state = new HeartBeatService()
-            //{
-            //    Port = 13453,
-            //    RemoteHost = "100.100.0.105"
-            //};
+            HeartBeatService state = new HeartBeatService()
+            {
+                Port = 13453,
+                RemoteHost = "100.100.0.111"
+            };
 
-            //state.ApplyDevice("Mozi.StateService", "80018001", "1.2.3");
-            //state.SetState("alive");
-            //state.Init();
-            //state.Activate();
-
+            state.ApplyDevice("Mozi", "80018001", "1.2.3");
+            state.SetState(ClientLifeState.Alive);
+            state.Init();
+            state.Activate();
+            state.SetState(ClientLifeState.Idle);
+            //服务网关
             hg.OnClientStateChange += Hg_OnClientStateChange;
             hg.Start(13453);
             Console.ReadLine();

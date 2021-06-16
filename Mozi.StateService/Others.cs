@@ -61,9 +61,9 @@ namespace Mozi.StateService
 
         public static byte ToCharByte(this int data)
         {
-            if (data >= byte.MinValue && data <= byte.MaxValue)
+            if (data >= 0 && data <= 9)
             {
-                return Convert.ToByte((byte)data);
+                return System.Text.Encoding.ASCII.GetBytes(data.ToString())[0];
             }
             else
             {
