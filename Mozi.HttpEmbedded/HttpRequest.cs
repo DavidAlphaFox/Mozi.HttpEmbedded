@@ -7,6 +7,8 @@ using Mozi.HttpEmbedded.Generic;
 
 namespace Mozi.HttpEmbedded
 {
+    //TODO 应将 GET/POST 查询字段进行区分 
+
     /// <summary>
     /// HTTP请求
     /// </summary>

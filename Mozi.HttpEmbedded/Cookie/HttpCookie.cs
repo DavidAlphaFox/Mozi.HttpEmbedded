@@ -26,7 +26,8 @@ namespace Mozi.HttpEmbedded.Cookie
 
         public HttpCookie()
         {
-
+            Path = "/";
+            Domain = "";
         }
 
         public HttpCookie(string name, string value)
@@ -59,7 +60,8 @@ namespace Mozi.HttpEmbedded.Cookie
             {
                 data.Add("HttpOnly");
             }
-            return string.Join(new string(new[] { (char)ASCIICode.SPACE, (char)ASCIICode.SEMICOLON }), data);
+            //TODO 分割符号为“; ”
+            return string.Join(new string(new[] {  (char)ASCIICode.SEMICOLON ,(char)ASCIICode.SPACE}), data);
         }
     }
     /// <summary>
@@ -172,22 +174,44 @@ namespace Mozi.HttpEmbedded.Cookie
         private readonly List<HttpCookie> _cookies = new List<HttpCookie>();
         /// <summary>
         /// 设置Cookie
+        /// <para>
+        ///     Cookie三要素为name,domain,path。如果仍需要设置其他属性，请直接使用函数的返回值进行设置。
+        /// </para>
         /// </summary>
         /// <param name="key"></param>
         /// <param name="value"></param>
         /// <returns></returns>
         public HttpCookie Set(string key, string value)
         {
-            HttpCookie cookie = new HttpCookie() { Name = key, Value = UrlEncoder.Encode(value) };
-            if (_cookies.Exists(x => x.Equals(cookie)))
+            var cookie = _cookies.Find(x => x.Name.Equals(key));
+            if (cookie==null)
             {
-                cookie = _cookies.Find(x => x.Equals(cookie));
-                cookie.Value = value;
-            }
-            else
-            {
+                cookie = new HttpCookie() { Name = key};
                 _cookies.Add(cookie);
             }
+            cookie.Value =  UrlEncoder.Encode(value);
+            return cookie;
+        }
+        /// <summary>
+        /// 设置Cookie
+        /// <para>
+        ///     Cookie三要素为name,domain,path。如果仍需要设置其他属性，请直接使用函数的返回值进行设置。
+        /// </para>
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="domain"></param>
+        /// <param name="path"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public HttpCookie Set(string key,string domain,string path,string value)
+        {
+            var cookie = _cookies.Find(x => x.Name.Equals(key)&&x.Path.Equals(path)&&x.Domain.Equals(domain));
+            if (cookie == null)
+            {
+                cookie = new HttpCookie() { Name = key, Domain=domain,Path=path };
+                _cookies.Add(cookie);
+            }
+            cookie.Value = value;
             return cookie;
         }
         /// <summary>

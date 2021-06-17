@@ -32,6 +32,9 @@ namespace Mozi.SSDP
         /// 缓存时间
         /// </summary>
         public int CacheTimeout = 3600;
+
+        public string DeviceName = "";
+
         /// <summary>
         /// 默认查询包
         /// </summary>
@@ -71,7 +74,13 @@ namespace Mozi.SSDP
         {
             Console.WriteLine("*********收到数据[{0}]*********\r\n{1}\r\n*******END********", args.IP,System.Text.Encoding.UTF8.GetString(args.Data));
         }
+        /// <summary>
+        /// 包解析
+        /// </summary>
+        private static void ParsePackage()
+        {
 
+        }
         /// <summary>
         /// 激活
         /// </summary>

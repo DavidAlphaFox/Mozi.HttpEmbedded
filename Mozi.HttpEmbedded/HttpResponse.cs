@@ -71,6 +71,28 @@ namespace Mozi.HttpEmbedded
             ProtocolVersion = version;
         }
         /// <summary>
+        /// 设置Cookie
+        /// <see cref="ResponseCookie.Set(string, string)"/>
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="value"></param>
+        public void SetCookie(string name,string value)
+        {
+            Cookies.Set(name, value);
+        }
+        /// <summary>
+        /// 设置Cookie
+        /// <see cref="ResponseCookie.Set(string, string, string, string)"/>
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="domain"></param>
+        /// <param name="path"></param>
+        /// <param name="value"></param>
+        public void SetCookie(string name,string domain,string path,string value)
+        {
+            Cookies.Set(name, domain, path, value);
+        }
+        /// <summary>
         /// 设置状态
         /// </summary>
         /// <param name="status"></param>
@@ -79,6 +101,14 @@ namespace Mozi.HttpEmbedded
             Status = status;
             return this;
         }
+        /// <summary>
+        /// 设置文档类型
+        /// <para>
+        /// 默认为text/plain
+        /// </para>
+        /// </summary>
+        /// <param name="contentType"></param>
+        /// <returns></returns>
         public HttpResponse SetContentType(string contentType)
         {
             _contentType = contentType;

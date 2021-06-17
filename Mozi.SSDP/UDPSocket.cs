@@ -5,6 +5,8 @@ using Mozi.HttpEmbedded;
 
 namespace Mozi.SSDP
 {
+    //TODO 多网卡绑定IPAddress.Any会出现无法接收的问题
+
     /// <summary>
     /// UDP套接字
     /// </summary>
