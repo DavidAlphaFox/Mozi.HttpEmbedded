@@ -68,10 +68,10 @@ namespace Mozi.HttpEmbedded
         /// 请求头
         /// </summary>
         public TransformHeader Headers { get; protected set; }
-        /// <summary>
-        /// 二进制通讯数据
-        /// </summary>
-        public byte[] PackData { get; protected set; }
+        ///// <summary>
+        ///// 二进制通讯数据
+        ///// </summary>
+        //public byte[] PackData { get; protected set; }
         /// <summary>
         /// 原始请求首行数据
         /// </summary>
@@ -142,7 +142,7 @@ namespace Mozi.HttpEmbedded
         /// <returns></returns>
         public static HttpRequest Parse(byte[] data)
         {
-            HttpRequest req = new HttpRequest() { PackData = data };
+            HttpRequest req = new HttpRequest();
             //解析头
             int posCR = 0;
             int posCaret = 0;
@@ -635,7 +635,7 @@ namespace Mozi.HttpEmbedded
         }
         ~HttpRequest()
         {
-            PackData = null;
+            //PackData = null;
             FirstLineData = null;
             Body = null;
             Headers = null;

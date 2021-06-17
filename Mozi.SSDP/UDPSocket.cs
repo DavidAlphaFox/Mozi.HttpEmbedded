@@ -10,7 +10,7 @@ namespace Mozi.SSDP
     /// </summary>
     public class UDPSocket
     {
-        protected int _iport = 80;
+        protected int _iport = SSDPProtocol.ProtocolPort;
 
         protected Socket _sc;
 
@@ -78,7 +78,6 @@ namespace Mozi.SSDP
         {
             MulticastGroupAddress = multicastGroupAddress;
             MulticastOption mcastOpt = new MulticastOption(IPAddress.Parse(multicastGroupAddress), IPAddress.Any);
-            // Add membership to the group.
             _sc.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.AddMembership, mcastOpt);
 
         }
@@ -112,10 +111,11 @@ namespace Mozi.SSDP
             _sc.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
             _sc.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.MulticastTimeToLive, 32);
             _sc.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.MulticastInterface, 0);
+
+            _sc.MulticastLoopback = true;
             JoinMulticastGroup(MulticastGroupAddress);
             _sc.Bind(endpoint);
 
-            //EndPoint _remoteEndPoint = new IPEndPoint(IPAddress.Any, 0);
             //回调服务器启动事件
             UDPStateObject so = new UDPStateObject()
             {

@@ -38,7 +38,7 @@ namespace Mozi.SSDP
         public DiscoverPackage PackDefaultDiscover = new DiscoverPackage() 
         {
             MX=3,
-            ST= "upnp:rootdevice"
+            ST= "ssdp:all"
         };
         /// <summary>
         /// 默认在线消息包
@@ -48,7 +48,7 @@ namespace Mozi.SSDP
             CacheTimeout = 3600,
             Location = "",
             Server = "",
-            NT="upnp:rootdevice",
+            NT= "ssdp:all",
             USN=""
         };
         /// <summary>
@@ -176,7 +176,7 @@ namespace Mozi.SSDP
         {
             HttpResponse resp = new HttpResponse();
             resp.AddHeader(HeaderProperty.Host, $"{SSDPProtocol.MulticastAddress}:{SSDPProtocol.ProtocolPort}");
-            resp.AddHeader(HeaderProperty.CacheControl, $"max-age={CacheTimeout}");
+            resp.AddHeader(HeaderProperty.CacheControl, $"max-age = {CacheTimeout}");
             resp.AddHeader("EXT", "");
             resp.AddHeader(HeaderProperty.Location, "http://127.0.0.1/desc.xml");
             resp.AddHeader("Server", _server);
@@ -209,7 +209,7 @@ namespace Mozi.SSDP
             headers.Add("NTS", SSDPType.Alive.ToString());
             headers.Add("USN", $"{USN}");
             headers.Add("LOCATION", $"{Location}");
-            headers.Add(HeaderProperty.CacheControl, $"max-age= {CacheTimeout}");
+            headers.Add(HeaderProperty.CacheControl, $"max-age = {CacheTimeout}");
             return headers;
         }
     }
@@ -234,7 +234,7 @@ namespace Mozi.SSDP
             TransformHeader headers = new TransformHeader();
             headers.Add(HeaderProperty.Host, $"{MulticastAddress}:{ProtocolPort}");
             headers.Add("S", $"{S}");
-            headers.Add("MAN", SSDPType.Discover.ToString());
+            headers.Add("MAN", "\""+SSDPType.Discover.ToString()+"\"");
             headers.Add("ST", $"{ST}");
             headers.Add("MX", $"{MX}");
             return headers;
@@ -254,22 +254,25 @@ namespace Mozi.SSDP
             TransformHeader headers = new TransformHeader();
             headers.Add(HeaderProperty.Host, $"{MulticastAddress}:{ProtocolPort}");
             headers.Add("NT", $"{NT}");
-            headers.Add("NTS", SSDPType.Byebye.ToString());
+            headers.Add("NTS", "\"" + SSDPType.Byebye.ToString()+"\"");
             headers.Add("USN", $"{USN}");
             return headers;
         }
     }
 
+    //NOTIFY* HTTP/1.1     
+    //HOST: 239.255.255.250:1900    
+    //CACHE-CONTROL: max-age = seconds until advertisement expires    
+    //LOCATION: URL for UPnP description for root device
+    //NT: search target
+    //NTS: ssdp:alive 
+    //SERVER: OS/versionUPnP/1.0product/version 
+    //USN: advertisement UUI
+    /// <summary>
+    /// 公告包
+    /// </summary>
     public class AdvertisePackage
     {
-        //NOTIFY* HTTP/1.1     
-        //HOST: 239.255.255.250:1900    
-        //CACHE-CONTROL: max-age = seconds until advertisement expires    
-        //LOCATION: URL for UPnP description for root device
-        //NT: search target
-        //NTS: ssdp:alive 
-        //SERVER: OS/versionUPnP/1.0product/version 
-        //USN: advertisement UUI
         public string MulticastAddress { get; set; }
         public int ProtocolPort { get; set; }
 
