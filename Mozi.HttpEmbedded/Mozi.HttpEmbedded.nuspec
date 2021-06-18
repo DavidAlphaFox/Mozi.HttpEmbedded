@@ -10,7 +10,7 @@
     <projectUrl>https://gitee.com/myui_admin/mozi</projectUrl>
     <description>嵌入式HTTP应用服务器</description>
     <releaseNotes>1.2.3版本</releaseNotes>
-    <copyright>JasonWcx</copyright>
-    <tags></tags>
+    <copyright>Copyright © Jason 2020-2021</copyright>
+    <tags>HTTP EMBEDDED</tags>
   </metadata>
 </package>

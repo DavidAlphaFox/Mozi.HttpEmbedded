@@ -12,7 +12,7 @@ namespace Mozi.SSDP
         public static SSDPType Alive = new SSDPType("alive");
         public static SSDPType Byebye = new SSDPType("byebye");
 
-        private string _name;
+        private readonly string _name;
 
         //discover all alive byebye
         public SSDPType(string name)

@@ -77,11 +77,11 @@ namespace Mozi.HttpEmbedded
         /// <summary>
         /// 原始请求首行数据
         /// </summary>
-        public byte[] FirstLineData { get; protected set; }
+        public byte[] RequestLineData { get; protected set; }
         /// <summary>
         /// 原始请求首行字符串
         /// </summary>
-        public string FirstLineString { get; protected set; }
+        public string RequestLineString { get; protected set; }
         /// <summary>
         /// 请求头数据
         /// </summary>
@@ -161,7 +161,7 @@ namespace Mozi.HttpEmbedded
                 Array.Copy(data, posCaret, fragement, 0, posCR - posCaret);
                 if (index == 0)
                 {
-                    ParseFirstLine(ref req, fragement);
+                    ParseRequestLine(ref req, fragement);
                 }
                 else
                 {
@@ -200,7 +200,7 @@ namespace Mozi.HttpEmbedded
                 req.Body = new byte[data.Length - (posCR + 4)];
                 //TODO 此处又重新生成一个数据对象，导致内存占用过大
                 Array.Copy(data, posCR + 4, req.Body, 0, req.Body.Length);
-                ParsePayload(ref req,req.Body);
+                ParsePayload(ref req, req.Body);
             }
             return req;
         }
@@ -212,7 +212,7 @@ namespace Mozi.HttpEmbedded
         /// </summary>
         /// <param name="req"></param>
         /// <param name="data"></param>
-        private static void ParsePayload(ref HttpRequest req,byte[] data)
+        private static void ParsePayload(ref HttpRequest req, byte[] data)
         {
             string formType = req.Headers.GetValue(HeaderProperty.ContentType.PropertyName);
             if (formType != null)
@@ -273,7 +273,7 @@ namespace Mozi.HttpEmbedded
             string contentType = req.Headers.GetValue(HeaderProperty.ContentType.PropertyName);
             string boundary = "";
             //此处仅用；分割，提高通用性
-            string[] values = contentType.Split(new[] { ((char)ASCIICode.SEMICOLON).ToString()}, StringSplitOptions.RemoveEmptyEntries);
+            string[] values = contentType.Split(new[] { ((char)ASCIICode.SEMICOLON).ToString() }, StringSplitOptions.RemoveEmptyEntries);
 
             //取得分割符号boundary
             foreach (var s in values)
@@ -288,7 +288,7 @@ namespace Mozi.HttpEmbedded
             byte[] bBound = StringEncoder.Encode(boundary);
 
             //分割 form-data
-            int indBoundary = -1,indFragFirst/*分割起点*/ = 0, indFragNext/*下段分割起点*/ = 0;
+            int indBoundary = -1, indFragFirst/*分割起点*/ = 0, indFragNext/*下段分割起点*/ = 0;
 
             while ((indBoundary + 1) < data.Length && Array.IndexOf(data, ASCIICode.MINUS, indBoundary + 1) >= 0)
             {
@@ -319,7 +319,7 @@ namespace Mozi.HttpEmbedded
                     if (isFragStart && indFragNext > 0)
                     {
                         //Console.WriteLine("发现片段{0}-{1},长度{2} Byte", indFragFirst, indFragNext, indFragNext - indFragFirst);
-                        int posCR = 0,posCaret/*分割起始位*/ = 0,index = 0;
+                        int posCR = 0, posCaret/*分割起始位*/ = 0, index = 0;
 
                         byte[] fragment = new byte[indFragNext - indFragFirst];
 
@@ -342,7 +342,7 @@ namespace Mozi.HttpEmbedded
                         while ((posCR = Array.IndexOf(fragment, ASCIICode.CR, posCR + 1)) > 0)
                         {
                             //TODO 对普通字段的处理有问题
-                            
+
                             byte[] fraghead = new byte[posCR - posCaret];
                             Array.Copy(fragment, posCaret, fraghead, 0, posCR - posCaret);
 
@@ -390,7 +390,7 @@ namespace Mozi.HttpEmbedded
                         if (data.Length > posCR + 4)
                         {
                             //内容末端还有两个字符(\r\n)，故此处再减两个字节
-                            var postField = new byte[fragment.Length - (posCR + 4+2)];
+                            var postField = new byte[fragment.Length - (posCR + 4 + 2)];
                             Array.Copy(fragment, posCR + 4, postField, 0, postField.Length);
 
                             if (isFile)
@@ -509,8 +509,8 @@ namespace Mozi.HttpEmbedded
         {
             if (req.Headers.Contains(HeaderProperty.AcceptLanguage.PropertyName))
             {
-                var language=req.Headers.GetValue(HeaderProperty.AcceptLanguage.PropertyName)??"";
-                var languages = language.Split(new char[] { (char)ASCIICode.COMMA },StringSplitOptions.RemoveEmptyEntries);
+                var language = req.Headers.GetValue(HeaderProperty.AcceptLanguage.PropertyName) ?? "";
+                var languages = language.Split(new char[] { (char)ASCIICode.COMMA }, StringSplitOptions.RemoveEmptyEntries);
                 req.AcceptLanguage = new LanguageOrder[languages.Length];
                 try
                 {
@@ -539,7 +539,7 @@ namespace Mozi.HttpEmbedded
         {
             if (req.Headers.Contains(HeaderProperty.ContentType.PropertyName))
             {
-                var contentType=req.Headers.GetValue(HeaderProperty.ContentType.PropertyName);
+                var contentType = req.Headers.GetValue(HeaderProperty.ContentType.PropertyName);
                 string[] cts = contentType.Split(new[] { ((char)ASCIICode.SEMICOLON).ToString() + ((char)ASCIICode.SPACE).ToString() }, StringSplitOptions.RemoveEmptyEntries);
                 if (cts.Length > 0)
                 {
@@ -580,12 +580,12 @@ namespace Mozi.HttpEmbedded
         /// </summary>
         /// <param name="req"></param>
         /// <param name="data"></param>
-        private static void ParseFirstLine(ref HttpRequest req, byte[] data)
+        private static void ParseRequestLine(ref HttpRequest req, byte[] data)
         {
             //解析起始行
-            req.FirstLineData = data;
-            req.FirstLineString = Encoding.UTF8.GetString(data);
-            string[] sFirst = req.FirstLineString.Split(new[] { (char)ASCIICode.SPACE }, StringSplitOptions.None);
+            req.RequestLineData = data;
+            req.RequestLineString = Encoding.UTF8.GetString(data);
+            string[] sFirst = req.RequestLineString.Split(new[] { (char)ASCIICode.SPACE }, StringSplitOptions.None);
             //方法 查询 协议 
             string sMethod = sFirst[0];
             string sUrl = sFirst[1];
@@ -638,12 +638,19 @@ namespace Mozi.HttpEmbedded
         ~HttpRequest()
         {
             //PackData = null;
-            FirstLineData = null;
+            RequestLineData = null;
             Body = null;
             Headers = null;
             HeaderData = null;
             Files = null;
             AcceptLanguage = null;
         }
+    }
+    /// <summary>
+    /// HttpRequest扩展
+    /// </summary>
+    public static class HttpRequestExtension
+    {
+        
     }
 }

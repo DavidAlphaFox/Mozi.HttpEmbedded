@@ -30,7 +30,7 @@ namespace Mozi.HttpEmbedded.Cookie
             Domain = "";
         }
 
-        public HttpCookie(string name, string value)
+        public HttpCookie(string name, string value) : this()
         {
             Name = name;
             Value = value;

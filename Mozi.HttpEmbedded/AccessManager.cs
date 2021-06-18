@@ -20,10 +20,18 @@ namespace Mozi.HttpEmbedded
         {
 
         }
+        /// <summary>
+        /// 增加黑名单成员
+        /// </summary>
+        /// <param name="ipAddress"></param>
         private void AddBlackList(string ipAddress)
         {
             _blacklist.Add(ipAddress);
         }
+        /// <summary>
+        /// 将成员从黑名单中移除
+        /// </summary>
+        /// <param name="ipAddress"></param>
         private void RemoveBlackList(string ipAddress)
         {
             _blacklist.Remove(ipAddress);

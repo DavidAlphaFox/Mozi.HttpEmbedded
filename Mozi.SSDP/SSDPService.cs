@@ -12,6 +12,7 @@ namespace Mozi.SSDP
     {
         private RequestMethod MSEARCH = new RequestMethod("M-SEARCH");
         private RequestMethod NOTIFY = new RequestMethod("NOTIFY");
+
         private const string QueryPath = "*";
 
         private UDPSocket _socket;
