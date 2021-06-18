@@ -15,7 +15,6 @@ namespace Mozi.HttpEmbedded
         public static readonly HttpVersion Version09 = new HttpVersion("0.9");
         public static readonly HttpVersion Version10 = new HttpVersion("1.0");
         public static readonly HttpVersion Version11 = new HttpVersion("1.1");
-        // public static readonly HttpVersion Version12 = new HttpVersion("1.2");
 
         /// <summary>
         /// 1. 二进制协议

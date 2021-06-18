@@ -65,9 +65,10 @@ namespace Mozi.StateService
                 InitRemoteEndpoint();
             }
         }
-
+        /// <summary>
+        /// 状态变更通知
+        /// </summary>
         public bool StateChangeNotifyImmediately { get; set; }
-
         /// <summary>
         /// 端口
         /// </summary>
