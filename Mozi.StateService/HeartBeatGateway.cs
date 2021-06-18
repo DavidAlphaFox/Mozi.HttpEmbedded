@@ -3,24 +3,28 @@ using System.Collections.Generic;
 
 namespace Mozi.StateService
 {
-    //public delegate void ClientStateChange(object sender, ClientStateChangeArgs args);
 
     public delegate void ClientStateChange(object sender, ClientAliveInfo clientInfo, ClientState oldState, ClientState newState);
+
+    public delegate void ClientAddRemove(object sender, ClientAliveInfo clientInfo);
+
+    public delegate void ClientMessageReceive(object sender, ClientAliveInfo clientInfo,string host,int port);
 
     public class ClientStateChangeArgs : EventArgs
     {
         public HeartBeatPackage BeatPackage { get; set; }
     }
-    public class ClientAliveInfo 
+
+    public class ClientAliveInfo
     {
-        internal ClientLifeState State   { get; set; }
+        public ClientLifeState State   { get; set; }
         public ClientState ClientState { get; set; }
-        public string DeviceName { get; set; }
-        public string DeviceId   { get; set; }
-        public string AppVersion { get; set; }
-        public string UserName   { get; set; } 
-        public DateTime BeatTime { get; set; }
-        public DateTime OnTime   { get; set; }
+        public string DeviceName  { get; set; }
+        public string DeviceId    { get; set; }
+        public string AppVersion  { get; set; }
+        public string UserName    { get; set; } 
+        public DateTime BeatTime  { get; set; }
+        public DateTime OnTime    { get; set; }
         public DateTime LeaveTime { get; set; }
 
         public ClientAliveInfo()
@@ -48,14 +52,27 @@ namespace Mozi.StateService
         private readonly UDPSocket _socket;
         private int _timeoutOffline = 180;
         private int _port = 13453;
-        public  int Port { get { return _port; } }
-
-        //public event ClientStateChange OnClientAlive;
-        //public event ClientStateChange OnClientLeave;
-        public event ClientStateChange OnClientStateChange;
-
         private List<ClientAliveInfo> _clients = new List<ClientAliveInfo>();
 
+        /// <summary>
+        /// 服务端端口
+        /// </summary>
+        public  int Port { get { return _port; } }
+        /// <summary>
+        /// 终端加入事件
+        /// </summary>
+        public event ClientAddRemove OnClientJoin;
+        /// <summary>
+        /// 终端状态变更事件
+        /// </summary>
+        public event ClientStateChange OnClientStateChange;
+        /// <summary>
+        /// 终端消息接收事件
+        /// </summary>
+        public event ClientMessageReceive OnClientMessageReceive;
+        /// <summary>
+        /// 终端列表
+        /// </summary>
         public List<ClientAliveInfo> Clients { get { return _clients; } }
 
         public HeartBeatGateway()
@@ -75,13 +92,15 @@ namespace Mozi.StateService
             _port = port;
             _socket.Start(_port);
         }
-
         public void Shutdown()
         {
             _socket.Shutdown();
         }
         /// <summary>
         /// 设置终端状态
+        /// <para>
+        /// 如非必要不要调用这个方法
+        /// </para>
         /// </summary>
         /// <param name="ca"></param>
         /// <param name="state"></param>
@@ -96,6 +115,7 @@ namespace Mozi.StateService
                 {
                     try
                     {
+                        //触发终端状态变更事件
                         OnClientStateChange.BeginInvoke(this, client, clientOldState, client.ClientState, null, null);
                     }
                     finally
@@ -113,7 +133,9 @@ namespace Mozi.StateService
         {
             SetClientState(ca, ClientState.Dead);
         }
-
+        /// <summary>
+        /// 服务端检活
+        /// </summary>
         public void CheckClientState()
         {
             foreach(var client in _clients)
@@ -124,7 +146,6 @@ namespace Mozi.StateService
                 }
             }
         }
-
         /// <summary>
         /// 保存终端信息
         /// </summary>
@@ -143,6 +164,11 @@ namespace Mozi.StateService
                 ca.OnTime = DateTime.Now;
                 _clients.Add(ca);
                 client = ca;
+                //终端加入事件
+                if (OnClientJoin != null)
+                {
+                    OnClientJoin.BeginInvoke(this, ca,null,null);
+                }
             }
             //统一设置跳动时间
             client.BeatTime = DateTime.Now;
@@ -175,10 +201,13 @@ namespace Mozi.StateService
                     DeviceId = pg.DeviceId,
                     AppVersion=pg.AppVersion,
                     UserName=pg.UserName,
-                    State=(ClientLifeState)Enum.Parse(typeof(ClientLifeState),pg.StateName.ToCharString())
+                    State=(ClientLifeState)Enum.Parse(typeof(ClientLifeState),pg.StateName.ToString())
                 };
                 var client=UpdateClient(ca);
-                Console.WriteLine("{4:yyyyMMdd HH:mm:ss}|设备{0},编号{1},状态{2},版本{3},{5}", client.DeviceName, client.DeviceId, client.State, client.AppVersion, client.BeatTime,args.IP);
+                if (OnClientMessageReceive != null)
+                {
+                    OnClientMessageReceive.BeginInvoke(this, client,args.IP,args.Port, null, null);
+                }
             }
             catch(Exception ex)
             {

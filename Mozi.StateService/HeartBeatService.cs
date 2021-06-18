@@ -57,6 +57,9 @@ namespace Mozi.StateService
                 _sc.Dispose();
             }
         }
+        /// <summary>
+        ///服务器地址 
+        /// </summary>
         public string RemoteHost
         {
             get { return _host; }
@@ -67,6 +70,9 @@ namespace Mozi.StateService
         }
         /// <summary>
         /// 状态变更通知
+        /// <para>
+        /// 开启此参数会立即向服务器发出数据包
+        /// </para>
         /// </summary>
         public bool StateChangeNotifyImmediately { get; set; }
         /// <summary>
@@ -109,7 +115,11 @@ namespace Mozi.StateService
             active = false;
             _timeLooper.Change(Timeout.Infinite, Timeout.Infinite);
         }
-        public void TimerCallbackInvoker(object sender)
+        /// <summary>
+        /// 定时回调
+        /// </summary>
+        /// <param name="sender"></param>
+        private void TimerCallbackInvoker(object sender)
         {
             if (active)
             {
@@ -144,11 +154,15 @@ namespace Mozi.StateService
             _sp.UserName = userName;
             return this;
         }
-
+        /// <summary>
+        /// 设置终端状态
+        /// </summary>
+        /// <param name="stateName"></param>
+        /// <returns></returns>
         public HeartBeatService SetState(ClientLifeState stateName)
         {
             var oldState = _sp.StateName;
-            _sp.StateName = stateName.ToCharByte();
+            _sp.StateName = (byte)stateName;
             if (oldState != _sp.StateName&&StateChangeNotifyImmediately)
             {
                 SendPack();
@@ -174,33 +188,47 @@ namespace Mozi.StateService
             _sc.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
             _sc.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.IpTimeToLive, 100);
         }
+        /// <summary>
+        /// 初始化终结点
+        /// </summary>
         private void InitRemoteEndpoint()
         {
             _endPoint = new IPEndPoint(IPAddress.Parse(_host), _port);
         }
-
-        public void SendPack()
+        /// <summary>
+        /// 发送数据包
+        /// </summary>
+        private void SendPack()
         {
             if (!string.IsNullOrEmpty(_host))
             {
                 _sc.SendTo(_sp.Pack(), _endPoint);
             }
         }
-
+        /// <summary>
+        /// 终端状态 Alive
+        /// </summary>
         public void Alive()
         {
             SetState(ClientLifeState.Alive);
         }
-
+        /// <summary>
+        /// 终端状态 Leave
+        /// </summary>
         public void Leave()
         {
             SetState(ClientLifeState.Byebye);
         }
-
+        /// <summary>
+        /// 终端状态 Busy
+        /// </summary>
         public void Busy()
         {
             SetState(ClientLifeState.Busy);
         }
+        /// <summary>
+        /// 终端状态 Idle
+        /// </summary>
         public void Idle()
         {
             SetState(ClientLifeState.Idle);
@@ -212,10 +240,10 @@ namespace Mozi.StateService
     public enum ClientLifeState
     {
         Unknown=0,
-        Alive=1,
-        Byebye=2,
-        Busy=3,
-        Idle=4
+        Alive=0x31,
+        Byebye= 0x32,
+        Busy= 0x33,
+        Idle= 0x34
     }
 
     //statename:alive|byebye|busy|idle|offline
@@ -280,7 +308,7 @@ namespace Mozi.StateService
                 PackageLength = pg.ToUInt16(1)
             };
             byte[] body = new byte[state.PackageLength];
-            Array.Copy(pg, 3, body, 0, body.Length);
+            Array.Copy(pg, 1+2, body, 0, body.Length);
 
             state.StateName = body[0];
             state.DeviceNameLength = body.ToUInt16(1);

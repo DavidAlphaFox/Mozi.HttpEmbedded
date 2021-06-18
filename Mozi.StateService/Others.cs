@@ -14,7 +14,11 @@ namespace Mozi.StateService
             Array.Reverse(data);
             return data;
         }
-
+        /// <summary>
+        /// 时间转Unix时间戳
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns></returns>
         public static long ToTimestamp(this DateTime date)
         {
             var mills = (date.ToUniversalTime() - new DateTime(1970, 1, 1, 0, 0, 0)).TotalMilliseconds;
