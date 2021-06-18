@@ -267,6 +267,9 @@ namespace Mozi.StateService
         public string AppVersion { get; set; }        
         public ushort UserNameLength { get; set; }
         public string UserName { get; set; }
+        /// <summary>
+        /// UTC时间戳 
+        /// </summary>
         public long Timestamp { get; set; }
 
         public byte[] Pack()

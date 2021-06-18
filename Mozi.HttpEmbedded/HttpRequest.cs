@@ -119,6 +119,7 @@ namespace Mozi.HttpEmbedded
         /// </summary>
         public HttpRequest()
         {
+            //默认HTTP/1.1
             ProtocolVersion = HttpVersion.Version11;
             Headers = new TransformHeader();
             Files = new FileCollection();
@@ -126,7 +127,7 @@ namespace Mozi.HttpEmbedded
             Body = new byte[] { };
         }
         /// <summary>
-        /// 解析请求
+        /// 解析请求数据包
         /// <code>
         ///                     
         ///  GET / HTTP/1.1\r\nHost: 127.0.0.1:9000\r\n
@@ -178,7 +179,7 @@ namespace Mozi.HttpEmbedded
                 //TODO 置空对象
             }
 
-            //头部信息分解
+            //头信息解析
             //HOST
             ParseHeaderHost(ref req);
             //User-Agent
@@ -204,11 +205,10 @@ namespace Mozi.HttpEmbedded
             }
             return req;
         }
-
+        //TODO HTTP/2.0 是基于二进制数据帧，此处需要重新适配
         //TODO 先判断包体是否经过压缩
         /// <summary>
-        /// 解析请求体
-        /// 区分Content-Type
+        /// 解析请求体正文
         /// </summary>
         /// <param name="req"></param>
         /// <param name="data"></param>
@@ -608,14 +608,14 @@ namespace Mozi.HttpEmbedded
         }
         //TODO 此功能需要重试以进行验证
         /// <summary>
-        /// 将数据重播
+        /// 数据重播
         /// </summary>
         /// <returns></returns>
         public byte[] GetBuffer()
         {
             List<byte> data = new List<byte>();
             //注入状态信息
-            data.AddRange(GetFirstLine());
+            data.AddRange(GetRequestLine());
             data.AddRange(TransformHeader.Carriage);
             //注入默认头部
             data.AddRange(Headers.GetBuffer());
@@ -628,10 +628,10 @@ namespace Mozi.HttpEmbedded
             return data.ToArray();
         }
         /// <summary>
-        /// 响应状态
+        /// 生成请求行
         /// </summary>
         /// <returns></returns>
-        public byte[] GetFirstLine()
+        public byte[] GetRequestLine()
         {
             return StringEncoder.Encode(string.Format("{0} {1} HTTP/{2}", Method.Name, Path, ProtocolVersion.Version));
         }

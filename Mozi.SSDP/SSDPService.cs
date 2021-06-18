@@ -5,6 +5,10 @@ using Mozi.HttpEmbedded;
 
 namespace Mozi.SSDP
 {
+    public delegate void DeviceFound(object sender);
+
+    public delegate void DeviceStateReceive(object sender);
+
     /// <summary>
     /// SSDP协议实现
     /// </summary>
@@ -18,9 +22,13 @@ namespace Mozi.SSDP
         private UDPSocket _socket;
         private Timer _timer;
         private IPEndPoint _remoteEP;
-        //
         private string _server = "";
-            
+
+        #region
+        public string UUID { get; set; }
+
+        #endregion
+
         /// <summary>
         /// 广播消息周期
         /// </summary>
@@ -39,7 +47,7 @@ namespace Mozi.SSDP
         /// <summary>
         /// 默认查询包
         /// </summary>
-        public DiscoverPackage PackDefaultDiscover = new DiscoverPackage() 
+        public SearchPackage PackDefaultDiscover = new SearchPackage() 
         {
             MX=3,
             ST= "ssdp:all"
@@ -47,7 +55,7 @@ namespace Mozi.SSDP
         /// <summary>
         /// 默认在线消息包
         /// </summary>
-        public NotificationPackage PackDefaultAlive = new NotificationPackage()
+        public AlivePackage PackDefaultAlive = new AlivePackage()
         {
             CacheTimeout = 3600,
             Location = "",
@@ -62,6 +70,10 @@ namespace Mozi.SSDP
         { 
         
         };
+
+        public event DeviceFound OnDeviceFound;
+
+        public event DeviceStateReceive OnDeviceStateReceive;
 
         public SSDPService()
         {
@@ -102,7 +114,7 @@ namespace Mozi.SSDP
             _timer.Change(Timeout.Infinite, Timeout.Infinite);
             return this;
         }
-        //M-SEARCH* HTTP/1.1
+        //M-SEARCH * HTTP/1.1
         //S: uuid:ijklmnop-7dec-11d0-a765-00a0c91e6bf6
         //Host: 239.255.255.250:1900
         //MAN: "ssdp:discover"
@@ -124,7 +136,7 @@ namespace Mozi.SSDP
         /// <summary>
         /// 发送查询消息
         /// </summary>
-        public void Discover(DiscoverPackage dp)
+        public void Discover(SearchPackage dp)
         {
             HttpRequestU request = new HttpRequestU();
             request.SetPath("*").SetMethod(MSEARCH);
@@ -135,19 +147,19 @@ namespace Mozi.SSDP
             _socket.SocketMain.SendTo(data, _remoteEP);
         }
 
-        //NOTIFY* HTTP/1.1     
+        //NOTIFY * HTTP/1.1     
         //HOST: 239.255.255.250:1900    
         //CACHE-CONTROL: max-age = seconds until advertisement expires    
         //LOCATION: URL for UPnP description for root device
         //NT: search target
         //NTS: ssdp:alive 
         //SERVER: OS/versionUPnP/1.0product/version 
-        //USN: advertisement UUI
+        //USN: advertisement UUID
 
         /// <summary>
         /// 发送存在通知
         /// </summary>
-        public void Notification(NotificationPackage np)
+        public void NotifyAlive(AlivePackage np)
         {
             HttpRequestU request = new HttpRequestU();
             request.SetPath("*").SetMethod(NOTIFY);
@@ -165,7 +177,7 @@ namespace Mozi.SSDP
         /// <summary>
         /// 离线通知
         /// </summary>
-        public void Leave(ByebyePackage bp)
+        public void NotifyLeave(ByebyePackage bp)
         {
             HttpRequestU request = new HttpRequestU();
             request.SetPath("*").SetMethod(NOTIFY);
@@ -196,15 +208,18 @@ namespace Mozi.SSDP
             byte[] data = resp.GetBuffer();
             _socket.SocketMain.SendTo(data, _remoteEP);
         }
-
-        public void TimeoutCallback(object state)
+        /// <summary>
+        /// 定时器回调函数
+        /// </summary>
+        /// <param name="state"></param>
+        private void TimeoutCallback(object state)
         {
             Discover(PackDefaultDiscover);
-            Notification(PackDefaultAlive);
+            NotifyAlive(PackDefaultAlive);
         }
     }
 
-    public class NotificationPackage:ByebyePackage
+    public class AlivePackage:ByebyePackage
     {
         public int CacheTimeout { get; set; }
         public string Location { get; set; }
@@ -222,12 +237,20 @@ namespace Mozi.SSDP
             headers.Add(HeaderProperty.CacheControl, $"max-age = {CacheTimeout}");
             return headers;
         }
+        public static new AlivePackage Parse(byte[] data)
+        {
+            throw new NotImplementedException();
+        }
     }
     /// <summary>
     /// 查询头信息
+    /// <para>
+    ///     发送包设置<see cref="SearchPackage.MAN"/>参数无效，默认为 "ssdp:discover"
+    /// </para>
     /// </summary>
-    public class DiscoverPackage:AdvertisePackage
+    public class SearchPackage:AdvertisePackage
     {
+        public string MAN { get; set; }
         public string S { get; set; }
         //-ssdp:all 搜索所有设备和服务
         //-upnp:rootdevice 仅搜索网络中的根设备
@@ -239,6 +262,9 @@ namespace Mozi.SSDP
         /// 查询等待时间
         /// </summary>
         public int MX { get; set; }
+        /// <summary>
+        /// </summary>
+        /// <returns></returns>
         public  TransformHeader GetHeaders()
         {
             TransformHeader headers = new TransformHeader();
@@ -248,6 +274,10 @@ namespace Mozi.SSDP
             headers.Add("ST", $"{ST}");
             headers.Add("MX", $"{MX}");
             return headers;
+        }
+        public static SearchPackage Parse(byte[] data)
+        {
+            throw new NotImplementedException();
         }
     }
     /// <summary>
@@ -267,6 +297,11 @@ namespace Mozi.SSDP
             headers.Add("NTS", "\"" + SSDPType.Byebye.ToString()+"\"");
             headers.Add("USN", $"{USN}");
             return headers;
+        }
+
+        public static ByebyePackage Parse(byte[] data)
+        {
+            throw new NotImplementedException();
         }
     }
 
@@ -292,7 +327,6 @@ namespace Mozi.SSDP
             ProtocolPort = SSDPProtocol.ProtocolPort;
         }
     }
-
     public class SSDPProtocol
     {
         //组播地址

@@ -23,7 +23,7 @@ namespace Mozi.StateService.Test
             state.SetState(ClientLifeState.Idle);
 
             //服务网关
-            hg.OnClientStateChange += Hg_OnClientStateChange;
+            hg.OnClientOnlineStateChange += Hg_OnClientStateChange;
             hg.OnClientMessageReceive += Hg_OnClientMessageReceive;
             hg.Start(13453);
             

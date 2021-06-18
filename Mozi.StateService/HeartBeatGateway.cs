@@ -4,7 +4,11 @@ using System.Collections.Generic;
 namespace Mozi.StateService
 {
 
-    public delegate void ClientStateChange(object sender, ClientAliveInfo clientInfo, ClientState oldState, ClientState newState);
+    public delegate void ClientUserChange(object sender, ClientAliveInfo client, string oldUser, string newUser);
+
+    public delegate void ClientLifeStateChange(object sender, ClientAliveInfo clientInfo, ClientLifeState oldState, ClientLifeState newState);
+
+    public delegate void ClientOnlineStateChange(object sender, ClientAliveInfo clientInfo, ClientState oldState, ClientState newState);
 
     public delegate void ClientAddRemove(object sender, ClientAliveInfo clientInfo);
 
@@ -36,7 +40,9 @@ namespace Mozi.StateService
             ClientState = ClientState.Unknown;
         }
     }
-
+    /// <summary>
+    /// 终端状态
+    /// </summary>
     public enum ClientState
     {
         Unknown=0,
@@ -63,9 +69,17 @@ namespace Mozi.StateService
         /// </summary>
         public event ClientAddRemove OnClientJoin;
         /// <summary>
-        /// 终端状态变更事件
+        /// 终端通知状态变更
         /// </summary>
-        public event ClientStateChange OnClientStateChange;
+        public event ClientLifeStateChange OnClientLifeStateChange;
+        /// <summary>
+        /// 终端在线状态变更事件
+        /// </summary>
+        public event ClientOnlineStateChange OnClientOnlineStateChange;
+        /// <summary>
+        /// 终端用户变更
+        /// </summary>
+        public event ClientUserChange OnClientUserChange;
         /// <summary>
         /// 终端消息接收事件
         /// </summary>
@@ -96,6 +110,27 @@ namespace Mozi.StateService
         {
             _socket.Shutdown();
         }
+        public void SetClientLifeState(ClientAliveInfo ca,ClientLifeState state)
+        {
+            var client = _clients.Find(x => x.DeviceName.Equals(ca.DeviceName) && x.DeviceId.Equals(ca.DeviceId));
+            if (client != null)
+            {
+                var clientOldState = client.State;
+                ca.State = state;
+                if (client.State != clientOldState && OnClientLifeStateChange != null)
+                {
+                    try
+                    {
+                        //触发终端状态变更事件
+                        OnClientLifeStateChange.BeginInvoke(this, client, clientOldState, client.State, null, null);
+                    }
+                    finally
+                    {
+
+                    }
+                }
+            }
+        }
         /// <summary>
         /// 设置终端状态
         /// <para>
@@ -111,12 +146,12 @@ namespace Mozi.StateService
             {
                 var clientOldState = client.ClientState;
                 ca.ClientState = state;
-                if (client.ClientState != clientOldState && OnClientStateChange != null)
+                if (client.ClientState != clientOldState && OnClientOnlineStateChange != null)
                 {
                     try
                     {
                         //触发终端状态变更事件
-                        OnClientStateChange.BeginInvoke(this, client, clientOldState, client.ClientState, null, null);
+                        OnClientOnlineStateChange.BeginInvoke(this, client, clientOldState, client.ClientState, null, null);
                     }
                     finally
                     {
@@ -156,8 +191,8 @@ namespace Mozi.StateService
             if (client != null)
             {
                 client.AppVersion = ca.AppVersion;
-                client.State = ca.State;
                 client.UserName = ca.UserName;
+                SetClientLifeState(client,ca.State);
             }
             else
             {
