@@ -105,7 +105,7 @@
     <Compile Include="Page\AbsPage.cs" />
     <Compile Include="Serialize\DataSerializeType.cs" />
     <Compile Include="Cache\Global.cs" />
-    <Compile Include="Page\PageCreator.cs" />
+    <Compile Include="Template\PageCreator.cs" />
     <Compile Include="Page\Router.cs" />
     <Compile Include="Page\RuntimeApi.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -120,6 +120,7 @@
     <Compile Include="ServerEvent.cs" />
     <Compile Include="Source\Mime.cs" />
     <Compile Include="Source\StaticFiles.cs" />
+    <Compile Include="Stastistics\PageView.cs" />
     <Compile Include="StateObject.cs" />
     <Compile Include="StatusCode.cs" />
     <Compile Include="Encode\StringEncoder.cs" />
@@ -179,9 +180,7 @@
     <None Include="WebDav\packages.config" />
     <None Include="WebDav\README.md" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Stastistics\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0">
       <Visible>False</Visible>

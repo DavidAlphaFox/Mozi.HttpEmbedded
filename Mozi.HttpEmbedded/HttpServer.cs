@@ -10,6 +10,7 @@ using Mozi.HttpEmbedded.Encode;
 using Mozi.HttpEmbedded.Page;
 using Mozi.HttpEmbedded.Secure;
 using Mozi.HttpEmbedded.Source;
+using Mozi.HttpEmbedded.Template;
 
 namespace Mozi.HttpEmbedded
 {
@@ -20,7 +21,7 @@ namespace Mozi.HttpEmbedded
     //TODO 2021/05/07 增加分块传输 chunked
 
     //Transfer-Encoding: chunked 主要是为解决服务端无法预测Content-Length的问题
-    
+
     /*断点续传*/
     //client->  
     //    HTTP GET /document.ext
@@ -29,7 +30,7 @@ namespace Mozi.HttpEmbedded
     //    HTTP/1.1 206 206 Partial Content| HTTP/1.1 Range Not Satisfiable
     //    Content-Range:bytes 0-1024/4048
     /**/
-    
+
     /// <summary>
     /// Http服务器
     /// </summary>
@@ -314,13 +315,14 @@ namespace Mozi.HttpEmbedded
             }
             else
             {
+                //发送验证要求
                 context.Response.AddHeader(HeaderProperty.WWWAuthenticate, string.Format("{0} realm=\"{1}\"", Auth.AuthType.Name, AuthorizationType.REALM));
                 return StatusCode.Unauthorized;
             }
         }
         //TODO 2020/09/18 考虑增加断点续传的功能
         //TODO 2020/09/18 增加缓存功能
-        //TODO 2020/09/19 增加默认页面功能
+        //DONE 2020/09/19 增加默认页面功能
         /// <summary>
         /// 处理请求
         /// </summary>

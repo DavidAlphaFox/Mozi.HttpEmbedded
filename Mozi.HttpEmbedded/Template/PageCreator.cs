@@ -5,7 +5,7 @@ using System.IO;
 using System.Reflection;
 using System.Text.RegularExpressions;
 
-namespace Mozi.HttpEmbedded.Page
+namespace Mozi.HttpEmbedded.Template
 {
     //TODO 需要实现一个模板引擎或考虑通过Razor引擎提高通用性
     //2021/06/08 文档模板仅仅实现类建议参数注入功能
