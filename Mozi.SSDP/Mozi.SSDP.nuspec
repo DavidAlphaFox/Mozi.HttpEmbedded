@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package >
+  <metadata>
+    <id>Mozi.SSDP</id>
+    <version>1.2.4</version>
+	<title>Mozi.SSDP</title>
+    <authors>JasonWcx</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="expression">MIT</license>
+    <projectUrl>https://gitee.com/myui_admin/mozi</projectUrl>
+    <description>SSDP-UPNP实现</description>
+    <releaseNotes>SSDP-UPNP实现</releaseNotes>
+    <copyright>Copyright © Jason 2020-2021</copyright>
+    <tags>SSDP UPNP</tags>
+	  <dependencies>
+		  <dependency id="Mozi.HttpEmbedded" version="(1.2.0,)" />
+	  </dependencies>
+  </metadata>
+</package>
