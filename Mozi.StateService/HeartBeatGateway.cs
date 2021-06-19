@@ -77,7 +77,7 @@ namespace Mozi.StateService
         /// </summary>
         public event ClientOnlineStateChange OnClientOnlineStateChange;
         /// <summary>
-        /// 终端用户变更
+        /// 终端在线用户变更
         /// </summary>
         public event ClientUserChange OnClientUserChange;
         /// <summary>
@@ -110,13 +110,32 @@ namespace Mozi.StateService
         {
             _socket.Shutdown();
         }
-        public void SetClientLifeState(ClientAliveInfo ca,ClientLifeState state)
+        public void SetUserName(ref ClientAliveInfo client, string userName)
         {
-            var client = _clients.Find(x => x.DeviceName.Equals(ca.DeviceName) && x.DeviceId.Equals(ca.DeviceId));
+            if (client != null)
+            {
+                var clientOldUserName = client.UserName;
+                client.UserName = userName;
+                if (client.UserName != clientOldUserName && OnClientUserChange != null)
+                {
+                    try
+                    {
+                        //触发终端状态变更事件
+                        OnClientUserChange.BeginInvoke(this, client, clientOldUserName, client.UserName, null, null);
+                    }
+                    finally
+                    {
+
+                    }
+                }
+            }
+        }
+        private void SetClientLifeState(ref ClientAliveInfo client, ClientLifeState state)
+        {
             if (client != null)
             {
                 var clientOldState = client.State;
-                ca.State = state;
+                client.State = state;
                 if (client.State != clientOldState && OnClientLifeStateChange != null)
                 {
                     try
@@ -145,7 +164,7 @@ namespace Mozi.StateService
             if (client != null)
             {
                 var clientOldState = client.ClientState;
-                ca.ClientState = state;
+                client.ClientState = state;
                 if (client.ClientState != clientOldState && OnClientOnlineStateChange != null)
                 {
                     try
@@ -192,7 +211,8 @@ namespace Mozi.StateService
             {
                 client.AppVersion = ca.AppVersion;
                 client.UserName = ca.UserName;
-                SetClientLifeState(client,ca.State);
+                SetUserName(ref client, ca.UserName);
+                SetClientLifeState(ref client,ca.State);
             }
             else
             {

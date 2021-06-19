@@ -13,7 +13,7 @@ namespace Mozi.StateService
     /// </summary>
     public class HeartBeatService
     {
-        public const int DefaultPort = 13453; 
+        
 
         private int _port = DefaultPort;
 
@@ -38,6 +38,12 @@ namespace Mozi.StateService
         };
 
         private  IPEndPoint _endPoint;
+        /// <summary>
+        /// 套接字是否已初始化
+        /// </summary>
+        private bool _socketInitialized = false;
+
+        public const int DefaultPort = 13453; 
 
         public HeartBeatService()
         {
@@ -75,6 +81,7 @@ namespace Mozi.StateService
         /// </para>
         /// </summary>
         public bool StateChangeNotifyImmediately { get; set; }
+        public bool UserChangeNotifyImmediately { get; set; }
         /// <summary>
         /// 端口
         /// </summary>
@@ -87,7 +94,7 @@ namespace Mozi.StateService
             }
         }
         /// <summary>
-        /// 设置心跳周期
+        /// 设置心跳周期 默认30秒
         /// </summary>
         public int Interval
         {
@@ -151,7 +158,12 @@ namespace Mozi.StateService
         /// <returns></returns>
         public HeartBeatService SetUserName(string userName)
         {
+            var oldUserName = _sp.UserName;
             _sp.UserName = userName;
+            if (oldUserName != _sp.UserName && UserChangeNotifyImmediately)
+            {
+                SendPack();
+            }
             return this;
         }
         /// <summary>
@@ -194,13 +206,14 @@ namespace Mozi.StateService
         private void InitRemoteEndpoint()
         {
             _endPoint = new IPEndPoint(IPAddress.Parse(_host), _port);
+            _socketInitialized = true;
         }
         /// <summary>
         /// 发送数据包
         /// </summary>
         private void SendPack()
         {
-            if (!string.IsNullOrEmpty(_host))
+            if (!string.IsNullOrEmpty(_host)&&_socketInitialized)
             {
                 _sc.SendTo(_sp.Pack(), _endPoint);
             }
@@ -250,6 +263,9 @@ namespace Mozi.StateService
 
     /// <summary>
     /// 状态数据协议包
+    /// <para>
+    ///     <see cref="DeviceName"/>和<see cref="DeviceId"/>为主键值，区分业务类型和终端标识
+    /// </para>
     /// <para>
     /// 所有字符串均按ASCII编码，字符集不能超过ASCII
     /// </para>

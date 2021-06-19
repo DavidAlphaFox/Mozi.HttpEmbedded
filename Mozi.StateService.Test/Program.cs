@@ -32,7 +32,7 @@ namespace Mozi.StateService.Test
 
         private static void Hg_OnClientMessageReceive(object sender, ClientAliveInfo client,string host,int port)
         {
-            Console.WriteLine("{4:yyyyMMdd HH:mm:ss}|设备{0},编号{1},状态{2},版本{3},{5}", client.DeviceName, client.DeviceId, client.State, client.AppVersion, client.BeatTime, host);
+            Console.WriteLine("{4:MMdd HH:mm:ss}|N:{0},ID:{1},S:{2},V:{3},{5},{6}", client.DeviceName, client.DeviceId, client.State, client.AppVersion, client.BeatTime, host,client.UserName);
         }
 
         private static void Hg_OnClientStateChange(object sender, ClientAliveInfo clientInfo, ClientState oldState, ClientState newState)
