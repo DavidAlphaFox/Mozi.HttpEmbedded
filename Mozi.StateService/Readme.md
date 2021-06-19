@@ -2,7 +2,7 @@
 
 ## 项目介绍
 
-Mozi.StateService是一个心跳服务组件，包含两个主要的应用对象  
+Mozi.StateService是一个心跳服务组件，基于UDP开发，包含两个主要的应用对象  
 
 ### HeartBeatService
     心跳客户端  
@@ -22,16 +22,18 @@ Mozi.StateService是一个心跳服务组件，包含两个主要的应用对象
             HeartBeatService state = new HeartBeatService()
             {
                 Port = 13453,
-                RemoteHost = "100.100.0.111"
+                RemoteHost = $"{port}"
             };
 
-            state.ApplyDevice("Mozi", "80018001", "1.2.3");
+            state.ApplyDevice("Mozi", "80018001", "1.2.4");
             state.SetState(ClientLifeState.Alive);
             state.Init();
             state.Activate();
+
+            //切换终端状态
             state.SetState(ClientLifeState.Idle);
 
-            //服务网关
+            //心跳服务网关
             hg.OnClientStateChange += Hg_OnClientStateChange;
             hg.Start(13453);
             Console.ReadLine();

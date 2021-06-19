@@ -13,7 +13,7 @@ namespace Mozi.StateService
 
         protected Socket _sc;
 
-        private EndPoint _endPoint = new IPEndPoint(IPAddress.Any, 13453);
+        private EndPoint _endPoint;
 
         public UDPSocket()
         {

@@ -101,15 +101,27 @@ namespace Mozi.StateService
         {
             Start(_port);
         }
+        /// <summary>
+        /// 启动网关
+        /// </summary>
+        /// <param name="port"></param>
         public void Start(int port)
         {
             _port = port;
             _socket.Start(_port);
         }
+        /// <summary>
+        /// 网关下线
+        /// </summary>
         public void Shutdown()
         {
             _socket.Shutdown();
         }
+        /// <summary>
+        /// 设置用户名
+        /// </summary>
+        /// <param name="client"></param>
+        /// <param name="userName"></param>
         public void SetUserName(ref ClientAliveInfo client, string userName)
         {
             if (client != null)
@@ -130,6 +142,11 @@ namespace Mozi.StateService
                 }
             }
         }
+        /// <summary>
+        /// 刷新终端心跳状态
+        /// </summary>
+        /// <param name="client"></param>
+        /// <param name="state"></param>
         private void SetClientLifeState(ref ClientAliveInfo client, ClientLifeState state)
         {
             if (client != null)
@@ -181,6 +198,7 @@ namespace Mozi.StateService
         }
         /// <summary>
         /// 将终端置于失效状态
+        /// <para>若终端长时间无心跳包，可将终端标记为已不可用</para>
         /// </summary>
         /// <param name="ca"></param>
         public void SetClientDead(ClientAliveInfo ca)

@@ -4,7 +4,7 @@ namespace Mozi.StateService.Test
 {
     class Program
     {
-        static HeartBeatGateway hg = new HeartBeatGateway();
+        static readonly HeartBeatGateway hg = new HeartBeatGateway();
 
         static void Main(string[] args)
         {

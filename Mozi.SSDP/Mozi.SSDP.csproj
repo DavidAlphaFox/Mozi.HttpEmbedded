@@ -54,7 +54,9 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="License.md" />
     <None Include="Mozi.SSDP.nuspec" />
+    <None Include="Readme.md" />
     <None Include="UPnP-arch-DeviceArchitecture-v1.0.pdf" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

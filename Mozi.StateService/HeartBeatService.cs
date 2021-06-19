@@ -14,7 +14,6 @@ namespace Mozi.StateService
     public class HeartBeatService
     {
         
-
         private int _port = DefaultPort;
 
         private string _host = "127.0.0.1";
@@ -264,10 +263,10 @@ namespace Mozi.StateService
     /// <summary>
     /// 状态数据协议包
     /// <para>
-    ///     <see cref="DeviceName"/>和<see cref="DeviceId"/>为主键值，区分业务类型和终端标识
+    ///     <see cref="DeviceName"/>和<see cref="DeviceId"/>为主键值，区分终端类型和终端标识
     /// </para>
     /// <para>
-    /// 所有字符串均按ASCII编码，字符集不能超过ASCII
+    /// 所有字符串均按ASCII编码，字符集不能超过ASCII，超过ASCII的部分请自行转码
     /// </para>
     /// </summary>
     public class HeartBeatPackage

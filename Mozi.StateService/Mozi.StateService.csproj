@@ -46,6 +46,7 @@
     <Compile Include="UDPStateObject.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="License.md" />
     <None Include="Mozi.StateService.nuspec" />
     <None Include="Readme.md" />
   </ItemGroup>
