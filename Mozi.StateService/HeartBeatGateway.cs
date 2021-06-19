@@ -18,7 +18,9 @@ namespace Mozi.StateService
     {
         public HeartBeatPackage BeatPackage { get; set; }
     }
-
+    /// <summary>
+    /// 终端在线信息
+    /// </summary>
     public class ClientAliveInfo
     {
         public ClientLifeState State   { get; set; }
@@ -26,7 +28,11 @@ namespace Mozi.StateService
         public string DeviceName  { get; set; }
         public string DeviceId    { get; set; }
         public string AppVersion  { get; set; }
-        public string UserName    { get; set; } 
+        public string UserName    { get; set; }
+        /// <summary>
+        /// 数据包发送计数
+        /// </summary>
+        public int BeatCount      { get; set; }
         public DateTime BeatTime  { get; set; }
         public DateTime OnTime    { get; set; }
         public DateTime LeaveTime { get; set; }
@@ -64,6 +70,7 @@ namespace Mozi.StateService
         /// 服务端端口
         /// </summary>
         public  int Port { get { return _port; } }
+        public DateTime StartTime { get; private set; }
         /// <summary>
         /// 终端加入事件
         /// </summary>
@@ -109,6 +116,7 @@ namespace Mozi.StateService
         {
             _port = port;
             _socket.Start(_port);
+            StartTime = DateTime.Now;
         }
         /// <summary>
         /// 网关下线
@@ -116,6 +124,7 @@ namespace Mozi.StateService
         public void Shutdown()
         {
             _socket.Shutdown();
+            StartTime = DateTime.MinValue;
         }
         /// <summary>
         /// 设置用户名
@@ -222,7 +231,7 @@ namespace Mozi.StateService
         /// 保存终端信息
         /// </summary>
         /// <param name="ca"></param>
-        public ClientAliveInfo UpdateClient(ClientAliveInfo ca)
+        public ClientAliveInfo UpsertClient(ClientAliveInfo ca)
         {
             var client = _clients.Find(x => x.DeviceName.Equals(ca.DeviceName) && x.DeviceId.Equals(ca.DeviceId));
             if (client != null)
@@ -243,6 +252,7 @@ namespace Mozi.StateService
                     OnClientJoin.BeginInvoke(this, ca,null,null);
                 }
             }
+            client.BeatCount++;
             //统一设置跳动时间
             client.BeatTime = DateTime.Now;
            
@@ -256,6 +266,15 @@ namespace Mozi.StateService
                 SetClientState(client, ClientState.On);
             }
             return client;
+        }
+        /// <summary>
+        /// 移除指定终端
+        /// </summary>
+        /// <param name="deviceName"></param>
+        /// <param name="deviceId"></param>
+        public void Remove(string deviceName,string deviceId)
+        {
+            _clients.RemoveAll(x => x.DeviceName == deviceName && x.DeviceId == deviceId);
         }
         /// <summary>
         /// 数据接收完成回调
@@ -276,7 +295,7 @@ namespace Mozi.StateService
                     UserName=pg.UserName,
                     State=(ClientLifeState)Enum.Parse(typeof(ClientLifeState),pg.StateName.ToString())
                 };
-                var client=UpdateClient(ca);
+                var client=UpsertClient(ca);
                 if (OnClientMessageReceive != null)
                 {
                     OnClientMessageReceive.BeginInvoke(this, client,args.IP,args.Port, null, null);

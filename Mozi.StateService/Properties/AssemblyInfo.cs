@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // 控制。更改这些特性值可修改
 // 与程序集关联的信息。
 [assembly: AssemblyTitle("Mozi.StateService")]
-[assembly: AssemblyDescription("心跳服务")]
+[assembly: AssemblyDescription("心跳服务及心跳网关")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Jason")]
 [assembly: AssemblyProduct("Mozi.StateService")]

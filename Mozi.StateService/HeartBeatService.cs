@@ -10,6 +10,9 @@ namespace Mozi.StateService
     //TODO 是否考虑设置一个备份地址
     /// <summary>
     /// 状态服务
+    /// <para>
+    /// 状态服务仅能承载很少的业务功能，主要面向终端检活这种应用场景
+    /// </para>
     /// </summary>
     public class HeartBeatService
     {
@@ -105,16 +108,15 @@ namespace Mozi.StateService
             get { return _sc; }
         }
         /// <summary>
-        /// 激活
+        /// 激活心跳
         /// </summary>
         public void Activate()
         {
             active = true;
             _timeLooper.Change(0, _interval);
         }
-
         /// <summary>
-        /// 停止活动
+        /// 停止心跳
         /// </summary>
         public void Inactivate()
         {
@@ -257,7 +259,6 @@ namespace Mozi.StateService
         Busy= 0x33,
         Idle= 0x34
     }
-
     //statename:alive|byebye|busy|idle|offline
 
     /// <summary>
@@ -275,18 +276,30 @@ namespace Mozi.StateService
         public ushort PackageLength { get; set; }
         public byte StateName { get; set; }
         public ushort DeviceNameLength { get; set; }
+        /// <summary>
+        /// 设备名 区分业务群
+        /// </summary>
         public string DeviceName { get; set; }
         public ushort DeviceIdLength { get; set; }
+        /// <summary>
+        /// 设备唯一标识
+        /// </summary>
         public string DeviceId { get; set; }
         public ushort AppVersionLength { get; set; }
         public string AppVersion { get; set; }        
         public ushort UserNameLength { get; set; }
+        /// <summary>
+        /// 登录用户名 可自定义或承载一定的业务功能
+        /// </summary>
         public string UserName { get; set; }
         /// <summary>
         /// UTC时间戳 
         /// </summary>
         public long Timestamp { get; set; }
-
+        /// <summary>
+        /// 数据封包
+        /// </summary>
+        /// <returns></returns>
         public byte[] Pack()
         {
             List<byte> arr = new List<byte>();
@@ -317,7 +330,11 @@ namespace Mozi.StateService
             arr.Insert(0, Version);
             return arr.ToArray();
         }
-
+        /// <summary>
+        /// 协议包解析
+        /// </summary>
+        /// <param name="pg"></param>
+        /// <returns></returns>
         public static HeartBeatPackage Parse(byte[] pg)
         {
             HeartBeatPackage state = new HeartBeatPackage

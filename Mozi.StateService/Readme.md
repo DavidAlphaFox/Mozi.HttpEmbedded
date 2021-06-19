@@ -2,14 +2,15 @@
 
 ## 项目介绍
 
-Mozi.StateService是一个心跳服务组件，基于UDP开发，包含两个主要的应用对象  
+Mozi.StateService是一个心跳服务组件，基于UDP开发。项目主要面向终端检活场景，包含两个可用组件: 
 
 ### HeartBeatService
     心跳客户端  
+    终端调用此组件，定时向服务器发送在线通知。
 
 ### HeartBeatGateway
     心跳网关  
-
+    接收终端心跳信息，并检查终端在线状态管理。
 ## 使用说明
 
 ~~~csharp
