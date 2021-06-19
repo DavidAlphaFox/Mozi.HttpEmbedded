@@ -172,6 +172,7 @@
     <None Include="app.config" />
     <None Include="Changes.md" />
     <None Include="License.md" />
+    <None Include="Mozi.HttpEmbedded.nuspec" />
     <None Include="Readme.md" />
     <None Include="WebDav\ClassDiagram.cd" />
     <None Include="WebDav\LICENSE" />
