@@ -11,7 +11,7 @@
     <description>$description$</description>
     <releaseNotes>嵌入式WEB服务器</releaseNotes>
     <copyright>$copyright$</copyright>
-    <tags>HTTP EMBEDDED 嵌入式 WEB</tags>
+    <tags>HTTP EMBEDDED 嵌入式 WEB 微内核 服务器</tags>
 	<readme>readme.md</readme>
   </metadata>
 </package>

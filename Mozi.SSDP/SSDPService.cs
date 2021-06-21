@@ -30,6 +30,7 @@ namespace Mozi.SSDP
         private UDPSocket _socket;
         private Timer _timer;
         private IPEndPoint _remoteEP;
+
         private string _server = "";
 
         #region
@@ -76,7 +77,7 @@ namespace Mozi.SSDP
             Location = "",
             Server = "",
             NT= "ssdp:all",
-            USN=""
+            USN="",
         };
         /// <summary>
         /// 默认离线消息包
@@ -199,7 +200,7 @@ namespace Mozi.SSDP
             _socket.SocketMain.SendTo(data, _remoteEP);
         }
 
-        //NOTIFY* HTTP/1.1     
+        //NOTIFY * HTTP/1.1     
         //HOST:    239.255.255.250:1900
         //NT: search target
         //NTS: ssdp:byebye
@@ -217,6 +218,7 @@ namespace Mozi.SSDP
             _socket.SocketMain.SendTo(data, _remoteEP);
         }
 
+        //HTTP/1.1 200 OK
         //CACHE-CONTROL: max-age = seconds until advertisement expires
         //DATE: when reponse was generated
         //EXT:
@@ -225,6 +227,9 @@ namespace Mozi.SSDP
         //ST: search target
         //USN: advertisement UUID
 
+        /// <summary>
+        /// 响应 MS-SEARCH 查找
+        /// </summary>
         public void EchoDiscover()
         {
             HttpResponse resp = new HttpResponse();

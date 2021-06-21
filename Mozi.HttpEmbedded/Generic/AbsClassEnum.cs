@@ -33,6 +33,9 @@ namespace Mozi.HttpEmbedded.Generic
         }
         /// <summary>
         /// 此处判断标识符是否相等
+        /// <para>
+        ///     如果要判断子对象是否等于<see cref="null"/>，请使用<see cref="object.Equals(object, object)"/>
+        /// </para>
         /// </summary>
         /// <param name="obj"></param>
         /// <returns></returns>
@@ -40,7 +43,15 @@ namespace Mozi.HttpEmbedded.Generic
         {
             return (obj is AbsClassEnum) && ((AbsClassEnum)obj).Tag.Equals(Tag);
         }
-
+        /// <summary>
+        /// 重载==
+        /// <para>
+        ///     如果要判断子对象是否等于<see cref="null"/>，请使用<see cref="object.Equals(object, object)"/>
+        /// </para>
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
         public static bool operator ==(AbsClassEnum a, AbsClassEnum b)
         {
             return (object)b != null && ((object)a != null && a.Tag.Equals(b.Tag));
@@ -48,6 +59,9 @@ namespace Mozi.HttpEmbedded.Generic
 
         /// <summary>
         /// 重载!=
+        /// <para>
+        ///     如果要判断子对象是否等于<see cref="null"/>，请使用<see cref="object.Equals(object, object)"/>
+        /// </para>
         /// </summary>
         /// <param name="a"></param>
         /// <param name="b"></param>

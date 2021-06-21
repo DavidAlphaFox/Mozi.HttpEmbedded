@@ -11,7 +11,7 @@
     <description>$description$</description>
     <releaseNotes>1.2.4版本</releaseNotes>
     <copyright>$copyright$</copyright>
-    <tags>心跳 HeartBeat</tags>
+    <tags>心跳 HeartBeat 心跳网关</tags>
 	<readme>readme.md</readme>  
   </metadata>
 </package>

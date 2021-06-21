@@ -12,7 +12,7 @@ namespace Mozi.StateService
     /// <summary>
     /// 状态服务
     /// <para>
-    /// 状态服务仅能承载很少的业务功能，主要面向终端检活这种应用场景
+    /// 状态服务仅能承载很少的业务功能，主要面向终端检活这种应用场景，协议包封装的很小，可以支撑数量庞大的终端监测功能。
     /// </para>
     /// </summary>
     public class HeartBeatService
