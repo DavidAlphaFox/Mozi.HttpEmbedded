@@ -19,6 +19,8 @@ namespace Mozi.HttpEmbedded
     //TODO 2021/05/05 实现HTTPS功能
     //TODO 2021/05/05 实现管道机制pipelining 即同一TCP链接允许发起多个HTTP请求 HTTP/1.1
     //TODO 2021/05/07 增加分块传输 chunked
+    //TODO 2021/06/21 实现多端口监听
+    //TODO 2021/06/21 是否考虑增加中间件功能
 
     //Transfer-Encoding: chunked 主要是为解决服务端无法预测Content-Length的问题
 

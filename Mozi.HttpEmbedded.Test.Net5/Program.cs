@@ -58,7 +58,7 @@ namespace Mozi.HttpEmbedded.Test.Net5
             router.Map("services/{controller}/{action}");
 
             //开启WebDAV
-            hs.UseWebDav("dav");
+            //hs.UseWebDav("dav");
 
             //开启SSDP服务
             SSDP.SSDPService ser = new SSDP.SSDPService();
@@ -71,8 +71,8 @@ namespace Mozi.HttpEmbedded.Test.Net5
                 RemoteHost = "100.100.0.105"
             };
 
-            state.ApplyDevice("Mozi.StateService", "80018001");
-            state.SetState("alive");
+            state.ApplyDevice("Mozi.StateService", "80018001","1.2.3");
+            state.SetState(ClientLifeState.Alive);
             state.Init();
             state.Activate();
             Console.ReadLine();

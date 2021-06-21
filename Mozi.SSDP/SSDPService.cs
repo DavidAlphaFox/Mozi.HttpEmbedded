@@ -9,13 +9,15 @@ namespace Mozi.SSDP
 
     public delegate void DeviceStateReceive(object sender);
 
+    //TODO 进一步完善SSDP协议并进行良好的封装
+
     /// <summary>
     /// SSDP协议实现
     /// </summary>
     public class SSDPService
     {
-        private RequestMethod MSEARCH = new RequestMethod("M-SEARCH");
-        private RequestMethod NOTIFY = new RequestMethod("NOTIFY");
+        private readonly RequestMethod MSEARCH = new RequestMethod("M-SEARCH");
+        private readonly RequestMethod NOTIFY = new RequestMethod("NOTIFY");
 
         private const string QueryPath = "*";
 

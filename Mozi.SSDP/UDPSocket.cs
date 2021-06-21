@@ -177,6 +177,13 @@ namespace Mozi.SSDP
                 InvokeAfterReceiveEnd(so, client, (IPEndPoint)remote);
             }
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="so"></param>
+        /// <param name="client"></param>
+        /// <param name="remote"></param>
+        
         private void InvokeAfterReceiveEnd(UDPStateObject so, Socket client, EndPoint remote)
         {
             if (AfterReceiveEnd != null)

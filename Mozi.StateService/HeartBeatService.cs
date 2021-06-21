@@ -249,7 +249,7 @@ namespace Mozi.StateService
         }
     }
     /// <summary>
-    /// 客户机状态类型
+    /// 终端状态类型
     /// </summary>
     public enum ClientLifeState
     {
@@ -272,8 +272,14 @@ namespace Mozi.StateService
     /// </summary>
     public class HeartBeatPackage
     {
+        /// <summary>
+        /// 协议版本
+        /// </summary>
         public byte Version { get; set; }
         public ushort PackageLength { get; set; }
+        /// <summary>
+        /// 状态名
+        /// </summary>
         public byte StateName { get; set; }
         public ushort DeviceNameLength { get; set; }
         /// <summary>
@@ -286,6 +292,9 @@ namespace Mozi.StateService
         /// </summary>
         public string DeviceId { get; set; }
         public ushort AppVersionLength { get; set; }
+        /// <summary>
+        /// 终端应用程序版本
+        /// </summary>
         public string AppVersion { get; set; }        
         public ushort UserNameLength { get; set; }
         /// <summary>

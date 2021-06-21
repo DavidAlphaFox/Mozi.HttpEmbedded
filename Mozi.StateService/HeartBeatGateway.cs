@@ -8,9 +8,9 @@ namespace Mozi.StateService
 
     public delegate void ClientLifeStateChange(object sender, ClientAliveInfo clientInfo, ClientLifeState oldState, ClientLifeState newState);
 
-    public delegate void ClientOnlineStateChange(object sender, ClientAliveInfo clientInfo, ClientState oldState, ClientState newState);
+    public delegate void ClientOnlineStateChange(object sender, ClientAliveInfo clientInfo, ClientOnlineState oldState, ClientOnlineState newState);
 
-    public delegate void ClientAddRemove(object sender, ClientAliveInfo clientInfo);
+    public delegate void ClientJoinQuit(object sender, ClientAliveInfo clientInfo);
 
     public delegate void ClientMessageReceive(object sender, ClientAliveInfo clientInfo,string host,int port);
 
@@ -24,7 +24,7 @@ namespace Mozi.StateService
     public class ClientAliveInfo
     {
         public ClientLifeState State   { get; set; }
-        public ClientState ClientState { get; set; }
+        public ClientOnlineState ClientState { get; set; }
         public string DeviceName  { get; set; }
         public string DeviceId    { get; set; }
         public string AppVersion  { get; set; }
@@ -42,19 +42,21 @@ namespace Mozi.StateService
             BeatTime = DateTime.MinValue;
             OnTime = DateTime.MinValue;
             LeaveTime = DateTime.MinValue;
+
             State = ClientLifeState.Unknown;
-            ClientState = ClientState.Unknown;
+            ClientState = ClientOnlineState.Unknown;
         }
     }
     /// <summary>
     /// 终端状态
     /// </summary>
-    public enum ClientState
+    public enum ClientOnlineState
     {
         Unknown=0,
         On=1,
         Offline=2,
-        Dead=3
+        Lost=3,
+        Lazy=4    
     }
     /// <summary>
     /// 心跳网关服务器
@@ -74,7 +76,7 @@ namespace Mozi.StateService
         /// <summary>
         /// 终端加入事件
         /// </summary>
-        public event ClientAddRemove OnClientJoin;
+        public event ClientJoinQuit OnClientJoin;
         /// <summary>
         /// 终端通知状态变更
         /// </summary>
@@ -184,7 +186,7 @@ namespace Mozi.StateService
         /// </summary>
         /// <param name="ca"></param>
         /// <param name="state"></param>
-        public void SetClientState(ClientAliveInfo ca,ClientState state)
+        public void SetClientState(ClientAliveInfo ca,ClientOnlineState state)
         {
             var client = _clients.Find(x => x.DeviceName.Equals(ca.DeviceName) && x.DeviceId.Equals(ca.DeviceId));
             if (client != null)
@@ -195,7 +197,7 @@ namespace Mozi.StateService
                 {
                     try
                     {
-                        //触发终端状态变更事件
+                        //触发终端在线状态变更事件
                         OnClientOnlineStateChange.BeginInvoke(this, client, clientOldState, client.ClientState, null, null);
                     }
                     finally
@@ -210,9 +212,9 @@ namespace Mozi.StateService
         /// <para>若终端长时间无心跳包，可将终端标记为已不可用</para>
         /// </summary>
         /// <param name="ca"></param>
-        public void SetClientDead(ClientAliveInfo ca)
+        public void SetClientLost(ClientAliveInfo ca)
         {
-            SetClientState(ca, ClientState.Dead);
+            SetClientState(ca, ClientOnlineState.Lost);
         }
         /// <summary>
         /// 服务端检活
@@ -223,7 +225,7 @@ namespace Mozi.StateService
             {
                 if ((DateTime.Now - client.BeatTime).TotalSeconds > _timeoutOffline)
                 {
-                    SetClientState(client, ClientState.Offline);
+                    SetClientState(client, ClientOnlineState.Offline);
                 }
             }
         }
@@ -259,11 +261,11 @@ namespace Mozi.StateService
             if (client.State == ClientLifeState.Byebye)
             {
                 client.LeaveTime = DateTime.Now;
-                SetClientState(client, ClientState.Offline);
+                SetClientState(client, ClientOnlineState.Offline);
             }
             else
             {
-                SetClientState(client, ClientState.On);
+                SetClientState(client, ClientOnlineState.On);
             }
             return client;
         }
