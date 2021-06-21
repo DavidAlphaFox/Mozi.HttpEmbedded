@@ -7,7 +7,7 @@ namespace Mozi.SSDP
 {
     public delegate void ServiceFound(object sender);
 
-    public delegate void ServiceMessageReceive(object sender,HttpRequestU request,string host);
+    public delegate void ServiceMessageReceive(object sender,HttpRequest request,string host);
 
     //TODO 进一步完善SSDP协议并进行良好的封装
 
@@ -52,7 +52,10 @@ namespace Mozi.SSDP
 
         public string DeviceName = "";
         /// <summary>
+        /// 是否接受回环地址消息
+        /// <para>
         /// 激活定时服务前启用此参数
+        /// </para>
         /// </summary>
         public bool AllowLoopbackMessage { get; set; }
 
@@ -86,6 +89,7 @@ namespace Mozi.SSDP
         public event ServiceFound OnServiceFound;
 
         public event ServiceMessageReceive OnServiceMessageReceive;
+
         /// <summary>
         /// 构造函数
         /// <para>
@@ -106,6 +110,7 @@ namespace Mozi.SSDP
         /// <param name="args"></param>
         private void _socket_AfterReceiveEnd(object sender, DataTransferArgs args)
         {
+            HttpRequest req = HttpRequestU.Parse(args.Data); 
             Console.WriteLine("*********收到数据[{0}]*********\r\n{1}\r\n*******END********", args.IP,System.Text.Encoding.UTF8.GetString(args.Data));
         }
         /// <summary>
@@ -123,10 +128,10 @@ namespace Mozi.SSDP
         /// </summary>
         /// <returns></returns>
         public SSDPService Activate()
-        {
+        {            
+            _socket.AllowLoopbackMessage = AllowLoopbackMessage;
             _socket.StartServer(SSDPProtocol.ProtocolPort);
             //是否接受回环消息
-            _socket.AllowLoopbackMessage = AllowLoopbackMessage;
             _timer.Change(0, NotificationPeriod);
             return this;
         }

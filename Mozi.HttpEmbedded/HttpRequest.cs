@@ -593,6 +593,11 @@ namespace Mozi.HttpEmbedded
             RequestMethod rm = AbsClassEnum.Get<RequestMethod>(sMethod);
             req.Method = rm;
 
+            //判断方法是否是已知方法
+            if (object.Equals(req.Method,null))
+            {
+                req.Method = new RequestMethod(sMethod);
+            }
             string[] urls = sUrl.Split(new[] { (char)ASCIICode.QUESTION }, StringSplitOptions.RemoveEmptyEntries);
             req.Path = urls[0];
             if (urls.Length > 1)

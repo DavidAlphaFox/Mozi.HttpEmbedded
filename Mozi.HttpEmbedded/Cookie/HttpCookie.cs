@@ -72,7 +72,7 @@ namespace Mozi.HttpEmbedded.Cookie
         /// <returns></returns>
         public static HttpCookie Parse(string setCookieData)
         {
-            HttpCookie cookies = new HttpCookie();
+            HttpCookie cookie = new HttpCookie();
             string[] options = setCookieData.Split(new[] { (char)ASCIICode.SEMICOLON }, StringSplitOptions.RemoveEmptyEntries);
             for (int i = 0; i < options.Length; i++)
             {
@@ -82,20 +82,20 @@ namespace Mozi.HttpEmbedded.Cookie
                     string[] kp = r.Split(new[] { (char)ASCIICode.EQUAL }, StringSplitOptions.RemoveEmptyEntries);
                     if (kp.Length == 2)
                     {
-                        cookies.Name = kp[0];
-                        cookies.Value = kp[1];
+                        cookie.Name = kp[0];
+                        cookie.Value = kp[1];
                     }
                 }
                 else{
                     //secure
                     if (r.Trim().Equals("secure", StringComparison.OrdinalIgnoreCase))
                     {
-                        cookies.Secure = true;
+                        cookie.Secure = true;
                     }
                     //httponly
                     if (r.Trim().Equals("httponly", StringComparison.OrdinalIgnoreCase))
                     {
-                        cookies.HttpOnly = true;
+                        cookie.HttpOnly = true;
                     }
                     //max-age
                     if (r.Trim().StartsWith("max-age", StringComparison.OrdinalIgnoreCase))
@@ -103,7 +103,7 @@ namespace Mozi.HttpEmbedded.Cookie
                         string[] kp = r.Split(new[] { (char)ASCIICode.EQUAL }, StringSplitOptions.RemoveEmptyEntries);
                         if (kp.Length == 2)
                         {
-                            cookies.MaxAge = int.Parse(kp[1]);
+                            cookie.MaxAge = int.Parse(kp[1]);
                         }
                     }
                     //path
@@ -112,7 +112,7 @@ namespace Mozi.HttpEmbedded.Cookie
                         string[] kp = r.Split(new[] { (char)ASCIICode.EQUAL }, StringSplitOptions.RemoveEmptyEntries);
                         if (kp.Length == 2)
                         {
-                            cookies.Path = kp[1];
+                            cookie.Path = kp[1];
                         }
                     }
                     //domain
@@ -121,21 +121,21 @@ namespace Mozi.HttpEmbedded.Cookie
                         string[] kp = r.Split(new[] { (char)ASCIICode.EQUAL }, StringSplitOptions.RemoveEmptyEntries);
                         if (kp.Length == 2)
                         {
-                            cookies.Domain = kp[1];
+                            cookie.Domain = kp[1];
                         }
                     }
                     //samesite
-                    if (r.Trim().StartsWith("samesite",StringComparison.OrdinalIgnoreCase))
+                    if (r.Trim().StartsWith("samesite", StringComparison.OrdinalIgnoreCase))
                     {
                         string[] kp = r.Split(new[] { (char)ASCIICode.EQUAL }, StringSplitOptions.RemoveEmptyEntries);
                         if (kp.Length == 2)
                         {
-                            cookies.SameSite =SameSiteModeExtension.Get(kp[1]);
+                            cookie.SameSite = (SameSiteMode)Enum.Parse(typeof(SameSiteMode),kp[1]);
                         }
                     }
                 }
             }
-            return cookies;
+            return cookie;
         }
     }
     /// <summary>
@@ -181,22 +181,6 @@ namespace Mozi.HttpEmbedded.Cookie
         // ÕªÒª:
         //     Indicates the client should only send the cookie with "same-site" requests.
         Strict = 2
-    }
-
-    internal static class SameSiteModeExtension
-    {
-        public static SameSiteMode Get(string keyName)
-        {
-            var type =Enum.GetValues(typeof(SameSiteMode));
-            foreach(var t in type)
-            {
-                if (Enum.GetName(typeof(SameSiteMode), t).Equals(keyName, StringComparison.OrdinalIgnoreCase))
-                {
-                    return (SameSiteMode)t;
-                }
-            }
-            return SameSiteMode.None;
-        }
     }
     /// <summary>
     /// ÇëÇóCookie

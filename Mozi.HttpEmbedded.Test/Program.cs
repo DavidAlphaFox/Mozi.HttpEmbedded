@@ -54,6 +54,7 @@ namespace Mozi.HttpEmbedded.Test
 
             //开启SSDP服务
             SSDP.SSDPService ssdp = new SSDP.SSDPService();
+            ssdp.AllowLoopbackMessage = true;
             ssdp.Activate();
 
             ////开启状态服务

@@ -57,7 +57,6 @@ namespace Mozi.HttpEmbedded.Generic
             return (object)a == null || (object)b == null || !a.Tag.Equals(b.Tag);
         }
 
-
         public override int GetHashCode()
         {
             return Tag.GetHashCode();

@@ -307,9 +307,9 @@ namespace Mozi.HttpEmbedded
         /// 解析首行数据
         /// 协议 状态 描述 
         /// </summary>
-        /// <param name="req"></param>
+        /// <param name="resp"></param>
         /// <param name="data"></param>
-        private static void ParseRequestLine(ref HttpResponse req, byte[] data)
+        private static void ParseRequestLine(ref HttpResponse resp, byte[] data)
         {
             //解析起始行
             var RequestLineString = Encoding.UTF8.GetString(data);
@@ -322,16 +322,16 @@ namespace Mozi.HttpEmbedded
             string sProtoType = sProtocol.Substring(0, sProtocol.IndexOf((char)ASCIICode.DIVIDE));
             string sProtoVersion = sProtocol.Substring(sProtocol.IndexOf((char)ASCIICode.DIVIDE) + 1);
 
-            req.Status = AbsClassEnum.Get<StatusCode>(sStatusCode);
-            req.ProtocolVersion = AbsClassEnum.Get<HttpVersion>(sProtoVersion);
+            resp.Status = AbsClassEnum.Get<StatusCode>(sStatusCode);
+            resp.ProtocolVersion = AbsClassEnum.Get<HttpVersion>(sProtoVersion);
 
         }
         /// <summary>
         /// 解析头属性
         /// </summary>
-        /// <param name="req"></param>
+        /// <param name="resp"></param>
         /// <param name="data"></param>
-        private static void ParseHeaders(ref HttpResponse req, byte[] data)
+        private static void ParseHeaders(ref HttpResponse resp, byte[] data)
         {
             HeaderProperty hp = HeaderProperty.Parse(data);            
             
@@ -340,18 +340,22 @@ namespace Mozi.HttpEmbedded
             #endif
             if (!hp.PropertyName.Equals(HeaderProperty.SetCookie))
             {
-                req.Headers.Add(hp.PropertyName, hp.PropertyValue);
+                resp.Headers.Add(hp.PropertyName, hp.PropertyValue);
             }
             else
             {
-
+                ParseCookie(ref resp, hp.PropertyValue);
             }
         }
-
-        private static void ParseCookie(ref HttpResponse req,string setCookieValue)
+        /// <summary>
+        /// 解析Cookie
+        /// </summary>
+        /// <param name="resp"></param>
+        /// <param name="setCookieValue"></param>
+        private static void ParseCookie(ref HttpResponse resp,string setCookieValue)
         {
             HttpCookie cookie = HttpCookie.Parse(setCookieValue);
-            req.Cookies.Set(cookie.Name, cookie.Domain, cookie.Path, cookie.Value);
+            resp.Cookies.Set(cookie.Name, cookie.Domain, cookie.Path, cookie.Value);
         }
         ~HttpResponse()
         {
