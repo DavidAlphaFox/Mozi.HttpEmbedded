@@ -61,6 +61,9 @@ namespace Mozi.StateService.Test
         private static void Hg_OnClientMessageReceive(object sender, ClientAliveInfo client,string host,int port)
         {
             Console.WriteLine("{4:MMdd HH:mm:ss}|N:{0},ID:{1},S:{2},V:{3},{5},{6}", client.DeviceName, client.DeviceId, client.State, client.AppVersion, client.BeatTime, host,client.UserName);
+
+            //对终端累计忙时进行统计，此处需要终端配合进行[闲/忙]切换
+
         }
 
         private static void Hg_OnClientStateChange(object sender, ClientAliveInfo clientInfo, ClientOnlineState oldState, ClientOnlineState newState)

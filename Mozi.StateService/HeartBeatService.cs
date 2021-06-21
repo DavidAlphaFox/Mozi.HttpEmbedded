@@ -7,7 +7,8 @@ using System.Threading;
 namespace Mozi.StateService
 {
     //TODO 是否考虑建立双向心跳服务，类似于握手
-    //TODO 是否考虑设置一个备份地址
+    //TODO 是否考虑设置一个备份服务器地址
+
     /// <summary>
     /// 状态服务
     /// <para>
@@ -379,7 +380,9 @@ namespace Mozi.StateService
             return state;
         }
     }
-
+    /// <summary>
+    /// 扩展方法
+    /// </summary>
     internal static class Extension
     {
         public static byte[] ToBytes(this string data)
@@ -389,11 +392,6 @@ namespace Mozi.StateService
         public static string AsString(this byte[] data)
         {
             return System.Text.Encoding.ASCII.GetString(data);
-        }
-
-        public static byte ToCharByte(this ClientLifeState state)
-        {
-            return ((int)state).ToCharByte();
         }
     }
 }

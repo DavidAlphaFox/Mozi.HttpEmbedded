@@ -22,6 +22,8 @@ namespace Mozi.SSDP
         /// </summary>
         public string MulticastGroupAddress = SSDPProtocol.MulticastAddress;
 
+        public bool AllowLoopbackMessage { get; set; }
+
         public UDPSocket()
         {
 
@@ -114,7 +116,7 @@ namespace Mozi.SSDP
             _sc.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.MulticastTimeToLive, 32);
             _sc.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.MulticastInterface, 0);
 
-            _sc.MulticastLoopback = true;
+            _sc.MulticastLoopback = AllowLoopbackMessage;
             JoinMulticastGroup(MulticastGroupAddress);
             _sc.Bind(endpoint);
 

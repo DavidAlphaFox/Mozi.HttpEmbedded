@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using Mozi.HttpEmbedded.Encode;
 
 namespace Mozi.HttpEmbedded.Cookie
@@ -63,6 +64,79 @@ namespace Mozi.HttpEmbedded.Cookie
             //TODO 分割符号为“; ”
             return string.Join(new string(new[] {  (char)ASCIICode.SEMICOLON ,(char)ASCIICode.SPACE}), data);
         }
+
+        /// <summary>
+        /// 解析Cookie
+        /// </summary>
+        /// <param name="setCookieData"></param>
+        /// <returns></returns>
+        public static HttpCookie Parse(string setCookieData)
+        {
+            HttpCookie cookies = new HttpCookie();
+            string[] options = setCookieData.Split(new[] { (char)ASCIICode.SEMICOLON }, StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < options.Length; i++)
+            {
+                string r = options[i];
+                if (i == 0)
+                {
+                    string[] kp = r.Split(new[] { (char)ASCIICode.EQUAL }, StringSplitOptions.RemoveEmptyEntries);
+                    if (kp.Length == 2)
+                    {
+                        cookies.Name = kp[0];
+                        cookies.Value = kp[1];
+                    }
+                }
+                else{
+                    //secure
+                    if (r.Trim().Equals("secure", StringComparison.OrdinalIgnoreCase))
+                    {
+                        cookies.Secure = true;
+                    }
+                    //httponly
+                    if (r.Trim().Equals("httponly", StringComparison.OrdinalIgnoreCase))
+                    {
+                        cookies.HttpOnly = true;
+                    }
+                    //max-age
+                    if (r.Trim().StartsWith("max-age", StringComparison.OrdinalIgnoreCase))
+                    {
+                        string[] kp = r.Split(new[] { (char)ASCIICode.EQUAL }, StringSplitOptions.RemoveEmptyEntries);
+                        if (kp.Length == 2)
+                        {
+                            cookies.MaxAge = int.Parse(kp[1]);
+                        }
+                    }
+                    //path
+                    if (r.Trim().StartsWith("path", StringComparison.OrdinalIgnoreCase))
+                    {
+                        string[] kp = r.Split(new[] { (char)ASCIICode.EQUAL }, StringSplitOptions.RemoveEmptyEntries);
+                        if (kp.Length == 2)
+                        {
+                            cookies.Path = kp[1];
+                        }
+                    }
+                    //domain
+                    if (r.Trim().StartsWith("domain", StringComparison.OrdinalIgnoreCase))
+                    {
+                        string[] kp = r.Split(new[] { (char)ASCIICode.EQUAL }, StringSplitOptions.RemoveEmptyEntries);
+                        if (kp.Length == 2)
+                        {
+                            cookies.Domain = kp[1];
+                        }
+                    }
+                    //samesite
+                    if (r.Trim().StartsWith("samesite",StringComparison.OrdinalIgnoreCase))
+                    {
+                        string[] kp = r.Split(new[] { (char)ASCIICode.EQUAL }, StringSplitOptions.RemoveEmptyEntries);
+                        if (kp.Length == 2)
+                        {
+                            cookies.SameSite =SameSiteModeExtension.Get(kp[1]);
+                        }
+                    }
+                }
+            }
+            return cookies;
+        }
     }
     /// <summary>
     /// HttpCookie扩展类
@@ -107,6 +181,22 @@ namespace Mozi.HttpEmbedded.Cookie
         // 摘要:
         //     Indicates the client should only send the cookie with "same-site" requests.
         Strict = 2
+    }
+
+    internal static class SameSiteModeExtension
+    {
+        public static SameSiteMode Get(string keyName)
+        {
+            var type =Enum.GetValues(typeof(SameSiteMode));
+            foreach(var t in type)
+            {
+                if (Enum.GetName(typeof(SameSiteMode), t).Equals(keyName, StringComparison.OrdinalIgnoreCase))
+                {
+                    return (SameSiteMode)t;
+                }
+            }
+            return SameSiteMode.None;
+        }
     }
     /// <summary>
     /// 请求Cookie

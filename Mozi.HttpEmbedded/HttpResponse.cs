@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using Mozi.HttpEmbedded.Cookie;
 using Mozi.HttpEmbedded.Encode;
+using Mozi.HttpEmbedded.Generic;
 using Mozi.HttpEmbedded.Source;
 
 namespace Mozi.HttpEmbedded
@@ -50,7 +52,7 @@ namespace Mozi.HttpEmbedded
         /// <summary>
         /// 请求数据体
         /// </summary>
-        public byte[] Body { get { return _body; } }
+        public byte[] Body { get { return _body; } private set { _body = value; } }
         /// <summary>
         /// Cookie
         /// </summary>
@@ -248,7 +250,109 @@ namespace Mozi.HttpEmbedded
             Headers.Add(HeaderProperty.Location.PropertyName, path);
             return StatusCode.Found;
         }
+        /// <summary>
+        /// HttpResponse反向解析
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public static HttpResponse Parse(byte[] data)
+        {
+            HttpResponse resp = new HttpResponse();
+            //响应行
+            //头
+            //包体
+            //解析头
+            int posCR = 0;
+            int posCaret = 0;
+            int index = 0;
+            int dataLength = data.Length;
+            while ((posCR < dataLength) && Array.IndexOf(data, ASCIICode.CR, posCR + 1) > 0)
+            {
+                posCR = Array.IndexOf(data, ASCIICode.CR, posCR + 1);
 
+                //连续两个CR
+                byte[] fragement = new byte[posCR - posCaret];
+                Array.Copy(data, posCaret, fragement, 0, posCR - posCaret);
+                if (index == 0)
+                {
+                    ParseRequestLine(ref resp, fragement);
+                }
+                else
+                {
+                    ParseHeaders(ref resp, fragement);
+                }
+
+                if ((Array.IndexOf(data, ASCIICode.CR, posCR + 1) == posCR + 2))
+                {
+                    break;
+                }
+                //跳过分割字节段
+                posCaret = posCR + 2;
+                index++;
+                //TODO 置空对象
+            }
+
+            //解析Cookie
+            //解析数据 荷载部分
+            if (data.Length > posCR + 4)
+            {
+                resp.Body = new byte[data.Length - (posCR + 4)];
+                //TODO 此处又重新生成一个数据对象，导致内存占用过大
+                Array.Copy(data, posCR + 4, resp.Body, 0, resp.Body.Length);
+            }
+            return resp;
+        }
+
+        /// <summary>
+        /// 解析首行数据
+        /// 协议 状态 描述 
+        /// </summary>
+        /// <param name="req"></param>
+        /// <param name="data"></param>
+        private static void ParseRequestLine(ref HttpResponse req, byte[] data)
+        {
+            //解析起始行
+            var RequestLineString = Encoding.UTF8.GetString(data);
+            string[] sFirst = RequestLineString.Split(new[] { (char)ASCIICode.SPACE }, StringSplitOptions.None);
+            //协议 状态 描述 
+            string sProtocol = sFirst[0];
+            string sStatusCode = sFirst[1];
+            string sStatusDescription = sFirst[2];
+
+            string sProtoType = sProtocol.Substring(0, sProtocol.IndexOf((char)ASCIICode.DIVIDE));
+            string sProtoVersion = sProtocol.Substring(sProtocol.IndexOf((char)ASCIICode.DIVIDE) + 1);
+
+            req.Status = AbsClassEnum.Get<StatusCode>(sStatusCode);
+            req.ProtocolVersion = AbsClassEnum.Get<HttpVersion>(sProtoVersion);
+
+        }
+        /// <summary>
+        /// 解析头属性
+        /// </summary>
+        /// <param name="req"></param>
+        /// <param name="data"></param>
+        private static void ParseHeaders(ref HttpResponse req, byte[] data)
+        {
+            HeaderProperty hp = HeaderProperty.Parse(data);            
+            
+            #if DEBUG
+                Console.WriteLine("{0}:{1}",hp.PropertyTag,hp.PropertyValue);
+            #endif
+            if (!hp.PropertyName.Equals(HeaderProperty.SetCookie))
+            {
+                req.Headers.Add(hp.PropertyName, hp.PropertyValue);
+            }
+            else
+            {
+
+            }
+        }
+
+        private static void ParseCookie(ref HttpResponse req,string setCookieValue)
+        {
+            HttpCookie cookie = HttpCookie.Parse(setCookieValue);
+            req.Cookies.Set(cookie.Name, cookie.Domain, cookie.Path, cookie.Value);
+        }
         ~HttpResponse()
         {
             _body = null;

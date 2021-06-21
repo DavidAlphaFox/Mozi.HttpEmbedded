@@ -1,9 +1,11 @@
-﻿namespace Mozi.HttpEmbedded
+﻿using Mozi.HttpEmbedded.Generic;
+
+namespace Mozi.HttpEmbedded
 {
     /// <summary>
     /// 响应状态码
     /// </summary>
-    public struct StatusCode
+    public class StatusCode:AbsClassEnum
     {
         /// <summary>
         /// 这个临时响应表明，迄今为止的所有内容都是可行的，客户端应该继续请求，如果已经完成，则忽略它。
@@ -281,6 +283,8 @@
         public int Code { get { return _code; } }
 
         public string Text { get { return _text; } }
+
+        protected override string Tag { get { return Code.ToString(); } }
 
         private StatusCode(int code, string desc)
         {

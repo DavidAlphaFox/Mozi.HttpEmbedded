@@ -5,14 +5,20 @@ using Mozi.HttpEmbedded;
 
 namespace Mozi.SSDP
 {
-    public delegate void DeviceFound(object sender);
+    public delegate void ServiceFound(object sender);
 
-    public delegate void DeviceStateReceive(object sender);
+    public delegate void ServiceMessageReceive(object sender,HttpRequestU request,string host);
 
     //TODO 进一步完善SSDP协议并进行良好的封装
 
     /// <summary>
     /// SSDP协议实现
+    /// <para>
+    ///     功能包含：发现，在线广播，离线广播
+    /// </para>
+    /// <para>
+    /// Simple Service Discovery Protocol
+    /// </para>
     /// </summary>
     public class SSDPService
     {
@@ -45,6 +51,10 @@ namespace Mozi.SSDP
         public int CacheTimeout = 3600;
 
         public string DeviceName = "";
+        /// <summary>
+        /// 激活定时服务前启用此参数
+        /// </summary>
+        public bool AllowLoopbackMessage { get; set; }
 
         /// <summary>
         /// 默认查询包
@@ -73,10 +83,15 @@ namespace Mozi.SSDP
         
         };
 
-        public event DeviceFound OnDeviceFound;
+        public event ServiceFound OnServiceFound;
 
-        public event DeviceStateReceive OnDeviceStateReceive;
-
+        public event ServiceMessageReceive OnServiceMessageReceive;
+        /// <summary>
+        /// 构造函数
+        /// <para>
+        /// 从实例创建开始就可以开始接受组播数据
+        /// </para>
+        /// </summary>
         public SSDPService()
         {
             _socket = new UDPSocket();
@@ -84,7 +99,11 @@ namespace Mozi.SSDP
             _remoteEP = new IPEndPoint(IPAddress.Parse(SSDPProtocol.MulticastAddress), SSDPProtocol.ProtocolPort);
             _timer = new Timer(TimeoutCallback, null, Timeout.Infinite, Timeout.Infinite);
         }
-
+        /// <summary>
+        /// 数据接收时间
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
         private void _socket_AfterReceiveEnd(object sender, DataTransferArgs args)
         {
             Console.WriteLine("*********收到数据[{0}]*********\r\n{1}\r\n*******END********", args.IP,System.Text.Encoding.UTF8.GetString(args.Data));
@@ -97,12 +116,17 @@ namespace Mozi.SSDP
 
         }
         /// <summary>
-        /// 激活
+        /// 激活服务
+        /// <para>
+        /// 启动一个定时器，定时发送在线消息
+        /// </para>
         /// </summary>
         /// <returns></returns>
         public SSDPService Activate()
         {
             _socket.StartServer(SSDPProtocol.ProtocolPort);
+            //是否接受回环消息
+            _socket.AllowLoopbackMessage = AllowLoopbackMessage;
             _timer.Change(0, NotificationPeriod);
             return this;
         }
@@ -331,7 +355,7 @@ namespace Mozi.SSDP
     }
     public class SSDPProtocol
     {
-        //组播地址
+        //组播地址，固定地址
         public const string MulticastAddress = "239.255.255.250";
         //组播地址IPv6
         public const string MulticastAddressIPv6 = "FF0x::C";
