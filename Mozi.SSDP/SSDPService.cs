@@ -17,7 +17,20 @@ namespace Mozi.SSDP
     ///     功能包含：发现，在线广播，离线广播
     /// </para>
     /// <para>
-    /// Simple Service Discovery Protocol
+    /// UPNP 4大部分
+    /// --Discovery
+    ///     --Notify:alive
+    ///     --Notify:bybye
+    ///     --Search
+    /// --Description
+    ///     --Device Description
+    ///     --Service Description
+    /// --Control
+    ///     --Action
+    ///     --Query
+    /// --Eventing
+    ///     --Subscribe
+    ///     --UnSubscribe
     /// </para>
     /// </summary>
     public class SSDPService
@@ -212,7 +225,13 @@ namespace Mozi.SSDP
         //HOST:    239.255.255.250:1900
         //NT: search target
         //NTS: ssdp:byebye
-        //USN: uuid:advertisement UUID
+        //USN: advertisement UUID
+        //      --uuid:device-UUID::upnp:rootdevice 
+        //      --uuid:device-UUID
+        //      --uuid:device-UUID::urn:schemas-upnp-org:device:deviceType:v
+        //      --uuid:device-UUID::urn:schemas-upnp-org:service:serviceType:v
+        //      --uuid:device-UUID::urn:domain-name:device:deviceType:v
+        //      --uuid:device-UUID::urn:domain-name:service:serviceType:v
 
         /// <summary>
         /// 离线通知
@@ -232,8 +251,19 @@ namespace Mozi.SSDP
         //EXT:
         //LOCATION: URL for UPnP description for root device
         //SERVER: OS/Version UPNP/1.0 product/version
-        //ST: search target
+        //ST: ge:fridge
+        //      -ssdp:all 搜索所有设备和服务
+        //      -upnp:rootdevice 仅搜索网络中的根设备
+        //      -uuid:device-UUID 查询UUID标识的设备
+        //      -urn:schemas-upnp-org:device:device-Type:version 
+        //      -urn:schemas-upnp-org:service:service-Type:version 
         //USN: advertisement UUID
+        //      --uuid:device-UUID::upnp:rootdevice 
+        //      --uuid:device-UUID
+        //      --uuid:device-UUID::urn:schemas-upnp-org:device:deviceType:v
+        //      --uuid:device-UUID::urn:schemas-upnp-org:service:serviceType:v
+        //      --uuid:device-UUID::urn:domain-name:device:deviceType:v
+        //      --uuid:device-UUID::urn:domain-name:service:serviceType:v
 
         /// <summary>
         /// 响应 MS-SEARCH 查找
@@ -243,6 +273,7 @@ namespace Mozi.SSDP
             HttpResponse resp = new HttpResponse();
             resp.AddHeader(HeaderProperty.Host, $"{SSDPProtocol.MulticastAddress}:{SSDPProtocol.ProtocolPort}");
             resp.AddHeader(HeaderProperty.CacheControl, $"max-age = {CacheTimeout}");
+            resp.AddHeader(HeaderProperty.Date, DateTime.UtcNow.ToString("r"));
             resp.AddHeader("EXT", "");
             resp.AddHeader(HeaderProperty.Location, "http://127.0.0.1/desc.xml");
             resp.AddHeader("Server", _server);
