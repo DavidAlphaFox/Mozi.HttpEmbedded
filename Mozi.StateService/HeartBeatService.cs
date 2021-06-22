@@ -78,12 +78,18 @@ namespace Mozi.StateService
             }
         }
         /// <summary>
-        /// 状态变更通知
+        /// 状态变更实时通知
         /// <para>
         /// 开启此参数会立即向服务器发出数据包
         /// </para>
         /// </summary>
         public bool StateChangeNotifyImmediately { get; set; }
+        /// <summary>
+        /// 登录用户变更即时通知
+        /// <para>
+        /// 开启此参数会立即向服务器发出数据包
+        /// </para>
+        /// </summary>
         public bool UserChangeNotifyImmediately { get; set; }
         /// <summary>
         /// 端口
