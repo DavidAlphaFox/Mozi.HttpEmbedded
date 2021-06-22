@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <package>
   <metadata>
-	<id>$id$</id>
-	<version>$version$</version>
-	<title>$title$</title>
-	<authors>$author$</authors>
+	<id>Mozi.StateService</id>
+	<version>1.2.4</version>
+	<title>Mozi.StateService</title>
+	<authors>JasonWcx</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="expression">MIT</license>
     <projectUrl>https://gitee.com/myui_admin/mozi</projectUrl>
-    <description>$description$</description>
+    <description>心跳服务及心跳网关</description>
     <releaseNotes>1.2.4版本</releaseNotes>
-    <copyright>$copyright$</copyright>
+    <copyright>Copyright © Jason 2021</copyright>
     <tags>心跳 HeartBeat 心跳网关</tags>
-	<readme>readme.md</readme>  
   </metadata>
 </package>
