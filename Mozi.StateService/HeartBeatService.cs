@@ -370,7 +370,7 @@ namespace Mozi.StateService
             Array.Copy(body, 2 * 1 + 1, deviceName, 0, state.DeviceNameLength);
             Array.Copy(body, 2 * 2 + 1 + state.DeviceNameLength, deviceId, 0, state.DeviceIdLength);
             Array.Copy(body, 2 * 3 + 1 + state.DeviceNameLength + state.DeviceIdLength, appVersion, 0, state.AppVersionLength);
-            Array.Copy(body, 2 * 4 + 1 + state.DeviceNameLength + state.DeviceIdLength+state.AppVersionLength, userName, 0, state.UserNameLength);
+            Array.Copy(body, 2 * 4 + 1 + state.DeviceNameLength + state.DeviceIdLength + state.AppVersionLength, userName, 0, state.UserNameLength);
 
             state.DeviceName = deviceName.AsString();
             state.DeviceId = deviceId.AsString();
