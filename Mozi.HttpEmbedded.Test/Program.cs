@@ -64,8 +64,9 @@ namespace Mozi.HttpEmbedded.Test
                 RemoteHost = "100.100.0.111"
             };
 
-            state.ApplyDevice("Mozi.StateService", "80018001", "1.2.3");
+            state.ApplyDevice("Mozi", "80018001", "1.2.3");
             state.SetState(ClientLifeState.Alive);
+            state.SetUserName("StateService");
             state.Init();
             state.Activate();
 

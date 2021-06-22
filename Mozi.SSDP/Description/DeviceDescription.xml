@@ -1,0 +1,49 @@
+﻿<?xml version="1.0"?>
+<root xmlns="urn:schemas-upnp-org:device-1-0">
+	<specVersion>
+		<major>1</major>
+		<minor>0</minor>
+	</specVersion>
+	<URLBase>base URL for all relative URLs</URLBase>
+	<device>
+		<deviceType>urn:schemas-upnp-org:device:deviceType:v</deviceType>
+		<friendlyName>short user-friendly title</friendlyName>
+		<manufacturer>manufacturer name</manufacturer>
+		<manufacturerURL>URL to manufacturer site</manufacturerURL>
+		<modelDescription>long user-friendly title</modelDescription>
+		<modelName>model name</modelName>
+		<modelNumber>model number</modelNumber>
+		<modelURL>URL to model site</modelURL>
+		<serialNumber>manufacturer's serial number</serialNumber>
+		<UDN>uuid:UUID</UDN>
+		<UPC>Universal Product Code</UPC>
+		<iconList>
+			<icon>
+				<mimetype>image/format</mimetype>
+				<width>horizontal pixels</width>
+				<height>vertical pixels</height>
+				<depth>color depth</depth>
+				<url>URL to icon</url>
+			</icon>
+			XML to declare other icons, if any, go here
+		</iconList>
+		<serviceList>
+			<service>
+				<serviceType>urn:schemas-upnp-org:service:serviceType:v</serviceType>
+				<serviceId>urn:upnp-org:serviceId:serviceID</serviceId>
+				<SCPDURL>URL to service description</SCPDURL>
+				<controlURL>URL for control</controlURL>
+				<eventSubURL>URL for eventing</eventSubURL>
+			</service>
+			Declarations for other services defined by a UPnP Forum working committee (if any)
+			go here
+			Declarations for other services added by UPnP vendor (if any) go here
+		</serviceList>
+		<deviceList>
+			Description of embedded devices defined by a UPnP Forum working committee (if any)
+			go here
+			Description of embedded devices added by UPnP vendor (if any) go here
+		</deviceList>
+		<presentationURL>URL for presentation</presentationURL>
+	</device>
+</root>

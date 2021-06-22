@@ -22,20 +22,19 @@ namespace Mozi.SSDP
     /// </summary>
     public class SSDPService
     {
-        private readonly RequestMethod MSEARCH = new RequestMethod("M-SEARCH");
-        private readonly RequestMethod NOTIFY = new RequestMethod("NOTIFY");
-
         private const string QueryPath = "*";
 
         private UDPSocket _socket;
         private Timer _timer;
         private IPEndPoint _remoteEP;
 
-        private string _server = "";
+        private string _server = " Mozi/1.2.4 UPnP/1.0 Mozi.SSDP/1.2.4";
+        private string _uuid = "";
 
         #region
-        public string UUID { get; set; }
-
+        public string UUID { get { return _uuid; } set { _uuid = value; } }
+        public string Server { get { return _server; } set { _server = value; } }
+        public string Location { get; set; }
         #endregion
 
         /// <summary>
@@ -52,6 +51,8 @@ namespace Mozi.SSDP
         public int CacheTimeout = 3600;
 
         public string DeviceName = "";
+
+
         /// <summary>
         /// 是否接受回环地址消息
         /// <para>
@@ -84,7 +85,7 @@ namespace Mozi.SSDP
         /// </summary>
         public ByebyePackage PackDefaultByebye = new ByebyePackage() 
         { 
-        
+            
         };
 
         public event ServiceFound OnServiceFound;
@@ -151,27 +152,21 @@ namespace Mozi.SSDP
         //Host: 239.255.255.250:1900
         //MAN: "ssdp:discover"
         //ST: ge:fridge
-        //MX: 3
+        //      -ssdp:all 搜索所有设备和服务
+        //      -upnp:rootdevice 仅搜索网络中的根设备
+        //      -uuid:device-UUID 查询UUID标识的设备
+        //      -urn:schemas-upnp-org:device:device-Type:version 查询device-Type字段指定的设备类型，设备类型和版本由UPNP组织定义。
+        //      -urn:schemas-upnp-org:service:service-Type:version 查询service-Type字段指定的服务类型，服务类型和版本由UPNP组织定义。
+        //MX: {seconds}
+        //      --{seconds} in [1,120]
 
-        //各HTTP协议头的含义：
-
-        //HOST：设置为协议保留多播地址和端口，必须是：239.255.255.250:1900（IPv4）或FF0x::C(IPv6)
-        //MAN：设置协议查询的类型，必须是：ssdp:discover
-        //MX：设置设备响应最长等待时间。设备响应在0和这个值之间随机选择响应延迟的值，这样可以为控制点响应平衡网络负载。
-        //ST：设置服务查询的目标，它必须是下面的类型：
-        //-ssdp:all 搜索所有设备和服务
-        //-upnp:rootdevice 仅搜索网络中的根设备
-        //-uuid:device-UUID 查询UUID标识的设备
-        //-urn:schemas-upnp-org:device:device-Type:version 查询device-Type字段指定的设备类型，设备类型和版本由UPNP组织定义。
-        //-urn:schemas-upnp-org:service:service-Type:version 查询service-Type字段指定的服务类型，服务类型和版本由UPNP组织定义。
-        
         /// <summary>
         /// 发送查询消息
         /// </summary>
         public void Discover(SearchPackage dp)
         {
             HttpRequestU request = new HttpRequestU();
-            request.SetPath("*").SetMethod(MSEARCH);
+            request.SetPath("*").SetMethod(RequestMethodUPnP.MSEARCH);
             request.SetHeaders(dp.GetHeaders());
 
             byte[] data = request.GetBuffer();
@@ -181,12 +176,25 @@ namespace Mozi.SSDP
 
         //NOTIFY * HTTP/1.1     
         //HOST: 239.255.255.250:1900    
-        //CACHE-CONTROL: max-age = seconds until advertisement expires    
+        //CACHE-CONTROL: max-age = {seconds}   
+        //      --{seconds}>=1800s
         //LOCATION: URL for UPnP description for root device
         //NT: search target
+        //      --upnp:rootdevice
+        //      --uuid:device-UUID
+        //      --urn:schemas-upnp-org:device:deviceType:v
+        //      --urn:schemas-upnp-org:service:serviceType:v
+        //      --urn:domain-name:device:deviceType:v
+        //      --urn:domain-name:service:serviceType:v
         //NTS: ssdp:alive 
-        //SERVER: OS/versionUPnP/1.0product/version 
+        //SERVER: OS/version UPnP/1.0 product/version 
         //USN: advertisement UUID
+        //      --uuid:device-UUID::upnp:rootdevice 
+        //      --uuid:device-UUID
+        //      --uuid:device-UUID::urn:schemas-upnp-org:device:deviceType:v
+        //      --uuid:device-UUID::urn:schemas-upnp-org:service:serviceType:v
+        //      --uuid:device-UUID::urn:domain-name:device:deviceType:v
+        //      --uuid:device-UUID::urn:domain-name:service:serviceType:v
 
         /// <summary>
         /// 发送存在通知
@@ -194,7 +202,7 @@ namespace Mozi.SSDP
         public void NotifyAlive(AlivePackage np)
         {
             HttpRequestU request = new HttpRequestU();
-            request.SetPath("*").SetMethod(NOTIFY);
+            request.SetPath("*").SetMethod(RequestMethodUPnP.NOTIFY);
             request.SetHeaders(np.GetHeaders());
             byte[] data = request.GetBuffer();
             _socket.SocketMain.SendTo(data, _remoteEP);
@@ -212,7 +220,7 @@ namespace Mozi.SSDP
         public void NotifyLeave(ByebyePackage bp)
         {
             HttpRequestU request = new HttpRequestU();
-            request.SetPath("*").SetMethod(NOTIFY);
+            request.SetPath("*").SetMethod(RequestMethodUPnP.NOTIFY);
             request.SetHeaders(bp.GetHeaders());
             byte[] data = request.GetBuffer();
             _socket.SocketMain.SendTo(data, _remoteEP);
@@ -243,6 +251,14 @@ namespace Mozi.SSDP
             resp.SetStatus(StatusCode.Success);
             byte[] data = resp.GetBuffer();
             _socket.SocketMain.SendTo(data, _remoteEP);
+        }
+        internal void Subscribe()
+        {
+
+        }
+        internal void UnSubscribe()
+        {
+
         }
         /// <summary>
         /// 定时器回调函数

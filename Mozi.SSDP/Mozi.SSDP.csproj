@@ -37,6 +37,7 @@
   <ItemGroup>
     <Compile Include="HttpRequestU.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RequestMethodUPnP.cs" />
     <Compile Include="SSDPService.cs" />
     <Compile Include="SSDPCache.cs" />
     <Compile Include="SSDPCacheManager.cs" />
@@ -58,6 +59,10 @@
     <None Include="Mozi.SSDP.nuspec" />
     <None Include="Readme.md" />
     <None Include="UPnP-arch-DeviceArchitecture-v1.0.pdf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Description\DeviceDescription.xml" />
+    <Content Include="Description\ServiceDescription.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
