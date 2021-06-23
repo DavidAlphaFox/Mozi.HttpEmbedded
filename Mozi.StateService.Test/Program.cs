@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Mozi.StateService.Test
 {
@@ -27,10 +28,23 @@ namespace Mozi.StateService.Test
             hg.OnClientMessageReceive += Hg_OnClientMessageReceive;
             hg.OnClientUserChange += Hg_OnClientUserChange;
             hg.OnClientJoin += Hg_OnClientJoin;
+            hg.OnClientLifeStateChange += Hg_OnClientLifeStateChange;
             hg.Start(13453);
             
             Console.ReadLine();
         }
+        /// <summary>
+        /// 终端心跳状态变化事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="clientInfo"></param>
+        /// <param name="oldState"></param>
+        /// <param name="newState"></param>
+        private static void Hg_OnClientLifeStateChange(object sender, ClientAliveInfo clientInfo, ClientLifeState oldState, ClientLifeState newState)
+        {
+            
+        }
+
         /// <summary>
         /// 新增终端事件
         /// </summary>

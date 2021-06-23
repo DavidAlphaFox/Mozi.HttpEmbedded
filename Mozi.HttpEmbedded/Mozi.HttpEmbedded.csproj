@@ -120,7 +120,7 @@
     <Compile Include="ServerEvent.cs" />
     <Compile Include="Source\Mime.cs" />
     <Compile Include="Source\StaticFiles.cs" />
-    <Compile Include="Stastistics\PageView.cs" />
+    <Compile Include="Statistics\PageView.cs" />
     <Compile Include="StateObject.cs" />
     <Compile Include="StatusCode.cs" />
     <Compile Include="Encode\StringEncoder.cs" />

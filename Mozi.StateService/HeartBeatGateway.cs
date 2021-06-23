@@ -42,7 +42,6 @@ namespace Mozi.StateService
             BeatTime = DateTime.MinValue;
             OnTime = DateTime.MinValue;
             LeaveTime = DateTime.MinValue;
-
             State = ClientLifeState.Unknown;
             ClientState = ClientOnlineState.Unknown;
         }
@@ -97,7 +96,11 @@ namespace Mozi.StateService
         /// 终端列表
         /// </summary>
         public List<ClientAliveInfo> Clients { get { return _clients; } }
-
+        public bool EnableCount { get; set; }
+        /// <summary>
+        /// 统计
+        /// </summary>
+        public ClientStateStatistics Statistics = new ClientStateStatistics();
         public HeartBeatGateway()
         {
             _socket = new UDPSocket();
@@ -163,7 +166,7 @@ namespace Mozi.StateService
             if (client != null)
             {
                 var clientOldState = client.State;
-                client.State = state;
+                client.State = state;                
                 if (client.State != clientOldState && OnClientLifeStateChange != null)
                 {
                     try
@@ -175,6 +178,11 @@ namespace Mozi.StateService
                     {
 
                     }
+                }
+                //开启统计功能
+                if (EnableCount)
+                {
+                    Statistics.UpdateClientLiftState(client, state);
                 }
             }
         }
@@ -307,6 +315,131 @@ namespace Mozi.StateService
             {
                 var ex2 = ex;
             }
+        }
+    }
+    /// <summary>
+    /// 终端状态统计
+    /// <para>
+    /// 最小统计粒度为 天
+    /// </para>
+    /// </summary>
+    public class ClientStateStatistics
+    {
+
+        private readonly List<ClientStateSummary> _sum = new List<ClientStateSummary>();
+        private readonly List<ClientStateDateSummary> _sumDate = new List<ClientStateDateSummary>();
+
+        private ClientStateSummary Find(string deviceName, string deviceId)
+        {
+            var summary = _sum.Find(x => x.DeviceName == deviceName && x.DeviceId == deviceId);
+            if (summary == null)
+            {
+                summary = new ClientStateSummary()
+                {
+                    DeviceName = deviceName,
+                    DeviceId = deviceId,
+                    OnlineTime = DateTime.Now
+                };
+                _sum.Add(summary);
+            }
+            return summary;
+        }
+        private ClientStateDateSummary FindSummaryDate(string deviceName, string deviceId, string sumDate)
+        {
+            var summary = _sumDate.Find(x => x.DeviceName == deviceName && x.DeviceId == deviceId && x.SummaryDate == sumDate);
+            if (summary == null)
+            {
+                summary = new ClientStateDateSummary()
+                {
+                    DeviceName = deviceName,
+                    DeviceId = deviceName,
+                    OnlineTime = DateTime.Now
+                };
+                _sum.Add(summary);
+            }
+            return summary;
+        }
+        public void UpdateClientLiftState(ClientAliveInfo info, ClientLifeState newState)
+        {
+            var client = Find(info.DeviceName, info.DeviceId);
+
+            //DONE 处理跨天的问题 
+            //汇总统计
+            //刷新繁忙时间
+            if (newState == ClientLifeState.Busy && client.OnBusyTime == DateTime.MinValue)
+            {
+                client.OnBusyTime = DateTime.Now;
+                client.BusyCount++;
+
+                var clientDate = FindSummaryDate(info.DeviceName, info.DeviceId, DateTime.Now.ToString("yyyyMMdd"));
+                clientDate.OnBusyTime = DateTime.Now;
+                clientDate.BusyCount++;
+            }
+            else
+            {
+                var iOffset = (DateTime.Now - client.OnBusyTime).Days;
+
+                client.BusyTimeTotoal += (long)(DateTime.Now - client.OnBusyTime).TotalMilliseconds;
+
+                if (iOffset > 1)
+                {
+                    for (int i = 0; i <= iOffset; i++)
+                    {
+                        var clientDate = FindSummaryDate(info.DeviceName, info.DeviceId, client.OnBusyTime.AddDays(0).ToString("yyyyMMdd"));
+                        clientDate.BusyTimeTotoal += (long)(DateTime.Now - client.OnBusyTime).TotalMilliseconds;
+                        clientDate.OnBusyTime = DateTime.MinValue;
+                    }
+                }
+
+                client.OnBusyTime = DateTime.MinValue;
+            }
+            //按日期统计
+        }
+        public void UpdateOnlineState(ClientAliveInfo info, ClientOnlineState oldState, ClientOnlineState newState)
+        {
+            //汇总统计
+            //按日期统计
+        }
+        public List<ClientStateSummary> GetSummary()
+        {
+            return _sum;
+        }
+        public List<ClientStateDateSummary> GetDateSummary()
+        {
+            return _sumDate;
+        }
+
+        public void Reset()
+        {
+            _sum.Clear();
+            _sumDate.Clear();
+        }
+        /// <summary>
+        /// 客户机状态统计
+        /// </summary>
+        public class ClientStateSummary
+        {
+            public string DeviceName { get; set; }
+            public string DeviceId { get; set; }
+            public long BusyTimeTotoal { get; set; }
+            public int BusyCount { get; set; }
+            public int UserCount { get; set; }
+            public long OnlineTimeTotal { get; set; }
+            public DateTime OnBusyTime { get; set; }
+            public DateTime OnlineTime { get; set; }
+
+            public ClientStateSummary()
+            {
+                OnBusyTime = DateTime.MinValue;
+                OnlineTime = DateTime.MinValue;
+            }
+        }
+        /// <summary>
+        /// 客户机状态日统计
+        /// </summary>
+        public class ClientStateDateSummary : ClientStateSummary
+        {
+            public string SummaryDate { get; set; }
         }
     }
 }

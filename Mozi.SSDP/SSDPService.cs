@@ -48,6 +48,9 @@ namespace Mozi.SSDP
         public string UUID { get { return _uuid; } set { _uuid = value; } }
         public string Server { get { return _server; } set { _server = value; } }
         public string Location { get; set; }
+
+        public string DeviceName = "";
+
         #endregion
 
         /// <summary>
@@ -62,9 +65,6 @@ namespace Mozi.SSDP
         /// 缓存时间
         /// </summary>
         public int CacheTimeout = 3600;
-
-        public string DeviceName = "";
-
 
         /// <summary>
         /// 是否接受回环地址消息
@@ -202,8 +202,8 @@ namespace Mozi.SSDP
         //NTS: ssdp:alive 
         //SERVER: OS/version UPnP/1.0 product/version 
         //USN: advertisement UUID
-        //      --uuid:device-UUID::upnp:rootdevice 
         //      --uuid:device-UUID
+        //      --uuid:device-UUID::upnp:rootdevice 
         //      --uuid:device-UUID::urn:schemas-upnp-org:device:deviceType:v
         //      --uuid:device-UUID::urn:schemas-upnp-org:service:serviceType:v
         //      --uuid:device-UUID::urn:domain-name:device:deviceType:v
@@ -226,8 +226,8 @@ namespace Mozi.SSDP
         //NT: search target
         //NTS: ssdp:byebye
         //USN: advertisement UUID
+        //      --uuid:device-UUID 
         //      --uuid:device-UUID::upnp:rootdevice 
-        //      --uuid:device-UUID
         //      --uuid:device-UUID::urn:schemas-upnp-org:device:deviceType:v
         //      --uuid:device-UUID::urn:schemas-upnp-org:service:serviceType:v
         //      --uuid:device-UUID::urn:domain-name:device:deviceType:v
@@ -257,9 +257,9 @@ namespace Mozi.SSDP
         //      -uuid:device-UUID 查询UUID标识的设备
         //      -urn:schemas-upnp-org:device:device-Type:version 
         //      -urn:schemas-upnp-org:service:service-Type:version 
-        //USN: advertisement UUID
-        //      --uuid:device-UUID::upnp:rootdevice 
+        //USN: advertisement UUID 
         //      --uuid:device-UUID
+        //      --uuid:device-UUID::upnp:rootdevice 
         //      --uuid:device-UUID::urn:schemas-upnp-org:device:deviceType:v
         //      --uuid:device-UUID::urn:schemas-upnp-org:service:serviceType:v
         //      --uuid:device-UUID::urn:domain-name:device:deviceType:v
@@ -282,6 +282,24 @@ namespace Mozi.SSDP
             resp.SetStatus(StatusCode.Success);
             byte[] data = resp.GetBuffer();
             _socket.SocketMain.SendTo(data, _remoteEP);
+        }
+        //POST path of control URL HTTP/1.1 
+        //HOST: host of control URL:port of control URL
+        //CONTENT-LENGTH: bytes in body
+        //CONTENT-TYPE: text/xml; charset="utf-8" 
+        //SOAPACTION: "urn:schemas-upnp-org:service:serviceType:v#actionName" 
+        //<?xml version = "1.0" ?>
+        //<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/"  s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"> 
+        //      <s:Body> 
+        //          <u:actionName xmlns:u="urn:schemas-upnp-org:service:serviceType:v"> 
+        //              <argumentName>in arg value</argumentName> 
+        //              other in args and their values go here, if any
+        //          </u:actionName>
+        //      </s:Body> 
+        //</s:Envelope>
+        internal void ControlAction()
+        {
+
         }
         internal void Subscribe()
         {
