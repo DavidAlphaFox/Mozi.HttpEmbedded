@@ -301,10 +301,59 @@ namespace Mozi.SSDP
         {
 
         }
+        //POST path of control URL HTTP/1.1 
+        //HOST: host of control URL:port of control URL
+        //CONTENT-LENGTH: bytes in body
+        //CONTENT-TYPE: text/xml; charset="utf-8" 
+        //SOAPACTION: "urn:schemas-upnp-org:control-1-0#QueryStateVariable" 
+        //<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"> 
+        //      <s:Body> 
+        //          <u:QueryStateVariable xmlns:u="urn:schemas-upnp-org:control-1-0"> 
+        //              <u:varName>variableName</u:varName> 
+        //          </u:QueryStateVariable> 
+        //      </s:Body> 
+        //</s:Envelope>
+        internal void ControlQuery()
+        {
+
+        }
+
+        //SUBSCRIBE publisher path HTTP/1.1 
+        //HOST: publisher host:publisher port
+        //CALLBACK: <delivery URL> 
+        //NT: upnp:event
+        //TIMEOUT: Second-requested subscription duration
+
+        //SUBSCRIBE publisher path HTTP/1.1 
+        //HOST: publisher host:publisher port
+        //SID: uuid:subscription UUID
+        //TIMEOUT: Second-requested subscription duration
+
+        //NOTIFY delivery path HTTP/1.1 
+        //HOST: delivery host:delivery port
+        //CONTENT-TYPE: text/xml
+        //CONTENT-LENGTH: Bytes in body
+        //NT: upnp:event
+        //NTS: upnp:propchange
+        //SID: uuid:subscription-UUID
+        // SEQ: event key
+        //<?xml version="1.0"?>
+        //<e:propertyset xmlns:e="urn:schemas-upnp-org:event-1-0"> 
+        //<e:property> 
+        //<variableName>new value</variableName> 
+        //</e:property> 
+        //Other variable names and values(if any) go here.
+        //</e:propertyset>
+
         internal void Subscribe()
         {
 
         }
+
+        //UNSUBSCRIBE publisher path HTTP/1.1 
+        //HOST: publisher host:publisher port
+        //SID: uuid:subscription UUID
+
         internal void UnSubscribe()
         {
 
