@@ -49,7 +49,7 @@ namespace Mozi.HttpEmbedded.Cache
                 cache.IsPrivate = isprivate;
                 if (isNew)
                 {
-                    _caches.Insert(0,cache);
+                    _caches.Add(cache);
                 }
             }
         }
@@ -59,7 +59,7 @@ namespace Mozi.HttpEmbedded.Cache
         /// <param name="name"></param>
         /// <param name="param"></param>
         /// <returns></returns>
-        public CacheInfo Get(string name, string param)
+        public CacheInfo Find(string name, string param)
         {
             lock (_sync)
             {

@@ -229,13 +229,35 @@ namespace Mozi.HttpEmbedded.Page
         /// <summary>
         /// 全局缓存-内存型
         /// </summary>
+        /// <param name="action">query|add|remove|clear</param>
+        /// <param name="name"></param>
+        /// <param name="param"></param>
+        /// <param name="data"></param>
         /// <returns></returns>
-        internal ResponseMessage Cache()
+        public ResponseMessage Cache(string action,string name,string param,string data)
         {
-            ResponseMessage rm = new ResponseMessage
+            ResponseMessage rm = new ResponseMessage();
+            if (action == "query")
             {
-                success = true
-            };
+                rm.data=Context.Server.Cache.Find(name, param);
+            }
+            else if (action == "add")
+            {
+                Context.Server.Cache.Add(name,param,data);
+            }
+            else if (action == "remove")
+            {
+                Context.Server.Cache.Remove(name,param);
+            }
+            else if (action == "clear")
+            {
+                Context.Server.Cache.ClearExpired();
+            }
+            else
+            {
+                rm.success = false;
+            }
+            rm.success = true;
             return rm;
         }
     }

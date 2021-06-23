@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Net.Sockets;
 using Mozi.HttpEmbedded.Auth;
+using Mozi.HttpEmbedded.Cache;
 using Mozi.HttpEmbedded.Cert;
 using Mozi.HttpEmbedded.Common;
 using Mozi.HttpEmbedded.Compress;
@@ -53,7 +54,7 @@ namespace Mozi.HttpEmbedded
         /// <summary>
         /// 默认为程序集运行路径的TEMP目录
         /// </summary>
-        private string _tempPath = AppDomain.CurrentDomain.BaseDirectory+@"Temp\";
+        private string _tempPath = AppDomain.CurrentDomain.BaseDirectory + @"Temp\";
         private string _serverRoot = AppDomain.CurrentDomain.BaseDirectory;
 
         private string _serverName = "HttpEmbedded";
@@ -70,6 +71,9 @@ namespace Mozi.HttpEmbedded
         private CertManager _certMg;
         //HTTPS开启标识
         private bool _httpsEnabled = false;
+
+        private MemoryCache _cache = new MemoryCache();
+
         /// <summary>
         /// 服务器启动时间
         /// </summary>
@@ -155,6 +159,9 @@ namespace Mozi.HttpEmbedded
             get { return _serverRoot; }
             private set { _serverRoot = value; }
         }
+
+        internal MemoryCache Cache { get { return _cache; }  }
+
         public HttpServer()
         {
             StartTime = DateTime.MinValue;
