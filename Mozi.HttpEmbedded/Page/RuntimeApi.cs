@@ -260,6 +260,19 @@ namespace Mozi.HttpEmbedded.Page
             rm.success = true;
             return rm;
         }
+
+        public  string Soap(string action)
+        {
+            if (action == "example")
+            {
+                WebService.SOAPEnvelope envelope = new WebService.SOAPEnvelope();
+                envelope.Body.Method = "GetExample";
+                envelope.Body.Items.Add("Price", "1");
+                Context.Response.SetContentType(envelope.Version==WebService.SOAPVersion.Ver11?"text/xml":"application/soap+xml");
+                return WebService.SOAPEnvelope.CreateDocument(envelope);
+            }
+            return "";
+        }
     }
     /// <summary>
     /// 标准消息封装
