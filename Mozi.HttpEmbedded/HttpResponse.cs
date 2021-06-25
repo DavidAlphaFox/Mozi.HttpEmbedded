@@ -219,7 +219,7 @@ namespace Mozi.HttpEmbedded
             //注入包体大小 字节长度
             AddHeader(HeaderProperty.ContentLength, _body.Length.ToString());
             //注入文档类型
-            AddHeader(HeaderProperty.ContentType, _contentType+(!string.IsNullOrEmpty(Charset)?";"+ Charset : ""));
+            AddHeader(HeaderProperty.ContentType, _contentType+(!string.IsNullOrEmpty(Charset)?"; "+ Charset : ""));
             //注入响应时间
             AddHeader(HeaderProperty.Date, DateTime.Now.ToUniversalTime().ToString("r"));
             //注入默认头部

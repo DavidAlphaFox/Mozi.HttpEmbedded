@@ -276,6 +276,7 @@ namespace Mozi.HttpEmbedded.Page
             else if(action=="wsdl")
             {
                 WebService.WSDL envelope = new WebService.WSDL();
+                envelope.ApiTypes.Methods.AddRange(this.GetType().GetMethods());
                 Context.Response.SetContentType( "text/xml");
                 return WebService.WSDL.CreateDocument(envelope);
             }
