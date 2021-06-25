@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Reflection;
+using Mozi.HttpEmbedded.Attributes;
 
 namespace Mozi.HttpEmbedded.Page
 {

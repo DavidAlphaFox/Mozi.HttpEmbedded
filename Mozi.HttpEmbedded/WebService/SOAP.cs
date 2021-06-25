@@ -5,11 +5,14 @@ using Mozi.HttpEmbedded.Generic;
 
 namespace Mozi.HttpEmbedded.WebService
 {
+    /// <summary>
+    /// SOAP envelope封装
+    /// </summary>
     public class SOAPEnvelope
     {
-        public string xsi = "http://www.w3.org/2001/XMLSchema-instance";
-        public string xsd= "http://www.w3.org/2001/XMLSchema";
-        public string encodingStyle = "http://www.w3.org/2001/12/soap-encoding";
+        public string NS_XSI = "http://www.w3.org/2001/XMLSchema-instance";
+        public string NS_XSD= "http://www.w3.org/2001/XMLSchema";
+        public string EncodingStyle = "http://www.w3.org/2001/12/soap-encoding";
 
         /// <summary>
         /// SOAP版本
@@ -34,9 +37,9 @@ namespace Mozi.HttpEmbedded.WebService
             XmlTextWriter writer = new XmlTextWriter(ms, System.Text.Encoding.UTF8);
             writer.WriteStartDocument(true);
             writer.WriteStartElement(envelope.Version.Prefix, "Envelope", envelope.Version.Namespace);
-            writer.WriteAttributeString(envelope.Version.Prefix, "encodingStyle",null,envelope.encodingStyle);
-            writer.WriteAttributeString("xmlns", "xsi",null,envelope.xsi);
-            writer.WriteAttributeString("xmlns", "xsd", null,envelope.xsd);
+            writer.WriteAttributeString(envelope.Version.Prefix, "encodingStyle",null,envelope.EncodingStyle);
+            writer.WriteAttributeString("xmlns", "xsi",null,envelope.NS_XSI);
+            writer.WriteAttributeString("xmlns", "xsd", null,envelope.NS_XSD);
             //header
             if (envelope.Header != null)
             {
@@ -56,6 +59,7 @@ namespace Mozi.HttpEmbedded.WebService
             {
                 writer.WriteElementString(envelope.Body.Prefix, r.Key,null, r.Value);
             }
+            //fault
             writer.WriteEndElement();
             writer.WriteEndElement();
             writer.WriteEndElement();
@@ -81,9 +85,9 @@ namespace Mozi.HttpEmbedded.WebService
 
             //envelope
             var nodeEnvelope = doc.CreateNode(XmlNodeType.Element, envelope.Version.Prefix,"Envelope", envelope.Version.Namespace);
-            var encodingStyle =doc.CreateAttribute("soap","encodingStyle",envelope.encodingStyle);
+            var encodingStyle =doc.CreateAttribute("soap","encodingStyle",envelope.EncodingStyle);
             var xsi = doc.CreateAttribute("xmlns", "xsi",null);
-            xsi.Value = envelope.xsi;
+            xsi.Value = envelope.NS_XSI;
             var xsd = doc.CreateAttribute("xsd","xsd", null);
 
             nodeEnvelope.Attributes.Append((XmlAttribute)xsi);
@@ -134,6 +138,7 @@ namespace Mozi.HttpEmbedded.WebService
     }
     public class SOAPHeaderChild
     {
+        public string Name { get; set; }
         public string actor {get;set;}
         public string mustUnderstand { get; set; }  //"0"|"1"
         public string encodingStyle { get; set; }
@@ -150,7 +155,11 @@ namespace Mozi.HttpEmbedded.WebService
 
     public class SOAPFault
     {
-        public string faultcode { get; set; }
+        //VersionMismatch SOAP Envelope 元素的无效命名空间被发现
+        //MustUnderstand Header 元素的一个直接子元素（带有设置为 "1" 的 mustUnderstand 属性）无法被理解。
+        //Client 消息被不正确地构成，或包含了不正确的信息。
+        //Server 服务器有问题，因此无法处理进行下去。
+        public string faultcode { get; set; }   
         public string faultstring { get; set; }
         public string faultactor { get; set; }
         public string detail { get; set; }
