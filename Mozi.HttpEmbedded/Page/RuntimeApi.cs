@@ -267,10 +267,17 @@ namespace Mozi.HttpEmbedded.Page
             if (action == "example")
             {
                 WebService.SOAPEnvelope envelope = new WebService.SOAPEnvelope();
-                envelope.Body.Method = "GetExample";
+                envelope.Body.Method = "GetGoodsPrice";
+                envelope.Body.Items.Add("GoodsCode", "123456789");
                 envelope.Body.Items.Add("Price", "1");
                 Context.Response.SetContentType(envelope.Version==WebService.SOAPVersion.Ver11?"text/xml":"application/soap+xml");
                 return WebService.SOAPEnvelope.CreateDocument(envelope);
+            }
+            else if(action=="wsdl")
+            {
+                WebService.WSDL envelope = new WebService.WSDL();
+                Context.Response.SetContentType( "text/xml");
+                return WebService.WSDL.CreateDocument(envelope);
             }
             return "";
         }
