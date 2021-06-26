@@ -30,7 +30,7 @@ namespace Mozi.HttpEmbedded.Test
             hs.SetPort(9000).Start();
 
             //开启认证
-            hs.UseAuth(AuthorizationType.Basic).SetUser("admin", "admin");
+            //hs.UseAuth(AuthorizationType.Basic).SetUser("admin", "admin");
 
             //开启静态文件支持
             hs.UseStaticFiles("");

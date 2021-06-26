@@ -193,7 +193,7 @@ namespace Mozi.HttpEmbedded.WebService
         /// application/soap+xml
         /// </summary>
         public static SOAPVersion Ver12 = new SOAPVersion("1.2","soap12", "http://www.w3.org/2003/05/soap-envelope");
-        public static SOAPVersion Ver12Dotnet = new SOAPVersion("1.2", "soap2", "http://www.w3.org/2003/05/soap-envelope");
+        public static SOAPVersion Ver12Dotnet = new SOAPVersion("dot1.2", "soap2", "http://www.w3.org/2003/05/soap-envelope");
 
         public string Version { get { return _vervalue; } }
         public string Namespace { get { return _namespace; } }
