@@ -261,7 +261,16 @@ namespace Mozi.HttpEmbedded.Page
             rm.success = true;
             return rm;
         }
-
+        //TODO 2021-06-28 实现程序集的上传与注册
+        //TODO 2021-06-28 实现程序集热更新
+        /// <summary>
+        /// 上传程序集，并实现自动注册
+        /// </summary>
+        /// <returns></returns>
+        internal ResponseMessage UploadAssembly()
+        {
+            throw new NotImplementedException();
+        }
         public  string Soap(string action)
         {
             if (action == "example")
@@ -276,8 +285,7 @@ namespace Mozi.HttpEmbedded.Page
             else if(action=="wsdl")
             {
                 WebService.WSDL envelope = new WebService.WSDL();
-                envelope.ApiTypes.Methods.AddRange(this.GetType().GetMethods());
-                envelope.ApiTypes.Methods.RemoveRange(0, 5);
+                envelope.ApiTypes.Methods.AddRange(this.GetType().GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly));
                 Context.Response.SetContentType( "text/xml");
                 return WebService.WSDL.CreateDocument(envelope);
             }

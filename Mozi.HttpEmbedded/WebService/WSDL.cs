@@ -20,16 +20,14 @@ namespace Mozi.HttpEmbedded.WebService
         public string BindingTransport = "http://schemas.xmlsoap.org/soap/http";
 
         public string Prefix = "wsdl";
-
-        public string WSDLNamespace = "http://schemas.xmlsoap.org/wsdl/";
-
-        public string Namespace = "http://mozi.org";
+        public string Namespace = "http://schemas.xmlsoap.org/wsdl/";
 
         public string PrefixElement = "s";
         public string PrefixElementNamespace = "http://www.w3.org/2001/XMLSchema";
 
         public string Description = "Mozi.WebService服务信息";
-        public string Name = "Mozi.WebService";
+        public string ServiceName = "Mozi.WebService";
+        public string ServiceNamespace = "http://mozi.org";
         public string ServiceAddress = "http://127.0.0.1/runtime/soap?action=wsdl";
 
         public bool AllowHttpAccess = true;
@@ -48,33 +46,34 @@ namespace Mozi.HttpEmbedded.WebService
         public static string CreateDocument(WSDL document)
         {
             XmlDocument doc = new XmlDocument();
-
+           
             //declaration 
-            var declare=doc.CreateXmlDeclaration("1.0", "utf-8", "yes");
+            var declare=doc.CreateXmlDeclaration("1.0", "utf-8", "yes"); 
             doc.AppendChild(declare);
+
             //definitions
-            var definitions = doc.CreateElement(document.Prefix, "definitions", document.WSDLNamespace);
+            var definitions = doc.CreateElement(document.Prefix, "definitions", document.Namespace);
             definitions.SetAttribute("xmlns:soapenc", document.NS_soapenc);
             definitions.SetAttribute("xmlns:mime",  document.NS_mime);
             definitions.SetAttribute("xmlns:soap", document.NS_soap);
             definitions.SetAttribute("xmlns:"+document.PrefixElement, document.PrefixElementNamespace);
             definitions.SetAttribute("xmlns:soap12", document.NS_soap12);
             definitions.SetAttribute("xmlns:http", document.NS_http);
-            definitions.SetAttribute("targetNamespace", document.Namespace);
-            definitions.SetAttribute("xmlns:tns", document.Namespace);
+            definitions.SetAttribute("targetNamespace", document.ServiceNamespace);
+            definitions.SetAttribute("xmlns:tns", document.ServiceNamespace);
             doc.AppendChild(definitions);
 
             //documentation
-            var documentation = doc.CreateElement(document.Prefix, "documentation", document.WSDLNamespace);
+            var documentation = doc.CreateElement(document.Prefix, "documentation", document.Namespace);
             documentation.InnerText=document.Description;
             definitions.AppendChild(documentation);
 
             //types
-            var types= doc.CreateElement(document.Prefix, "types", document.WSDLNamespace);
+            var types= doc.CreateElement(document.Prefix, "types", document.Namespace);
             definitions.AppendChild(types);
             var schema=doc.CreateElement(document.PrefixElement, "schema",document.PrefixElementNamespace);
             schema.SetAttribute("elementFormDefault", "qualified");
-            schema.SetAttribute("targetNamespace", document.Namespace);
+            schema.SetAttribute("targetNamespace", document.ServiceNamespace);
             types.AppendChild(schema);
 
             //elements
@@ -100,20 +99,124 @@ namespace Mozi.HttpEmbedded.WebService
                 //return type
                 var elementOut = doc.CreateElement(document.PrefixElement, "element", document.PrefixElementNamespace);
                 elementOut.SetAttribute("name",s.Name+"Response");
+                var returnValueType = s.ReturnType.UnderlyingSystemType;
+                var isComplexType = false;
+                var isEnumerable = false;
+                var isMemberComplexType = false;
                 var complexTypeOut = doc.CreateElement(document.PrefixElement, "complexType", document.PrefixElementNamespace);
-                var sequenceOut = doc.CreateElement(document.PrefixElement, "sequence", document.PrefixElementNamespace);
-                var returnType = s.ReturnType;
 
-                var elementReturn = doc.CreateElement(document.PrefixElement, "element", document.PrefixElementNamespace);
-                elementReturn.SetAttribute("minOccurs", "0");
-                elementReturn.SetAttribute("maxOccurs", "1");
-                elementReturn.SetAttribute("name", returnType.Name);
-                elementReturn.SetAttribute("type", document.PrefixElement + ":" + TypeConverter.FormDoNet(returnType.UnderlyingSystemType));
+                if (returnValueType != typeof(void))
+                {
+                    var sequenceOut = doc.CreateElement(document.PrefixElement, "sequence", document.PrefixElementNamespace);
 
-                sequenceOut.AppendChild(elementReturn);
-                complexTypeOut.AppendChild(sequenceOut);
+                    var elementReturn = doc.CreateElement(document.PrefixElement, "element", document.PrefixElementNamespace);
+                    elementReturn.SetAttribute("minOccurs", "0");
+                    elementReturn.SetAttribute("maxOccurs", "1");
+                    elementReturn.SetAttribute("name", returnValueType.Name+"Result");
+
+                    if (IsPlatformDefinedType(returnValueType))
+                    {
+                        elementReturn.SetAttribute("type", document.PrefixElement + ":" + TypeConverter.FormDoNet(returnValueType));
+                    }
+                    else
+                    {
+                        isComplexType = true;
+                        isEnumerable = returnValueType.IsArray;
+                        if (!isEnumerable) { 
+                            elementReturn.SetAttribute("type", "tns" + ":" + returnValueType.Name);
+                        }
+                        else
+                        {
+                            elementReturn.SetAttribute("type", "tns" + ":" + "ArrayOf"+returnValueType.GetElementType());
+                        }
+                        
+                    }
+                    sequenceOut.AppendChild(elementReturn);
+                    complexTypeOut.AppendChild(sequenceOut);
+                }
+
                 elementOut.AppendChild(complexTypeOut);
+
                 schema.AppendChild(elementOut);
+
+                //self define type
+                if (isComplexType)
+                {
+                    XmlNamespaceManager xm = new XmlNamespaceManager(doc.NameTable);
+                    xm.AddNamespace(document.PrefixElement, document.PrefixElementNamespace);
+                    var exists = schema.SelectSingleNode("s:complexType[@name='"+ returnValueType.Name+"']", xm);
+                    //如果没有定义该类型
+                    if (exists == null)
+                    {
+                        var complexTypeSelfDefine = doc.CreateElement(document.PrefixElement, "complexType", document.PrefixElementNamespace);
+                        complexTypeSelfDefine.SetAttribute("name", isEnumerable?("ArrayOf"+ returnValueType.Name): returnValueType.Name);
+                        var sequenceSelfDefine = doc.CreateElement(document.PrefixElement, "sequence", document.PrefixElementNamespace);
+                        //非数组类型
+                        if (!isEnumerable)
+                        {
+                            PropertyInfo[] props = returnValueType.GetProperties();
+                            foreach (var r in props)
+                            {
+                                var elementReturnSelfDefine = doc.CreateElement(document.PrefixElement, "element", document.PrefixElementNamespace);
+                                elementReturnSelfDefine.SetAttribute("minOccurs", "0");
+                                elementReturnSelfDefine.SetAttribute("maxOccurs", "1");
+                                elementReturnSelfDefine.SetAttribute("name", r.Name);
+                                elementReturnSelfDefine.SetAttribute("type", document.PrefixElement + ":" + TypeConverter.FormDoNet(r.GetType()));
+
+                                sequenceSelfDefine.AppendChild(elementReturnSelfDefine);
+                            }
+                        }
+                        //数组类型
+                        else
+                        {
+                            var elementReturnSelfDefine = doc.CreateElement(document.PrefixElement, "element", document.PrefixElementNamespace);
+                            elementReturnSelfDefine.SetAttribute("minOccurs", "0");
+                            elementReturnSelfDefine.SetAttribute("maxOccurs", "unbounded");
+                            elementReturnSelfDefine.SetAttribute("name", returnValueType.GetElementType().Name);
+                            elementReturnSelfDefine.SetAttribute("nillable", "true");
+                            elementReturnSelfDefine.SetAttribute("type", "tns:" + returnValueType.GetElementType().Name);
+                            sequenceSelfDefine.AppendChild(elementReturnSelfDefine);
+                        }
+                        complexTypeSelfDefine.AppendChild(sequenceSelfDefine);
+
+                        //数组类型包裹类型定义
+                        if (isEnumerable)
+                        {
+                            var memberType = returnValueType.GetElementType();
+                            var complexTypeMember = doc.CreateElement(document.PrefixElement, "complexType", document.PrefixElementNamespace);
+                            complexTypeMember.SetAttribute("name",  memberType.Name);
+                            var sequenceMember = doc.CreateElement(document.PrefixElement, "sequence", document.PrefixElementNamespace);
+
+                            PropertyInfo[] props = memberType.GetProperties();
+
+                            if (!IsPlatformDefinedType(memberType))
+                            {
+                                foreach (var r in props)
+                                {
+                                    var elementReturnMember = doc.CreateElement(document.PrefixElement, "element", document.PrefixElementNamespace);
+                                    elementReturnMember.SetAttribute("minOccurs", "0");
+                                    elementReturnMember.SetAttribute("maxOccurs", "1");
+                                    elementReturnMember.SetAttribute("name", r.Name);
+                                    elementReturnMember.SetAttribute("type", document.PrefixElement + ":" + TypeConverter.FormDoNet(r.GetType()));
+                                    sequenceMember.AppendChild(elementReturnMember);
+                                }
+                            }
+                            else
+                            {
+                                    var elementReturnMember = doc.CreateElement(document.PrefixElement, "element", document.PrefixElementNamespace);
+                                    elementReturnMember.SetAttribute("minOccurs", "0");
+                                    elementReturnMember.SetAttribute("maxOccurs", "1");
+                                    elementReturnMember.SetAttribute("name", TypeConverter.FormDoNet(memberType));
+                                    elementReturnMember.SetAttribute("type", document.PrefixElement + ":" + TypeConverter.FormDoNet(memberType.GetType()));
+                                    sequenceMember.AppendChild(elementReturnMember);
+                            }
+
+                            schema.AppendChild(complexTypeMember);
+                        }
+
+                        schema.AppendChild(complexTypeSelfDefine);
+                    }
+                }
             }
 
             //messages
@@ -127,12 +230,12 @@ namespace Mozi.HttpEmbedded.WebService
                         continue;
                     }
 
-                    var messageIn = doc.CreateElement(document.Prefix, "message", document.WSDLNamespace);
+                    var messageIn = doc.CreateElement(document.Prefix, "message", document.Namespace);
                     messageIn.SetAttribute("name", s.Name + act);
 
                     if (act == "SoapIn" || act == "SoapOut")
                     {
-                        var partIn = doc.CreateElement(document.Prefix, "part", document.WSDLNamespace);
+                        var partIn = doc.CreateElement(document.Prefix, "part", document.Namespace);
                         partIn.SetAttribute("name", "parameters");
                         if (act == "SoapIn")
                         {
@@ -147,7 +250,7 @@ namespace Mozi.HttpEmbedded.WebService
                     {
                         foreach (var r in s.GetParameters())
                         {
-                            var partParam = doc.CreateElement(document.Prefix, "part", document.WSDLNamespace);
+                            var partParam = doc.CreateElement(document.Prefix, "part", document.Namespace);
                             partParam.SetAttribute("name", r.Name);
                             partParam.SetAttribute("type", document.Prefix + ":" + TypeConverter.FormDoNet(r.ParameterType));
                             messageIn.AppendChild(partParam);
@@ -161,24 +264,25 @@ namespace Mozi.HttpEmbedded.WebService
                 }
             }
             //portTypes
-            string[] portTypes = new string[] { "UserSoap","UserHttpGet","UserHttpPost" };
+            string[] portTypes = new string[] {  "Soap",  "HttpGet","HttpPost" };
             foreach (var p in portTypes)
-            {                                        
-                var portType = doc.CreateElement(document.Prefix, "portType", document.WSDLNamespace);
-                portType.SetAttribute("name", p);                
+            {
+                var portName = document.ServiceName + p;
+                var portType = doc.CreateElement(document.Prefix, "portType", document.Namespace);
+                portType.SetAttribute("name", portName);                
                 if (!document.AllowHttpAccess && p.Contains("Http"))
                 {
                     continue;
                 }
                 foreach (var s in document.ApiTypes.Methods)
                 {
-                    var operation = doc.CreateElement(document.Prefix, "operation", document.WSDLNamespace);
+                    var operation = doc.CreateElement(document.Prefix, "operation", document.Namespace);
                     operation.SetAttribute("name", s.Name);
-                    var documentationPorttType = doc.CreateElement(document.Prefix, "documentation", document.WSDLNamespace);
-                    var input = doc.CreateElement(document.Prefix, "input", document.WSDLNamespace);
-                    input.SetAttribute("message", "tns:" + s.Name + p + "In");
-                    var output = doc.CreateElement(document.Prefix, "output", document.WSDLNamespace);
-                    output.SetAttribute("message", "tns" + s.Name + p + "Out");
+                    var documentationPorttType = doc.CreateElement(document.Prefix, "documentation", document.Namespace);
+                    var input = doc.CreateElement(document.Prefix, "input", document.Namespace);
+                    input.SetAttribute("message", "tns:" + s.Name + portName + "In");
+                    var output = doc.CreateElement(document.Prefix, "output", document.Namespace);
+                    output.SetAttribute("message", "tns" + s.Name + portName + "Out");
                     operation.AppendChild(documentationPorttType);
                     operation.AppendChild(input);
                     operation.AppendChild(output);
@@ -187,18 +291,25 @@ namespace Mozi.HttpEmbedded.WebService
                 }
             }
             //binding
-            string[] bindingTypes = new string[] { "UserSoap", "UserSoap12", "UserHttpGet", "UserHttpPost" };
+            string[] bindingTypes = new string[] { "Soap", "Soap12",  "HttpGet",  "HttpPost" };
             foreach (var p in bindingTypes)
             {
+                var portName = document.ServiceName + p;
                 if (!document.AllowHttpAccess && p.Contains("Http"))
                 {
                     continue;
                 }
 
-                var binding = doc.CreateElement(document.Prefix, "binding", document.WSDLNamespace);
-                binding.SetAttribute("name", p);
-                binding.SetAttribute("type", "tns:" + p);
-
+                var binding = doc.CreateElement(document.Prefix, "binding", document.Namespace);
+                binding.SetAttribute("name", portName);
+                if (p.Contains("Soap"))
+                {
+                    binding.SetAttribute("type", "tns:" + document.ServiceName+"Soap");
+                }
+                else
+                {
+                    binding.SetAttribute("type", "tns:" + portName);
+                }
                 var soapBinding = doc.CreateElement("soap", "binding", document.NS_soap);
                 soapBinding.SetAttribute("transport", document.NS_soap);
                 binding.AppendChild(soapBinding);
@@ -206,20 +317,20 @@ namespace Mozi.HttpEmbedded.WebService
                 foreach (var r in document.ApiTypes.Methods)
                 { 
 
-                    var operation = doc.CreateElement(document.Prefix, "operation", document.WSDLNamespace);
+                    var operation = doc.CreateElement(document.Prefix, "operation", document.Namespace);
                     operation.SetAttribute("name", r.Name);
                     var soapOperation = doc.CreateElement("soap", "operation", document.NS_soap);
-                    soapOperation.SetAttribute("soapAction", document.Namespace+"/"+r.Name);
+                    soapOperation.SetAttribute("soapAction", document.ServiceNamespace+"/"+r.Name);
                     soapOperation.SetAttribute("style", "document");
 
                     //input 
-                    var input = doc.CreateElement(document.Prefix, "input", document.WSDLNamespace);                    
+                    var input = doc.CreateElement(document.Prefix, "input", document.Namespace);                    
                     var bodyInput = doc.CreateElement("soap", "body", document.NS_soap);
                     bodyInput.SetAttribute("use", "literal");
                     input.AppendChild(bodyInput);
 
                     //output
-                    var output = doc.CreateElement(document.Prefix, "output", document.WSDLNamespace);
+                    var output = doc.CreateElement(document.Prefix, "output", document.Namespace);
                     var bodyOutput = doc.CreateElement("soap", "body", document.NS_soap);
                     bodyOutput.SetAttribute("use", "literal");
                     output.AppendChild(bodyOutput);
@@ -234,15 +345,15 @@ namespace Mozi.HttpEmbedded.WebService
             }
 
             //service
-            var service = doc.CreateElement(document.Prefix, "service", document.WSDLNamespace);
-            service.SetAttribute("name", document.Name);
-            var serviceDocumentation =doc.CreateElement(document.Prefix, "documentation", document.WSDLNamespace);
+            var service = doc.CreateElement(document.Prefix, "service", document.Namespace);
+            service.SetAttribute("name", document.ServiceName);
+            var serviceDocumentation =doc.CreateElement(document.Prefix, "documentation", document.Namespace);
             serviceDocumentation.InnerText = document.Description;
             service.AppendChild(serviceDocumentation);
             foreach (var p in bindingTypes)
             {
-                var port = doc.CreateElement(document.Prefix, "port", document.WSDLNamespace);
-                port.SetAttribute("name", p);
+                var port = doc.CreateElement(document.Prefix, "port", document.Namespace);
+                port.SetAttribute("name", document.ServiceName+p);
                 port.SetAttribute("binding", "tns:" + p);
                 var address = doc.CreateElement("soap", "address", document.NS_soap);
                 address.SetAttribute("location", document.ServiceAddress);
@@ -252,6 +363,16 @@ namespace Mozi.HttpEmbedded.WebService
             definitions.AppendChild(service);
             return doc.OuterXml;
 
+        }
+        /// <summary>
+        /// 判断是否平台预先定义类型
+        /// 基本类型+String
+        /// </summary>
+        /// <param name="memberType"></param>
+        /// <returns></returns>
+        public static bool IsPlatformDefinedType(Type memberType)
+        {
+            return memberType.IsPrimitive || memberType== Type.GetType("System.String");
         }
         public class Types
         {
