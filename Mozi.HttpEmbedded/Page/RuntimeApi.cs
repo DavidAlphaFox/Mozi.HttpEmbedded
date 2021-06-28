@@ -30,6 +30,18 @@ namespace Mozi.HttpEmbedded.Page
         {
             return DateTime.UtcNow.ToString("r");
         }
+        [Description("获取运行环境")]
+        public RuntimeInfo Info()
+        {
+            RuntimeInfo info = new RuntimeInfo();
+            var exeAssembly = Assembly.GetExecutingAssembly();
+            info.Name = exeAssembly.GetName().Name;
+            info.VersionName = exeAssembly.GetName().Version.ToString();
+            info.PlatformName =exeAssembly.ImageRuntimeVersion;
+            info.StartupTime = Context.Server.StartTime.ToUniversalTime().ToString("r");
+            exeAssembly.GetLoadedModules();
+            return info;
+        }
         /// <summary>
         /// 验证用户
         /// </summary>
@@ -330,5 +342,13 @@ namespace Mozi.HttpEmbedded.Page
         public string paramtype { get; set; }
         public string constraint { get; set; }
 
+    }
+    [Serializable]
+    public class RuntimeInfo
+    {
+        public string Name { get; set; }
+        public string VersionName { get; set; }
+        public string PlatformName { get; set; }
+        public string StartupTime { get; set; }
     }
 }

@@ -269,6 +269,13 @@ namespace Mozi.StateService
     //statename:alive|byebye|busy|idle|offline
 
     /// <summary>
+    /// 版本号
+    /// </summary>
+    public enum HeartBeatVersion
+    {
+        Version1=1
+    }
+    /// <summary>
     /// 状态数据协议包
     /// <para>
     ///     <see cref="DeviceName"/>和<see cref="DeviceId"/>为主键值，区分终端类型和终端标识
