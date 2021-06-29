@@ -12,15 +12,12 @@ namespace Mozi.SSDP
     /// </summary>
     public class UDPSocket
     {
-        protected int _iport = SSDPProtocol.ProtocolPort;
+        protected int _multicastGroupPort = SSDPProtocol.ProtocolPort;
+        protected string _multicastGroupAddress  = SSDPProtocol.MulticastAddress;
 
         protected Socket _sc;
 
         //private EndPoint _remoteEndPoint=new IPEndPoint(IPAddress.Any, 0);
-        /// <summary>
-        /// 组播地址
-        /// </summary>
-        public string MulticastGroupAddress = SSDPProtocol.MulticastAddress;
 
         public bool AllowLoopbackMessage { get; set; }
 
@@ -50,11 +47,25 @@ namespace Mozi.SSDP
         /// </summary>
         public int Port
         {
-            get { return _iport; }
+            get { return _multicastGroupPort; }
         }
         public Socket SocketMain
         {
             get { return _sc; }
+        }
+        /// <summary>
+        /// 组播地址
+        /// </summary>
+        public string MulticastGroupAddress
+        {
+            get { return _multicastGroupAddress; }
+        }
+        /// <summary>
+        /// 组播端口
+        /// </summary>
+        public int MulticastGroupPort
+        {
+            get { return _multicastGroupPort; }
         }
         /// <summary>
         /// 关闭服务器
@@ -80,7 +91,7 @@ namespace Mozi.SSDP
         /// <param name="multicastGroupAddress"></param>
         public void JoinMulticastGroup(string multicastGroupAddress)
         {
-            MulticastGroupAddress = multicastGroupAddress;
+            _multicastGroupAddress = multicastGroupAddress;
             MulticastOption mcastOpt = new MulticastOption(IPAddress.Parse(multicastGroupAddress), IPAddress.Any);
             _sc.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.AddMembership, mcastOpt);
 
@@ -91,17 +102,16 @@ namespace Mozi.SSDP
         /// <param name="multicastGroupAddress"></param>
         public void LeaveMulticastGroup(string multicastGroupAddress)
         {
-            MulticastGroupAddress = multicastGroupAddress;
             MulticastOption mcastOpt = new MulticastOption(IPAddress.Parse(multicastGroupAddress), IPAddress.Any);
             _sc.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.DropMembership, mcastOpt);
         }
         /// <summary>
         /// 启动服务器
         /// </summary>
-        /// <param name="port"></param>
-        public void StartServer(int port)
+        /// <param name="multicastGroupPort"></param>
+        public void StartServer(string multicastGroupAddress,int multicastGroupPort)
         {
-            _iport = port;
+            _multicastGroupPort = multicastGroupPort;
             if (_sc == null)
             {
                 _sc = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, System.Net.Sockets.ProtocolType.Udp);
@@ -110,14 +120,14 @@ namespace Mozi.SSDP
             {
                 _sc.Close();
             }
-            IPEndPoint endpoint = new IPEndPoint(IPAddress.Any, _iport);
+            IPEndPoint endpoint = new IPEndPoint(IPAddress.Any, _multicastGroupPort);
             //允许端口复用
             _sc.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
             _sc.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.MulticastTimeToLive, 32);
             _sc.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.MulticastInterface, 0);
 
             _sc.MulticastLoopback = AllowLoopbackMessage;
-            JoinMulticastGroup(MulticastGroupAddress);
+            JoinMulticastGroup(multicastGroupAddress);
             _sc.Bind(endpoint);
 
             //回调服务器启动事件

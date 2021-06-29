@@ -41,6 +41,9 @@ namespace Mozi.SSDP
         private Timer _timer;
         private IPEndPoint _remoteEP;
 
+        private string _multicastGroupAddress = SSDPProtocol.MulticastAddress;
+        private int _multicastGroupPort = SSDPProtocol.ProtocolPort;
+
         private string _server = " Mozi/1.2.4 UPnP/1.0 Mozi.SSDP/1.2.4";
         private string _uuid = "";
 
@@ -73,6 +76,40 @@ namespace Mozi.SSDP
         /// </para>
         /// </summary>
         public bool AllowLoopbackMessage { get; set; }
+        /// <summary>
+        /// 组播地址
+        /// <para>
+        /// 标准地址为 <see cref="SSDPProtocol.MulticastAddress"/> | <see cref="SSDPProtocol.MulticastAddressIPv6"/>
+        /// </para>
+        /// </summary>
+        public string MulticastGroupAddress
+        {
+            get 
+            { 
+                return _multicastGroupAddress; 
+            }
+            set
+            {
+                _multicastGroupAddress = value;
+            }
+        }
+        /// <summary>
+        /// 组播端口
+        /// <para>
+        /// 标准端口为 <see cref="SSDPProtocol.ProtocolPort"/>
+        /// </para>
+        /// </summary>
+        public int MulticastGroupPort
+        {
+            get 
+            {
+                return _multicastGroupPort; 
+            }
+            set
+            {
+                _multicastGroupPort = value;
+            }
+        }
 
         /// <summary>
         /// 默认查询包
@@ -145,7 +182,7 @@ namespace Mozi.SSDP
         public SSDPService Activate()
         {            
             _socket.AllowLoopbackMessage = AllowLoopbackMessage;
-            _socket.StartServer(SSDPProtocol.ProtocolPort);
+            _socket.StartServer(_multicastGroupAddress,_multicastGroupPort);
             //是否接受回环消息
             _timer.Change(0, NotificationPeriod);
             return this;
