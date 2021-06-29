@@ -4,30 +4,37 @@ using Mozi.HttpEmbedded.Generic;
 
 namespace Mozi.HttpEmbedded.WebService
 {
+
     /// <summary>
     /// SOAP envelope封装
     /// SOAP标准内容比较多，目前只实现WebService中需要封装的部分
     /// </summary>
-    public class SOAPEnvelope
+    public class SoapEnvelope
     {
-        public string NS_XSI = "http://www.w3.org/2001/XMLSchema-instance";
-        public string NS_XSD= "http://www.w3.org/2001/XMLSchema";
+
+        public List<Namespace> Namespaces = new List<Namespace>()
+        {
+            new Namespace { Prefix="xsi",Uri="http://www.w3.org/2001/XMLSchema-instance" },
+            new Namespace { Prefix="xsd",Uri="http://www.w3.org/2001/XMLSchema" }
+        };
+
         public string NS_EncodingStyle = "http://www.w3.org/2001/12/soap-encoding";
 
         /// <summary>
         /// SOAP版本
         /// </summary>
-        public SOAPVersion Version = SOAPVersion.Ver11;
+        public SoapVersion Version = SoapVersion.Ver11;
 
-        public SOAPHeader Header { get; set; }
-        public SOAPBody Body { get; set; }
+        public SoapHeader Header { get; set; }
+        public SoapBody Body { get; set; }
 
         public string Prefix = "m";
+
         public string Namespace = "http://mozi.org/soap";
 
-        public SOAPEnvelope()
+        public SoapEnvelope()
         {
-            Body = new SOAPBody();
+            Body = new SoapBody();
         }
         ///// <summary>
         ///// 构造xml文档
@@ -75,7 +82,7 @@ namespace Mozi.HttpEmbedded.WebService
         //    writer.Close();
         //    string text = System.Text.Encoding.UTF8.GetString(ms.ToArray());
         //    ms.Close();
-        //    return text;
+        //    return text;429004198712031889
         //}
 
         //DONE 这种写法有问题，暂时无法生成完整的XML文档，后期再想办法解决
@@ -87,7 +94,7 @@ namespace Mozi.HttpEmbedded.WebService
         /// </summary>
         /// <param name="envelope"></param>
         /// <returns></returns>
-        public static string CreateDocument(SOAPEnvelope envelope)
+        public static string CreateDocument(SoapEnvelope envelope)
         {
             XmlDocument doc = new XmlDocument();
 
@@ -97,9 +104,10 @@ namespace Mozi.HttpEmbedded.WebService
 
             //envelope
             var nodeEnvelope = doc.CreateElement( envelope.Version.Prefix,"Envelope", envelope.Version.Namespace);
-            
-            nodeEnvelope.SetAttribute("xmlns:xsi", envelope.NS_XSI);
-            nodeEnvelope.SetAttribute("xmlns:xsd", envelope.NS_XSD);
+            foreach (var ns in envelope.Namespaces)
+            {
+                nodeEnvelope.SetAttribute("xmlns:"+ns.Prefix, ns.Uri);
+            }
             nodeEnvelope.SetAttribute("xmlns:" + envelope.Version.Prefix, envelope.Version.Namespace);
             nodeEnvelope.SetAttribute("encodingStyle",envelope.Version.Namespace,envelope.NS_EncodingStyle);
             
@@ -165,9 +173,9 @@ namespace Mozi.HttpEmbedded.WebService
         /// </summary>
         /// <param name="content"></param>
         /// <returns></returns>
-        public static SOAPEnvelope ParseDocument(string content,SOAPVersion version)
+        public static SoapEnvelope ParseDocument(string content,SoapVersion version)
         {
-            SOAPEnvelope envelope = new SOAPEnvelope();
+            SoapEnvelope envelope = new SoapEnvelope();
             XmlDocument doc = new XmlDocument();
             XmlNamespaceManager xm = new XmlNamespaceManager(doc.NameTable);
             xm.AddNamespace(version.Prefix, version.Namespace);
@@ -195,26 +203,26 @@ namespace Mozi.HttpEmbedded.WebService
             return envelope;
         }
     }
-    public class SOAPHeader
+    public class SoapHeader
     {
-        public SOAPHeaderChild[] Childs { get; set; }
+        public SoapHeaderChild[] Childs { get; set; }
     }
-    public class SOAPHeaderChild
+    public class SoapHeaderChild
     {
         public string Name { get; set; }
         public string actor {get;set;}
         public string mustUnderstand { get; set; }  //"0"|"1"
         public string encodingStyle { get; set; }
     }
-    public class SOAPBody
+    public class SoapBody
     {
-        public SOAPFault Fault { get; set; }
+        public SoapFault Fault { get; set; }
 
         public string Method = "";
         public Dictionary<string, string> Items = new Dictionary<string, string>();
     }
 
-    public class SOAPFault
+    public class SoapFault
     {
         //VersionMismatch SOAP Envelope 元素的无效命名空间被发现
         //MustUnderstand Header 元素的一个直接子元素（带有设置为 "1" 的 mustUnderstand 属性）无法被理解。
@@ -228,17 +236,18 @@ namespace Mozi.HttpEmbedded.WebService
     /// <summary>
     /// SOAP协议版本
     /// </summary>
-    public class SOAPVersion : AbsClassEnum
+    public class SoapVersion : AbsClassEnum
     {
         /// <summary>
+        /// SOAPAction: "{ServiceName}/{ActionName}"
         /// text/xml
         /// </summary>
-        public static SOAPVersion Ver11 = new SOAPVersion("1.1","soap", "http://schemas.xmlsoap.org/soap/envelope/");
+        public static SoapVersion Ver11 = new SoapVersion("1.1","soap", "http://schemas.xmlsoap.org/soap/envelope/");
         /// <summary>
         /// application/soap+xml
         /// </summary>
-        public static SOAPVersion Ver12 = new SOAPVersion("1.2","soap12", "http://www.w3.org/2003/05/soap-envelope");
-        public static SOAPVersion Ver12Dotnet = new SOAPVersion("dot1.2", "soap2", "http://www.w3.org/2003/05/soap-envelope");
+        public static SoapVersion Ver12 = new SoapVersion("1.2","soap12", "http://www.w3.org/2003/05/soap-envelope");
+        public static SoapVersion Ver12Dotnet = new SoapVersion("dot1.2", "soap2", "http://www.w3.org/2003/05/soap-envelope");
 
         public string Version { get { return _vervalue; } }
         public string Namespace { get { return _namespace; } }
@@ -249,7 +258,7 @@ namespace Mozi.HttpEmbedded.WebService
         private string _namespace = "";
         private string _prefix = "";
 
-        public SOAPVersion(string verValue,string prefix,string nameSpace)
+        public SoapVersion(string verValue,string prefix,string nameSpace)
         {
             _vervalue = verValue;
             _prefix = prefix;

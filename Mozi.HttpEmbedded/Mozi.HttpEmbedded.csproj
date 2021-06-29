@@ -161,6 +161,7 @@
     <Compile Include="WebDav\DAVExtensions.cs" />
     <Compile Include="WebDav\DAVProperty.cs" />
     <Compile Include="WebDav\DAVServer.cs" />
+    <Compile Include="WebService\Namespace.cs" />
     <Compile Include="WebService\Publisher.cs" />
     <Compile Include="WebService\SOAP.cs" />
     <Compile Include="WebService\WSDL.cs" />

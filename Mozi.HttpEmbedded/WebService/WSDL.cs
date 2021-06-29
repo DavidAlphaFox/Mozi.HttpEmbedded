@@ -11,13 +11,19 @@ namespace Mozi.HttpEmbedded.WebService
     /// </summary>
     internal class WSDL
     {
-        public string NS_SOAPENC = "http://schemas.xmlsoap.org/soap/encoding/";
-        public string NS_MIME = "http://schemas.xmlsoap.org/wsdl/mime/";
+
         public string NS_SOAP = "http://schemas.xmlsoap.org/wsdl/soap/";
-        public string NS_SOAP12 = "http://schemas.xmlsoap.org/wsdl/soap12/";
-        public string NS_HTTP = "http://schemas.xmlsoap.org/wsdl/http/";
+
         public string NS_BindingTransport = "http://schemas.xmlsoap.org/soap/http";
 
+        public List<Namespace> Namespaces = new List<Namespace>()
+        {
+            new Namespace{ Prefix="soapenc", Uri="http://schemas.xmlsoap.org/soap/encoding/" },
+            new Namespace{ Prefix="mime", Uri="http://schemas.xmlsoap.org/wsdl/mime/" },
+            //new Namespace{ Prefix="soap", Uri="http://schemas.xmlsoap.org/wsdl/soap/" },
+            new Namespace{ Prefix="soap12", Uri="http://schemas.xmlsoap.org/wsdl/soap12/" },
+            new Namespace{ Prefix="http", Uri="http://schemas.xmlsoap.org/wsdl/http/" }
+        };
 
         public string Prefix = "wsdl";
         public string Namespace = "http://schemas.xmlsoap.org/wsdl/";
@@ -60,14 +66,16 @@ namespace Mozi.HttpEmbedded.WebService
 
             //definitions
             var definitions = doc.CreateElement(desc.Prefix, "definitions", desc.Namespace);
-            definitions.SetAttribute("xmlns:soapenc", desc.NS_SOAPENC);
-            definitions.SetAttribute("xmlns:mime", desc.NS_MIME);
+            foreach (var ns in desc.Namespaces)
+            {
+                definitions.SetAttribute("xmlns:"+ns.Prefix, ns.Uri);
+            }
+
             definitions.SetAttribute("xmlns:soap", desc.NS_SOAP);
             definitions.SetAttribute("xmlns:" + desc.PrefixElement, desc.PrefixElementNamespace);
-            definitions.SetAttribute("xmlns:soap12", desc.NS_SOAP12);
-            definitions.SetAttribute("xmlns:http", desc.NS_HTTP);
             definitions.SetAttribute("targetNamespace", desc.ServiceNamespace);
             definitions.SetAttribute("xmlns:tns", desc.ServiceNamespace);
+
             doc.AppendChild(definitions);
 
             //documentation
