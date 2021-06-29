@@ -2,22 +2,22 @@
 using System.Collections.Generic;
 using System.Reflection;
 using System.Xml;
+using Mozi.HttpEmbedded.WebService.Attributes;
 
 namespace Mozi.HttpEmbedded.WebService
 {
     /// <summary>
     /// WSDL描述文档
     /// </summary>
-    public class WSDL
+    internal class WSDL
     {
+        public string NS_SOAPENC = "http://schemas.xmlsoap.org/soap/encoding/";
+        public string NS_MIME = "http://schemas.xmlsoap.org/wsdl/mime/";
+        public string NS_SOAP = "http://schemas.xmlsoap.org/wsdl/soap/";
+        public string NS_SOAP12 = "http://schemas.xmlsoap.org/wsdl/soap12/";
+        public string NS_HTTP = "http://schemas.xmlsoap.org/wsdl/http/";
+        public string NS_BindingTransport = "http://schemas.xmlsoap.org/soap/http";
 
-        public string NS_soapenc = "http://schemas.xmlsoap.org/soap/encoding/";
-        public string NS_mime = "http://schemas.xmlsoap.org/wsdl/mime/";
-        public string NS_soap = "http://schemas.xmlsoap.org/wsdl/soap/";
-        public string NS_soap12 = "http://schemas.xmlsoap.org/wsdl/soap12/";
-        public string NS_http = "http://schemas.xmlsoap.org/wsdl/http/";
-
-        public string BindingTransport = "http://schemas.xmlsoap.org/soap/http";
 
         public string Prefix = "wsdl";
         public string Namespace = "http://schemas.xmlsoap.org/wsdl/";
@@ -25,10 +25,12 @@ namespace Mozi.HttpEmbedded.WebService
         public string PrefixElement = "s";
         public string PrefixElementNamespace = "http://www.w3.org/2001/XMLSchema";
 
+        public WebServiceAttribute ServiceAttribute;
+
         public string Description = "Mozi.WebService服务信息";
-        public string ServiceName = "Mozi.WebService";
+        public string ServiceName = "MoziWS";
         public string ServiceNamespace = "http://mozi.org";
-        public string ServiceAddress = "http://127.0.0.1/runtime/soap?action=wsdl";
+        public string ServiceAddress = "http://127.0.0.1/";
 
         public bool AllowHttpAccess = true;
 
@@ -37,6 +39,11 @@ namespace Mozi.HttpEmbedded.WebService
         public WSDL()
         {
             ApiTypes = new Types();
+
+            ServiceAttribute = new WebServiceAttribute()
+            {
+
+            };
         }
         /// <summary>
         /// 构建文档
@@ -53,12 +60,12 @@ namespace Mozi.HttpEmbedded.WebService
 
             //definitions
             var definitions = doc.CreateElement(desc.Prefix, "definitions", desc.Namespace);
-            definitions.SetAttribute("xmlns:soapenc", desc.NS_soapenc);
-            definitions.SetAttribute("xmlns:mime", desc.NS_mime);
-            definitions.SetAttribute("xmlns:soap", desc.NS_soap);
+            definitions.SetAttribute("xmlns:soapenc", desc.NS_SOAPENC);
+            definitions.SetAttribute("xmlns:mime", desc.NS_MIME);
+            definitions.SetAttribute("xmlns:soap", desc.NS_SOAP);
             definitions.SetAttribute("xmlns:" + desc.PrefixElement, desc.PrefixElementNamespace);
-            definitions.SetAttribute("xmlns:soap12", desc.NS_soap12);
-            definitions.SetAttribute("xmlns:http", desc.NS_http);
+            definitions.SetAttribute("xmlns:soap12", desc.NS_SOAP12);
+            definitions.SetAttribute("xmlns:http", desc.NS_HTTP);
             definitions.SetAttribute("targetNamespace", desc.ServiceNamespace);
             definitions.SetAttribute("xmlns:tns", desc.ServiceNamespace);
             doc.AppendChild(definitions);
@@ -326,8 +333,8 @@ namespace Mozi.HttpEmbedded.WebService
                 {
                     binding.SetAttribute("type", "tns:" + portName);
                 }
-                var soapBinding = doc.CreateElement("soap", "binding", desc.NS_soap);
-                soapBinding.SetAttribute("transport", desc.NS_soap);
+                var soapBinding = doc.CreateElement("soap", "binding", desc.NS_SOAP);
+                soapBinding.SetAttribute("transport", desc.NS_SOAP);
                 binding.AppendChild(soapBinding);
 
                 foreach (var r in desc.ApiTypes.Methods)
@@ -335,19 +342,19 @@ namespace Mozi.HttpEmbedded.WebService
 
                     var operation = doc.CreateElement(desc.Prefix, "operation", desc.Namespace);
                     operation.SetAttribute("name", r.Name);
-                    var soapOperation = doc.CreateElement("soap", "operation", desc.NS_soap);
+                    var soapOperation = doc.CreateElement("soap", "operation", desc.NS_SOAP);
                     soapOperation.SetAttribute("soapAction", desc.ServiceNamespace + "/" + r.Name);
                     soapOperation.SetAttribute("style", "document");
 
                     //input 
                     var input = doc.CreateElement(desc.Prefix, "input", desc.Namespace);
-                    var bodyInput = doc.CreateElement("soap", "body", desc.NS_soap);
+                    var bodyInput = doc.CreateElement("soap", "body", desc.NS_SOAP);
                     bodyInput.SetAttribute("use", "literal");
                     input.AppendChild(bodyInput);
 
                     //output
                     var output = doc.CreateElement(desc.Prefix, "output", desc.Namespace);
-                    var bodyOutput = doc.CreateElement("soap", "body", desc.NS_soap);
+                    var bodyOutput = doc.CreateElement("soap", "body", desc.NS_SOAP);
                     bodyOutput.SetAttribute("use", "literal");
                     output.AppendChild(bodyOutput);
 
@@ -371,8 +378,8 @@ namespace Mozi.HttpEmbedded.WebService
                 var port = doc.CreateElement(desc.Prefix, "port", desc.Namespace);
                 port.SetAttribute("name", desc.ServiceName + p);
                 port.SetAttribute("binding", "tns:" + desc.ServiceName+p);
-                var address = doc.CreateElement("soap", "address", desc.NS_soap);
-                address.SetAttribute("location", desc.ServiceAddress);
+                var address = doc.CreateElement("soap", "address", desc.NS_SOAP);
+                address.SetAttribute("location", desc.ServiceAddress+desc.ServiceName);
                 port.AppendChild(address);
                 service.AppendChild(port);
             }

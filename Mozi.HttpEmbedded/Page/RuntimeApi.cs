@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Reflection;
-using Mozi.HttpEmbedded.Attributes;
 
 namespace Mozi.HttpEmbedded.Page
 {
@@ -39,7 +38,16 @@ namespace Mozi.HttpEmbedded.Page
             info.VersionName = exeAssembly.GetName().Version.ToString();
             info.PlatformName =exeAssembly.ImageRuntimeVersion;
             info.StartupTime = Context.Server.StartTime.ToUniversalTime().ToString("r");
-            exeAssembly.GetLoadedModules();
+            Module[] modules = exeAssembly.GetLoadedModules();
+            foreach(var m in modules)
+            {
+                info.LoadedModules.Add(new LoadedModuleInfo()
+                {
+                    Name=m.Name,
+                    VersionName=m.Assembly.GetName().Version.ToString()
+                });
+
+            }
             return info;
         }
         /// <summary>
@@ -297,6 +305,7 @@ namespace Mozi.HttpEmbedded.Page
             else if(action=="wsdl")
             {
                 WebService.WSDL envelope = new WebService.WSDL();
+                envelope.ServiceName = this.GetType().Name;
                 envelope.ApiTypes.Methods.AddRange(this.GetType().GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly));
                 Context.Response.SetContentType( "text/xml");
                 return WebService.WSDL.CreateDocument(envelope);
@@ -343,6 +352,9 @@ namespace Mozi.HttpEmbedded.Page
         public string constraint { get; set; }
 
     }
+    /// <summary>
+    /// 服务器运行环境
+    /// </summary>
     [Serializable]
     public class RuntimeInfo
     {
@@ -350,5 +362,19 @@ namespace Mozi.HttpEmbedded.Page
         public string VersionName { get; set; }
         public string PlatformName { get; set; }
         public string StartupTime { get; set; }
+
+        public List<LoadedModuleInfo> LoadedModules {get;set;}
+        public RuntimeInfo()
+        {
+            LoadedModules = new List<LoadedModuleInfo>();
+        }
+    }
+    /// <summary>
+    /// 装载到服务器的模块信息
+    /// </summary>
+    public class LoadedModuleInfo
+    {
+        public string Name { get; set; }
+        public string VersionName { get; set; }
     }
 }

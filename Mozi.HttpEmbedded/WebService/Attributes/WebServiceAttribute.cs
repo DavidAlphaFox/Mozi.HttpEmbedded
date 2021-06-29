@@ -1,12 +1,12 @@
 ﻿using System;
 
-namespace Mozi.HttpEmbedded.Attributes
+namespace Mozi.HttpEmbedded.WebService.Attributes
 {
     /// <summary>
     /// WebService属性
     /// </summary>
     [AttributeUsage(AttributeTargets.Class)]
-    internal class WebServiceAttribute:Attribute
+    public class WebServiceAttribute : Attribute
     {
         /// <summary>
         /// 服务名
