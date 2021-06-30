@@ -655,6 +655,46 @@ namespace Mozi.HttpEmbedded
             return this;
         }
         /// <summary>
+        /// 设置请求路径
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public HttpRequest SetPath(string path)
+        {
+            Path = path;
+            return this;
+        }
+        /// <summary>
+        /// 设置请求方法
+        /// </summary>
+        /// <param name="method"></param>
+        /// <returns></returns>
+        public HttpRequest SetMethod(RequestMethod method)
+        {
+            Method = method;
+            return this;
+        }
+        /// <summary>
+        /// 设置请求HTTP协议
+        /// </summary>
+        /// <param name="version"></param>
+        /// <returns></returns>
+        public HttpRequest SetProtocol(HttpEmbedded.HttpVersion version)
+        {
+            ProtocolVersion = version;
+            return this;
+        }
+        /// <summary>
+        /// 应用头信息集合
+        /// </summary>
+        /// <param name="headers"></param>
+        /// <returns></returns>
+        public HttpRequest ApplyHeaders(TransformHeader headers)
+        {
+            Headers = headers;
+            return this;
+        }        
+        /// <summary>
         /// 生成请求行
         /// </summary>
         /// <returns></returns>
