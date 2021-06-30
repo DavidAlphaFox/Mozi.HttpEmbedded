@@ -44,6 +44,7 @@
     <Compile Include="SSDPType.cs" />
     <Compile Include="UDPSocket.cs" />
     <Compile Include="UDPStateObject.cs" />
+    <Compile Include="UUID.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Mozi.HttpEmbedded\Mozi.HttpEmbedded.csproj">
@@ -59,6 +60,7 @@
     <None Include="Mozi.SSDP.nuspec" />
     <None Include="Readme.md" />
     <None Include="UPnP-arch-DeviceArchitecture-v1.0.pdf" />
+    <None Include="UPnP-arch-DeviceArchitecture-v2.0-20200417.pdf" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Description\DeviceDescription.xml" />

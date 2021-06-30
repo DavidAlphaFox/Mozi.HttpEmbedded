@@ -11,11 +11,13 @@ namespace Mozi.HttpEmbedded.WebService
     /// </summary>
     internal class WSDL
     {
+        public Namespace NS_SOAP = new Namespace { Prefix = "soap", Uri="http://schemas.xmlsoap.org/wsdl/soap/" };
+        public Namespace NS_Element = new Namespace { Prefix = "s", Uri = "http://www.w3.org/2001/XMLSchema" };
+        public Namespace NS_Document= new Namespace { Prefix = "wsdl", Uri = "http://schemas.xmlsoap.org/wsdl/" };
 
-        public string NS_SOAP = "http://schemas.xmlsoap.org/wsdl/soap/";
-
-        public string NS_BindingTransport = "http://schemas.xmlsoap.org/soap/http";
-
+        /// <summary>
+        /// 文档中用到的命名空间
+        /// </summary>
         public List<Namespace> Namespaces = new List<Namespace>()
         {
             new Namespace{ Prefix="soapenc", Uri="http://schemas.xmlsoap.org/soap/encoding/" },
@@ -24,13 +26,7 @@ namespace Mozi.HttpEmbedded.WebService
             new Namespace{ Prefix="soap12", Uri="http://schemas.xmlsoap.org/wsdl/soap12/" },
             new Namespace{ Prefix="http", Uri="http://schemas.xmlsoap.org/wsdl/http/" }
         };
-
-        public string Prefix = "wsdl";
-        public string Namespace = "http://schemas.xmlsoap.org/wsdl/";
-
-        public string PrefixElement = "s";
-        public string PrefixElementNamespace = "http://www.w3.org/2001/XMLSchema";
-
+    
         public WebServiceAttribute ServiceAttribute;
 
         public string Description = "Mozi.WebService服务信息";
@@ -59,35 +55,40 @@ namespace Mozi.HttpEmbedded.WebService
         public static string CreateDocument(WSDL desc)
         {
             XmlDocument doc = new XmlDocument();
+            var docPrefix = desc.NS_Document.Prefix;
+            var docnsuri = desc.NS_Document.Uri;
+            var elnsuri = desc.NS_Element.Uri;
+
             //declaration 
             var declare = doc.CreateXmlDeclaration("1.0", "utf-8", "yes");
 
             doc.AppendChild(declare);
 
             //definitions
-            var definitions = doc.CreateElement(desc.Prefix, "definitions", desc.Namespace);
+            var definitions = doc.CreateElement(docPrefix, "definitions", docnsuri);
             foreach (var ns in desc.Namespaces)
             {
                 definitions.SetAttribute("xmlns:"+ns.Prefix, ns.Uri);
             }
 
-            definitions.SetAttribute("xmlns:soap", desc.NS_SOAP);
-            definitions.SetAttribute("xmlns:" + desc.PrefixElement, desc.PrefixElementNamespace);
+            definitions.SetAttribute("xmlns:"+desc.NS_SOAP.Prefix, desc.NS_SOAP.Uri);
+            
+            definitions.SetAttribute("xmlns:" + desc.NS_Element.Prefix, elnsuri);
             definitions.SetAttribute("targetNamespace", desc.ServiceNamespace);
             definitions.SetAttribute("xmlns:tns", desc.ServiceNamespace);
 
             doc.AppendChild(definitions);
 
             //documentation
-            var documentation = doc.CreateElement(desc.Prefix, "documentation", desc.Namespace);
+            var documentation = doc.CreateElement(docPrefix, "documentation", docnsuri);
             documentation.AppendChild(doc.CreateTextNode(desc.Description));
             definitions.AppendChild(documentation);
 
             //types
-            var types = doc.CreateElement(desc.Prefix, "types", desc.Namespace);
+            var types = doc.CreateElement(docPrefix, "types", docnsuri);
             definitions.AppendChild(types);
 
-            var schema = doc.CreateElement(desc.PrefixElement, "schema", desc.PrefixElementNamespace);
+            var schema = doc.CreateElement(desc.NS_Element.Prefix, "schema", elnsuri);
             schema.SetAttribute("elementFormDefault", "qualified");
             schema.SetAttribute("targetNamespace", desc.ServiceNamespace);
             types.AppendChild(schema);
@@ -96,16 +97,16 @@ namespace Mozi.HttpEmbedded.WebService
             foreach (var s in desc.ApiTypes.Methods)
             {
                 //params
-                var elementIn = doc.CreateElement(desc.PrefixElement, "element", desc.PrefixElementNamespace);
+                var elementIn = doc.CreateElement(desc.NS_Element.Prefix, "element", elnsuri);
                 elementIn.SetAttribute("name", s.Name);
-                var complexTypeIn = doc.CreateElement(desc.PrefixElement, "complexType", desc.PrefixElementNamespace);
-                var sequenceIn = doc.CreateElement(desc.PrefixElement, "sequence", desc.PrefixElementNamespace);
+                var complexTypeIn = doc.CreateElement(desc.NS_Element.Prefix, "complexType", elnsuri);
+                var sequenceIn = doc.CreateElement(desc.NS_Element.Prefix, "sequence", elnsuri);
                 foreach (var r in s.GetParameters()) {
-                    var elementParams = doc.CreateElement(desc.PrefixElement, "element", desc.PrefixElementNamespace);
+                    var elementParams = doc.CreateElement(desc.NS_Element.Prefix, "element", elnsuri);
                     elementParams.SetAttribute("minOccurs", "0");
                     elementParams.SetAttribute("maxOccurs", "1");
                     elementParams.SetAttribute("name", r.Name);
-                    elementParams.SetAttribute("type", desc.PrefixElement + ":" + TypeConverter.FormDoNet(r.ParameterType));
+                    elementParams.SetAttribute("type", desc.NS_Element.Prefix + ":" + TypeConverter.FormDoNet(r.ParameterType));
                     sequenceIn.AppendChild(elementParams);
                 }
                 complexTypeIn.AppendChild(sequenceIn);
@@ -113,26 +114,26 @@ namespace Mozi.HttpEmbedded.WebService
                 schema.AppendChild(elementIn);
 
                 //return type
-                var elementOut = doc.CreateElement(desc.PrefixElement, "element", desc.PrefixElementNamespace);
+                var elementOut = doc.CreateElement(desc.NS_Element.Prefix, "element", elnsuri);
                 elementOut.SetAttribute("name", s.Name + "Response");
                 var returnValueType = s.ReturnType.UnderlyingSystemType;
                 var isComplexType = false;
                 var isEnumerable = false;
                 var isMemberComplexType = false;
-                var complexTypeOut = doc.CreateElement(desc.PrefixElement, "complexType", desc.PrefixElementNamespace);
+                var complexTypeOut = doc.CreateElement(desc.NS_Element.Prefix, "complexType", elnsuri);
 
                 if (returnValueType != typeof(void))
                 {
-                    var sequenceOut = doc.CreateElement(desc.PrefixElement, "sequence", desc.PrefixElementNamespace);
+                    var sequenceOut = doc.CreateElement(desc.NS_Element.Prefix, "sequence", elnsuri);
 
-                    var elementReturn = doc.CreateElement(desc.PrefixElement, "element", desc.PrefixElementNamespace);
+                    var elementReturn = doc.CreateElement(desc.NS_Element.Prefix, "element", elnsuri);
                     elementReturn.SetAttribute("minOccurs", "0");
                     elementReturn.SetAttribute("maxOccurs", "1");
                     elementReturn.SetAttribute("name", returnValueType.Name + "Result");
 
                     if (IsPlatformDefinedType(returnValueType))
                     {
-                        elementReturn.SetAttribute("type", desc.PrefixElement + ":" + TypeConverter.FormDoNet(returnValueType));
+                        elementReturn.SetAttribute("type", desc.NS_Element.Prefix + ":" + TypeConverter.FormDoNet(returnValueType));
                     }
                     else
                     {
@@ -159,25 +160,25 @@ namespace Mozi.HttpEmbedded.WebService
                 if (isComplexType)
                 {
                     XmlNamespaceManager xm = new XmlNamespaceManager(doc.NameTable);
-                    xm.AddNamespace(desc.PrefixElement, desc.PrefixElementNamespace);
+                    xm.AddNamespace(desc.NS_Element.Prefix, elnsuri);
                     var exists = schema.SelectSingleNode("s:complexType[@name='" + returnValueType.Name + "']", xm);
                     //如果没有定义该类型
                     if (exists == null)
                     {
-                        var complexTypeSelfDefine = doc.CreateElement(desc.PrefixElement, "complexType", desc.PrefixElementNamespace);
+                        var complexTypeSelfDefine = doc.CreateElement(desc.NS_Element.Prefix, "complexType", elnsuri);
                         complexTypeSelfDefine.SetAttribute("name", isEnumerable ? ("ArrayOf" + returnValueType.Name) : returnValueType.Name);
-                        var sequenceSelfDefine = doc.CreateElement(desc.PrefixElement, "sequence", desc.PrefixElementNamespace);
+                        var sequenceSelfDefine = doc.CreateElement(desc.NS_Element.Prefix, "sequence", elnsuri);
                         //非数组类型
                         if (!isEnumerable)
                         {
                             PropertyInfo[] props = returnValueType.GetProperties();
                             foreach (var r in props)
                             {
-                                var elementReturnSelfDefine = doc.CreateElement(desc.PrefixElement, "element", desc.PrefixElementNamespace);
+                                var elementReturnSelfDefine = doc.CreateElement(desc.NS_Element.Prefix, "element", elnsuri);
                                 elementReturnSelfDefine.SetAttribute("minOccurs", "0");
                                 elementReturnSelfDefine.SetAttribute("maxOccurs", "1");
                                 elementReturnSelfDefine.SetAttribute("name", r.Name);
-                                elementReturnSelfDefine.SetAttribute("type", desc.PrefixElement + ":" + TypeConverter.FormDoNet(r.GetType()));
+                                elementReturnSelfDefine.SetAttribute("type", desc.NS_Element.Prefix + ":" + TypeConverter.FormDoNet(r.GetType()));
 
                                 sequenceSelfDefine.AppendChild(elementReturnSelfDefine);
                             }
@@ -185,7 +186,7 @@ namespace Mozi.HttpEmbedded.WebService
                         //数组类型
                         else
                         {
-                            var elementReturnSelfDefine = doc.CreateElement(desc.PrefixElement, "element", desc.PrefixElementNamespace);
+                            var elementReturnSelfDefine = doc.CreateElement(desc.NS_Element.Prefix, "element", elnsuri);
                             elementReturnSelfDefine.SetAttribute("minOccurs", "0");
                             elementReturnSelfDefine.SetAttribute("maxOccurs", "unbounded");
                             elementReturnSelfDefine.SetAttribute("name", returnValueType.GetElementType().Name);
@@ -199,9 +200,9 @@ namespace Mozi.HttpEmbedded.WebService
                         if (isEnumerable)
                         {
                             var memberType = returnValueType.GetElementType();
-                            var complexTypeMember = doc.CreateElement(desc.PrefixElement, "complexType", desc.PrefixElementNamespace);
+                            var complexTypeMember = doc.CreateElement(desc.NS_Element.Prefix, "complexType", elnsuri);
                             complexTypeMember.SetAttribute("name", memberType.Name);
-                            var sequenceMember = doc.CreateElement(desc.PrefixElement, "sequence", desc.PrefixElementNamespace);
+                            var sequenceMember = doc.CreateElement(desc.NS_Element.Prefix, "sequence", elnsuri);
 
                             PropertyInfo[] props = memberType.GetProperties();
 
@@ -209,21 +210,21 @@ namespace Mozi.HttpEmbedded.WebService
                             {
                                 foreach (var r in props)
                                 {
-                                    var elementReturnMember = doc.CreateElement(desc.PrefixElement, "element", desc.PrefixElementNamespace);
+                                    var elementReturnMember = doc.CreateElement(desc.NS_Element.Prefix, "element", elnsuri);
                                     elementReturnMember.SetAttribute("minOccurs", "0");
                                     elementReturnMember.SetAttribute("maxOccurs", "1");
                                     elementReturnMember.SetAttribute("name", r.Name);
-                                    elementReturnMember.SetAttribute("type", desc.PrefixElement + ":" + TypeConverter.FormDoNet(r.GetType()));
+                                    elementReturnMember.SetAttribute("type", desc.NS_Element.Prefix + ":" + TypeConverter.FormDoNet(r.GetType()));
                                     sequenceMember.AppendChild(elementReturnMember);
                                 }
                             }
                             else
                             {
-                                var elementReturnMember = doc.CreateElement(desc.PrefixElement, "element", desc.PrefixElementNamespace);
+                                var elementReturnMember = doc.CreateElement(desc.NS_Element.Prefix, "element", elnsuri);
                                 elementReturnMember.SetAttribute("minOccurs", "0");
                                 elementReturnMember.SetAttribute("maxOccurs", "1");
                                 elementReturnMember.SetAttribute("name", TypeConverter.FormDoNet(memberType));
-                                elementReturnMember.SetAttribute("type", desc.PrefixElement + ":" + TypeConverter.FormDoNet(memberType.GetType()));
+                                elementReturnMember.SetAttribute("type", desc.NS_Element.Prefix + ":" + TypeConverter.FormDoNet(memberType.GetType()));
                                 sequenceMember.AppendChild(elementReturnMember);
                             }
 
@@ -246,12 +247,12 @@ namespace Mozi.HttpEmbedded.WebService
                         continue;
                     }
 
-                    var messageIn = doc.CreateElement(desc.Prefix, "message", desc.Namespace);
+                    var messageIn = doc.CreateElement(docPrefix, "message", docnsuri);
                     messageIn.SetAttribute("name", s.Name + act);
 
                     if (act == "SoapIn" || act == "SoapOut")
                     {
-                        var partIn = doc.CreateElement(desc.Prefix, "part", desc.Namespace);
+                        var partIn = doc.CreateElement(docPrefix, "part", docnsuri);
                         partIn.SetAttribute("name", "parameters");
                         if (act == "SoapIn")
                         {
@@ -266,16 +267,16 @@ namespace Mozi.HttpEmbedded.WebService
                     {
                         foreach (var r in s.GetParameters())
                         {
-                            var partParam = doc.CreateElement(desc.Prefix, "part", desc.Namespace);
+                            var partParam = doc.CreateElement(docPrefix, "part", docnsuri);
                             partParam.SetAttribute("name", r.Name);
-                            partParam.SetAttribute("type", desc.Prefix + ":" + TypeConverter.FormDoNet(r.ParameterType));
+                            partParam.SetAttribute("type", docPrefix + ":" + TypeConverter.FormDoNet(r.ParameterType));
                             messageIn.AppendChild(partParam);
                         }
                     }
                     else
                     {
                         //TODO 未完成
-                        var partIn = doc.CreateElement(desc.Prefix, "part", desc.Namespace);
+                        var partIn = doc.CreateElement(docPrefix, "part", docnsuri);
                         partIn.SetAttribute("name", "parameters");
                         var returnType = s.ReturnType.UnderlyingSystemType;
                         if (IsPlatformDefinedType(returnType))
@@ -298,7 +299,7 @@ namespace Mozi.HttpEmbedded.WebService
             foreach (var p in portTypes)
             {
                 var portName = desc.ServiceName + p;
-                var portType = doc.CreateElement(desc.Prefix, "portType", desc.Namespace);
+                var portType = doc.CreateElement(docPrefix, "portType", docnsuri);
                 portType.SetAttribute("name", portName);
                 if (!desc.AllowHttpAccess && p.Contains("Http"))
                 {
@@ -306,12 +307,12 @@ namespace Mozi.HttpEmbedded.WebService
                 }
                 foreach (var s in desc.ApiTypes.Methods)
                 {
-                    var operation = doc.CreateElement(desc.Prefix, "operation", desc.Namespace);
+                    var operation = doc.CreateElement(docPrefix, "operation", docnsuri);
                     operation.SetAttribute("name", s.Name);
-                    var documentationPorttType = doc.CreateElement(desc.Prefix, "documentation", desc.Namespace);
-                    var input = doc.CreateElement(desc.Prefix, "input", desc.Namespace);
+                    var documentationPorttType = doc.CreateElement(docPrefix, "documentation", docnsuri);
+                    var input = doc.CreateElement(docPrefix, "input", docnsuri);
                     input.SetAttribute("message", "tns:" + s.Name + portName + "In");
-                    var output = doc.CreateElement(desc.Prefix, "output", desc.Namespace);
+                    var output = doc.CreateElement(docPrefix, "output", docnsuri);
                     output.SetAttribute("message", "tns" + s.Name + portName + "Out");
                     operation.AppendChild(documentationPorttType);
                     operation.AppendChild(input);
@@ -331,7 +332,7 @@ namespace Mozi.HttpEmbedded.WebService
                     continue;
                 }
 
-                var binding = doc.CreateElement(desc.Prefix, "binding", desc.Namespace);
+                var binding = doc.CreateElement(docPrefix, "binding", docnsuri);
                 binding.SetAttribute("name", portName);
                 if (p.Contains("Soap"))
                 {
@@ -341,28 +342,28 @@ namespace Mozi.HttpEmbedded.WebService
                 {
                     binding.SetAttribute("type", "tns:" + portName);
                 }
-                var soapBinding = doc.CreateElement("soap", "binding", desc.NS_SOAP);
-                soapBinding.SetAttribute("transport", desc.NS_SOAP);
+                var soapBinding = doc.CreateElement(desc.NS_SOAP.Prefix, "binding", desc.NS_SOAP.Uri);
+                soapBinding.SetAttribute("transport", desc.NS_SOAP.Uri);
                 binding.AppendChild(soapBinding);
 
                 foreach (var r in desc.ApiTypes.Methods)
                 {
 
-                    var operation = doc.CreateElement(desc.Prefix, "operation", desc.Namespace);
+                    var operation = doc.CreateElement(docPrefix, "operation", docnsuri);
                     operation.SetAttribute("name", r.Name);
-                    var soapOperation = doc.CreateElement("soap", "operation", desc.NS_SOAP);
+                    var soapOperation = doc.CreateElement(desc.NS_SOAP.Prefix, "operation", desc.NS_SOAP.Uri);
                     soapOperation.SetAttribute("soapAction", desc.ServiceNamespace + "/" + r.Name);
                     soapOperation.SetAttribute("style", "document");
 
                     //input 
-                    var input = doc.CreateElement(desc.Prefix, "input", desc.Namespace);
-                    var bodyInput = doc.CreateElement("soap", "body", desc.NS_SOAP);
+                    var input = doc.CreateElement(docPrefix, "input", docnsuri);
+                    var bodyInput = doc.CreateElement(desc.NS_SOAP.Prefix, "body", desc.NS_SOAP.Uri);
                     bodyInput.SetAttribute("use", "literal");
                     input.AppendChild(bodyInput);
 
                     //output
-                    var output = doc.CreateElement(desc.Prefix, "output", desc.Namespace);
-                    var bodyOutput = doc.CreateElement("soap", "body", desc.NS_SOAP);
+                    var output = doc.CreateElement(docPrefix, "output", docnsuri);
+                    var bodyOutput = doc.CreateElement(desc.NS_SOAP.Prefix, "body", desc.NS_SOAP.Uri);
                     bodyOutput.SetAttribute("use", "literal");
                     output.AppendChild(bodyOutput);
 
@@ -376,17 +377,17 @@ namespace Mozi.HttpEmbedded.WebService
             }
 
             //service
-            var service = doc.CreateElement(desc.Prefix, "service", desc.Namespace);
+            var service = doc.CreateElement(docPrefix, "service", docnsuri);
             service.SetAttribute("name", desc.ServiceName);
-            var serviceDocumentation = doc.CreateElement(desc.Prefix, "documentation", desc.Namespace);
+            var serviceDocumentation = doc.CreateElement(docPrefix, "documentation", docnsuri);
             serviceDocumentation.AppendChild(doc.CreateTextNode(desc.Description));
             service.AppendChild(serviceDocumentation);
             foreach (var p in bindingTypes)
             {
-                var port = doc.CreateElement(desc.Prefix, "port", desc.Namespace);
+                var port = doc.CreateElement(docPrefix, "port", docnsuri);
                 port.SetAttribute("name", desc.ServiceName + p);
                 port.SetAttribute("binding", "tns:" + desc.ServiceName+p);
-                var address = doc.CreateElement("soap", "address", desc.NS_SOAP);
+                var address = doc.CreateElement("soap", "address", desc.NS_SOAP.Uri);
                 address.SetAttribute("location", desc.ServiceAddress+desc.ServiceName);
                 port.AppendChild(address);
                 service.AppendChild(port);

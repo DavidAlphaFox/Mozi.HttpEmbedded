@@ -60,10 +60,10 @@ namespace Mozi.SSDP
         /// 广播消息周期
         /// </summary>
         public int NotificationPeriod = 30 * 1000;
-        /// <summary>
-        /// 查询周期
-        /// </summary>
-        public int DiscoverPeriod = 30 * 1000;
+        ///// <summary>
+        ///// 查询周期
+        ///// </summary>
+        //public int DiscoverPeriod = 30 * 1000;
         /// <summary>
         /// 缓存时间
         /// </summary>
