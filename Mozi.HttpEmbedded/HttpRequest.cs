@@ -679,7 +679,7 @@ namespace Mozi.HttpEmbedded
         /// </summary>
         /// <param name="version"></param>
         /// <returns></returns>
-        public HttpRequest SetProtocol(HttpEmbedded.HttpVersion version)
+        public HttpRequest SetProtocol(HttpVersion version)
         {
             ProtocolVersion = version;
             return this;

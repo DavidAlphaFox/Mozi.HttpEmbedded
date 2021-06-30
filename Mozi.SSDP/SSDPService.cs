@@ -6,6 +6,11 @@ using Mozi.HttpEmbedded;
 namespace Mozi.SSDP
 {
     internal delegate void ServiceFound(object sender);
+    internal delegate void NotifyReceived(object sender);
+    internal delegate void SearchReceived(object sender);
+    internal delegate void SubScribeReceived(object sender);
+    internal delegate void UnSubscribedReceived(object sender);
+    internal delegate void ControlReceived(object sender);
 
     public delegate void ServiceMessageReceive(object sender,HttpRequest request,string host);
 
@@ -183,13 +188,32 @@ namespace Mozi.SSDP
             try
             {
                 HttpRequest request = HttpRequest.Parse(data);
-                //Notify
                 RequestMethod method = request.Method;
+                //Notify
+                if (method == RequestMethodUPnP.NOTIFY)
+                {
+
+                }
                 //MS-SEARCH
+                else if(method==RequestMethodUPnP.MSEARCH)
+                {
 
+                }
                 //SUBSCRIBE
+                else if(method==RequestMethodUPnP.SUBSCRIBE)
+                {
 
+                }
                 //UNSUBSCRIBE
+                else if(method==RequestMethodUPnP.UNSUBSCRIBE)
+                {
+
+                }
+                //Control
+                else if(method== RequestMethod.POST)
+                {
+
+                }
             }
             catch
             {
@@ -580,7 +604,7 @@ namespace Mozi.SSDP
             }
             else
             {
-                if (String.IsNullOrEmpty(DeviceId))
+                if (string.IsNullOrEmpty(DeviceId))
                 {
 
                     result = string.Format("urn:{0}:{1}:{2}:{3}", Domain, ServiceType == ServiceType.Device ? "device" : "service", ServiceName, Version);
