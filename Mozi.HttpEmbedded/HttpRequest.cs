@@ -633,6 +633,28 @@ namespace Mozi.HttpEmbedded
             return data.ToArray();
         }
         /// <summary>
+        /// 设置头信息
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public HttpRequest SetHeader(string key,string value)
+        {
+            Headers.Add(key, value);
+            return this;
+        }
+        /// <summary>
+        /// 设置头信息
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public HttpRequest SetHeader(HeaderProperty key,string value)
+        {
+            Headers.Add(key, value);
+            return this;
+        }
+        /// <summary>
         /// 生成请求行
         /// </summary>
         /// <returns></returns>

@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Mozi.HttpEmbedded.Common;
 using Mozi.StateService;
+using System.Reflection;
 
 namespace Mozi.HttpEmbedded.Test
 {
@@ -47,6 +48,7 @@ namespace Mozi.HttpEmbedded.Test
 
             //路由映射
             Router router = Router.Default;
+            router.Register(Assembly.GetExecutingAssembly());
             router.Map("services/{controller}/{action}");
 
             //开启WebDAV

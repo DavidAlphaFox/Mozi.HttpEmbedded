@@ -45,14 +45,21 @@ namespace Mozi.SSDP
         private int _multicastGroupPort = SSDPProtocol.ProtocolPort;
 
         private string _server = " Mozi/1.2.4 UPnP/1.0 Mozi.SSDP/1.2.4";
-        private string _uuid = "";
 
         #region
-        public string UUID { get { return _uuid; } set { _uuid = value; } }
+
         public string Server { get { return _server; } set { _server = value; } }
         public string Location { get; set; }
 
-        public string DeviceName = "";
+        public USNDesc USN = new USNDesc()
+        {
+            DeviceId = UUID.Generate(),
+            Domain = "mozi.org",
+            ServiceType = ServiceType.Device,
+            ServiceName = "simplehost",
+            IsRootDevice=false,
+            Version=1,
+        };
 
         #endregion
 
@@ -117,7 +124,7 @@ namespace Mozi.SSDP
         public SearchPackage PackDefaultDiscover = new SearchPackage() 
         {
             MX=3,
-            ST= "ssdp:all"
+            ST= TargetDesc.All.ToString(),
         };
         /// <summary>
         /// 默认在线消息包
@@ -127,7 +134,7 @@ namespace Mozi.SSDP
             CacheTimeout = 3600,
             Location = "",
             Server = "",
-            NT= "ssdp:all",
+            NT= TargetDesc.All.ToString(),
             USN="",
         };
         /// <summary>
@@ -238,7 +245,7 @@ namespace Mozi.SSDP
         //      --urn:domain-name:service:serviceType:v
         //NTS: ssdp:alive 
         //SERVER: OS/version UPnP/1.0 product/version 
-        //USN: advertisement UUID
+        //USN:
         //      --uuid:device-UUID
         //      --uuid:device-UUID::upnp:rootdevice 
         //      --uuid:device-UUID::urn:schemas-upnp-org:device:deviceType:v
@@ -254,6 +261,7 @@ namespace Mozi.SSDP
             HttpRequestU request = new HttpRequestU();
             request.SetPath("*").SetMethod(RequestMethodUPnP.NOTIFY);
             request.SetHeaders(np.GetHeaders());
+            request.SetHeader("USN", USN.ToString());
             byte[] data = request.GetBuffer();
             _socket.SocketMain.SendTo(data, _remoteEP);
         }
@@ -415,7 +423,7 @@ namespace Mozi.SSDP
         public new TransformHeader GetHeaders()
         {
             TransformHeader headers = new TransformHeader();
-            headers.Add(HeaderProperty.Host, $"{MulticastAddress}:{ProtocolPort }");
+            headers.Add(HeaderProperty.Host, $"{MulticastAddress}:{ProtocolPort}");
             headers.Add("SERVER", $"{Server}");
             headers.Add("NT", $"{NT}");
             headers.Add("NTS", SSDPType.Alive.ToString());
@@ -522,5 +530,97 @@ namespace Mozi.SSDP
         public const string MulticastAddressIPv6 = "FF0x::C";
         //组播端口
         public const int ProtocolPort = 1900;
+    }
+
+
+    /// <summary>
+    ///     --upnp:rootdevice
+    //      --uuid:device-UUID
+    //      --urn:schemas-upnp-org:device:deviceType:v
+    //      --urn:schemas-upnp-org:service:serviceType:v
+    //      --urn:domain-name:device:deviceType:v
+    //      --urn:domain-name:service:serviceType:v
+    /// </summary>
+    public class TargetDesc:USNDesc
+    {
+
+        private bool IsAll = false;
+        /// <summary>
+        /// upnp:rootdevice
+        /// </summary>
+        public static TargetDesc RootDevice = new TargetDesc { IsRootDevice = true };
+        public static TargetDesc All = new TargetDesc { IsAll = true};
+
+        public new string ToString()
+        {
+            if (IsAll)
+            {
+                return "ssdp:all";
+            }
+            string result;
+            if (IsRootDevice)
+            {
+                result = "upnp:rootdevice";
+            }
+            else
+            {
+                if (String.IsNullOrEmpty(DeviceId))
+                {
+
+                    result = string.Format("urn:{0}:{1}:{2}:{3}", Domain, ServiceType == ServiceType.Device ? "device" : "service", ServiceName, Version);
+                }
+                else
+                {
+                    result = "uuid:" + DeviceId;
+                }
+            }
+            return result;
+        }
+
+
+    }
+
+    /// <summary>
+    /// --uuid:device-UUID
+    /// --uuid:device-UUID::upnp:rootdevice 
+    /// --uuid:device-UUID::urn:schemas-upnp-org:device:deviceType:v
+    /// --uuid:device-UUID::urn:schemas-upnp-org:service:serviceType:v
+    /// --uuid:device-UUID::urn:domain-name:device:deviceType:v
+    /// --uuid:device-UUID::urn:domain-name:service:serviceType:v
+    /// </summary>
+    public class USNDesc
+    {
+        public string Domain = "schemas-upnp-org";
+        public bool IsRootDevice = false;
+        public ServiceType ServiceType = ServiceType.Service;
+        public string DeviceId = "";
+        public string ServiceName = "simplehost";
+        public int Version = 1;
+
+        public new string ToString()
+        {
+            var result = "uuid:" + DeviceId;
+            if (IsRootDevice)
+            {
+                result += "::upnp:rootdevice";
+            }
+            else
+            {
+                result += string.Format("::urn:{0}:{1}:{2}:{3}", Domain, ServiceType == ServiceType.Device ? "device" : "service", ServiceName, Version);
+            }
+            return result;
+        }
+
+        public static USNDesc Parse(string data)
+        {
+            USNDesc usn = new USNDesc();
+            return usn;
+        }
+    }
+
+    public enum ServiceType
+    {
+        Device=1,
+        Service=2
     }
 }

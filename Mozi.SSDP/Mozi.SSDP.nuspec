@@ -8,7 +8,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="expression">MIT</license>
     <projectUrl>https://gitee.com/myui_admin/mozi</projectUrl>
-    <description>SSDP-UPNP实现</description>
+    <description>SSDP-UPNP实现，遵循UPNP/1.0 UPNP/2.0规范</description>
     <releaseNotes>SSDP-UPNP实现</releaseNotes>
     <copyright>Copyright © Jason 2020-2021</copyright>
     <tags>SSDP UPNP</tags>
