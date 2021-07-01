@@ -122,7 +122,7 @@ namespace Mozi.HttpEmbedded
         {
 
         }
-        private HeaderProperty(string tag)
+        public HeaderProperty(string tag)
         {
             PropertyName = tag;
         }

@@ -37,6 +37,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RequestMethodUPnP.cs" />
+    <Compile Include="SSDPHeader.cs" />
     <Compile Include="SSDPService.cs" />
     <Compile Include="SSDPCache.cs" />
     <Compile Include="SSDPCacheManager.cs" />

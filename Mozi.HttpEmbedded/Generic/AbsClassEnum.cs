@@ -32,7 +32,7 @@ namespace Mozi.HttpEmbedded.Generic
             return null;
         }
         /// <summary>
-        /// 此处判断标识符是否相等
+        /// 此处判断标识符是否相等,区分大小写
         /// <para>
         ///     如果要判断子对象是否等于<see cref="null"/>，请使用<see cref="object.Equals(object, object)"/>
         /// </para>

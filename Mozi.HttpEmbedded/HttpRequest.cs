@@ -615,15 +615,16 @@ namespace Mozi.HttpEmbedded
         /// <summary>
         /// 数据重播
         /// </summary>
+        /// <param name="headerKeyNameUpperCase">头属性名传大写</param>
         /// <returns></returns>
-        public byte[] GetBuffer()
+        public byte[] GetBuffer(bool headerKeyNameUpperCase)
         {
             List<byte> data = new List<byte>();
             //注入状态信息
             data.AddRange(GetRequestLine());
             data.AddRange(TransformHeader.Carriage);
             //注入默认头部
-            data.AddRange(Headers.GetBuffer());
+            data.AddRange(Headers.GetBuffer(headerKeyNameUpperCase));
             //注入Cookie
             data.AddRange(Cookies.GetBuffer());
             //注入分割符
@@ -631,6 +632,14 @@ namespace Mozi.HttpEmbedded
             //注入响应包体
             data.AddRange(Body);
             return data.ToArray();
+        }
+        /// <summary>
+        /// 数据重播
+        /// </summary>
+        /// <returns></returns>
+        public byte[] GetBuffer()
+        {
+            return GetBuffer(false);
         }
         /// <summary>
         /// 设置头信息

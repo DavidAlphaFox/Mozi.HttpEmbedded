@@ -71,10 +71,14 @@ namespace Mozi.HttpEmbedded
         /// <returns></returns>
         public byte[] GetBuffer()
         {
+           return GetBuffer(false);
+        }
+        public byte[] GetBuffer(bool keyNameUpperCase)
+        {
             List<byte> buffer = new List<byte>();
             foreach (var item in HeaderData)
             {
-                buffer.AddRange(Encoding.UTF8.GetBytes(string.Format("{0}: {1}", item.Key, item.Value)));
+                buffer.AddRange(Encoding.UTF8.GetBytes(string.Format("{0}: {1}", keyNameUpperCase?item.Key.ToUpper():item.Key, item.Value)));
                 buffer.AddRange(Carriage);
             }
             return buffer.ToArray();
@@ -86,7 +90,10 @@ namespace Mozi.HttpEmbedded
         }
         public string this[string key]
         {
-            get { return HeaderData[key]; }
+            get 
+            {
+                return HeaderData[key];
+            }
             set { HeaderData[key] = value; }
         }
 
