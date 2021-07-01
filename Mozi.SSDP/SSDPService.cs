@@ -5,9 +5,10 @@ using Mozi.HttpEmbedded;
 
 namespace Mozi.SSDP
 {
-    internal delegate void ServiceFound(object sender);
-    internal delegate void NotifyReceived(object sender);
-    internal delegate void SearchReceived(object sender);
+    public delegate void NotifyAliveReceived(object sender,AlivePackage pack,string host);
+    public delegate void NotifyByebyeReceived(object sender, ByebyePackage pack, string host);
+    public delegate void SearchReceived(object sender,SearchPackage pack,string host);
+
     internal delegate void SubScribeReceived(object sender);
     internal delegate void UnSubscribedReceived(object sender);
     internal delegate void ControlReceived(object sender);
@@ -153,9 +154,10 @@ namespace Mozi.SSDP
             
         };
 
-        internal event ServiceFound OnServiceFound;
-
         public event ServiceMessageReceive OnServiceMessageReceive;
+        public event NotifyAliveReceived OnNotifyAliveReceived;
+        public event NotifyByebyeReceived OnNotifyByebyeReceived;
+        public event SearchReceived OnSearchReceived;
 
         /// <summary>
         /// 构造函数
@@ -169,6 +171,10 @@ namespace Mozi.SSDP
             _socket.AfterReceiveEnd += _socket_AfterReceiveEnd;
             _remoteEP = new IPEndPoint(IPAddress.Parse(SSDPProtocol.MulticastAddress), SSDPProtocol.ProtocolPort);
             _timer = new Timer(TimeoutCallback, null, Timeout.Infinite, Timeout.Infinite);
+
+            PackDefaultAlive.USN = new USNDesc() { IsRootDevice = true, DeviceId = UUID.Generate() };
+            PackDefaultByebye.USN = new USNDesc() { IsRootDevice = true, DeviceId = UUID.Generate() };
+
         }
         /// <summary>
         /// 数据接收时间
@@ -177,17 +183,17 @@ namespace Mozi.SSDP
         /// <param name="args"></param>
         private void _socket_AfterReceiveEnd(object sender, DataTransferArgs args)
         {
-            ParsePackage(args.Data);
+            ParsePackage(args);
             Console.WriteLine("*********收到数据[{0}]*********\r\n{1}\r\n*******END********", args.IP,System.Text.Encoding.UTF8.GetString(args.Data));
         }
         /// <summary>
         /// 包解析
         /// </summary>
-        private static void ParsePackage(byte[] data)
+        private void ParsePackage(DataTransferArgs args)
         {
             try
             {
-                HttpRequest request = HttpRequest.Parse(data);
+                HttpRequest request = HttpRequest.Parse(args.Data);
                 RequestMethod method = request.Method;
                 //Notify
                 if (method == RequestMethodUPnP.NOTIFY)
@@ -196,10 +202,18 @@ namespace Mozi.SSDP
                     if (nts == SSDPType.Alive.ToString())
                     {
                         var pack = AlivePackage.Parse(request);
+                        if (pack != null && OnNotifyAliveReceived != null)
+                        {
+                            OnNotifyAliveReceived(this, pack,args.IP);
+                        }
                     }
                     else if (nts == SSDPType.Byebye.ToString())
                     {
                         var pack = ByebyePackage.Parse(request);
+                        if (pack != null && OnNotifyByebyeReceived != null)
+                        {
+                            OnNotifyByebyeReceived(this, pack, args.IP);
+                        }
                     }
                     
                 }
@@ -207,6 +221,10 @@ namespace Mozi.SSDP
                 else if(method==RequestMethodUPnP.MSEARCH)
                 {
                     var pack = SearchPackage.Parse(request);
+                    if (pack != null && OnSearchReceived != null)
+                    {
+                        OnSearchReceived(this, pack, args.IP);
+                    }
                 }
                 //SUBSCRIBE
                 else if(method==RequestMethodUPnP.SUBSCRIBE)
@@ -224,9 +242,9 @@ namespace Mozi.SSDP
 
                 }
             }
-            catch
+            catch(Exception ex)
             {
-
+                var ex1 = ex;
             }
         }
         /// <summary>
@@ -503,7 +521,7 @@ namespace Mozi.SSDP
             pack.USN = USNDesc.Parse(sUSN);
             pack.Location = req.Headers.GetValue("LOCATION");
             var sCacheControl = req.Headers.GetValue("CACHE-CONTROL");
-            if (!String.IsNullOrEmpty(sCacheControl))
+            if (!string.IsNullOrEmpty(sCacheControl))
             {
                 string[] cacheItems = sHost.Split(new char[] { '=' }, StringSplitOptions.RemoveEmptyEntries);
                 if (cacheItems.Length == 2)
@@ -778,7 +796,7 @@ namespace Mozi.SSDP
             }
             else
             {
-                result += string.Format("::urn:{0}:{1}:{2}:{3}", Domain, ServiceType == ServiceType.Device ? "device" : "service", ServiceName, Version);
+                result += string.Format(":urn:{0}:{1}:{2}:{3}", Domain, ServiceType == ServiceType.Device ? "device" : "service", ServiceName, Version);
             }
             return result;
         }
