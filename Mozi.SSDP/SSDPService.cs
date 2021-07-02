@@ -768,7 +768,7 @@ namespace Mozi.SSDP
 
         public virtual TransformHeader GetHeaders()
         {
-            return new TransformHeader();
+            throw new NotImplementedException();
         }
     }
 
@@ -781,12 +781,27 @@ namespace Mozi.SSDP
     }
     public class SSDPProtocol
     {
-        //组播地址，固定地址
+        /// <summary>
+        /// SSDP组播地址
+        /// </summary>
         public const string MulticastAddress = "239.255.255.250";
-        //组播地址IPv6
+        /// <summary>
+        /// SSDP组播地址IPV6
+        /// </summary>
         public const string MulticastAddressIPv6 = "FF0x::C";
-        //组播端口
+        /// <summary>
+        /// SSDP组播端口
+        /// </summary>
         public const int ProtocolPort = 1900;
+        /// <summary>
+        /// 事件组播地址
+        /// </summary>
+        public const string EventMulticastAddress = " 239.255.255.246";
+        /// <summary>
+        /// 事件组播端口
+        /// </summary>
+        public const int EventMulticastPort = 7900;
+
     }
 
 

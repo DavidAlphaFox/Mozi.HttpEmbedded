@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Mozi.SSDP
 {
@@ -18,8 +15,12 @@ namespace Mozi.SSDP
         public string Callback { get; set; }
     }
 
-    public class SubscribeReaponsePackage
+    public class SubscribeResponsePackage
     {
-
+        public DateTime Date { get; set; }
+        public string Server { get; set; }
+        public TargetDesc SID { get; set; }
+        public int TIMEOUT { get; set; }
+        public string AcceptedStateVar { get; set; }
     }
 }
