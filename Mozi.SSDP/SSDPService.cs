@@ -14,8 +14,6 @@ namespace Mozi.SSDP
     internal delegate void UnSubscribedReceived(object sender);
     internal delegate void ControlReceived(object sender);
 
-    public delegate void ServiceMessageReceive(object sender,HttpRequest request,string host);
-
     //TODO 进一步完善SSDP协议并进行良好的封装
 
     /// <summary>
@@ -51,7 +49,8 @@ namespace Mozi.SSDP
         private string _multicastGroupAddress = SSDPProtocol.MulticastAddress;
         private int _multicastGroupPort = SSDPProtocol.ProtocolPort;
 
-        private string _server = " Mozi/1.2.5 UPnP/2.0 Mozi.SSDP/1.2.5";
+        private string _server = "Mozi/1.2.5 UPnP/2.0 Mozi.SSDP/1.2.5";
+
         /// <summary>
         /// 设备描述文档地址
         /// </summary>
@@ -61,7 +60,10 @@ namespace Mozi.SSDP
 
         public string Server { get { return _server; } set { _server = value; } }
         public string Location { get; set; }
-
+        /// <summary>
+        /// 程序默认的域信息，用于绑定NT,ST,USN，以及设备/服务描述文档中的相关信息
+        /// </summary>
+        public string Domain = "mozi.org";
         /// <summary>
         /// 本地服务基本信息
         /// </summary>
@@ -135,7 +137,7 @@ namespace Mozi.SSDP
         /// <summary>
         /// 默认查询包
         /// </summary>
-        public SearchPackage PackDefaultDiscover = new SearchPackage() 
+        public SearchPackage PackDefaultSearch = new SearchPackage() 
         {
             MX=3,
             ST= TargetDesc.All,
@@ -159,7 +161,6 @@ namespace Mozi.SSDP
             
         };
 
-        public event ServiceMessageReceive OnServiceMessageReceive;
         public event NotifyAliveReceived OnNotifyAliveReceived;
         public event NotifyByebyeReceived OnNotifyByebyeReceived;
         public event SearchReceived OnSearchReceived;
@@ -208,6 +209,7 @@ namespace Mozi.SSDP
                 if (method == RequestMethodUPnP.NOTIFY)
                 {
                     var nts = request.Headers.GetValue("NTS");
+                    //ssdp:alive
                     if (nts == SSDPType.Alive.ToString())
                     {
                         var pack = AlivePackage.Parse(request);
@@ -216,6 +218,7 @@ namespace Mozi.SSDP
                             OnNotifyAliveReceived(this, pack,args.IP);
                         }
                     }
+                    //ssdp:byebye
                     else if (nts == SSDPType.Byebye.ToString())
                     {
                         var pack = ByebyePackage.Parse(request);
@@ -223,6 +226,7 @@ namespace Mozi.SSDP
                         {
                             OnNotifyByebyeReceived(this, pack, args.IP);
                         }
+                    //upnp:update
                     }else if (nts == SSDPType.Update.ToString()){
 
                         var pack = UpdatePackage.Parse(request);
@@ -372,7 +376,14 @@ namespace Mozi.SSDP
             byte[] data = request.GetBuffer();
             _socket.SocketMain.SendTo(data, _remoteEP);
         }
-
+        public void NotifyUpdate(UpdatePackage bp)
+        {
+            HttpRequest request = new HttpRequest();
+            request.SetPath("*").SetMethod(RequestMethodUPnP.NOTIFY);
+            request.ApplyHeaders(bp.GetHeaders());
+            byte[] data = request.GetBuffer();
+            _socket.SocketMain.SendTo(data, _remoteEP);
+        }
         //HTTP/1.1 200 OK
         //CACHE-CONTROL: max-age = seconds until advertisement expires
         //DATE: when reponse was generated
@@ -396,20 +407,14 @@ namespace Mozi.SSDP
         /// <summary>
         /// 响应 MS-SEARCH 查找
         /// </summary>
-        public void EchoSearch()
+        public void EchoSearch(SearchResponsePackage pk)
         {
             HttpResponse resp = new HttpResponse();
-            resp.AddHeader("HOST", $"{SSDPProtocol.MulticastAddress}:{SSDPProtocol.ProtocolPort}");
-            resp.AddHeader("CACHE-CONTROL", $"max-age = {CacheTimeout}");
-            resp.AddHeader(HeaderProperty.Date, DateTime.UtcNow.ToString("r"));
-            resp.AddHeader("EXT", "");
-            resp.AddHeader(HeaderProperty.Location, "http://127.0.0.1/desc.xml");
-            resp.AddHeader("Server", _server);
-            resp.AddHeader("ST", "mozi-embedded:simplehost");
-            resp.AddHeader("USN", "mozi-embedded:simplehost");
+            resp.SetHeaders(pk.GetHeaders());
             resp.SetStatus(StatusCode.Success);
             byte[] data = resp.GetBuffer();
             _socket.SocketMain.SendTo(data, _remoteEP);
+
         }
         //POST path of control URL HTTP/1.1 
         //HOST: host of control URL:port of control URL
@@ -500,244 +505,8 @@ namespace Mozi.SSDP
         /// <param name="state"></param>
         private void TimeoutCallback(object state)
         {
-            Search(PackDefaultDiscover);
+            Search(PackDefaultSearch);
             NotifyAlive(PackDefaultAlive);
-        }
-    }
-    public class UpdatePackage : AlivePackage
-    {
-        public int NEXTBOOTID { get; set; }
-
-        public override TransformHeader GetHeaders()
-        {
-            TransformHeader headers = new TransformHeader();
-            headers.Add("HOST", $"{MulticastAddress}:{ProtocolPort}");
-            headers.Add("SERVER", Server);
-            headers.Add("NT", NT.ToString());
-            headers.Add("NTS", SSDPType.Alive.ToString());
-            headers.Add("USN", USN.ToString());
-            headers.Add("LOCATION", Location);
-            headers.Add("CACHE-CONTROL", $"max-age = {CacheTimeout}");
-            return headers;
-        }
-
-        public new static UpdatePackage Parse(HttpRequest req)
-        {
-            UpdatePackage pack = new UpdatePackage();
-            var sHost = req.Headers.GetValue("HOST");
-            //IPV4
-            string[] hostItmes = sHost.Split(new char[] { ':' }, StringSplitOptions.RemoveEmptyEntries);
-            if (hostItmes.Length == 2)
-            {
-                pack.MulticastAddress = hostItmes[0];
-                pack.ProtocolPort = int.Parse(hostItmes[1]);
-            }
-            pack.Server = req.Headers.GetValue("SERVER");
-            var sNt = req.Headers.GetValue("NT");
-            pack.NT = TargetDesc.Parse(sNt);
-            var sNTS = req.Headers.GetValue("NTS");
-            var sUSN = req.Headers.GetValue("USN");
-            pack.USN = USNDesc.Parse(sUSN);
-            pack.Location = req.Headers.GetValue("LOCATION");
-            var sCacheControl = req.Headers.GetValue("CACHE-CONTROL");
-            if (!string.IsNullOrEmpty(sCacheControl))
-            {
-                string[] cacheItems = sHost.Split(new char[] { '=' }, StringSplitOptions.RemoveEmptyEntries);
-                if (cacheItems.Length == 2)
-                {
-                    pack.CacheTimeout = int.Parse(hostItmes[1].Trim());
-                }
-            }
-            return pack;
-        }
-    }
-
-
-
-    public class AlivePackage:ByebyePackage
-    {
-        public int CacheTimeout { get; set; }
-        public string Location { get; set; }
-        public string Server { get; set; }
-
-        public int SEARCHPORT { get; set; }
-        public int SECURELOCATION { get; set; }
-
-        public override TransformHeader GetHeaders()
-        {
-            TransformHeader headers = new TransformHeader();
-            headers.Add("HOST", $"{MulticastAddress}:{ProtocolPort}");
-            headers.Add("SERVER", Server);
-            headers.Add("NT", NT.ToString());
-            headers.Add("NTS", SSDPType.Alive.ToString());
-            headers.Add("USN", USN.ToString());
-            headers.Add("LOCATION", Location);
-            headers.Add("CACHE-CONTROL", $"max-age = {CacheTimeout}");
-            return headers;
-        }
-        public new static AlivePackage Parse(HttpRequest req)
-        {
-            AlivePackage pack = new AlivePackage();
-            var sHost = req.Headers.GetValue("HOST");
-            //IPV4
-            string[] hostItmes = sHost.Split(new char[] { ':'}, StringSplitOptions.RemoveEmptyEntries);
-            if (hostItmes.Length == 2)
-            {
-                pack.MulticastAddress = hostItmes[0];
-                pack.ProtocolPort = int.Parse(hostItmes[1]);
-            }
-            pack.Server = req.Headers.GetValue("SERVER");
-            var sNt = req.Headers.GetValue("NT");
-            pack.NT = TargetDesc.Parse(sNt);
-            var sNTS = req.Headers.GetValue("NTS");
-            var sUSN = req.Headers.GetValue("USN");
-            pack.USN = USNDesc.Parse(sUSN);
-            pack.Location = req.Headers.GetValue("LOCATION");
-            var sCacheControl = req.Headers.GetValue("CACHE-CONTROL");
-            if (!string.IsNullOrEmpty(sCacheControl))
-            {
-                string[] cacheItems = sHost.Split(new char[] { '=' }, StringSplitOptions.RemoveEmptyEntries);
-                if (cacheItems.Length == 2)
-                {
-                    pack.CacheTimeout = int.Parse(hostItmes[1].Trim());
-                }
-            }
-            return pack;
-        }
-    }
-
-    public class SearchResponsePackage : SearchPackage
-    {
-        public int CacheTimeout { get; set; }
-        public DateTime Date { get; set; }
-        public string Ext { get; set; }
-        public override TransformHeader GetHeaders()
-        {
-            TransformHeader headers = new TransformHeader();
-            headers.Add("HOST", $"{MulticastAddress}:{ProtocolPort}");
-            headers.Add("MAN", "\"" + SSDPType.Discover.ToString() + "\"");
-            headers.Add("ST", ST.ToString());
-            return headers;
-        }
-        public new static  SearchResponsePackage Parse(HttpRequest req)
-        {
-            SearchResponsePackage pack = new SearchResponsePackage();
-            var sHost = req.Headers.GetValue("HOST");
-            //IPV4
-            string[] hostItmes = sHost.Split(new char[] { ':' }, StringSplitOptions.RemoveEmptyEntries);
-            if (hostItmes.Length == 2)
-            {
-                pack.MulticastAddress = hostItmes[0];
-                pack.ProtocolPort = int.Parse(hostItmes[1]);
-            }
-            pack.MAN = req.Headers.GetValue("MAN");
-            pack.MX = int.Parse(req.Headers.GetValue("MX"));
-            var st = req.Headers.GetValue("ST");
-            pack.ST = TargetDesc.Parse(st);
-            var sNTS = req.Headers.GetValue("NTS");
-            var sUSN = req.Headers.GetValue("USN");
-            return pack;
-        }
-
-    }
-
-    /// <summary>
-    /// 查询头信息
-    /// <para>
-    ///     发送包设置<see cref="SearchPackage.MAN"/>参数无效，默认为 "ssdp:discover"
-    /// </para>
-    /// </summary>
-    public class SearchPackage : AbsAdvertisePackage
-    {
-        public string MAN { get; set; }
-        //-ssdp:all 搜索所有设备和服务
-        //-upnp:rootdevice 仅搜索网络中的根设备
-        //-uuid:device-UUID 查询UUID标识的设备
-        //-urn:schemas-upnp-org:device:device-Type:version 查询device-Type字段指定的设备类型，设备类型和版本由UPNP组织定义。
-        //-urn:schemas-upnp-org:service:service-Type:version 查询service-Type字段指定的服务类型，服务类型和版本由UPNP组织定义。
-        public TargetDesc ST { get; set; }
-        /// <summary>
-        /// 查询等待时间
-        /// </summary>
-        public int MX { get; set; }
-        /// <summary>
-        /// 用户代理
-        /// </summary>
-        public string USERAGENT {get;set;}
-        public int TCPPORT { get; set; }
-        public string CPFN { get; set; }
-        public string CPUUID { get; set; }
-        /// <summary>
-        /// </summary>
-        /// <returns></returns>
-        public override TransformHeader GetHeaders()
-        {
-            TransformHeader headers = new TransformHeader();
-            headers.Add("HOST", $"{MulticastAddress}:{ProtocolPort}");
-            headers.Add("MAN", "\""+SSDPType.Discover.ToString()+"\"");
-            headers.Add("ST", ST.ToString());
-            headers.Add("MX", $"{MX}");
-            return headers;
-        }
-        public static SearchPackage Parse(HttpRequest req)
-        {
-            SearchPackage pack = new SearchPackage();
-            var sHost = req.Headers.GetValue("HOST");
-            //IPV4
-            string[] hostItmes = sHost.Split(new char[] { ':' }, StringSplitOptions.RemoveEmptyEntries);
-            if (hostItmes.Length == 2)
-            {
-                pack.MulticastAddress = hostItmes[0];
-                pack.ProtocolPort = int.Parse(hostItmes[1]);
-            }
-            pack.MAN = req.Headers.GetValue("MAN");
-            pack.MX = int.Parse(req.Headers.GetValue("MX"));
-            var st = req.Headers.GetValue("ST");
-            pack.ST = TargetDesc.Parse(st);
-            var sNTS = req.Headers.GetValue("NTS");
-            var sUSN = req.Headers.GetValue("USN");
-            return pack;
-        }
-    }
-    /// <summary>
-    /// 离线头信息
-    /// </summary>
-    public class ByebyePackage:AbsAdvertisePackage
-    {
-        public TargetDesc NT { get; set; }
-        //public string NTS { get; set; }
-        public USNDesc USN { get; set; }
-        //
-        public int BOOTID { get; set; }
-        public int CONFIGID { get; set; }
-
-        public override TransformHeader GetHeaders()
-        {
-            TransformHeader headers = new TransformHeader();
-            headers.Add("HOST", $"{MulticastAddress}:{ProtocolPort}");
-            headers.Add("NT", NT.ToString());
-            headers.Add("NTS", "\"" + SSDPType.Byebye.ToString()+"\"");
-            headers.Add("USN", USN.ToString());
-            return headers;
-        }
-
-        public  static ByebyePackage Parse(HttpRequest req)
-        {
-            ByebyePackage pack = new ByebyePackage();
-            var sHost = req.Headers.GetValue("HOST");
-            //IPV4
-            string[] hostItmes = sHost.Split(new char[] { ':' }, StringSplitOptions.RemoveEmptyEntries);
-            if (hostItmes.Length == 2)
-            {
-                pack.MulticastAddress = hostItmes[0];
-                pack.ProtocolPort = int.Parse(hostItmes[1]);
-            }
-            var sNt = req.Headers.GetValue("NT");
-            pack.NT = TargetDesc.Parse(sNt);
-            var sNTS = req.Headers.GetValue("NTS");
-            var sUSN = req.Headers.GetValue("USN");
-            pack.USN = USNDesc.Parse(sUSN);
-            return pack;
         }
     }
 
@@ -772,13 +541,6 @@ namespace Mozi.SSDP
         }
     }
 
-    public  class SubscribePackage:AbsAdvertisePackage
-    {
-        public TargetDesc NT { get; set; }
-        public string CALLBACK { get; set; }
-        public string SID { get; set; }
-        public string TIMEOUT { get; set; }
-    }
     public class SSDPProtocol
     {
         /// <summary>

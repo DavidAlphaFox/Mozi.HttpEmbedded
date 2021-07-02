@@ -2,6 +2,16 @@
 
 namespace Mozi.SSDP
 {
+
+
+    public class SubscribePackage : AbsAdvertisePackage
+    {
+        public TargetDesc NT { get; set; }
+        public string CALLBACK { get; set; }
+        public string SID { get; set; }
+        public string TIMEOUT { get; set; }
+    }
+
     //NOTIFY* HTTP/1.0
     //HOST: 239.255.255.246:7900 *** note the port number is different than SSDP***
     //CONTENT-TYPE: text/xml; charset="utf-8"
@@ -31,6 +41,22 @@ namespace Mozi.SSDP
         public int ContentLength { get; set; }
 
         public Property[] PropertySet { get; set; }
+
+        public string CreateBody()
+        {
+            string doc= "<?xml version=\"1.0\"?><e:propertyset xmlns:e=\"urn:schemas-upnp-org:event-1-0\">";
+            foreach(var p in PropertySet)
+            {
+                doc += "<e:property>";
+                foreach(var v in p.Variables)
+                {
+                    doc += string.Format("<{0}>{1}</{0}>", v.VariableName,v.Value);
+                }
+                doc += "</e:property>";
+            }
+            doc += "</e:propertyset>";
+            return doc;
+        }
     }
 
     public class Property

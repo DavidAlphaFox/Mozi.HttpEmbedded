@@ -116,6 +116,11 @@ namespace Mozi.HttpEmbedded
             _contentType = contentType;
             return this;
         }
+        public HttpResponse SetHeaders(TransformHeader headers)
+        {
+            Headers = headers;
+            return this;
+        }
         /// <summary>
         /// 增加头部信息
         /// </summary>
