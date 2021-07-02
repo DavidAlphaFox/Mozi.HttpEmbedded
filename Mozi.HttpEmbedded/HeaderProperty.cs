@@ -78,18 +78,18 @@ namespace Mozi.HttpEmbedded
         //（请注意，在HTTP / 0.9规范中引入的正交错误必须在协议的后续版本中保留）
 
         public static HeaderProperty RetryAfter = new HeaderProperty("Retry-After");// 			
-        public static HeaderProperty SecWebsocketExtensions = new HeaderProperty("Sec-Websocket-Extensions");// 			 Websockets
-        public static HeaderProperty SecWebsocketKey = new HeaderProperty("Sec-Websocket-Key");// 			 Websockets
-        public static HeaderProperty SecWebsocketOrigin = new HeaderProperty("Sec-Websocket-Origin");// 			 Websockets
-        public static HeaderProperty SecWebsocketProtocol = new HeaderProperty("Sec-Websocket-Protocol");// 			 Websockets
-        public static HeaderProperty SecWebsocketVersion = new HeaderProperty("Sec-Websocket-Version");// 			 Websockets
+        public static HeaderProperty SecWebsocketExtensions = new HeaderProperty("Sec-Websocket-Extensions");                     // 			 Websockets
+        public static HeaderProperty SecWebsocketKey = new HeaderProperty("Sec-Websocket-Key");                                   // 			 Websockets
+        public static HeaderProperty SecWebsocketOrigin = new HeaderProperty("Sec-Websocket-Origin");                             // 			 Websockets
+        public static HeaderProperty SecWebsocketProtocol = new HeaderProperty("Sec-Websocket-Protocol");                         // 			 Websockets
+        public static HeaderProperty SecWebsocketVersion = new HeaderProperty("Sec-Websocket-Version");                           // 			 Websockets
         public static HeaderProperty Server = new HeaderProperty("Server");// 			
-        public static HeaderProperty SetCookie = new HeaderProperty("Set-Cookie");// 			RFC 2109
-        public static HeaderProperty SetCookie2 = new HeaderProperty("Set-Cookie2");// 			RFC 2965
-        public static HeaderProperty StrictTransportSecurity = new HeaderProperty("Strict-Transport-Security");// 		HTTP Strict Transport Security 	IETF reference
-        public static HeaderProperty TCN = new HeaderProperty("TCN");// 		HTTP Content Negotiation 	RFC 2295, §8.5
-        public static HeaderProperty TE = new HeaderProperty("TE");// 			
-        public static HeaderProperty Trailer = new HeaderProperty("Trailer");// 	
+        public static HeaderProperty SetCookie = new HeaderProperty("Set-Cookie");                                                // 			RFC 2109
+        public static HeaderProperty SetCookie2 = new HeaderProperty("Set-Cookie2");                                              // 			RFC 2965
+        public static HeaderProperty StrictTransportSecurity = new HeaderProperty("Strict-Transport-Security");                   // 		HTTP Strict Transport Security 	IETF reference
+        public static HeaderProperty TCN = new HeaderProperty("TCN");                                                             // 		HTTP Content Negotiation 	RFC 2295, §8.5
+        public static HeaderProperty TE = new HeaderProperty("TE");                                                               // 			
+        public static HeaderProperty Trailer = new HeaderProperty("Trailer");                                                     // 	
 
         //列出将在消息正文之后在尾部块中传输的头。这允许服务器计算一些值，如Content-MD5：在传输数据时。请注意，Trailer：标头不得列出Content-Length :, Trailer：或Transfer-Encoding：headers。
         //        RFC 2616, §14.40
@@ -112,6 +112,9 @@ namespace Mozi.HttpEmbedded
 
         //通常在值为“XMLHttpRequest”时使用
         //        Not standard
+
+        //SOAP
+        public static HeaderProperty SOAPAction = new HeaderProperty("SOAPAction");
 
         public string PropertyName { get; set; }
         public string PropertyValue { get; set; }

@@ -35,6 +35,7 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Control.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RequestMethodUPnP.cs" />
     <Compile Include="SSDPHeader.cs" />
@@ -42,6 +43,7 @@
     <Compile Include="SSDPCache.cs" />
     <Compile Include="SSDPCacheManager.cs" />
     <Compile Include="SSDPType.cs" />
+    <Compile Include="Subscribe.cs" />
     <Compile Include="UDPSocket.cs" />
     <Compile Include="UDPStateObject.cs" />
     <Compile Include="UUID.cs" />

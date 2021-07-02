@@ -14,6 +14,7 @@ namespace Mozi.SSDP
         public static HeaderProperty Usn= new HeaderProperty("USN");
         public static HeaderProperty BootId= new HeaderProperty("BOOTID.UPNP.ORG");
         public static HeaderProperty ConfigId= new HeaderProperty("CONFIGID.UPNP.ORG");
+        public static HeaderProperty NextBootId = new HeaderProperty("NEXTBOOTID.UPNP.ORG");
         public static HeaderProperty SearchPort= new HeaderProperty("SEARCHPORT.UPNP.ORG");
         public static HeaderProperty SecureLocation= new HeaderProperty("SECURELOCATION.UPNP.ORG");
         public static HeaderProperty Man= new HeaderProperty("MAN");

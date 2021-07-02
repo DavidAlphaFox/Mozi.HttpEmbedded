@@ -58,6 +58,9 @@ namespace Mozi.HttpEmbedded.Test
             SSDP.SSDPService ssdp = new SSDP.SSDPService();
             ssdp.OnNotifyAliveReceived += Ssdp_OnNotifyAliveReceived;
             ssdp.OnSearchReceived += Ssdp_OnSearchReceived;
+            ssdp.OnNotifyByebyeReceived += Ssdp_OnNotifyByebyeReceived;
+            ssdp.OnNotifyUpdateReceived += Ssdp_OnNotifyUpdateReceived;
+
             ssdp.AllowLoopbackMessage = true;
             ssdp.Activate();
 
@@ -78,6 +81,16 @@ namespace Mozi.HttpEmbedded.Test
 
             //请访问地址 http://{ip}:{port}/admin/index.html
 
+        }
+
+        private static void Ssdp_OnNotifyUpdateReceived(object sender, SSDP.UpdatePackage pack, string host)
+        {
+            Console.WriteLine("Notify update from {0}", host);
+        }
+
+        private static void Ssdp_OnNotifyByebyeReceived(object sender, SSDP.ByebyePackage pack, string host)
+        {
+            Console.WriteLine("Notify byebye from {0}", host);
         }
 
         private static void Ssdp_OnSearchReceived(object sender, SSDP.SearchPackage pack, string host)
