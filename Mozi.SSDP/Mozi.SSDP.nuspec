@@ -2,7 +2,7 @@
 <package >
   <metadata>
 	<id>Mozi.SSDP</id>
-	<version>1.2.5</version>
+	<version>1.2.6</version>
 	<title>Mozi.SSDP</title>
 	<authors>JasonWcx</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
@@ -13,7 +13,7 @@
     <copyright>Copyright © Jason 2020-2021</copyright>
     <tags>SSDP UPNP</tags>
 	  <dependencies>
-		  <dependency id="Mozi.HttpEmbedded" version="[1.2.0,]" />
+		  <dependency id="Mozi.HttpEmbedded" version="[1.2.5,]" />
 	  </dependencies>
   </metadata>
 </package>
