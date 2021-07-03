@@ -308,14 +308,12 @@ namespace Mozi.SSDP
         /// <summary>
         /// 发送查询消息
         /// </summary>
-        public void Search(SearchPackage dp)
+        public void Search(SearchPackage pk)
         {
             HttpRequest request = new HttpRequest();
             request.SetPath("*").SetMethod(RequestMethodUPnP.MSEARCH);
-            request.ApplyHeaders(dp.GetHeaders());
-
+            request.SetHeaders(pk.GetHeaders());
             byte[] data = request.GetBuffer();
-            
             _socket.SocketMain.SendTo(data, _remoteEP);
         }
 
@@ -344,11 +342,11 @@ namespace Mozi.SSDP
         /// <summary>
         /// 发送存在通知
         /// </summary>
-        public void NotifyAlive(AlivePackage np)
+        public void NotifyAlive(AlivePackage pk)
         {
             HttpRequest request = new HttpRequest();
             request.SetPath("*").SetMethod(RequestMethodUPnP.NOTIFY);
-            request.ApplyHeaders(np.GetHeaders());
+            request.SetHeaders(pk.GetHeaders());
             byte[] data = request.GetBuffer();
             _socket.SocketMain.SendTo(data, _remoteEP);
         }
@@ -368,19 +366,19 @@ namespace Mozi.SSDP
         /// <summary>
         /// 离线通知
         /// </summary>
-        public void NotifyLeave(ByebyePackage bp)
+        public void NotifyLeave(ByebyePackage pk)
         {
             HttpRequest request = new HttpRequest();
             request.SetPath("*").SetMethod(RequestMethodUPnP.NOTIFY);
-            request.ApplyHeaders(bp.GetHeaders());
+            request.SetHeaders(pk.GetHeaders());
             byte[] data = request.GetBuffer();
             _socket.SocketMain.SendTo(data, _remoteEP);
         }
-        public void NotifyUpdate(UpdatePackage bp)
+        public void NotifyUpdate(UpdatePackage pk)
         {
             HttpRequest request = new HttpRequest();
             request.SetPath("*").SetMethod(RequestMethodUPnP.NOTIFY);
-            request.ApplyHeaders(bp.GetHeaders());
+            request.SetHeaders(pk.GetHeaders());
             byte[] data = request.GetBuffer();
             _socket.SocketMain.SendTo(data, _remoteEP);
         }
@@ -478,18 +476,26 @@ namespace Mozi.SSDP
         //Other variable names and values(if any) go here.
         //</e:propertyset>
 
-        internal void Subscribe()
+        internal void Subscribe(SubscribePackage pk)
         {
-
+            HttpRequest request = new HttpRequest();
+            request.SetPath(pk.PublisherPath).SetMethod(RequestMethodUPnP.SUBSCRIBE);
+            request.SetHeaders(pk.GetHeaders());
+            byte[] data = request.GetBuffer();
+            _socket.SocketMain.SendTo(data, _remoteEP);
         }
 
         //UNSUBSCRIBE publisher path HTTP/1.1 
         //HOST: publisher host:publisher port
         //SID: uuid:subscription UUID
 
-        internal void UnSubscribe()
+        internal void UnSubscribe(SubscribePackage pk)
         {
-
+            HttpRequest request = new HttpRequest();
+            request.SetPath(pk.PublisherPath).SetMethod(RequestMethodUPnP.UNSUBSCRIBE);
+            request.SetHeaders(pk.GetHeaders());
+            byte[] data = request.GetBuffer();
+            _socket.SocketMain.SendTo(data, _remoteEP);
         }
         /// <summary>
         /// 设置描述文档地址

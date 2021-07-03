@@ -664,6 +664,16 @@ namespace Mozi.HttpEmbedded
             return this;
         }
         /// <summary>
+        /// 应用头信息集合
+        /// </summary>
+        /// <param name="headers"></param>
+        /// <returns></returns>
+        public HttpRequest SetHeaders(TransformHeader headers)
+        {
+            Headers = headers;
+            return this;
+        }
+        /// <summary>
         /// 设置请求路径
         /// </summary>
         /// <param name="path"></param>
@@ -692,17 +702,7 @@ namespace Mozi.HttpEmbedded
         {
             ProtocolVersion = version;
             return this;
-        }
-        /// <summary>
-        /// 应用头信息集合
-        /// </summary>
-        /// <param name="headers"></param>
-        /// <returns></returns>
-        public HttpRequest ApplyHeaders(TransformHeader headers)
-        {
-            Headers = headers;
-            return this;
-        }        
+        }   
         /// <summary>
         /// 生成请求行
         /// </summary>

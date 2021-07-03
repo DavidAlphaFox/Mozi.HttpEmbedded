@@ -1,4 +1,5 @@
-﻿using Mozi.HttpEmbedded.Generic;
+﻿using Mozi.HttpEmbedded;
+using Mozi.HttpEmbedded.Generic;
 
 namespace Mozi.SSDP
 {
@@ -10,6 +11,42 @@ namespace Mozi.SSDP
         public string CALLBACK { get; set; }
         public string SID { get; set; }
         public string TIMEOUT { get; set; }
+        public string UserAgent { get; set; }
+        /// <summary>
+        /// a, b, c这种分割字符
+        /// </summary>
+        public string StateVar { get; set; }
+        public string PublisherPath { get; set; }
+        public string PublisherHost { get; set; }
+        public string PublisherPort { get; set; }
+        /// <summary>
+        /// <para>
+        /// NT设置无效，会被统一设置为<see cref="SSDPType.Event"/>
+        /// </para>
+        /// </summary>
+        /// <returns></returns>
+        public override TransformHeader GetHeaders()
+        {
+            TransformHeader headers = new TransformHeader();
+            headers.Add("HOST", $"{PublisherHost}:{PublisherPort}");
+            headers.Add("NT",SSDPType.Event.ToString());
+            headers.Add("USER-AGENT", UserAgent);
+            headers.Add("TIMEOUT", "Second-"+TIMEOUT);
+            headers.Add("CALLBACK", CALLBACK);
+            headers.Add("STATEVAR", StateVar);
+            return headers;
+        }
+        /// <summary>
+        /// NT字段会被转化为SID字段，请给NT赋值
+        /// </summary>
+        /// <returns></returns>
+        public TransformHeader GetUnsubscribe()
+        {
+            TransformHeader headers = new TransformHeader();
+            headers.Add("HOST", $"{PublisherHost}:{PublisherPort}");
+            headers.Add("SID",NT.ToString());
+            return headers;
+        }
     }
 
     //NOTIFY* HTTP/1.0
@@ -40,8 +77,19 @@ namespace Mozi.SSDP
         public int BootId {get;set;}
         public int ContentLength { get; set; }
 
+        public string DeliveryPath { get; set; }
+
         public Property[] PropertySet { get; set; }
 
+        //public override TransformHeader GetHeaders()
+        //{
+        //    TransformHeader headers = new TransformHeader();
+        //    headers.Add("HOST", $"{HOST}");
+        //    headers.Add("NT", SSDPType.Event.ToString());
+        //    headers.Add("NTS", SSDPType.PropChange.ToString());
+        //    headers.Add("CONTENT-TYPE","text/xml; charset=\"utf-8\"");
+        //    return headers;
+        //}
         public string CreateBody()
         {
             string doc= "<?xml version=\"1.0\"?><e:propertyset xmlns:e=\"urn:schemas-upnp-org:event-1-0\">";
