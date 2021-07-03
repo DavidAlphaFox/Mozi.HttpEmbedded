@@ -702,7 +702,13 @@ namespace Mozi.HttpEmbedded
         {
             ProtocolVersion = version;
             return this;
-        }   
+        }
+        public HttpRequest SetBody(byte[] data)
+        {
+            Body = data;
+            ContentLength = Body.Length.ToString();
+            return this;
+        }
         /// <summary>
         /// 生成请求行
         /// </summary>

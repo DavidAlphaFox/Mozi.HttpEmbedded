@@ -2,6 +2,7 @@
 using System.Net;
 using System.Threading;
 using Mozi.HttpEmbedded;
+using Mozi.HttpEmbedded.WebService;
 
 namespace Mozi.SSDP
 {
@@ -10,9 +11,10 @@ namespace Mozi.SSDP
     public delegate void SearchReceived(object sender,SearchPackage pack,string host);
     public delegate void NotifyUpdateReceived(object sender, UpdatePackage pack, string host);
 
-    internal delegate void SubScribeReceived(object sender);
-    internal delegate void UnSubscribedReceived(object sender);
-    internal delegate void ControlReceived(object sender);
+    internal delegate void SubscribeReceived(object sender,SubscribePackage pack,string host);
+    internal delegate void UnSubscribedReceived(object sender,SubscribePackage pack, string host);
+    internal delegate void ControlActionReceived(object sender,ControlActionPackage pack,string host);
+    internal delegate void EventMessageReceive(object sender, EventPackage pack, string host);
 
     //TODO 进一步完善SSDP协议并进行良好的封装
 
@@ -209,6 +211,9 @@ namespace Mozi.SSDP
                 if (method == RequestMethodUPnP.NOTIFY)
                 {
                     var nts = request.Headers.GetValue("NTS");
+
+                    //TODO notify event
+
                     //ssdp:alive
                     if (nts == SSDPType.Alive.ToString())
                     {
@@ -235,7 +240,6 @@ namespace Mozi.SSDP
                             OnNotifyUpdateReceived(this, pack, args.IP);
                         }
                     }
-                    
                 }
                 //MS-SEARCH
                 else if(method==RequestMethodUPnP.MSEARCH)
@@ -246,12 +250,12 @@ namespace Mozi.SSDP
                         OnSearchReceived(this, pack, args.IP);
                     }
                 }
-                //SUBSCRIBE
+                //event SUBSCRIBE
                 else if(method==RequestMethodUPnP.SUBSCRIBE)
                 {
 
                 }
-                //UNSUBSCRIBE
+                //event UNSUBSCRIBE
                 else if(method==RequestMethodUPnP.UNSUBSCRIBE)
                 {
 
@@ -428,9 +432,16 @@ namespace Mozi.SSDP
         //          </u:actionName>
         //      </s:Body> 
         //</s:Envelope>
-        internal void ControlAction()
+        internal void ControlAction(ControlActionPackage pk)
         {
-
+            HttpRequest request = new HttpRequest();
+            //如果POST被拒绝，则使用M-POST
+            request.SetPath(pk.Path).SetMethod(RequestMethod.POST);
+            request.SetBody(HttpEmbedded.Encode.StringEncoder.Encode(SoapEnvelope.CreateDocument(pk.Body)));
+            request.SetHeader("CONTENT-LENGTH", request.ContentLength);
+            request.SetHeaders(pk.GetHeaders());
+            byte[] data = request.GetBuffer();
+            _socket.SocketMain.SendTo(data, _remoteEP);
         }
         //POST path of control URL HTTP/1.1 
         //HOST: host of control URL:port of control URL
@@ -444,6 +455,9 @@ namespace Mozi.SSDP
         //          </u:QueryStateVariable> 
         //      </s:Body> 
         //</s:Envelope>
+        /// <summary>
+        /// UPNP/2.0已废除Control Query
+        /// </summary>
         internal void ControlQuery()
         {
 
@@ -479,7 +493,7 @@ namespace Mozi.SSDP
         internal void Subscribe(SubscribePackage pk)
         {
             HttpRequest request = new HttpRequest();
-            request.SetPath(pk.PublisherPath).SetMethod(RequestMethodUPnP.SUBSCRIBE);
+            request.SetPath(pk.Path).SetMethod(RequestMethodUPnP.SUBSCRIBE);
             request.SetHeaders(pk.GetHeaders());
             byte[] data = request.GetBuffer();
             _socket.SocketMain.SendTo(data, _remoteEP);
@@ -492,7 +506,7 @@ namespace Mozi.SSDP
         internal void UnSubscribe(SubscribePackage pk)
         {
             HttpRequest request = new HttpRequest();
-            request.SetPath(pk.PublisherPath).SetMethod(RequestMethodUPnP.UNSUBSCRIBE);
+            request.SetPath(pk.Path).SetMethod(RequestMethodUPnP.UNSUBSCRIBE);
             request.SetHeaders(pk.GetHeaders());
             byte[] data = request.GetBuffer();
             _socket.SocketMain.SendTo(data, _remoteEP);
@@ -531,14 +545,16 @@ namespace Mozi.SSDP
     {
 
         public string HOST { get; set; }
+        public string Path { get; set; }
 
-        public string MulticastAddress { get; set; }
-        public int ProtocolPort { get; set; }
+        public string HostIp { get; set; }
+        public int HostPort { get; set; }
 
         public AbsAdvertisePackage()
         {
-            MulticastAddress = SSDPProtocol.MulticastAddress;
-            ProtocolPort = SSDPProtocol.ProtocolPort;
+            HostIp = SSDPProtocol.MulticastAddress;
+            HostPort = SSDPProtocol.ProtocolPort;
+            Path = "*";
         }
 
         public virtual TransformHeader GetHeaders()

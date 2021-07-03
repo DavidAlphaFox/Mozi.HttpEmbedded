@@ -16,9 +16,6 @@ namespace Mozi.SSDP
         /// a, b, c这种分割字符
         /// </summary>
         public string StateVar { get; set; }
-        public string PublisherPath { get; set; }
-        public string PublisherHost { get; set; }
-        public string PublisherPort { get; set; }
         /// <summary>
         /// <para>
         /// NT设置无效，会被统一设置为<see cref="SSDPType.Event"/>
@@ -28,7 +25,7 @@ namespace Mozi.SSDP
         public override TransformHeader GetHeaders()
         {
             TransformHeader headers = new TransformHeader();
-            headers.Add("HOST", $"{PublisherHost}:{PublisherPort}");
+            headers.Add("HOST", $"{HOST}");
             headers.Add("NT",SSDPType.Event.ToString());
             headers.Add("USER-AGENT", UserAgent);
             headers.Add("TIMEOUT", "Second-"+TIMEOUT);
@@ -43,7 +40,7 @@ namespace Mozi.SSDP
         public TransformHeader GetUnsubscribe()
         {
             TransformHeader headers = new TransformHeader();
-            headers.Add("HOST", $"{PublisherHost}:{PublisherPort}");
+            headers.Add("HOST", $"{HOST}");
             headers.Add("SID",NT.ToString());
             return headers;
         }
@@ -76,9 +73,9 @@ namespace Mozi.SSDP
         public int LVL { get; set; }
         public int BootId {get;set;}
         public int ContentLength { get; set; }
-
-        public string DeliveryPath { get; set; }
-
+        /// <summary>
+        /// delivery path
+        /// </summary>
         public Property[] PropertySet { get; set; }
 
         //public override TransformHeader GetHeaders()
