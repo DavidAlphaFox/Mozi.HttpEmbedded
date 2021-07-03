@@ -60,7 +60,7 @@ namespace Mozi.HttpEmbedded.Test
             ssdp.OnSearchReceived += Ssdp_OnSearchReceived;
             ssdp.OnNotifyByebyeReceived += Ssdp_OnNotifyByebyeReceived;
             ssdp.OnNotifyUpdateReceived += Ssdp_OnNotifyUpdateReceived;
-
+            ssdp.OnResponseMessageReceived += Ssdp_OnResponseMessageReceived;
             ssdp.AllowLoopbackMessage = true;
             ssdp.Activate();
 
@@ -81,6 +81,11 @@ namespace Mozi.HttpEmbedded.Test
 
             //请访问地址 http://{ip}:{port}/admin/index.html
 
+        }
+
+        private static void Ssdp_OnResponseMessageReceived(object sender, HttpResponse resp, string host)
+        {
+            Console.WriteLine("Response from {0}", host);
         }
 
         private static void Ssdp_OnNotifyUpdateReceived(object sender, SSDP.UpdatePackage pack, string host)

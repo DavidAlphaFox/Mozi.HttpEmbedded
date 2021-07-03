@@ -3,8 +3,6 @@ using Mozi.HttpEmbedded.Generic;
 
 namespace Mozi.SSDP
 {
-
-
     public class SubscribePackage : AbsAdvertisePackage
     {
         public TargetDesc NT { get; set; }

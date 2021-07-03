@@ -10,6 +10,7 @@ namespace Mozi.SSDP
     public delegate void NotifyByebyeReceived(object sender, ByebyePackage pack, string host);
     public delegate void SearchReceived(object sender,SearchPackage pack,string host);
     public delegate void NotifyUpdateReceived(object sender, UpdatePackage pack, string host);
+    public delegate void ResponseMessageReceived(object sender, HttpResponse resp, string host);
 
     internal delegate void SubscribeReceived(object sender,SubscribePackage pack,string host);
     internal delegate void UnSubscribedReceived(object sender,SubscribePackage pack, string host);
@@ -167,7 +168,7 @@ namespace Mozi.SSDP
         public event NotifyByebyeReceived OnNotifyByebyeReceived;
         public event SearchReceived OnSearchReceived;
         public event NotifyUpdateReceived OnNotifyUpdateReceived;
-
+        public event ResponseMessageReceived OnResponseMessageReceived;
         /// <summary>
         /// 构造函数
         /// <para>
@@ -268,7 +269,29 @@ namespace Mozi.SSDP
             }
             catch(Exception ex)
             {
-                var ex1 = ex;
+                try
+                {
+                    HttpResponse resp = HttpResponse.Parse(args.Data);
+                    if (OnResponseMessageReceived != null)
+                    {
+                        OnResponseMessageReceived(this, resp, args.IP);
+                    }
+                    //成功
+                    if (resp.Status == StatusCode.Success)
+                    {
+                        //判断包类型
+                        //M-SEARCH response
+                        var st = resp.Headers.GetValue("ST");
+                    }
+                    else
+                    {
+
+                    }
+                }
+                catch(Exception ex2)
+                {
+
+                }
             }
         }
         /// <summary>
